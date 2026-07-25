@@ -1,0 +1,34 @@
+Mobile-Friendly GitHub Upload Instructions
+
+Upload the CONTENTS of this ZIP to the root of your GitHub repository.
+Do not upload the ZIP file itself.
+
+Required files:
+- golf-ball-guide.html
+- golf-ball-guide__app.js
+- golf-ball-guide__data.js
+- golf-ball-guide__styles.css
+- golf-ball-guide__README.md
+- golf-ball-guide__.nojekyll
+- golf-ball-guide__golf_analytics_lab_logo.png
+- golf-ball-guide__golf_ball_database.json
+- golf-ball-guide__golf_ball_database_current_verified.xlsx
+
+Then confirm GitHub Pages:
+Settings → Pages → Deploy from branch → main → /root → Save
+
+After upload:
+Mac: Command + Shift + R
+Windows: Ctrl + F5
+
+Mobile test:
+Open the live GitHub Pages link on your phone.
+You should see:
+- Navy background
+- Company logo in the header
+- Orange “Find Your Fit” button
+- Single-column mobile results
+- Refreshed golf ball database
+
+Additional production-origin workbook:
+- golf-ball-guide__golf_ball_database_with_production_origin.xlsx

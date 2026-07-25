@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700">
+  <rect width="1000" height="700" rx="40" fill="#142033"/>
+  <g fill="none" stroke="#8fd0ff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+    <path d="M180 470 L340 330 L470 385 L640 220 L820 290"/>
+    <path d="M180 520 H820"/>
+    <path d="M180 180 V520"/>
+  </g>
+  <circle cx="340" cy="330" r="24" fill="#ffffff"/>
+  <circle cx="470" cy="385" r="24" fill="#ffffff"/>
+  <circle cx="640" cy="220" r="24" fill="#ffffff"/>
+  <text x="500" y="115" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" fill="#ffffff">GOLF ANALYTICS LAB</text>
+  <text x="500" y="620" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="4" fill="#8fd0ff">DATA-DRIVEN EQUIPMENT INSIGHT</text>
+</svg>

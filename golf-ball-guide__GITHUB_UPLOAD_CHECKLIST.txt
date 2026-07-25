@@ -1,0 +1,22 @@
+GitHub upload checklist — phone-compatible version
+
+Upload these files to the root of your GitHub repository:
+
+[ ] golf-ball-guide.html
+[ ] golf-ball-guide__app.js
+[ ] golf-ball-guide__data.js
+[ ] golf-ball-guide__styles.css
+[ ] golf-ball-guide__README.md
+[ ] golf-ball-guide__.nojekyll
+[ ] golf-ball-guide__golf_ball_database.json
+[ ] golf-ball-guide__golf_analytics_lab_logo.png
+[ ] golf-ball-guide__GITHUB_UPLOAD_CHECKLIST.txt
+[ ] golf-ball-guide__UPLOAD_INSTRUCTIONS.txt
+
+No assets folder is required.
+
+Then enable GitHub Pages:
+Settings → Pages → Deploy from branch → main → /root → Save
+
+Additional production-origin workbook:
+- golf-ball-guide__golf_ball_database_with_production_origin.xlsx

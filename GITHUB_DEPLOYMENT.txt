@@ -1,0 +1,21 @@
+GOLF ANALYTICS LAB — GITHUB PAGES DEPLOYMENT
+
+Upload the CONTENTS of this package to the repository root.
+
+Recommended repository structure:
+- index.html
+- assets/
+- golf-ball-guide/
+- all other .html pages
+- .nojekyll
+- 404.html
+
+GitHub Pages setup:
+1. Open repository Settings.
+2. Select Pages.
+3. Under Build and deployment, choose Deploy from a branch.
+4. Select the main branch.
+5. Select /(root).
+6. Save.
+
+Do not upload this ZIP itself to the repository. Unzip it first and upload the files and folders.

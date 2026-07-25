@@ -1,0 +1,17 @@
+GOLF ANALYTICS LAB — FLAT GITHUB PACKAGE V5
+
+This ZIP contains NO folders.
+
+UPLOAD METHOD
+1. Unzip this package.
+2. Upload every file directly to the root of your GitHub repository.
+3. Keep index.html named exactly index.html.
+4. Do not rename files after upload.
+5. In GitHub Pages settings, publish from:
+   main branch > /(root)
+
+IMPORTANT
+- The Golf Ball Buyers Guide is golf-ball-guide.html.
+- Image, CSS, JavaScript, JSON, spreadsheet, and article filenames were flattened.
+- All internal links were rewritten for this no-folder version.
+- The .nojekyll file is included.

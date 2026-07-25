@@ -1,0 +1,27 @@
+GitHub Upload Instructions
+
+This ZIP contains the phone-compatible app plus the refreshed database.
+
+Upload the CONTENTS of this ZIP to the root of your GitHub repository.
+Do not upload the ZIP file itself.
+
+Required root files include:
+- golf-ball-guide.html
+- golf-ball-guide__app.js
+- golf-ball-guide__data.js
+- golf-ball-guide__styles.css
+- golf-ball-guide__README.md
+- golf-ball-guide__.nojekyll
+- golf-ball-guide__golf_analytics_lab_logo.png
+- golf-ball-guide__golf_ball_database.json
+- golf-ball-guide__golf_ball_database_current_verified.xlsx
+
+Then enable or confirm GitHub Pages:
+Settings → Pages → Deploy from branch → main → /root → Save
+
+After upload:
+Mac: Command + Shift + R
+Windows: Ctrl + F5
+
+Additional production-origin workbook:
+- golf-ball-guide__golf_ball_database_with_production_origin.xlsx
