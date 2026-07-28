@@ -324,3 +324,15 @@ footer{background:var(--navy);color:white;margin-top:50px}
 .home-cost-tool{border-top:5px solid var(--orange)}
 @media(max-width:950px){.home-feature{grid-template-columns:1fr}.home-feature-primary{grid-column:auto}}
 @media(max-width:700px){.tool-callout{grid-template-columns:1fr}.tool-callout .button{white-space:normal;text-align:center}}
+
+
+/* Version 2.7.1 — Brand Laboratory independent layout */
+.brands-page-main{max-width:none;padding-left:0;padding-right:0}
+.brands-intro{max-width:900px;margin-left:auto;margin-right:auto}
+.brand-lab-shell{width:min(1400px,calc(100% - 44px));margin:48px auto 0}
+.brand-lab-shell .brand-lab{margin:0;box-shadow:0 18px 55px rgba(6,27,51,.12)}
+.brands-page-nav{width:min(1160px,calc(100% - 44px));margin:0 auto}
+@media(max-width:700px){
+  .brand-lab-shell,.brands-page-nav{width:calc(100% - 28px)}
+  .brand-lab-shell{margin-top:30px}
+}

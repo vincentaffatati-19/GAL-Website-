@@ -86,3 +86,9 @@ VERSION 2.6.0 — COST CALCULATOR TOOL
 - Added links from the home landing page and the “What Does a Golf Ball Really Cost?” section.
 - Added shared Buyers Guide data plus bundled fallback data.
 - Official package: GAL-SITE-2.6.0_Cost-Calculator-Tool.zip
+
+VERSION 2.7.1 — BRAND LABORATORY LAYOUT FIX
+- Moved the Brand Laboratory into an independent centered page region.
+- Removed the inherited 900-pixel article width from the interactive tool.
+- Preserved the brand graphic in the standard article container above the tool.
+- Official package: GAL-SITE-2.7.1_Brand-Laboratory-Layout-Fix.zip

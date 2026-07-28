@@ -1,29 +1,19 @@
 GOLF ANALYTICS LAB WEBSITE VERSION
 
-Version: GAL-SITE-2.6.0
-Release name: Cost Calculator Tool
-Release type: Minor interactive-feature release
+Version: GAL-SITE-2.7.1
+Release name: Brand Laboratory Layout Fix
+Release type: Patch layout correction
 Status: Review package
 
 Changes:
-- Added the Golf Ball Cost-of-Play Calculator as a separate interactive website tool.
-- Added a fifth panel beside the Four C's cards in the Golf Ball Learning Center.
-- Added a calculator link to the “What Does a Golf Ball Really Cost?” section in the Cost article.
-- Added a new calculator feature card to the home landing page.
-- Connected the calculator to the current 77-record shared Buyers Guide data file, with bundled fallback data for offline review.
-- Preserved all Compression, Construction, Cover, and Cost animations.
-- Preserved the external Golf Ball Buyers Guide architecture.
-
-Tool files:
-- cost-calculator.html
-- cost-calculator__styles.css
-- cost-calculator__app.js
-- cost-calculator__fallback-data.js
-- golf-ball-guide__data.js
+- Moved the Brand Laboratory out of the narrow article container used by the brand graphic.
+- Placed the tool in its own centered, wide-format content region.
+- Preserved the brand graphic in the standard article-width section above the tool.
+- Added independent margins and responsive spacing for desktop, tablet, and mobile layouts.
+- Preserved all Brand Laboratory data, filters, search, accordions, Cost Laboratory link, animations, and Buyers Guide links.
 
 Verification:
-- Files included: 100
-- Image files included: 21
-- Video files included: 8
-- Local website references checked: 882
-- Missing local references: 0
+- Brand Laboratory centered independently from the brand graphic.
+- Maximum tool width: 1400 pixels.
+- Mobile side margins: 14 pixels.
+- Missing local references: 0.

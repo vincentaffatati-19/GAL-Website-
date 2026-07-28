@@ -1,7 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Meet the Brands
-Golf Analytics Lab | Golf Analytics Lab</title><meta name="description" content="Meet the Brands
-Golf Analytics Lab"><link rel="stylesheet" href="assets__styles.css"></head>
+<title>Meet the Brands | Golf Analytics Lab</title><meta name="description" content="Explore golf-ball manufacturers through the interactive Golf Analytics Lab Brand Laboratory."><link rel="stylesheet" href="assets__styles.css"><link rel="stylesheet" href="brand-laboratory__styles.css"></head>
 <body>
 <header class="site-header"><div class="header-inner">
 <a href="index.html" aria-label="Golf Analytics Lab home"><img class="logo" src="assets__images__gal-logo.png" alt="Golf Analytics Lab — Data-Driven Equipment Insight"></a>
@@ -15,85 +13,41 @@ Golf Analytics Lab"><link rel="stylesheet" href="assets__styles.css"></head>
 <a class="cta-nav" href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener noreferrer">Golf Ball Buyers Guide</a>
 </nav></div></header>
 
-<section class="hero"><div class="hero-inner"><div class="eyebrow">Meet the Brands</div><h1>Meet the Brands
-Golf Analytics Lab</h1></div></section>
-<main><article class="article-page"><p>Golf Analytics Lab&#x27;s Independent Guide to Golf Ball Manufacturers
+<section class="hero"><div class="hero-inner"><div class="eyebrow">Meet the Brands</div><h1>Meet the Brands</h1><p>Explore the science, economics, governance, business strategy, products, and evidence behind today’s golf-ball brands.</p></div></section>
+<main class="brands-page-main">
+<article class="article-page brands-intro"><p>Golf Analytics Lab&#x27;s Independent Guide to Golf Ball Manufacturers
 Every golf ball tells two stories: performance and the company behind it. This section objectively examines the companies, engineering philosophies, manufacturing approaches, innovation, consistency, and value behind today&#x27;s golf balls.</p>
 <figure class="figure-panel"><img src="assets__images__brand-education-chart.png" alt="Golf ball brand education chart organizing brands into integrated, challenger, value, and private-label groups."><figcaption>This brand map provides a quick visual introduction to the major segments of the golf-ball market before readers explore the individual brand profiles.</figcaption></figure>
-<h3>The Four Business Models</h3>
-<h2>Integrated Manufacturers</h2>
-<p>Companies with extensive internal research, engineering, patent portfolios, and manufacturing capabilities.</p>
-<h2>Titleist</h2>
-<h2>Bridgestone</h2>
-<h2>Callaway</h2>
-<h2>TaylorMade</h2>
-<h2>Srixon</h2>
-<h2>Engineering-Driven Challenger Brands</h2>
-<p>Brands that develop competitive products while leveraging specialized manufacturing partners and lean business models.</p>
-<h2>Vice</h2>
-<h2>Snell</h2>
-<h2>OnCore</h2>
-<h2>Seed</h2>
-<h2>Cut Golf</h2>
-<h2>Sugar Golf</h2>
-<h2>Heritage &amp; Value Brands</h2>
-<p>Established brands emphasizing recreational performance, accessibility, or value.</p>
-<h2>Wilson</h2>
-<h2>Maxfli</h2>
-<h2>Volvik</h2>
-<h2>Pinnacle</h2>
-<h2>Nitro</h2>
-<h2>Retail &amp; Private-Label Brands</h2>
-<p>Retail-owned brands focused on value, convenience, and efficient distribution.</p>
-<h2>Kirkland Signature (Costco)</h2>
-<h2>Amazon Essentials</h2>
-<h2>Member&#x27;s Mark (Sam&#x27;s Club)</h2>
-<h3>Golf Analytics Lab Brand DNA</h3>
-<h3>Standard Profile Template</h3>
-<h2>Company Overview</h2>
-<h2>Company History</h2>
-<h2>Engineering Philosophy</h2>
-<h2>Research &amp; Development</h2>
-<h2>Manufacturing &amp; Supply Chain</h2>
-<h2>Patent &amp; Technology Highlights</h2>
-<h2>Product Family Guide</h2>
-<h2>Tour Presence (if applicable)</h2>
-<h2>Performance Strengths</h2>
-<h2>Tradeoffs</h2>
-<h2>Best Fit by Golfer Type</h2>
-<h2>GAL Verdict</h2>
-<h3>Launch Lineup</h3>
-<h2>1. Titleist</h2>
-<h2>2. Bridgestone</h2>
-<h2>3. Callaway</h2>
-<h2>4. TaylorMade</h2>
-<h2>5. Srixon</h2>
-<h2>6. Wilson</h2>
-<h2>7. Maxfli</h2>
-<h2>8. Vice</h2>
-<h2>9. Kirkland Signature</h2>
-<h2>10. Snell</h2>
-<h2>11. OnCore</h2>
-<h2>12. Seed</h2>
-<h2>13. Volvik</h2>
-<h2>14. Cut Golf</h2>
-<h2>15. Sugar Golf</h2>
-<h2>16. Pinnacle</h2>
-<h2>17. Nitro</h2>
-<h2>18. Amazon Essentials</h2>
-<h2>19. Member&#x27;s Mark</h2>
-<h3>Editorial Philosophy</h3>
-<p>Respect the engineering. Question the marketing. Trust the performance.
+</article>
 
-Brand recognition can be valuable, but every golf ball should ultimately be judged by its engineering, manufacturing consistency, and on-course performance.</p>
+<div class="brand-lab-shell">
+<section class="brand-lab" aria-labelledby="brand-laboratory-title">
+  <div class="bl-hero">
+    <div><p class="bl-eyebrow">MEET THE BRANDS</p><h2 id="brand-laboratory-title">Brand Laboratory</h2><p>Select a golf-ball brand, filter by interest, and use + / − controls to expose the depth you want.</p></div>
+    <div class="bl-stat"><b id="total"></b><span>buyer-guide brands</span><b>6</b><span>research views</span></div>
+  </div>
+  <div class="bl-main">
+    <aside class="bl-aside"><label for="brand">SELECT A BRAND</label><select id="brand"></select><fieldset><legend>INTEREST AREAS</legend>
+      <label><input type="checkbox" value="science" checked> Science</label><label><input type="checkbox" value="economics" checked> Economics</label><label><input type="checkbox" value="governance" checked> Governance</label><label><input type="checkbox" value="inside" checked> Inside the Business</label><label><input type="checkbox" value="products" checked> Product Family</label><label><input type="checkbox" value="sources" checked> Sources</label></fieldset>
+      <div class="buttons"><button id="open" type="button">＋ Expand all</button><button id="close" type="button">− Collapse all</button></div><label for="search">SEARCH THIS BRAND</label><input id="search" type="search" placeholder="patents, urethane, ownership…"><div class="note"><b>Evidence rule</b><br>Official, reported, and inferred details are not treated as equally certain.</div>
+    </aside>
+    <section class="work"><div id="head"></div><p id="summary"></p><div id="sections"></div></section>
+  </div>
+  <section class="bl-method"><p class="bl-eyebrow">EDITORIAL METHOD</p><h2>Respect the engineering. Question the marketing. Trust the evidence.</h2><div class="bl-grid"><article><b>1</b><h3>Primary sources first</h3><p>Filings, official technical pages, patents, conformity records, and packaging.</p></article><article><b>2</b><h3>Label confidence</h3><p>Published facts remain separate from reported compression and GAL inference.</p></article><article><b>3</b><h3>Use the Four C's</h3><p>Connect every brand claim to Compression, Construction, Cover, or Cost.</p></article><article><b>4</b><h3>Keep it current</h3><p>Ownership, prices, lineups, factories, and rules require dated verification.</p></article></div></section>
+  <div class="bl-crosslink"><div><strong>Continue to the Cost Laboratory</strong><p>See how price per ball, losses, wear, and rounds played determine what a golf ball really costs.</p></div><a class="button" href="cost.html#golf-ball-cost-title">What Does a Golf Ball Really Cost?</a></div>
+</section>
+</div>
+
+<div class="brands-page-nav">
 <div class="article-nav">
 <a class="button secondary" href="golf-ball-learning-center.html">Back to Learning Center</a>
 <a class="button" href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener noreferrer">Open the Golf Ball Buyers Guide</a>
 </div>
-</article></main>
+</div>
+</main>
 <footer><div class="footer-inner"><div class="footer-grid">
 <div><h3>Golf Analytics Lab</h3><p style="color:rgba(255,255,255,.72)">Independent golf-equipment education, analysis, comparisons, and buying tools for everyday golfers.</p></div>
 <div><h3>Learn</h3><a href="golf-ball-learning-center.html">Golf Ball Learning Center</a><a href="four-cs.html">The Four C’s</a><a href="meet-the-brands.html">Meet the Brands</a><a href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener noreferrer">Golf Ball Buyers Guide</a></div>
 <div><h3>Company &amp; Policies</h3><a href="about.html">About GAL</a><a href="our-team.html">Our Team</a><a href="editorial-standards.html">Editorial Standards</a><a href="affiliate-disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy Policy</a></div>
 </div><div class="amazon-statement"><strong>Amazon disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.<br>© Golf Analytics Lab.</div></div></footer>
-</body></html>
+<script src="brand-laboratory__data.js"></script><script src="brand-laboratory__app.js"></script></body></html>
