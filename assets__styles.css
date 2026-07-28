@@ -312,3 +312,15 @@ footer{background:var(--navy);color:white;margin-top:50px}
 .video-lesson video{display:block;width:100%;height:auto;background:#000}
 .video-lesson-note{padding:13px 18px;background:#f7fafc;color:var(--muted);font-size:.9rem}
 .animation-label{display:inline-block;margin:0 0 12px;padding:5px 10px;border-radius:999px;background:#fff2d6;color:var(--navy);font-size:.78rem;font-weight:850;letter-spacing:.04em;text-transform:uppercase}
+
+
+/* Cost calculator tool integration */
+.tool-label{display:inline-block;margin:0 0 12px;padding:5px 10px;border-radius:999px;background:#e5f4ec;color:#166534;font-size:.78rem;font-weight:850;letter-spacing:.04em;text-transform:uppercase}
+.tool-card{border-top:5px solid var(--orange)}
+.tool-callout{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;margin:30px 0 38px;padding:26px;border:1px solid var(--line);border-radius:18px;background:#fff8e8}
+.tool-callout h2{margin:3px 0 7px}.tool-callout p{margin:0}.tool-callout .button{white-space:nowrap}
+.home-feature{grid-template-columns:repeat(3,1fr)}
+.home-feature-primary{grid-column:span 1}
+.home-cost-tool{border-top:5px solid var(--orange)}
+@media(max-width:950px){.home-feature{grid-template-columns:1fr}.home-feature-primary{grid-column:auto}}
+@media(max-width:700px){.tool-callout{grid-template-columns:1fr}.tool-callout .button{white-space:normal;text-align:center}}

@@ -96,3 +96,11 @@ VERSION 2.5.0 — COST NOTEBOOK
 - Added an “Includes animation” label to the Cost card.
 - Preserved the Compression, Construction, and Cover animations.
 - Official package: GAL-SITE-2.5.0_Cost-Notebook.zip
+
+
+VERSION 2.6.0 — COST CALCULATOR TOOL
+- Added the interactive Golf Ball Cost-of-Play Calculator.
+- Added the calculator as a fifth panel in the Learning Center Four C's section.
+- Added links from the home landing page and the “What Does a Golf Ball Really Cost?” section.
+- Added shared Buyers Guide data plus bundled fallback data.
+- Official package: GAL-SITE-2.6.0_Cost-Calculator-Tool.zip

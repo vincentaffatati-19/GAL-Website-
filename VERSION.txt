@@ -1,29 +1,29 @@
 GOLF ANALYTICS LAB WEBSITE VERSION
 
-Version: GAL-SITE-2.5.0
-Release name: Cost Notebook
-Release type: Minor educational feature release
+Version: GAL-SITE-2.6.0
+Release name: Cost Calculator Tool
+Release type: Minor interactive-feature release
 Status: Review package
 
 Changes:
-- Added the Golf Ball Cost Notebook animation to the Cost article.
-- Included MP4 and WebM formats for browser compatibility.
-- Added the poster image and optional preview GIF.
-- Added an “Includes animation” label to the Cost card.
-- Preserved the Compression, Construction, and Cover animations.
+- Added the Golf Ball Cost-of-Play Calculator as a separate interactive website tool.
+- Added a fifth panel beside the Four C's cards in the Golf Ball Learning Center.
+- Added a calculator link to the “What Does a Golf Ball Really Cost?” section in the Cost article.
+- Added a new calculator feature card to the home landing page.
+- Connected the calculator to the current 77-record shared Buyers Guide data file, with bundled fallback data for offline review.
+- Preserved all Compression, Construction, Cover, and Cost animations.
 - Preserved the external Golf Ball Buyers Guide architecture.
 
-Animation package:
-- MP4: assets__media__golf-ball-cost.mp4
-- WebM: assets__media__golf-ball-cost.webm
-- Poster: assets__images__golf-ball-cost-poster.png
-- Preview GIF: assets__images__golf-ball-cost-preview.gif
-- Playback: user-controlled, no autoplay
-- Length: approximately 2 minutes 20 seconds
+Tool files:
+- cost-calculator.html
+- cost-calculator__styles.css
+- cost-calculator__app.js
+- cost-calculator__fallback-data.js
+- golf-ball-guide__data.js
 
 Verification:
-- Files included: 96
+- Files included: 100
 - Image files included: 21
 - Video files included: 8
-- Local website references checked: 874
+- Local website references checked: 882
 - Missing local references: 0
