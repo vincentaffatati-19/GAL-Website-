@@ -15,3 +15,66 @@ IMPORTANT
 - Image, CSS, JavaScript, JSON, spreadsheet, and article filenames were flattened.
 - All internal links were rewritten for this no-folder version.
 - The .nojekyll file is included.
+
+
+VERSION 6 LEARNING CENTER REFRESH
+- Replaced the four core Four C's pages with the full supplied GAL articles.
+- Expanded Meet the Brands to the 19-brand launch lineup.
+- Added flat profile framework pages for all brands in the supplied master guide.
+- All files remain at the repository root with no folders.
+
+
+VERSION 7 — LATEST BUYERS GUIDE REFRESH
+- Updated the Golf Ball Buyers Guide CSS, data.js, JSON database, verified workbook,
+  production-origin workbook, PNG logo, and SVG logo from the newly supplied files.
+- Preserved the complete Version 6 Learning Center and Meet the Brands content.
+- Replaced the sitewide GAL logo with the newly supplied official logo.
+- Buyer-guide database records detected: 77.
+- This remains a no-folder GitHub package. Upload every file to the repository root.
+
+
+VERSION 8 — SQUARESPACE TRANSITION DESIGN
+- Removed persistent Build a Better Bag banners and series navigation strips.
+- Separated the Golf Ball Buyers Guide from the main website.
+- External guide URL: https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/
+- Updated the Our Team page to use compact left-column portraits with biographies on the right.
+- Rebuilt the Compression, Construction, Cover, Cost, and Meet the Brands pages from the supplied GAL documents.
+- Preserved the flat-file GitHub structure for preview and migration work.
+
+
+OFFICIAL VERSION NAME
+GAL-SITE-2.0.0 — Squarespace Transition
+
+This is a major-version release because it changes the site architecture:
+the editorial website and interactive Buyers Guides are now managed separately.
+
+
+CURRENT PACKAGE
+- Official package name: GAL-SITE-2.1.0_Learning-Center-Illustrated.zip
+- Upload every unzipped file to the same destination used for the 2.0.0 preview package.
+- This remains a flat-file website package for migration and preview workflows.
+
+
+VERSION 2.1.1 — LEARNING CENTER REFINEMENT
+- Official package: GAL-SITE-2.1.1_Learning-Center-Refinement.zip
+- Patch update to the Learning Center layout and Compression headline sizing.
+
+
+VERSION 2.2.0 — COMPRESSION NOTEBOOK
+- Integrated the supplied responsive compression animation into compression.html.
+- Added MP4, WebM, and poster assets to the flat website package.
+- Video uses controls, metadata preload, playsinline, and no autoplay.
+- Official package: GAL-SITE-2.2.0_Compression-Notebook.zip
+
+VERSION 2.3.0 — CONSTRUCTION ENERGY TRANSFER
+- Integrated the supplied responsive core-energy-transfer animation into construction.html.
+- Added MP4, WebM, and poster assets to the flat website package.
+- Video uses controls, metadata preload, playsinline, and no autoplay.
+- Added an “Includes animation” label to the Construction card in the Learning Center.
+- Official package: GAL-SITE-2.3.0_Construction-Energy-Transfer.zip
+
+VERSION 2.4.0 — COVER FRICTION SPIN
+- Added the Cover Friction, Spin, and Durability animation to cover.html.
+- Added MP4, WebM, poster PNG, and preview GIF assets.
+- Preserved the Compression and Construction animations.
+- Official package: GAL-SITE-2.4.0_Cover-Friction-Spin.zip

@@ -245,3 +245,70 @@ footer{background:var(--navy);color:white;margin-top:50px}
 .breadcrumbs{font-size:.9rem;color:var(--muted);margin-bottom:22px}.breadcrumbs a{text-decoration:none}
 @media(max-width:900px){.learning-path,.brand-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.learning-path,.article-list,.brand-grid,.key-points{grid-template-columns:1fr}}
+
+/* Long-form Learning Center articles */
+.article-page{max-width:900px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(28px,5vw,58px)}
+.article-page h2{font-size:clamp(1.65rem,3vw,2.25rem);letter-spacing:-.03em;margin:2.3rem 0 .7rem;color:var(--navy)}
+.article-page h3{font-size:1.28rem;margin:1.7rem 0 .5rem;color:var(--navy)}
+.article-page p,.article-page li{color:var(--muted)}
+.article-page ul,.article-page ol{padding-left:1.4rem}
+.article-page li{margin:.35rem 0}
+.article-kicker{color:var(--orange);font-size:.82rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.article-deck{font-size:1.15rem;color:var(--muted);margin:0 0 8px}
+.article-byline{font-size:.93rem;color:var(--muted);padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:26px}
+.article-nav{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 0;padding-top:22px;border-top:1px solid var(--line)}
+.article-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.94rem}
+.article-table th,.article-table td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.article-table th{background:#f4f7fa;color:var(--navy)}
+.brand-category{margin:34px 0}
+.brand-category h2{margin-bottom:16px}
+.brand-dna-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.brand-dna-item{padding:16px;border:1px solid var(--line);border-radius:14px;background:#f8fafc}
+.brand-dna-item strong{display:block;color:var(--navy);margin-bottom:4px}
+@media(max-width:700px){.brand-dna-grid{grid-template-columns:1fr}.article-page{padding:26px 20px}}
+
+/* Compact team layout */
+.team-list{display:grid;gap:22px;max-width:1100px;margin:0 auto}
+.member{display:grid;grid-template-columns:150px minmax(0,1fr);gap:28px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow)}
+.portrait-wrap{display:flex;align-items:flex-start;justify-content:center}
+.portrait{width:120px;height:120px;object-fit:cover;border-radius:16px;background:#f4f7fa}
+.portrait-vincent{width:120px;height:120px}
+.bio h3{margin:0 0 4px;font-size:1.6rem;color:var(--navy)}
+.role{font-weight:900;color:var(--orange);margin-bottom:12px}
+.bio p{margin:.55rem 0;color:var(--muted)}
+.focus{padding-top:10px;border-top:1px solid var(--line)}
+.linkedin{display:inline-block;margin-top:6px;font-weight:800}
+@media(max-width:700px){
+  .member{grid-template-columns:1fr;text-align:left}
+  .portrait-wrap{justify-content:flex-start}
+  .portrait,.portrait-vincent{width:100px;height:100px}
+}
+
+
+/* Education center illustration blocks */
+.figure-panel{margin:28px 0 34px;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.figure-panel img{width:100%;height:auto;display:block}
+.figure-panel figcaption{padding:14px 18px;background:#f7fafc;color:var(--muted);font-size:.95rem;border-top:1px solid var(--line)}
+.visual-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.visual-card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.visual-card .visual-copy{padding:18px 20px}
+.visual-card h3{margin:0 0 8px;color:var(--navy)}
+.visual-card p{margin:0;color:var(--muted)}
+@media(max-width:700px){.visual-grid{grid-template-columns:1fr}}
+
+
+/* Version 2.1.1 refinements */
+.compression-article .hero h1{font-size:clamp(2rem,4.2vw,3.7rem);max-width:1050px}
+.figure-panel-half{width:50%;margin-left:auto;margin-right:auto}
+@media(max-width:800px){.figure-panel-half{width:100%}.compression-article .hero h1{font-size:clamp(1.9rem,8vw,3rem)}}
+
+
+/* Compression notebook animation */
+.video-lesson{margin:32px 0 38px;background:#061b33;border:1px solid rgba(6,27,51,.2);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.video-lesson-copy{padding:24px 26px 20px;color:#fff}
+.video-lesson-copy .article-kicker{margin-bottom:7px}
+.video-lesson-copy h2{color:#fff;margin:0 0 8px;font-size:clamp(1.55rem,3vw,2.15rem)}
+.video-lesson-copy p{color:rgba(255,255,255,.78);margin:0;max-width:760px}
+.video-lesson video{display:block;width:100%;height:auto;background:#000}
+.video-lesson-note{padding:13px 18px;background:#f7fafc;color:var(--muted);font-size:.9rem}
+.animation-label{display:inline-block;margin:0 0 12px;padding:5px 10px;border-radius:999px;background:#fff2d6;color:var(--navy);font-size:.78rem;font-weight:850;letter-spacing:.04em;text-transform:uppercase}

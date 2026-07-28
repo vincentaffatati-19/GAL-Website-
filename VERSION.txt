@@ -1,0 +1,29 @@
+GOLF ANALYTICS LAB WEBSITE VERSION
+
+Version: GAL-SITE-2.5.0
+Release name: Cost Notebook
+Release type: Minor educational feature release
+Status: Review package
+
+Changes:
+- Added the Golf Ball Cost Notebook animation to the Cost article.
+- Included MP4 and WebM formats for browser compatibility.
+- Added the poster image and optional preview GIF.
+- Added an “Includes animation” label to the Cost card.
+- Preserved the Compression, Construction, and Cover animations.
+- Preserved the external Golf Ball Buyers Guide architecture.
+
+Animation package:
+- MP4: assets__media__golf-ball-cost.mp4
+- WebM: assets__media__golf-ball-cost.webm
+- Poster: assets__images__golf-ball-cost-poster.png
+- Preview GIF: assets__images__golf-ball-cost-preview.gif
+- Playback: user-controlled, no autoplay
+- Length: approximately 2 minutes 20 seconds
+
+Verification:
+- Files included: 96
+- Image files included: 21
+- Video files included: 8
+- Local website references checked: 874
+- Missing local references: 0

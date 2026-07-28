@@ -54,3 +54,45 @@ VERSION 5 — GOLF BALL EDUCATION EXPANSION
 - Added Meet the Brands hub.
 - Added launch profile pages for Titleist, Callaway, TaylorMade, Bridgestone, Srixon, Wilson, Maxfli, Vice, OnCore, and Kirkland Signature.
 - Updated site navigation and homepage links.
+
+
+VERSION 2.1.0 — LEARNING CENTER ILLUSTRATED
+- Added custom GAL education-center illustrations to the learning-center hub and core article pages.
+- Added the overview infographic to the Golf Ball Learning Center and Four C’s pages.
+- Added article visuals for Compression, Construction, Cover, and Meet the Brands.
+- Replaced the earlier testing-lab concept with the approved testing-and-design illustration for the compression article.
+- Preserved the flat-file structure and external Golf Ball Buyers Guide workflow.
+
+OFFICIAL VERSION NAME
+GAL-SITE-2.1.0 — Learning Center Illustrated
+
+This is a minor-version release because it adds meaningful editorial features and visual assets
+without changing the overall site architecture introduced in Version 2.0.0.
+
+
+VERSION 2.2.0 — COMPRESSION NOTEBOOK
+- Integrated the supplied responsive compression animation into compression.html.
+- Added MP4, WebM, and poster assets to the flat website package.
+- Video uses controls, metadata preload, playsinline, and no autoplay.
+- Official package: GAL-SITE-2.2.0_Compression-Notebook.zip
+
+VERSION 2.3.0 — CONSTRUCTION ENERGY TRANSFER
+- Integrated the supplied responsive core-energy-transfer animation into construction.html.
+- Added MP4, WebM, and poster assets to the flat website package.
+- Video uses controls, metadata preload, playsinline, and no autoplay.
+- Added an “Includes animation” label to the Construction card in the Learning Center.
+- Official package: GAL-SITE-2.3.0_Construction-Energy-Transfer.zip
+
+VERSION 2.4.0 — COVER FRICTION SPIN
+- Added the Cover Friction, Spin, and Durability animation to cover.html.
+- Added MP4, WebM, poster PNG, and preview GIF assets.
+- Preserved the Compression and Construction animations.
+- Official package: GAL-SITE-2.4.0_Cover-Friction-Spin.zip
+
+
+VERSION 2.5.0 — COST NOTEBOOK
+- Added the Golf Ball Cost Notebook animation to cost.html.
+- Added MP4, WebM, poster PNG, and preview GIF assets.
+- Added an “Includes animation” label to the Cost card.
+- Preserved the Compression, Construction, and Cover animations.
+- Official package: GAL-SITE-2.5.0_Cost-Notebook.zip

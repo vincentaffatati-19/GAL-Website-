@@ -1,195 +1,23 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#011734">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Build a Better Bag — Golf Ball Buyers Guide | Golf Analytics Lab</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="golf-ball-guide__styles.css">
-</head>
-<body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Golf Ball Buyers Guide | Golf Analytics Lab</title><meta http-equiv="refresh" content="3;url=https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/">
+<link rel="stylesheet" href="assets__styles.css"></head><body>
+<header class="site-header"><div class="header-inner">
+<a href="index.html" aria-label="Golf Analytics Lab home"><img class="logo" src="assets__images__gal-logo.png" alt="Golf Analytics Lab — Data-Driven Equipment Insight"></a>
+<nav class="nav" aria-label="Primary navigation">
+<a href="build-a-better-bag.html">Build a Better Bag</a>
+<a href="golf-ball-learning-center.html">Learning Center</a>
+<a href="meet-the-brands.html">Meet the Brands</a>
+<a href="buying-guides.html">Buying Guides</a>
+<a href="how-we-test.html">How We Test</a>
+<a href="about.html">About</a>
+<a class="cta-nav" href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener noreferrer">Golf Ball Buyers Guide</a>
+</nav></div></header>
 
-<div class="gal-site-shell">
-  <header class="gal-site-header">
-    <a class="gal-site-brand" href="golf-ball-guide.html" aria-label="Golf Analytics Lab home">
-      <img src="golf-ball-guide__golf_analytics_lab_logo.png" alt="Golf Analytics Lab — Data-Driven Equipment Insight">
-    </a>
-    <nav class="gal-site-nav" aria-label="Website navigation">
-      <a href="build-a-better-bag.html">Build a Better Bag</a>
-      <a href="golf-ball-learning-center.html">Learning Center</a>
-      <a href="meet-the-brands.html">Meet the Brands</a>
-      <a href="how-we-test.html">How We Test</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>
-  <div class="gal-series-strip">
-    <span><strong>Build a Better Bag — Golf Balls</strong> · Learn the Four C’s, explore the brands, then compare the market.</span>
-    <a href="golf-ball-learning-center.html">Visit the Learning Center →</a>
-  </div>
-</div>
-
-<div class="app-shell">
-  <header class="hero">
-    <div class="hero-inner">
-      <div>
-        <div class="eyebrow">Build a Better Bag</div>
-        <h1>Golf Ball <span>Buyers Guide</span></h1>
-        <p>A 4 C's companion tool for matching golfers to the right ball using Compression, Construction, Cover, Cost, and Production Origin. Product features tell us what it is. Player fit tells us whether it belongs in your bag.</p>
-        <div class="stats">
-          <div class="stat"><b id="recordCount">—</b><span>models</span></div>
-          <div class="stat"><b id="brandCount">—</b><span>brands</span></div>
-          <div class="stat"><b>4 C's</b><span>decision logic</span></div>
-        </div>
-      </div>
-      <div class="logo-wrap">
-        <img src="golf-ball-guide__golf_analytics_lab_logo.png" alt="Golf Analytics Lab logo">
-      </div>
-    </div>
-  </header>
-
-  
-<div class="affiliate-disclosure" role="note">
-  <strong>Independent analysis first.</strong> The guide helps golfers compare options using the Four C’s and production information. Retailer links, when added, will be secondary and clearly disclosed.
-</div>
-
-<main class="main">
-    <button id="mobileFilterToggle" class="mobile-filter-toggle" type="button">Find Your Fit</button>
-    <aside class="panel controls">
-      <h2>Find your fit</h2>
-
-      <div class="control-group">
-        <label>Swing speed / tempo</label>
-        <div class="help">Used as a practical proxy for compression fit.</div>
-        <div class="segmented">
-          <button data-field="swing" data-value="slow">Slow / smooth<br><small>&lt; 85 mph driver</small></button>
-          <button data-field="swing" data-value="moderate">Moderate<br><small>85–100 mph</small></button>
-          <button data-field="swing" data-value="fast">Fast<br><small>100+ mph</small></button>
-          <button class="active" data-field="swing" data-value="not-sure">Not sure<br><small>show broad fits</small></button>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <label>Preferred feel</label>
-        <div class="segmented">
-          <button data-field="feel" data-value="soft">Soft</button>
-          <button data-field="feel" data-value="balanced">Balanced</button>
-          <button data-field="feel" data-value="firm">Firm</button>
-          <button class="active" data-field="feel" data-value="no-preference">No preference</button>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <label>Cover / short-game priority</label>
-        <div class="segmented">
-          <button data-field="cover" data-value="spin">More spin<br><small>urethane favored</small></button>
-          <button class="active" data-field="cover" data-value="balanced">Balanced</button>
-          <button data-field="cover" data-value="durable">Durable / value<br><small>ionomer or hybrid</small></button>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <label>Budget</label>
-        <div class="segmented">
-          <button data-field="budget" data-value="value">Value<br><small>under ~$30</small></button>
-          <button data-field="budget" data-value="mid">Mid<br><small>~$30–$45</small></button>
-          <button data-field="budget" data-value="premium">Premium<br><small>$45+</small></button>
-          <button class="active" data-field="budget" data-value="no-preference">No preference</button>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <label for="construction">Construction</label>
-        <select id="construction">
-          <option value="no-preference">No preference</option>
-          <option value="2-piece">2-piece</option>
-          <option value="3-piece">3-piece</option>
-          <option value="4-plus">4+ piece / tour family</option>
-        </select>
-      </div>
-
-      <div class="control-group">
-        <label for="brand">Brand</label>
-        <select id="brand">
-          <option value="all">All brands</option>
-        </select>
-      </div>
-
-      <div class="control-group">
-        <label for="search">Search</label>
-        <input id="search" type="search" placeholder="Search model, cover, notes, retailer...">
-      </div>
-
-      <div class="actions">
-        <button id="find" class="primary">Find My Ball</button>
-        <button id="reset" class="secondary">Reset</button>
-      </div>
-    </aside>
-
-    <section class="panel results">
-      <div class="results-head">
-        <div>
-          <h2>Recommended golf balls</h2>
-          <div class="results-meta"><span id="resultCount">—</span> matches · Top pick: <b id="topPick">—</b></div>
-          <div class="mobile-help-text">Tap filters to refine your recommendation.</div>
-        </div>
-        <div class="sort-row">
-          <label for="sort" class="hidden">Sort</label>
-          <select id="sort">
-            <option value="score">Sort by match score</option>
-            <option value="cost-low">Cost: low to high</option>
-            <option value="cost-high">Cost: high to low</option>
-            <option value="compression-low">Compression: low to high</option>
-            <option value="compression-high">Compression: high to low</option>
-            <option value="brand">Brand / model</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="cards" class="card-grid"></div>
-
-      <div class="compare">
-        <table>
-          <thead>
-            <tr>
-              <th>Ball</th>
-              <th>Score</th>
-              <th>Compression</th>
-              <th>Construction</th>
-              <th>Cover</th>
-              <th>Cost</th>
-              <th>Manufacturing Country</th>
-              <th>Design Origin</th>
-              <th>Production Confidence</th>
-              <th>Retailers</th>
-              <th>Notes</th>
-            </tr>
-          </thead>
-          <tbody id="compareBody"></tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-
-<div class="site-links">
-  <a href="golf-ball-learning-center.html">Golf Ball Learning Center</a>
-  <a href="four-cs.html">The Four C’s</a>
-  <a href="meet-the-brands.html">Meet the Brands</a>
-  <a href="how-we-test.html">How We Test</a>
-  <a href="affiliate-disclosure.html">Affiliate Disclosure</a>
-</div>
-<div class="amazon-note">As an Amazon Associate I earn from qualifying purchases.</div>
-
-    Data source: <span id="sourceFile"></span>. Compression values often come from reported or third-party sources where manufacturers do not publish official numbers. This app is a buyer-guide companion, not a fitting replacement.
-  </footer>
-</div>
-<script src="golf-ball-guide__data.js"></script>
-<script src="golf-ball-guide__app.js"></script>
-</body>
-</html>
+<section class="hero"><div class="hero-inner"><div class="eyebrow">External interactive guide</div><h1>Golf Ball Buyers Guide</h1><p>The interactive Buyers Guide is maintained separately from the main GAL editorial website and will open on GitHub Pages.</p></div></section>
+<main><article class="content"><p><a class="button" href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/">Open the Golf Ball Buyers Guide</a></p><p class="small">You will be redirected automatically.</p></article></main>
+<footer><div class="footer-inner"><div class="footer-grid">
+<div><h3>Golf Analytics Lab</h3><p style="color:rgba(255,255,255,.72)">Independent golf-equipment education, analysis, comparisons, and buying tools for everyday golfers.</p></div>
+<div><h3>Learn</h3><a href="golf-ball-learning-center.html">Golf Ball Learning Center</a><a href="four-cs.html">The Four C’s</a><a href="meet-the-brands.html">Meet the Brands</a><a href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener noreferrer">Golf Ball Buyers Guide</a></div>
+<div><h3>Company &amp; Policies</h3><a href="about.html">About GAL</a><a href="our-team.html">Our Team</a><a href="editorial-standards.html">Editorial Standards</a><a href="affiliate-disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy Policy</a></div>
+</div><div class="amazon-statement"><strong>Amazon disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.<br>© Golf Analytics Lab.</div></div></footer>
+</body></html>
