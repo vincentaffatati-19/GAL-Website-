@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 180" role="img" aria-labelledby="title desc">
+  <title id="title">Golf Analytics Lab</title>
+  <desc id="desc">Golf Analytics Lab company logo with orange data trajectory and the tagline Data-Driven Equipment Insight.</desc>
+  <rect x="1" y="1" width="658" height="178" rx="25" fill="#0b1f33" stroke="#183957" stroke-width="2"/>
+  <g transform="translate(28 26)" fill="none" stroke="#f28c28" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 112 C40 100, 61 80, 85 63 S128 31, 162 15" stroke-width="6"/>
+    <path d="M10 132 H166" stroke="#31506d" stroke-width="2"/>
+    <path d="M10 132 V5" stroke="#31506d" stroke-width="2"/>
+    <circle cx="18" cy="108" r="8" fill="#f28c28" stroke="none"/>
+    <circle cx="57" cy="83" r="8" fill="#f28c28" stroke="none"/>
+    <circle cx="94" cy="56" r="8" fill="#f28c28" stroke="none"/>
+    <circle cx="132" cy="31" r="8" fill="#f28c28" stroke="none"/>
+    <circle cx="162" cy="15" r="8" fill="#f28c28" stroke="none"/>
+    <path d="M151 14 H170 V33" stroke-width="5"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="800">
+    <text x="222" y="55" font-size="37" letter-spacing="2.5" fill="#ffffff">GOLF</text>
+    <text x="222" y="99" font-size="37" letter-spacing="2.5" fill="#ffffff">ANALYTICS</text>
+    <text x="222" y="143" font-size="37" letter-spacing="2.5" fill="#f28c28">LAB</text>
+  </g>
+  <text x="385" y="145" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700"
+        letter-spacing="2.05" fill="#ffffff">DATA-DRIVEN EQUIPMENT INSIGHT</text>
+</svg>

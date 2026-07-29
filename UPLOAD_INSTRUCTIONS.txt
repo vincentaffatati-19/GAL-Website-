@@ -92,3 +92,10 @@ VERSION 2.7.1 — BRAND LABORATORY LAYOUT FIX
 - Removed the inherited 900-pixel article width from the interactive tool.
 - Preserved the brand graphic in the standard article container above the tool.
 - Official package: GAL-SITE-2.7.1_Brand-Laboratory-Layout-Fix.zip
+
+VERSION 2.8.0 — COST CALCULATOR DATABASE UPDATE
+- Replaced the calculator with the supplied corrected-database review build.
+- Calculator dataset reports 116 records and 29 brands.
+- Added dedicated flat-file calculator data, provenance, logo, and source-reference files.
+- Official package: GAL-SITE-2.8.0_Cost-Calculator-Database-Update_Flat-GitHub.zip
+- Upload all unzipped files directly to the GitHub repository root.

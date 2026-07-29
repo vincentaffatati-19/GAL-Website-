@@ -1,0 +1,12 @@
+{
+  "runtime_database": "data.js",
+  "source_workbook": "source-reference/golf_ball_database_meijer_updated.xlsx",
+  "runtime_database_sha256": "1701df844d6387b0303e1afa26771989c702e7166e31844e58c4002eace0b600",
+  "source_workbook_sha256": "737b93cb612034b02544a3cc865a39be3c38ee1249f8a06f78ade914335c5523",
+  "logo_asset": "assets/golf-analytics-lab-logo.svg",
+  "database_meta_expected": {
+    "recordCount": 116,
+    "brandCount": 29,
+    "generatedOn": "2026-07-26"
+  }
+}
