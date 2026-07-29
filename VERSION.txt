@@ -1,31 +1,19 @@
 GOLF ANALYTICS LAB WEBSITE VERSION
 
-Version: GAL-SITE-2.8.0
-Release name: Cost Calculator Database Update
-Release type: Minor tool and data release
+Version: GAL-SITE-2.7.1
+Release name: Brand Laboratory Layout Fix
+Release type: Patch layout correction
 Status: Review package
 
 Changes:
-- Replaced the prior Golf Ball Cost-of-Play Calculator with the supplied corrected-database version.
-- Updated the calculator to load its dedicated data.js dataset directly.
-- Database metadata reports 116 golf-ball records across 29 brands.
-- Added package-size parsing, editable reference pricing, product-source links, and database availability notices.
-- Added the locked Golf Analytics Lab logo assets to the calculator header and footer.
-- Preserved the Brand Laboratory layout fix, Four C's animations, and existing site navigation.
-- Packaged as a flat GitHub-ready website: every file is stored at the ZIP root.
-
-Calculator files:
-- cost-calculator.html
-- cost-calculator__styles.css
-- cost-calculator__app.js
-- cost-calculator__data.js
-- cost-calculator__provenance.json
-- cost-calculator__gal-logo.svg
-- cost-calculator__gal-logo.png
-- cost-calculator__golf-ball-database-meijer-updated.xlsx
-- cost-calculator__buyers-guide-app-reference.js
+- Moved the Brand Laboratory out of the narrow article container used by the brand graphic.
+- Placed the tool in its own centered, wide-format content region.
+- Preserved the brand graphic in the standard article-width section above the tool.
+- Added independent margins and responsive spacing for desktop, tablet, and mobile layouts.
+- Preserved all Brand Laboratory data, filters, search, accordions, Cost Laboratory link, animations, and Buyers Guide links.
 
 Verification:
-- Files included: 108
-- Local references checked: 1004
-- Missing local references: 0
+- Brand Laboratory centered independently from the brand graphic.
+- Maximum tool width: 1400 pixels.
+- Mobile side margins: 14 pixels.
+- Missing local references: 0.

@@ -4,16 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Golf Ball Cost-of-Play Calculator | Golf Analytics Lab</title>
-  <meta name="description" content="Calculate the real cost of a golf ball using purchase price, rounds played, lost balls, wear, starting inventory, tax and shipping.">
+  <meta name="description" content="Calculate the real cost of a golf ball using purchase price, rounds played, balls lost, wear, starting inventory, tax, and shipping.">
   <link rel="stylesheet" href="cost-calculator__styles.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html" aria-label="Golf Analytics Lab home">
-      <img src="cost-calculator__gal-logo.svg" alt="Golf Analytics Lab — Data-Driven Equipment Insight">
+      <span class="brand-mark" aria-hidden="true">
+        <i></i><i></i><i></i><i></i>
+      </span>
+      <span><strong>GOLF ANALYTICS LAB</strong><small>DATA-DRIVEN EQUIPMENT INSIGHT</small></span>
     </a>
-    <nav aria-label="Primary navigation">
+    <nav>
       <a href="golf-ball-learning-center.html">Education Center</a>
       <a class="guide-link" href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener">Buyers Guide</a>
     </nav>
@@ -25,11 +28,11 @@
     <div>
       <div class="eyebrow">The Four C's — Cost</div>
       <h1>Golf Ball Cost-of-Play Calculator</h1>
-      <p>Calculate what a chosen ball really costs after price, package size, rounds played, lost balls, wear, starting inventory, tax and shipping are included.</p>
+      <p>See what a golf ball really costs after purchase price, lost balls, wear, package rounding, tax, shipping, and starting inventory are included.</p>
     </div>
     <div class="hero-equation">
-      <span>Core economic equation</span>
-      <strong>Total cost of balls consumed</strong>
+      <span>Core equation</span>
+      <strong>Total economic cost</strong>
       <code>Rounds × Price per Ball × (Lost + Retired)</code>
     </div>
   </div>
@@ -42,10 +45,7 @@
     <div class="panel controls-panel">
       <div class="section-title">
         <span class="step">1</span>
-        <div>
-          <h2>Choose a golf ball</h2>
-          <p>The ball list comes directly from the attached Buyers Guide database.</p>
-        </div>
+        <div><h2>Choose a golf ball</h2><p>Database values populate automatically and remain editable.</p></div>
       </div>
 
       <div class="field-grid two">
@@ -61,23 +61,19 @@
 
       <div class="field-grid three">
         <label>Package price
-          <div class="money-input"><span>$</span><input id="packagePrice" type="number" min="0" step="0.01"></div>
+          <div class="money-input"><span>$</span><input id="packagePrice" type="number" min="0" step="0.01" value="58"></div>
         </label>
         <label>Balls per package
-          <input id="packageQuantity" type="number" min="1" step="1">
+          <input id="packageQuantity" type="number" min="1" step="1" value="12">
         </label>
         <label>Price per ball
-          <output id="pricePerBall">$0.00</output>
+          <output id="pricePerBall">$4.83</output>
         </label>
       </div>
-      <div id="priceBasis" class="price-basis"></div>
 
       <div class="section-title compact">
         <span class="step">2</span>
-        <div>
-          <h2>Describe your play</h2>
-          <p>Use your own season, loss pattern and durability experience.</p>
-        </div>
+        <div><h2>Describe your play</h2><p>Use your own season and loss pattern.</p></div>
       </div>
 
       <div class="field-grid two">
@@ -114,8 +110,6 @@
         </div>
       </details>
 
-      <div id="availabilityNotice" class="availability-notice" hidden></div>
-
       <div class="button-row">
         <button id="resetButton" class="button secondary" type="button">Reset assumptions</button>
         <button id="copyButton" class="button secondary" type="button">Copy summary</button>
@@ -124,56 +118,47 @@
 
     <aside class="panel results-panel">
       <div class="result-header">
-        <div>
-          <span class="eyebrow">Your estimate</span>
-          <h2 id="resultBallName">Golf ball</h2>
-        </div>
-        <div class="confidence" id="confidenceBadge">Database record</div>
+        <div><span class="eyebrow">Your estimate</span><h2 id="resultBallName">Titleist Pro V1</h2></div>
+        <div class="confidence" id="confidenceBadge">High confidence</div>
       </div>
 
       <div class="hero-result">
         <span>Economic consumption cost</span>
-        <strong id="economicCost">$0.00</strong>
-        <small id="economicPerRound">$0.00 per round</small>
+        <strong id="economicCost">$326.25</strong>
+        <small id="economicPerRound">$10.88 per round</small>
       </div>
 
       <div class="metric-grid">
-        <div><span>Cash outlay</span><strong id="cashOutlay">$0.00</strong></div>
-        <div><span>Packages required</span><strong id="packagesRequired">0</strong></div>
-        <div><span>Balls consumed</span><strong id="ballsConsumed">0</strong></div>
-        <div><span>Ending inventory</span><strong id="endingInventory">0</strong></div>
+        <div><span>Cash outlay</span><strong id="cashOutlay">$348.00</strong></div>
+        <div><span>Packages required</span><strong id="packagesRequired">6</strong></div>
+        <div><span>Balls consumed</span><strong id="ballsConsumed">67.5</strong></div>
+        <div><span>Ending inventory</span><strong id="endingInventory">4.5</strong></div>
       </div>
 
       <div class="cost-breakdown">
         <h3>Cost breakdown</h3>
-        <div class="breakdown-row"><span>Lost balls</span><strong id="lostBallCost">$0.00</strong></div>
+        <div class="breakdown-row"><span>Lost balls</span><strong id="lostBallCost">$290.00</strong></div>
         <div class="bar-track"><i id="lostBar"></i></div>
-        <div class="breakdown-row"><span>Wear and damage</span><strong id="wearCost">$0.00</strong></div>
+        <div class="breakdown-row"><span>Wear and damage</span><strong id="wearCost">$36.25</strong></div>
         <div class="bar-track"><i id="wearBar"></i></div>
         <div class="breakdown-row"><span>Tax and shipping</span><strong id="feesCost">$0.00</strong></div>
       </div>
 
       <div class="savings-box">
         <span>Economics of improvement</span>
-        <strong id="improvementSavings">$0.00 potential savings</strong>
-        <p id="improvementText"></p>
+        <strong id="improvementSavings">$145.00 potential savings</strong>
+        <p id="improvementText">Reducing losses from 2.00 to 1.00 ball per round.</p>
       </div>
 
-      <div class="result-actions">
-        <a id="buyersGuideButton" class="button primary full" href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener">See this ball in the Buyers Guide →</a>
-        <a id="productSourceButton" class="button source full" href="#" target="_blank" rel="noopener">Open product source ↗</a>
-      </div>
-      <p class="price-note">Database prices are reference values. Enter the actual price and package quantity you expect to buy before making a decision.</p>
+      <a id="buyersGuideButton" class="button primary full" href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener">See this ball in the Buyers Guide →</a>
+      <p class="price-note">Database prices are reference values. Enter the actual price you expect to pay before making a decision.</p>
     </aside>
   </section>
 
   <section class="panel comparison-panel">
     <div class="section-title">
       <span class="step">3</span>
-      <div>
-        <h2>Compare three balls</h2>
-        <p>Each comparison uses the same rounds, loss rate, wear rate, tax and shipping assumptions.</p>
-      </div>
+      <div><h2>Compare up to three balls</h2><p>All balls use the same playing assumptions for a fair cost comparison.</p></div>
     </div>
 
     <div class="comparison-selects">
@@ -187,11 +172,11 @@
         <thead>
           <tr>
             <th>Ball</th>
-            <th>Package basis</th>
             <th>Price / ball</th>
             <th>Economic cost</th>
             <th>Cash outlay</th>
             <th>Cost / round</th>
+            <th>Packages</th>
           </tr>
         </thead>
         <tbody id="comparisonBody"></tbody>
@@ -204,26 +189,24 @@
     <div>
       <span class="eyebrow">How the tool calculates</span>
       <h2>The cost equations</h2>
-      <p>The calculator separates the economic value of balls consumed from the cash required to purchase whole packages.</p>
+      <p>The calculator separates the value of balls actually consumed from the cash required to buy whole packages.</p>
     </div>
     <div class="equations">
       <code>Price per ball = Package price ÷ Package quantity</code>
       <code>Balls consumed = Rounds × (Lost + Retired)</code>
       <code>Economic cost = Price per ball × Balls consumed</code>
-      <code>Packages = ceil(max(0, Consumed − Starting inventory) ÷ Package quantity)</code>
+      <code>Packages = ceil((Consumed − Starting inventory) ÷ Package quantity)</code>
       <code>Cash outlay = Packages × Package price + Tax + Shipping</code>
     </div>
   </section>
 </main>
 
 <footer>
-  <div>
-    <img src="cost-calculator__gal-logo.svg" alt="Golf Analytics Lab">
-  </div>
-  <div>Independent golf-equipment education. Prices and product specifications should be verified before publication or purchase.</div>
+  <div><strong>Golf Analytics Lab</strong><span>Independent golf-equipment education and buying tools.</span></div>
+  <div>Prices and product specifications should be verified before publication or purchase.</div>
 </footer>
 
-<script src="cost-calculator__data.js"></script>
+<script src="cost-calculator__fallback-data.js"></script>
 <script src="cost-calculator__app.js"></script>
 </body>
 </html>
