@@ -1,19 +1,32 @@
 GOLF ANALYTICS LAB WEBSITE VERSION
 
-Version: GAL-SITE-2.7.1
-Release name: Brand Laboratory Layout Fix
-Release type: Patch layout correction
-Status: Review package
+Version: GAL-SITE-2.9.0
+Release name: Brand Laboratory V2
+Release type: Minor interactive-tool release
+Status: Review package — flat GitHub build
 
 Changes:
-- Moved the Brand Laboratory out of the narrow article container used by the brand graphic.
-- Placed the tool in its own centered, wide-format content region.
-- Preserved the brand graphic in the standard article-width section above the tool.
-- Added independent margins and responsive spacing for desktop, tablet, and mobile layouts.
-- Preserved all Brand Laboratory data, filters, search, accordions, Cost Laboratory link, animations, and Buyers Guide links.
+- Replaced the previous Brand Laboratory with Version 2.0.
+- Added the brand-type filter and updated brand selector.
+- Added structured product-family tables for construction, cover, compression, and market position.
+- Added research-confidence badges and explicit public-data-unavailable labeling.
+- Added the separate Brand Laboratory JSON database to the flat website package.
+- Preserved the corrected 116-record Cost Calculator database and all Four C's animations.
+- Preserved the independent centered Brand Laboratory layout beneath the brand graphic.
+
+Brand Laboratory files:
+- brand-laboratory__data.js
+- brand-laboratory__database.json
+- brand-laboratory__app.js
+- brand-laboratory__styles.css
+
+GitHub format:
+- All files are located at the ZIP root.
+- No folders are included.
+- Upload the extracted files directly to the GitHub repository root.
 
 Verification:
-- Brand Laboratory centered independently from the brand graphic.
-- Maximum tool width: 1400 pixels.
-- Mobile side margins: 14 pixels.
-- Missing local references: 0.
+- Files included: 109
+- Local references checked: 1005
+- Missing local references: 0
+- ZIP directory entries: 0

@@ -23,17 +23,23 @@ Every golf ball tells two stories: performance and the company behind it. This s
 <div class="brand-lab-shell">
 <section class="brand-lab" aria-labelledby="brand-laboratory-title">
   <div class="bl-hero">
-    <div><p class="bl-eyebrow">MEET THE BRANDS</p><h2 id="brand-laboratory-title">Brand Laboratory</h2><p>Select a golf-ball brand, filter by interest, and use + / − controls to expose the depth you want.</p></div>
-    <div class="bl-stat"><b id="total"></b><span>buyer-guide brands</span><b>6</b><span>research views</span></div>
+    <div><p class="bl-eyebrow">RESEARCH DATABASE • VERSION 2.0</p><h2 id="brand-laboratory-title">Brand Laboratory</h2><p>Explore the science, economics, governance, and business strategy behind every golf-ball brand in the Buyers Guide.</p></div>
+    <div class="bl-stats"><b id="brandCount">19</b><span>brands</span><b>6</b><span>research views</span><b>100%</b><span>public-data gaps labeled</span></div>
   </div>
   <div class="bl-main">
-    <aside class="bl-aside"><label for="brand">SELECT A BRAND</label><select id="brand"></select><fieldset><legend>INTEREST AREAS</legend>
-      <label><input type="checkbox" value="science" checked> Science</label><label><input type="checkbox" value="economics" checked> Economics</label><label><input type="checkbox" value="governance" checked> Governance</label><label><input type="checkbox" value="inside" checked> Inside the Business</label><label><input type="checkbox" value="products" checked> Product Family</label><label><input type="checkbox" value="sources" checked> Sources</label></fieldset>
-      <div class="buttons"><button id="open" type="button">＋ Expand all</button><button id="close" type="button">− Collapse all</button></div><label for="search">SEARCH THIS BRAND</label><input id="search" type="search" placeholder="patents, urethane, ownership…"><div class="note"><b>Evidence rule</b><br>Official, reported, and inferred details are not treated as equally certain.</div>
+    <aside class="bl-aside">
+      <label for="brand">SELECT A BRAND</label><select id="brand"></select>
+      <label for="type">FILTER BY BRAND TYPE</label><select id="type"><option value="">All brand types</option></select>
+      <fieldset><legend>INTEREST AREAS</legend>
+        <label><input type="checkbox" value="science" checked> Science</label><label><input type="checkbox" value="economics" checked> Economics</label><label><input type="checkbox" value="governance" checked> Governance</label><label><input type="checkbox" value="inside" checked> Inside the Business</label><label><input type="checkbox" value="products" checked> Product Family</label><label><input type="checkbox" value="sources" checked> Sources</label>
+      </fieldset>
+      <div class="buttons"><button id="expand" type="button">＋ Expand all</button><button id="collapse" type="button">− Collapse all</button></div>
+      <label for="search">SEARCH THIS BRAND</label><input id="search" type="search" placeholder="patents, urethane, ownership…">
+      <div class="note"><b>Evidence policy</b><br>Manufacturer claims, retail facts, measured data, and unavailable public information are kept separate.</div>
     </aside>
-    <section class="work"><div id="head"></div><p id="summary"></p><div id="sections"></div></section>
+    <section class="workspace"><div id="profile"></div><p id="status"></p><div id="sections"></div></section>
   </div>
-  <section class="bl-method"><p class="bl-eyebrow">EDITORIAL METHOD</p><h2>Respect the engineering. Question the marketing. Trust the evidence.</h2><div class="bl-grid"><article><b>1</b><h3>Primary sources first</h3><p>Filings, official technical pages, patents, conformity records, and packaging.</p></article><article><b>2</b><h3>Label confidence</h3><p>Published facts remain separate from reported compression and GAL inference.</p></article><article><b>3</b><h3>Use the Four C's</h3><p>Connect every brand claim to Compression, Construction, Cover, or Cost.</p></article><article><b>4</b><h3>Keep it current</h3><p>Ownership, prices, lineups, factories, and rules require dated verification.</p></article></div></section>
+  <section class="bl-method"><p class="bl-eyebrow">GAL EDITORIAL STANDARD</p><h2>Respect the engineering. Question the marketing. Trust the evidence.</h2><div class="bl-methodgrid"><article><b>1</b><h3>Golf-specific sources</h3><p>Corporate filings, official product pages, manufacturing disclosures, patents, and conformity records.</p></article><article><b>2</b><h3>No invented precision</h3><p>When supplier, factory, compression, or financial data are unavailable, the profile says so.</p></article><article><b>3</b><h3>The Four C's</h3><p>Product records connect to Compression, Construction, Cover, and Cost.</p></article><article><b>4</b><h3>Dated evidence</h3><p>Ownership, prices, products, and rules require periodic review.</p></article></div></section>
   <div class="bl-crosslink"><div><strong>Continue to the Cost Laboratory</strong><p>See how price per ball, losses, wear, and rounds played determine what a golf ball really costs.</p></div><a class="button" href="cost.html#golf-ball-cost-title">What Does a Golf Ball Really Cost?</a></div>
 </section>
 </div>
