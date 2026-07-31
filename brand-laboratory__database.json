@@ -1,0 +1,2188 @@
+{
+  "meta": {
+    "title": "Golf Analytics Lab Brand Laboratory",
+    "version": "2.0",
+    "researchDate": "July 29, 2026",
+    "brandCount": 19,
+    "editorialRule": "Where reliable public golf-specific data were not found, the database says so explicitly."
+  },
+  "brands": [
+    {
+      "id": "titleist",
+      "name": "Titleist",
+      "category": "Integrated manufacturer",
+      "confidence": "High",
+      "tagline": "Precision \u2022 consistency \u2022 tour validation",
+      "snapshot": {
+        "Founded": "1932",
+        "Golf headquarters": "Fairhaven, Massachusetts",
+        "Ownership": "Acushnet Company / Acushnet Holdings Corp. (NYSE: GOLF)",
+        "Route to market": "Global wholesale, green-grass, specialty and direct"
+      },
+      "summary": "A vertically integrated golf-ball business built around proprietary materials research, aerodynamics, owned manufacturing, quality control and tour/player validation.",
+      "science": {
+        "Engineering philosophy": [
+          "Continuous, model-specific improvement rather than one universal design.",
+          "Consistency is treated as a performance attribute across materials, concentricity, aerodynamics and finishing."
+        ],
+        "R&D and intellectual property": [
+          "Titleist reports more than 75 golf-ball R&D specialists.",
+          "Official 2025 materials cite more than five million annual test data points and more than 1,700 golf-ball patents."
+        ],
+        "Materials and construction": [
+          "Pro V1-family products use multilayer constructions and cast thermoset urethane covers.",
+          "Value models use simpler constructions and durable ionomer-type covers.",
+          "Official compression is not published for every model."
+        ],
+        "Manufacturing and quality": [
+          "Titleist describes core mixing, molding, grinding, casing, urethane casting, X-ray inspection, painting and final checks.",
+          "Official materials state more than 90 quality checks for Pro V1/Pro V1x and more than 120 for dual-core Pro V1x."
+        ],
+        "Public data unavailable": [
+          "Ball-family R&D spending, rejection rates and model-level factory allocation are not public."
+        ]
+      },
+      "economics": {
+        "Portfolio economics": [
+          "Premium-led ladder from Pro V1 through AVX/Tour Soft to Velocity and TruFeel.",
+          "The ladder lets golfers trade performance and replacement cost without leaving the brand."
+        ],
+        "Cost of ownership": [
+          "At $57.99 per dozen, a lost ball costs about $4.83.",
+          "Three lost premium balls per round equal about $14.50 before tax."
+        ],
+        "Distribution": [
+          "Broad wholesale, green-grass, direct, logo and personalization channels."
+        ],
+        "Public data unavailable": [
+          "Golf-ball gross margin, manufacturing cost, model sales and tour-contract expense are not separately disclosed."
+        ]
+      },
+      "governance": {
+        "Ownership and accountability": [
+          "Publicly traded parent provides audited reporting.",
+          "Titleist is a brand of Acushnet Company, not a standalone public company."
+        ],
+        "Rules and conformity": [
+          "Every exact model and marking should be checked on the current USGA/R&A conforming list."
+        ],
+        "Transparency": [
+          "Construction and cover are commonly disclosed; official compression generally is not.",
+          "Third-party compression must be labeled measured or reported."
+        ],
+        "Sustainability": [
+          "Corporate ESG reporting exists, but model-level golf-ball footprint data are not public."
+        ],
+        "Public data unavailable": [
+          "Model-level labor, water, energy, waste and supplier metrics are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Recurring consumable-ball sales through wholesale, direct, on-course and customization channels."
+        ],
+        "Competitive moat": [
+          "Patents, accumulated formulations, owned processes, quality systems, fitting, distribution and professional adoption."
+        ],
+        "Strategic priorities": [
+          "Protect Pro V1 leadership, improve without disrupting trusted flight windows, expand fitting and personalization."
+        ],
+        "Risks": [
+          "Premium concentration, raw materials, currency, counterfeiting and regulatory change."
+        ],
+        "Public data unavailable": [
+          "Ball-specific revenue, EBITDA, patent licensing income and player-contract terms are not public."
+        ]
+      },
+      "products": [
+        [
+          "Pro V1",
+          "3-piece",
+          "Cast urethane",
+          "Not officially published",
+          "Premium balanced tour"
+        ],
+        [
+          "Pro V1x",
+          "4-piece / dual core",
+          "Cast urethane",
+          "Not officially published",
+          "Higher-flight firmer tour"
+        ],
+        [
+          "Pro V1x Left Dash",
+          "4-piece",
+          "Cast urethane",
+          "Not officially published",
+          "High-flight lower-spin niche"
+        ],
+        [
+          "AVX",
+          "Multilayer",
+          "Urethane",
+          "Not officially published",
+          "Soft premium / lower flight"
+        ],
+        [
+          "Tour Soft",
+          "2-piece",
+          "Ionomer-type",
+          "Not officially published",
+          "Mid-price soft feel"
+        ],
+        [
+          "Velocity",
+          "2-piece",
+          "Ionomer",
+          "Not officially published",
+          "Distance"
+        ],
+        [
+          "TruFeel",
+          "2-piece",
+          "Ionomer",
+          "Not officially published",
+          "Value / soft feel"
+        ]
+      ],
+      "sources": [
+        [
+          "Titleist R&D",
+          "https://www.titleist.com/company/research-development",
+          "Official"
+        ],
+        [
+          "Titleist manufacturing",
+          "https://www.titleist.com/company/manufacturing",
+          "Official"
+        ],
+        [
+          "2025 Pro V1 R&D facts",
+          "https://mediacenter.titleist.com/en-US/242340-25-years-of-innovation-new-pro-v1-and-pro-v1x-launch-on-pga-tour/",
+          "Official"
+        ],
+        [
+          "Acushnet investor relations",
+          "https://www.acushnetholdingscorp.com/",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "bridgestone",
+      "name": "Bridgestone",
+      "category": "Integrated manufacturer",
+      "confidence": "Medium-high",
+      "tagline": "Polymer science \u2022 fitting \u2022 impact response",
+      "snapshot": {
+        "Founded": "Golf-ball production since 1935",
+        "Golf headquarters": "Covington, Georgia",
+        "Ownership": "Bridgestone Corporation",
+        "Route to market": "Wholesale, green-grass, specialty, direct and online"
+      },
+      "summary": "A golf-ball business backed by a global rubber and polymer-science company, with a four-model TOUR B fitting matrix at the center of its premium strategy.",
+      "science": {
+        "Engineering philosophy": [
+          "Use core and cover chemistry to create different impact responses for different swing conditions.",
+          "Fit by speed, spin preference and feel rather than one universal flagship."
+        ],
+        "Materials and construction": [
+          "TOUR B models use multilayer urethane constructions; e-series/value models use more durable lower-cost cover systems.",
+          "REACTIV-family claims describe impact-dependent response and require independent validation."
+        ],
+        "Manufacturing": [
+          "Known golf-ball capability exists in Japan and Covington, Georgia.",
+          "Current model-level origin is not comprehensively published."
+        ],
+        "Public data unavailable": [
+          "Golf-specific R&D budget, complete patent count, factory allocation and quality-rejection rates are not public."
+        ]
+      },
+      "economics": {
+        "Portfolio economics": [
+          "Four TOUR B variants create a fitting matrix; e-series and Lady Precept broaden the ladder."
+        ],
+        "Cost position": [
+          "Premium products compete near mainstream tour pricing; e-series occupy mid/value tiers."
+        ],
+        "Public data unavailable": [
+          "Golf-ball revenue, margin, unit cost, fitting conversion and tour expense are not separately disclosed."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Part of publicly traded Bridgestone Corporation; golf is not separately reported."
+        ],
+        "Rules": [
+          "Verify every exact model on the current conforming list."
+        ],
+        "Transparency": [
+          "Corporate materials science is relevant but not proof of a specific ball's superiority."
+        ],
+        "Public data unavailable": [
+          "Golf supplier lists, quality audits and product-level environmental metrics are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Recurring sales across premium, fitting-led, recreational and women-focused segments."
+        ],
+        "Competitive advantage": [
+          "Rubber expertise, fitting heritage, domestic U.S. production capability and tour relationships."
+        ],
+        "Risks": [
+          "Golf is small inside a large parent and premium competition is intense."
+        ],
+        "Public data unavailable": [
+          "Golf-ball operating profit, R&D allocation and factory utilization are not public."
+        ]
+      },
+      "products": [
+        [
+          "TOUR B X",
+          "Multilayer",
+          "Urethane",
+          "Verify",
+          "Faster swing / distance"
+        ],
+        [
+          "TOUR B XS",
+          "Multilayer",
+          "Urethane",
+          "Verify",
+          "Faster swing / spin"
+        ],
+        [
+          "TOUR B RX",
+          "Multilayer",
+          "Urethane",
+          "Verify",
+          "Moderate swing / distance"
+        ],
+        [
+          "TOUR B RXS",
+          "Multilayer",
+          "Urethane",
+          "Verify",
+          "Moderate swing / spin"
+        ],
+        [
+          "e12",
+          "3-piece family",
+          "Ionomer-type",
+          "Varies by generation",
+          "Mid-price straight/distance"
+        ],
+        [
+          "e6",
+          "2-piece",
+          "Ionomer",
+          "Verify",
+          "Value soft distance"
+        ],
+        [
+          "Lady Precept",
+          "2-piece",
+          "Ionomer",
+          "Low / verify",
+          "Women / slower swing"
+        ]
+      ],
+      "sources": [
+        [
+          "Bridgestone Golf",
+          "https://www.bridgestonegolf.com/en-us/",
+          "Official"
+        ],
+        [
+          "About Bridgestone Golf",
+          "https://www.bridgestonegolf.com/en-us/about",
+          "Official"
+        ],
+        [
+          "Bridgestone corporate",
+          "https://www.bridgestone.com/corporate/",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "callaway",
+      "name": "Callaway",
+      "category": "Integrated manufacturer",
+      "confidence": "High",
+      "tagline": "Ball speed \u2022 precision manufacturing \u2022 alignment",
+      "snapshot": {
+        "Founded": "1982",
+        "Golf headquarters": "Carlsbad, California; ball plant in Chicopee, Massachusetts",
+        "Ownership": "Callaway Golf Company (NYSE: CALY)",
+        "Route to market": "Global wholesale, green-grass, specialty, direct and online"
+      },
+      "summary": "A broad equipment company combining U.S. ball manufacturing, premium Chrome products, high-volume Supersoft and distinctive visual alignment systems.",
+      "science": {
+        "Engineering philosophy": [
+          "Separate long-game speed from short-game spin through multilayer construction and cover chemistry.",
+          "Use aerodynamic and visual systems as additional differentiators."
+        ],
+        "Manufacturing": [
+          "The Chicopee plant has produced golf balls since 1896.",
+          "Callaway reported more than $50 million of modernization, automation and 3D X-ray investment."
+        ],
+        "Materials": [
+          "Chrome models use multilayer urethane; ERC and Supersoft use hybrid or ionomer-style covers depending on model."
+        ],
+        "Public data unavailable": [
+          "Ball-R&D headcount, golf-ball patent count, rejection rates and model output are not public."
+        ]
+      },
+      "economics": {
+        "Portfolio": [
+          "Chrome Tour/Soft premium, ERC mid-premium, Supersoft volume, Warbird/Superfast value and REVA women-focused."
+        ],
+        "Plant economics": [
+          "Owned production improves process control, but unit cost and utilization are not public."
+        ],
+        "Public data unavailable": [
+          "Golf-ball revenue, contribution margin, model sales and tour expense are not separately reported."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Public company with audited disclosures."
+        ],
+        "Rules": [
+          "Check exact markings on the current conforming list."
+        ],
+        "Transparency": [
+          "Construction/cover are usually published; compression and production origin are inconsistent."
+        ],
+        "Public data unavailable": [
+          "Supplier list, model-level quality audits and player-contract data are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Recurring balls complement clubs, Odyssey, OGIO and apparel sales."
+        ],
+        "Competitive advantage": [
+          "Chicopee production, broad retail reach, club-ball ecosystem and alignment graphics."
+        ],
+        "Risks": [
+          "Portfolio complexity, retailer cycles and premium competition."
+        ],
+        "Public data unavailable": [
+          "Ball profitability, production volume and player-contract economics are not public."
+        ]
+      },
+      "products": [
+        [
+          "Chrome Tour",
+          "4-piece",
+          "Urethane",
+          "Not consistently official",
+          "Premium balanced tour"
+        ],
+        [
+          "Chrome Tour X",
+          "4-piece",
+          "Urethane",
+          "Not consistently official",
+          "Firmer / higher-spin tour"
+        ],
+        [
+          "Chrome Soft",
+          "Multilayer",
+          "Urethane",
+          "Not standardized",
+          "Soft premium"
+        ],
+        [
+          "ERC Soft",
+          "3-piece",
+          "Hybrid cover",
+          "Verify",
+          "Mid-premium soft"
+        ],
+        [
+          "Supersoft",
+          "2-piece",
+          "Hybrid/ionomer family",
+          "Low; varies",
+          "High-volume soft value"
+        ],
+        [
+          "Supersoft MAX",
+          "Oversize 2-piece",
+          "Ionomer-type",
+          "Verify",
+          "Easy launch / slower speed"
+        ],
+        [
+          "Warbird",
+          "2-piece",
+          "Ionomer",
+          "Verify",
+          "Distance/value"
+        ],
+        [
+          "REVA",
+          "2-piece/oversize family",
+          "Ionomer-type",
+          "Verify",
+          "Women / easy launch"
+        ]
+      ],
+      "sources": [
+        [
+          "Chicopee ball plant",
+          "https://prd-sfcc.callawaygolf.com/golf-balls/chicopee",
+          "Official"
+        ],
+        [
+          "Callaway golf balls",
+          "https://www.callawaygolf.com/golf-balls",
+          "Official"
+        ],
+        [
+          "Callaway investor relations",
+          "https://ir.callawaygolf.com/investor-overview",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "taylormade",
+      "name": "TaylorMade",
+      "category": "Integrated equipment brand",
+      "confidence": "Medium-high",
+      "tagline": "Five-layer tuning \u2022 speed \u2022 visual systems",
+      "snapshot": {
+        "Founded": "1979",
+        "Golf headquarters": "Carlsbad, California",
+        "Ownership": "Privately held; verify current owner at publication",
+        "Route to market": "Global wholesale, green-grass, specialty, direct and online"
+      },
+      "summary": "A club-led global equipment brand whose ball identity centers on five-layer TP5/TP5x construction, tour visibility and visual alignment formats.",
+      "science": {
+        "Engineering philosophy": [
+          "Use five layers to tune driver, iron, wedge and feel characteristics.",
+          "Pair construction with aerodynamic and visual systems."
+        ],
+        "Current technology": [
+          "Official pages describe five-layer construction, cast urethane and Tour Flight dimples.",
+          "2026 pages describe a microcoating process intended to reduce paint pooling."
+        ],
+        "Manufacturing": [
+          "Complete model-level factory and supplier information is not public."
+        ],
+        "Public data unavailable": [
+          "Golf-ball R&D staffing, patent count, factory identity and quality metrics are not public."
+        ]
+      },
+      "economics": {
+        "Portfolio": [
+          "TP5/TP5x premium halo; pix/Stripe/MySymbol add visual/personalization value; Tour Response and SpeedSoft broaden price."
+        ],
+        "Public data unavailable": [
+          "Ball sales, margin, acquisition cost, manufacturing cost and model mix are not public."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Private ownership limits routine financial and manufacturing disclosure."
+        ],
+        "Rules": [
+          "Verify exact models and markings on the conforming list."
+        ],
+        "Claims": [
+          "Five-layer, microcoating and visual claims should be attributed to TaylorMade unless independently validated."
+        ],
+        "Public data unavailable": [
+          "Board oversight, supplier audits and ball-specific environmental data are unavailable."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Premium and recreational balls complement a leading club franchise."
+        ],
+        "Competitive advantage": [
+          "Five-layer platform, tour visibility, retail distribution and recognizable visual systems."
+        ],
+        "Risks": [
+          "Ownership transition, premium crowding and manufacturing-partner dependence."
+        ],
+        "Public data unavailable": [
+          "Profitability, R&D return and player-contract values are not public."
+        ]
+      },
+      "products": [
+        [
+          "TP5",
+          "5-piece",
+          "Soft cast urethane",
+          "Not consistently published",
+          "Softer / highest wedge spin"
+        ],
+        [
+          "TP5x",
+          "5-piece",
+          "Urethane",
+          "Not consistently published",
+          "Faster / firmer"
+        ],
+        [
+          "TP5 pix",
+          "5-piece",
+          "Urethane",
+          "Same family; verify",
+          "Visual premium"
+        ],
+        [
+          "TP5 Stripe",
+          "5-piece",
+          "Urethane",
+          "Same family; verify",
+          "360 alignment"
+        ],
+        [
+          "Tour Response",
+          "3-piece",
+          "Urethane",
+          "Verify",
+          "Mid-price urethane"
+        ],
+        [
+          "SpeedSoft",
+          "2-piece",
+          "Ionomer-type",
+          "Low; verify",
+          "Soft distance"
+        ],
+        [
+          "Distance+",
+          "2-piece",
+          "Ionomer",
+          "Verify",
+          "Value distance"
+        ],
+        [
+          "Kalea",
+          "2-piece",
+          "Ionomer-type",
+          "Verify",
+          "Women / soft feel"
+        ]
+      ],
+      "sources": [
+        [
+          "TaylorMade TP5",
+          "https://www.taylormadegolf.com/TP5-Golf-Balls/M1037401.html",
+          "Official"
+        ],
+        [
+          "TaylorMade balls",
+          "https://www.taylormadegolf.com/balls-core/",
+          "Official"
+        ],
+        [
+          "TaylorMade company",
+          "https://www.taylormadegolf.com/about-us.html",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "srixon",
+      "name": "Srixon",
+      "category": "Integrated manufacturer",
+      "confidence": "High",
+      "tagline": "Rubber science \u2022 gradient cores \u2022 value",
+      "snapshot": {
+        "Founded": "Srixon brand launched 1996",
+        "Golf headquarters": "Huntington Beach, California; parent in Japan",
+        "Ownership": "Sumitomo Rubber Industries",
+        "Route to market": "Global wholesale, green-grass, specialty, direct and online"
+      },
+      "summary": "A golf-ball and equipment brand backed by a major rubber company, with unusually useful model-level construction, compression, cover and dimple specifications.",
+      "science": {
+        "Engineering philosophy": [
+          "Use soft-to-firm gradient core structures to balance feel and speed.",
+          "Build a performance ladder from Z-STAR through Q-STAR and SOFT FEEL."
+        ],
+        "Z-STAR technology": [
+          "Current pages describe 3-piece urethane, FastLayer DG Core 2.0, Spin Skin+ and 338 dimples.",
+          "Published compressions include Z-STAR 88, Diamond 100 and XV 102."
+        ],
+        "Sustainability": [
+          "Current premium covers include biomass-derived material."
+        ],
+        "Public data unavailable": [
+          "Ball-R&D headcount, model-level factory origin and full patent portfolio are not itemized."
+        ]
+      },
+      "economics": {
+        "Portfolio": [
+          "Z-STAR premium; Q-STAR TOUR lower-compression urethane; SOFT FEEL volume/value."
+        ],
+        "Value": [
+          "Srixon often publishes more specifications and prices below the highest premium tier depending on promotion."
+        ],
+        "Public data unavailable": [
+          "Ball sales, gross margin, unit cost and promotion funding are not separately reported."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Part of publicly traded Sumitomo Rubber Industries."
+        ],
+        "Rules": [
+          "Verify exact markings on the conforming list."
+        ],
+        "Transparency": [
+          "Construction, compression, cover and dimple data are strong; production origin is less clear."
+        ],
+        "Public data unavailable": [
+          "Supplier audits, rejection data and product carbon footprints are unavailable."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Recurring balls plus clubs/accessories across Srixon and Cleveland Golf."
+        ],
+        "Competitive advantage": [
+          "Rubber science, technical disclosure, broad ladder and promotional value."
+        ],
+        "Risks": [
+          "Promotion dependency, currency and factory-origin uncertainty."
+        ],
+        "Public data unavailable": [
+          "Ball revenue, profit, utilization and contract terms are not disclosed."
+        ]
+      },
+      "products": [
+        [
+          "Z-STAR",
+          "3-piece",
+          "Thin urethane with biomass",
+          "88 official",
+          "Maximum greenside spin"
+        ],
+        [
+          "Z-STAR Diamond",
+          "3-piece",
+          "Urethane",
+          "100 official",
+          "Blended distance/iron spin"
+        ],
+        [
+          "Z-STAR XV",
+          "3-piece",
+          "Thin urethane with biomass",
+          "102 official",
+          "Maximum ball speed"
+        ],
+        [
+          "Q-STAR TOUR",
+          "3-piece",
+          "Urethane with biomass",
+          "Verify current page",
+          "Moderate-speed tour"
+        ],
+        [
+          "Q-STAR ULTISPEED",
+          "Multilayer distance design",
+          "Thin durable cover",
+          "Verify",
+          "Extreme distance"
+        ],
+        [
+          "AD333",
+          "2-piece",
+          "Ionomer",
+          "Verify",
+          "Balanced value"
+        ],
+        [
+          "SOFT FEEL",
+          "2-piece",
+          "Ionomer",
+          "Verify",
+          "Soft feel"
+        ],
+        [
+          "SOFT FEEL LADY",
+          "2-piece",
+          "Ionomer",
+          "Lower; verify",
+          "Women / slower speed"
+        ]
+      ],
+      "sources": [
+        [
+          "Srixon Z-STAR",
+          "https://us.dunlopsports.com/srixon/balls/z-star-series/z-star/z-star-golf-balls/10360111.html",
+          "Official"
+        ],
+        [
+          "Srixon selector",
+          "https://us.dunlopsports.com/srixon/golf-ball-selector-fitting.html",
+          "Official"
+        ],
+        [
+          "Srixon balls",
+          "https://us.dunlopsports.com/srixon/balls",
+          "Official"
+        ],
+        [
+          "Sumitomo Rubber Industries",
+          "https://www.srigroup.co.jp/english/",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "wilson",
+      "name": "Wilson",
+      "category": "Heritage/value manufacturer brand",
+      "confidence": "Medium",
+      "tagline": "Soft feel \u2022 accessibility \u2022 complete equipment",
+      "snapshot": {
+        "Founded": "1914",
+        "Golf headquarters": "Chicago, Illinois",
+        "Ownership": "Amer Sports / ANTA-led ownership",
+        "Route to market": "Wholesale, mass, specialty and direct"
+      },
+      "summary": "Wilson spans tour-urethane, balanced multilayer and very-low-compression recreational products.",
+      "science": {
+        "Architecture": [
+          "Staff Model/Staff Model X are premium; Triad is balanced mid-premium; DUO Soft is low compression."
+        ],
+        "Manufacturing": [
+          "Public factory and supplier details were not found."
+        ],
+        "Public data unavailable": [
+          "R&D staffing, patent count, factory identity, quality metrics and full compression table are not public."
+        ]
+      },
+      "economics": {
+        "Portfolio": [
+          "Premium Staff Model, mid Triad, volume DUO/value products."
+        ],
+        "Public data unavailable": [
+          "Ball revenue, margin, unit cost and tour expense are not disclosed."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Wilson is part of Amer Sports; golf-ball reporting is not separated."
+        ],
+        "Rules": [
+          "Verify exact markings on the current conforming list."
+        ],
+        "Public data unavailable": [
+          "Golf-specific supplier audits and sustainability metrics are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Balls support Wilson's full-equipment relationship and recurring purchase."
+        ],
+        "Advantage": [
+          "Heritage, retail coverage and DUO soft-feel identity."
+        ],
+        "Public data unavailable": [
+          "Profit, R&D allocation and athlete terms are not public."
+        ]
+      },
+      "products": [
+        [
+          "Staff Model",
+          "4-piece family",
+          "Urethane",
+          "Not clearly published",
+          "Premium softer tour"
+        ],
+        [
+          "Staff Model X",
+          "4-piece family",
+          "Urethane",
+          "Not clearly published",
+          "Premium firmer/high flight"
+        ],
+        [
+          "Triad",
+          "3-piece",
+          "Urethane",
+          "Verify",
+          "Balanced mid-premium"
+        ],
+        [
+          "DUO Soft",
+          "2-piece",
+          "Ionomer",
+          "Very low; verify",
+          "Soft value"
+        ],
+        [
+          "Zip",
+          "2-piece",
+          "Ionomer",
+          "Not public",
+          "Value"
+        ]
+      ],
+      "sources": [
+        [
+          "Wilson balls",
+          "https://www.wilson.com/en-us/golf/golf-balls",
+          "Official"
+        ],
+        [
+          "Amer Sports",
+          "https://www.amersports.com/",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "maxfli",
+      "name": "Maxfli",
+      "category": "Retail-owned performance/value brand",
+      "confidence": "High for products",
+      "tagline": "Cast urethane \u2022 CG marking \u2022 retail value",
+      "snapshot": {
+        "Founded": "Historic brand dating to the 1920s",
+        "Golf headquarters": "Managed by Dick's Sporting Goods / Golf Galaxy",
+        "Ownership": "Dick's Sporting Goods",
+        "Route to market": "Primarily Dick's and Golf Galaxy"
+      },
+      "summary": "Maxfli is a retailer-owned brand whose Tour family offers published premium specifications and strong multi-dozen economics.",
+      "science": {
+        "Tour family": [
+          "Tour S/Tour are 3-piece cast urethane; Tour X is 4-piece cast urethane.",
+          "Tour page lists 95 compression and 318 dimples."
+        ],
+        "Balancing": [
+          "Brand describes patented center-of-gravity measurement and marking."
+        ],
+        "Manufacturing": [
+          "Imported; supplier and factory not publicly identified."
+        ],
+        "Public data unavailable": [
+          "R&D staff, factory, supplier and quality metrics are not public."
+        ]
+      },
+      "economics": {
+        "Price": [
+          "Tour products listed around $39.99/dozen; 48-pack promotions can reduce cost to about $30/dozen."
+        ],
+        "Model": [
+          "Retail owner controls product, shelf, promotion and customer data."
+        ],
+        "Public data unavailable": [
+          "Brand revenue, unit margin and supplier cost are not disclosed."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Owned by publicly traded Dick's Sporting Goods."
+        ],
+        "Rules": [
+          "Verify exact models on the conforming list."
+        ],
+        "Public data unavailable": [
+          "Supplier audits and golf-ball sustainability data are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Private-brand margin, exclusive traffic and recurring sales."
+        ],
+        "Advantage": [
+          "Retail control, price, published specs and balancing differentiation."
+        ],
+        "Risk": [
+          "Supplier dependence and exclusive-channel concentration."
+        ],
+        "Public data unavailable": [
+          "Brand profit and contract manufacturer are not public."
+        ]
+      },
+      "products": [
+        [
+          "Tour S",
+          "3-piece",
+          "Cast urethane",
+          "Verify exact current value",
+          "Lower flight/softer"
+        ],
+        [
+          "Tour",
+          "3-piece",
+          "Cast urethane",
+          "95 official retail listing",
+          "Balanced premium value"
+        ],
+        [
+          "Tour X",
+          "4-piece",
+          "Cast urethane",
+          "Verify",
+          "Higher flight/firmer"
+        ],
+        [
+          "StraightFli",
+          "2-piece",
+          "Ionomer",
+          "Not public",
+          "Straight-flight value"
+        ],
+        [
+          "SoftFli",
+          "2-piece",
+          "Ionomer",
+          "Verify",
+          "Very soft value"
+        ]
+      ],
+      "sources": [
+        [
+          "Maxfli Tour details",
+          "https://www.golfgalaxy.com/s/golf-balls/maxfli-tour-details",
+          "Retail owner"
+        ],
+        [
+          "Dick's investor relations",
+          "https://investors.dicks.com/",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "vice",
+      "name": "Vice",
+      "category": "Direct-to-consumer challenger",
+      "confidence": "Medium-high",
+      "tagline": "Digital brand \u2022 premium construction \u2022 design",
+      "snapshot": {
+        "Founded": "2012",
+        "Golf headquarters": "Munich, Germany",
+        "Ownership": "Privately held",
+        "Route to market": "Direct-to-consumer plus expanding retail"
+      },
+      "summary": "Vice combines detailed product specification, direct merchandising, color/personalization and outsourced specialist manufacturing.",
+      "science": {
+        "Vice Pro": [
+          "3-piece cast urethane, 90 compression, High Energy Speed Core and mantle."
+        ],
+        "Manufacturing": [
+          "Factory/supplier is not publicly identified for every model."
+        ],
+        "Public data unavailable": [
+          "R&D headcount, patent portfolio and rejection rates are not public."
+        ]
+      },
+      "economics": {
+        "Model": [
+          "Direct sales, quantity pricing, personalization and retail expansion."
+        ],
+        "Public data unavailable": [
+          "Revenue, margin, acquisition cost and repeat rate are private."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Private; no audited public financial reporting."
+        ],
+        "Rules": [
+          "Verify exact markings on current conforming list."
+        ],
+        "Public data unavailable": [
+          "Supplier audits and product-level environmental data are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Repeat ball purchases, bundles, personalization, apparel and accessories."
+        ],
+        "Advantage": [
+          "Digital brand, clear comparison and premium/value ladder."
+        ],
+        "Risk": [
+          "Acquisition cost, retail complexity and contract manufacturing."
+        ],
+        "Public data unavailable": [
+          "Profitability and manufacturing contracts are not public."
+        ]
+      },
+      "products": [
+        [
+          "Pro Plus",
+          "4-piece",
+          "Cast urethane",
+          "Verify",
+          "Faster swing/high flight"
+        ],
+        [
+          "Pro",
+          "3-piece",
+          "Cast urethane",
+          "90 official",
+          "Balanced medium speed"
+        ],
+        [
+          "Pro Soft",
+          "3-piece",
+          "Cast urethane",
+          "Verify",
+          "Soft premium"
+        ],
+        [
+          "Tour",
+          "3-piece family",
+          "Ionomer",
+          "Verify",
+          "Mid/value"
+        ],
+        [
+          "Drive",
+          "2-piece",
+          "Ionomer",
+          "Verify",
+          "Value distance"
+        ]
+      ],
+      "sources": [
+        [
+          "Vice Pro",
+          "https://www.vicegolf.com/golf-balls/vice-pro-tracer",
+          "Official"
+        ],
+        [
+          "Vice balls",
+          "https://www.vicegolf.com/golf-balls",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "kirkland",
+      "name": "Kirkland Signature",
+      "category": "Warehouse private label",
+      "confidence": "High for product",
+      "tagline": "Urethane \u2022 two-dozen value \u2022 member economics",
+      "snapshot": {
+        "Founded": "Kirkland Signature brand 1995",
+        "Golf headquarters": "Managed through Costco",
+        "Ownership": "Costco Wholesale Corporation",
+        "Route to market": "Costco warehouses and Costco.com"
+      },
+      "summary": "Only golf-related Kirkland details are included. Costco sells a limited three-piece urethane range in two-dozen packs.",
+      "science": {
+        "Current V3.0": [
+          "3-piece urethane, soft elastic core, mantle and 338 dimples."
+        ],
+        "Manufacturing": [
+          "Factory and supplier are not publicly identified."
+        ],
+        "Public data unavailable": [
+          "Official compression, cover thickness, factory, patent ownership and quality metrics are not public."
+        ]
+      },
+      "economics": {
+        "Pack architecture": [
+          "24-ball packs and limited assortment lower cost per transaction."
+        ],
+        "Cost": [
+          "Use actual price divided by 24; include membership only when economically relevant."
+        ],
+        "Public data unavailable": [
+          "Golf-ball margin, supplier cost and unit volume are not public."
+        ]
+      },
+      "governance": {
+        "Scope": [
+          "Only golf-ball product, sourcing and conformity are included."
+        ],
+        "Rules": [
+          "Verify exact markings on current conforming list."
+        ],
+        "Public data unavailable": [
+          "Supplier audits, quality results and golf-ball sustainability metrics are not public."
+        ]
+      },
+      "inside": {
+        "How golf balls fit": [
+          "Member-value product, recurring purchase and category completeness."
+        ],
+        "Advantage": [
+          "Warehouse scale, limited SKUs and member trust."
+        ],
+        "Risk": [
+          "Supplier/generation changes and availability."
+        ],
+        "Public data unavailable": [
+          "Golf-ball profitability and supplier contract are not public."
+        ]
+      },
+      "products": [
+        [
+          "Performance Plus V3.0 White",
+          "3-piece",
+          "Urethane",
+          "Not public",
+          "Warehouse-value urethane"
+        ],
+        [
+          "Performance Plus V3.0 Yellow",
+          "3-piece",
+          "Urethane",
+          "Not public",
+          "High-visibility warehouse value"
+        ]
+      ],
+      "sources": [
+        [
+          "Costco V3.0 white",
+          "https://www.costco.com/p/-/kirkland-signature-v30-golf-ball-2-dozen/4000291493",
+          "Retail owner"
+        ],
+        [
+          "Costco V3.0 yellow",
+          "https://www.costco.com/p/-/kirkland-signature-v30-yellow-golf-ball-2-dozen/4000331846",
+          "Retail owner"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "snell",
+      "name": "Snell",
+      "category": "Engineer-led direct brand",
+      "confidence": "Medium",
+      "tagline": "Founder engineering \u2022 focused lineup \u2022 direct value",
+      "snapshot": {
+        "Founded": "2015",
+        "Golf headquarters": "Massachusetts",
+        "Ownership": "Privately held",
+        "Route to market": "Primarily direct-to-consumer"
+      },
+      "summary": "Founder-led premium/value lineup.",
+      "science": {
+        "Engineering": [
+          "Founder Dean Snell has extensive prior golf-ball development experience.",
+          "Prime models use urethane; Get Sum serves value."
+        ],
+        "Manufacturing": [
+          "Current factory/supplier not clearly public."
+        ],
+        "Public data unavailable": [
+          "R&D headcount, owned patent count, quality data and complete compression table are not public."
+        ]
+      },
+      "economics": {
+        "Model": [
+          "Focused DTC assortment and limited traditional marketing."
+        ],
+        "Public data unavailable": [
+          "Revenue, margin, acquisition cost and supplier cost are private."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Private."
+        ],
+        "Rules": [
+          "Verify exact Prime/Get Sum markings."
+        ],
+        "Public data unavailable": [
+          "Supplier audits and sustainability metrics are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Repeat DTC ball purchases."
+        ],
+        "Advantage": [
+          "Founder credibility and focused choice."
+        ],
+        "Risk": [
+          "Founder dependence and supplier continuity."
+        ],
+        "Public data unavailable": [
+          "Profitability and manufacturing contracts are not public."
+        ]
+      },
+      "products": [
+        [
+          "Prime 4.0",
+          "4-piece family",
+          "Urethane",
+          "Verify",
+          "Faster swing premium"
+        ],
+        [
+          "Prime 3.0",
+          "3-piece",
+          "Urethane",
+          "Verify",
+          "Balanced premium"
+        ],
+        [
+          "Get Sum",
+          "2-piece",
+          "Ionomer",
+          "Verify",
+          "Value/soft feel"
+        ]
+      ],
+      "sources": [
+        [
+          "Snell Golf",
+          "https://www.snellgolf.com/",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "oncore",
+      "name": "OnCore",
+      "category": "Patent-led challenger",
+      "confidence": "Medium",
+      "tagline": "Construction IP \u2022 perimeter concepts \u2022 Buffalo identity",
+      "snapshot": {
+        "Founded": "2009",
+        "Golf headquarters": "Buffalo, New York",
+        "Ownership": "Privately held",
+        "Route to market": "Direct, select retail and customization"
+      },
+      "summary": "Patent-led challenger with premium and value products.",
+      "science": {
+        "Engineering": [
+          "Historically associated with hollow-metal-core and perimeter-weighting concepts.",
+          "Current models use different constructions; historical patents should not be assumed in every model."
+        ],
+        "Manufacturing": [
+          "Factory/supplier not public."
+        ],
+        "Public data unavailable": [
+          "R&D staffing, production location and active patent mapping are incomplete."
+        ]
+      },
+      "economics": {
+        "Model": [
+          "Direct sales, memberships/bundles and customization."
+        ],
+        "Public data unavailable": [
+          "Revenue, margin and supplier cost are private."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Private."
+        ],
+        "Rules": [
+          "Verify exact markings."
+        ],
+        "Patents": [
+          "Distinguish active, expired and licensed patents."
+        ],
+        "Public data unavailable": [
+          "Supplier audits and environmental data are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Balls, personalization and memberships."
+        ],
+        "Advantage": [
+          "Distinct patent story and direct relationship."
+        ],
+        "Risk": [
+          "Capital needs and supplier scale."
+        ],
+        "Public data unavailable": [
+          "Profitability and licensing economics are not public."
+        ]
+      },
+      "products": [
+        [
+          "VERO X1",
+          "4-piece family",
+          "Urethane",
+          "Verify",
+          "Premium performance"
+        ],
+        [
+          "ELIXR",
+          "3-piece",
+          "Urethane",
+          "Verify",
+          "Balanced premium value"
+        ],
+        [
+          "AVANT 55",
+          "2-piece",
+          "Ionomer",
+          "55 claim; verify",
+          "Soft value"
+        ]
+      ],
+      "sources": [
+        [
+          "OnCore balls",
+          "https://www.oncoregolf.com/collections/golf-balls",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "seed",
+      "name": "Seed",
+      "category": "Direct-to-consumer challenger",
+      "confidence": "Medium-high",
+      "tagline": "Irish design \u2022 subscriptions \u2022 simplified fitting",
+      "snapshot": {
+        "Founded": "2015",
+        "Golf headquarters": "County Carlow, Ireland",
+        "Ownership": "Privately held",
+        "Route to market": "Direct, subscription, bulk and bundles"
+      },
+      "summary": "Subscription-friendly direct brand with meaningful construction detail.",
+      "science": {
+        "SD-01": [
+          "3-piece, polybutadiene core, HPF mantle and thermoset cast urethane cover.",
+          "Current generation lists a 0.0275-inch cover."
+        ],
+        "Manufacturing": [
+          "Designed in Ireland; factory not publicly identified."
+        ],
+        "Public data unavailable": [
+          "R&D staffing, patents and quality metrics are not public."
+        ]
+      },
+      "economics": {
+        "Model": [
+          "Subscriptions, bulk 'Loosies,' bundles and reduced packaging."
+        ],
+        "Public data unavailable": [
+          "Revenue, churn, margin and acquisition cost are private."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Private."
+        ],
+        "Rules": [
+          "Verify exact markings."
+        ],
+        "Transparency": [
+          "Designed in Ireland is not the same as made in Ireland."
+        ],
+        "Public data unavailable": [
+          "Supplier audits and carbon data are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Subscriptions and repeat direct purchases."
+        ],
+        "Advantage": [
+          "Clear numbered range and direct relationship."
+        ],
+        "Risk": [
+          "Shipping, churn and supplier dependence."
+        ],
+        "Public data unavailable": [
+          "Profitability and factory terms are not public."
+        ]
+      },
+      "products": [
+        [
+          "SD-01",
+          "3-piece",
+          "Cast urethane",
+          "Not clearly published",
+          "Balanced premium"
+        ],
+        [
+          "SD-02",
+          "Multilayer",
+          "Urethane",
+          "Verify",
+          "Firmer premium"
+        ],
+        [
+          "SD-05",
+          "Multilayer",
+          "Urethane",
+          "Verify",
+          "Soft premium"
+        ],
+        [
+          "SD-X1",
+          "Multilayer",
+          "Urethane",
+          "Verify",
+          "Low-spin premium"
+        ],
+        [
+          "SD-15",
+          "2-piece",
+          "Ionomer",
+          "Verify",
+          "Value distance"
+        ]
+      ],
+      "sources": [
+        [
+          "Seed Golf",
+          "https://seedgolf.com/",
+          "Official"
+        ],
+        [
+          "How SD-01 is made",
+          "https://seedgolf.com/blogs/news/how-the-sd-01-is-made",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "volvik",
+      "name": "Volvik",
+      "category": "Specialist manufacturer brand",
+      "confidence": "High for products",
+      "tagline": "Color \u2022 matte finishes \u2022 visual performance",
+      "snapshot": {
+        "Founded": "1980",
+        "Golf headquarters": "South Korea; U.S. office in California",
+        "Ownership": "Privately held",
+        "Route to market": "Direct, specialty, online, licensing and gift channels"
+      },
+      "summary": "Specialist colored/matte golf-ball company with useful specifications.",
+      "science": {
+        "Vivid": [
+          "3-piece, 85 compression, 322 dimples and Surlyn cover."
+        ],
+        "Vivid Soft": [
+          "3-piece, 70 compression, 322 dimples and Surlyn cover."
+        ],
+        "Manufacturing": [
+          "Exact model factory allocation is not fully stated."
+        ],
+        "Public data unavailable": [
+          "R&D headcount, quality metrics and verified active patent count are not public."
+        ]
+      },
+      "economics": {
+        "Price": [
+          "Vivid observed around $29.99; Vivid Soft around $34.99 before promotions."
+        ],
+        "Model": [
+          "Color, licensing, bundles and personalization add value."
+        ],
+        "Public data unavailable": [
+          "Revenue, margin and licensing economics are private."
+        ]
+      },
+      "governance": {
+        "Rules": [
+          "Verify exact models."
+        ],
+        "Claims": [
+          "Patent and 'world's first' claims should be dated and checked."
+        ],
+        "Public data unavailable": [
+          "Labor/environment and quality data are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Core range, color variants, personalization, licensed packs and glow products."
+        ],
+        "Advantage": [
+          "Strong matte/color identity."
+        ],
+        "Risk": [
+          "Novelty perception and visibility tradeoffs."
+        ],
+        "Public data unavailable": [
+          "Profit and production volume are not public."
+        ]
+      },
+      "products": [
+        [
+          "Vivid",
+          "3-piece",
+          "Surlyn",
+          "85 official",
+          "Matte visual all-around"
+        ],
+        [
+          "Vivid Soft",
+          "3-piece",
+          "Surlyn",
+          "70 official",
+          "Softer moderate-speed"
+        ],
+        [
+          "Vivid Combi",
+          "3-piece",
+          "Surlyn",
+          "90 official",
+          "Dual-color alignment"
+        ],
+        [
+          "Vivid Twilight",
+          "3-piece",
+          "V-Lumi X2 Surlyn",
+          "70 official",
+          "UV glow/night golf"
+        ],
+        [
+          "XT Soft",
+          "3-piece",
+          "Verify",
+          "Verify",
+          "Higher-performance soft"
+        ]
+      ],
+      "sources": [
+        [
+          "Volvik Vivid",
+          "https://volvik.com/collections/golf-balls/products/vivid",
+          "Official"
+        ],
+        [
+          "Volvik Vivid Soft",
+          "https://volvik.com/products/vivid-soft",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "cut",
+      "name": "Cut Golf",
+      "category": "Direct-to-consumer value challenger",
+      "confidence": "High for products",
+      "tagline": "Low-price urethane \u2022 direct sales \u2022 clear tiers",
+      "snapshot": {
+        "Founded": "2017",
+        "Golf headquarters": "United States",
+        "Ownership": "Privately held",
+        "Route to market": "Primarily direct-to-consumer"
+      },
+      "summary": "Simple four-model range with published construction, compression and price.",
+      "science": {
+        "Range": [
+          "Red: 2-piece ionomer/60; Grey: 3-piece urethane/80; Blue: 4-piece urethane/90; DC: dual-core 4-piece urethane.",
+          "Current pages show inconsistent DC compression values, which should be verified."
+        ],
+        "Manufacturing": [
+          "Factory not named."
+        ],
+        "Public data unavailable": [
+          "Supplier, R&D staffing and quality tolerances are not public."
+        ]
+      },
+      "economics": {
+        "Observed prices": [
+          "Red $16, Grey $24.95, Blue $24.95, DC $29.95."
+        ],
+        "Public data unavailable": [
+          "Revenue, margin and acquisition cost are private."
+        ]
+      },
+      "governance": {
+        "Rules": [
+          "Brand labels models conforming; verify exact markings."
+        ],
+        "Claims": [
+          "Competitor savings claims are marketing."
+        ],
+        "Public data unavailable": [
+          "Supplier audits and environmental data are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Direct repeat sales and customization."
+        ],
+        "Advantage": [
+          "Clear ladder and low urethane price."
+        ],
+        "Risk": [
+          "Durability perception and supplier concentration."
+        ],
+        "Public data unavailable": [
+          "Profitability and supplier agreements are not public."
+        ]
+      },
+      "products": [
+        [
+          "Cut Red",
+          "2-piece",
+          "Ionomer",
+          "60 official",
+          "Beginner/value"
+        ],
+        [
+          "Cut Grey",
+          "3-piece",
+          "Urethane",
+          "80 official",
+          "Moderate speed"
+        ],
+        [
+          "Cut Blue",
+          "4-piece",
+          "Urethane",
+          "90 official",
+          "Premium value"
+        ],
+        [
+          "Cut DC",
+          "Dual-core 4-piece",
+          "Urethane",
+          "99\u2013105 shown; verify",
+          "Fast-swing flagship"
+        ]
+      ],
+      "sources": [
+        [
+          "Cut range",
+          "https://www.cutgolf.co/collections/cheap-golf-balls",
+          "Official"
+        ],
+        [
+          "Cut DC",
+          "https://www.cutgolf.co/products/cut-dc",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "sugar",
+      "name": "Sugar Golf",
+      "category": "Direct-to-consumer value challenger",
+      "confidence": "Medium-high",
+      "tagline": "Eight-ball packaging \u2022 urethane \u2022 simplified range",
+      "snapshot": {
+        "Founded": "Public founding detail not found",
+        "Golf headquarters": "North American direct brand; verify legal address",
+        "Ownership": "Privately held",
+        "Route to market": "Direct-to-consumer"
+      },
+      "summary": "Premium-positioned urethane balls in eight-ball boxes.",
+      "science": {
+        "Pure": [
+          "3-piece urethane, 85 compression."
+        ],
+        "Quad": [
+          "4-piece urethane, 95\u2013100 compression."
+        ],
+        "Manufacturing": [
+          "Site does not identify factory."
+        ],
+        "Public data unavailable": [
+          "Factory, supplier, R&D staffing and quality tolerances are not public."
+        ]
+      },
+      "economics": {
+        "Packaging": [
+          "Eight-ball boxes require price-per-ball normalization."
+        ],
+        "Public data unavailable": [
+          "Revenue, margin and unit volume are private."
+        ]
+      },
+      "governance": {
+        "Rules": [
+          "Verify Pure and Quad markings."
+        ],
+        "Claims": [
+          "Same-factory language does not identify a manufacturer."
+        ],
+        "Public data unavailable": [
+          "Legal ownership detail and supplier audits were not found."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "Direct ball sales with focused premium range."
+        ],
+        "Advantage": [
+          "Simple choice and urethane value."
+        ],
+        "Risk": [
+          "Price-format confusion and supplier opacity."
+        ],
+        "Public data unavailable": [
+          "Profitability and manufacturing contracts are not public."
+        ]
+      },
+      "products": [
+        [
+          "Pure",
+          "3-piece",
+          "Urethane",
+          "85 official",
+          "Balanced premium value"
+        ],
+        [
+          "Quad",
+          "4-piece",
+          "Urethane",
+          "95\u2013100 official",
+          "Faster swing"
+        ]
+      ],
+      "sources": [
+        [
+          "Sugar Pure",
+          "https://sugar.golf/product/pure/",
+          "Official"
+        ],
+        [
+          "Sugar Quad",
+          "https://sugar.golf/product/quad/",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "pinnacle",
+      "name": "Pinnacle",
+      "category": "Acushnet value brand",
+      "confidence": "Medium",
+      "tagline": "Distance \u2022 durability \u2022 recreational value",
+      "snapshot": {
+        "Founded": "Historic Acushnet value brand",
+        "Golf headquarters": "Managed by Acushnet Company",
+        "Ownership": "Acushnet Company",
+        "Route to market": "Mass, specialty, online and selected golf channels"
+      },
+      "summary": "Acushnet's lower-price recreational golf-ball brand.",
+      "science": {
+        "Construction": [
+          "Rush and Soft are positioned as durable two-piece products."
+        ],
+        "Manufacturing": [
+          "Model-level plant origin is not clearly public."
+        ],
+        "Public data unavailable": [
+          "Official compression, cover resin and dedicated R&D are not consistently public."
+        ]
+      },
+      "economics": {
+        "Portfolio role": [
+          "Lets Acushnet compete in value channels without moving Titleist down-market."
+        ],
+        "Public data unavailable": [
+          "Revenue, margin and unit volume are not public."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Owned by Acushnet."
+        ],
+        "Rules": [
+          "Verify exact markings."
+        ],
+        "Public data unavailable": [
+          "Origin, supplier and sustainability data are not public."
+        ]
+      },
+      "inside": {
+        "How it makes money": [
+          "High-volume recreational ball sales."
+        ],
+        "Advantage": [
+          "Acushnet expertise and availability."
+        ],
+        "Risk": [
+          "Private-label competition."
+        ],
+        "Public data unavailable": [
+          "Brand profitability and channel mix are not public."
+        ]
+      },
+      "products": [
+        [
+          "Rush",
+          "2-piece",
+          "Durable ionomer-type",
+          "Not public",
+          "Distance/value"
+        ],
+        [
+          "Soft",
+          "2-piece",
+          "Durable ionomer-type",
+          "Not public",
+          "Soft value"
+        ]
+      ],
+      "sources": [
+        [
+          "Pinnacle Golf",
+          "https://www.pinnaclegolf.com/",
+          "Official"
+        ],
+        [
+          "Acushnet",
+          "https://www.acushnetholdingscorp.com/",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "nitro",
+      "name": "Nitro",
+      "category": "Entry-price recreational brand",
+      "confidence": "Low",
+      "tagline": "Distance \u2022 large packs \u2022 low replacement cost",
+      "snapshot": {
+        "Founded": "Reliable public date not found",
+        "Golf headquarters": "Reliable golf-specific legal headquarters not found",
+        "Ownership": "Reliable current legal owner not clearly identified",
+        "Route to market": "Mass retail and online marketplaces"
+      },
+      "summary": "Retained because it appears in the Buyers Guide, but public golf-specific disclosure is unusually limited.",
+      "science": {
+        "Product claims": [
+          "Brand pages emphasize titanium-core distance, durable covers and aerodynamic dimples.",
+          "Some listings include recycled/overrun products."
+        ],
+        "Manufacturing": [
+          "No reliable factory, supplier or formulation data were found."
+        ],
+        "Public data unavailable": [
+          "Verified construction, compression, dimple count, patents, R&D and quality controls are unavailable."
+        ]
+      },
+      "economics": {
+        "Model": [
+          "Large packs and marketplace distribution target beginners and high-loss golfers."
+        ],
+        "Public data unavailable": [
+          "Revenue, margin and supplier cost are not public."
+        ]
+      },
+      "governance": {
+        "Ownership": [
+          "Current legal ownership was not reliably established."
+        ],
+        "Rules": [
+          "Do not assume every Nitro listing is conforming; verify exact model and condition."
+        ],
+        "Public data unavailable": [
+          "Supplier audits and product testing are unavailable."
+        ]
+      },
+      "inside": {
+        "How it appears to make money": [
+          "Low-price new, recycled and overrun balls plus recreational equipment."
+        ],
+        "Advantage": [
+          "Low loss cost."
+        ],
+        "Risk": [
+          "Ownership, condition and specification ambiguity."
+        ],
+        "Public data unavailable": [
+          "Most financial, manufacturing and governance detail is unavailable."
+        ]
+      },
+      "products": [
+        [
+          "Maximum Distance",
+          "Not reliably verified",
+          "Durable cover claim",
+          "Not public",
+          "Entry distance"
+        ],
+        [
+          "Crossfire",
+          "Not reliably verified",
+          "Durable cover claim",
+          "Not public",
+          "Entry/control claim"
+        ],
+        [
+          "Ultimate Distance",
+          "Not reliably verified",
+          "Not public",
+          "Not public",
+          "Entry distance"
+        ]
+      ],
+      "sources": [
+        [
+          "Nitro Golf",
+          "https://thenitrogolf.com/",
+          "Brand site"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon Basics",
+      "category": "Marketplace private label",
+      "confidence": "Medium-low",
+      "tagline": "Low compression \u2022 marketplace convenience \u2022 entry price",
+      "snapshot": {
+        "Founded": "Golf-ball line launched 2025",
+        "Golf headquarters": "Managed through Amazon private label",
+        "Ownership": "Amazon.com, Inc.",
+        "Route to market": "Amazon marketplace"
+      },
+      "summary": "Only golf-related Amazon Basics data are included.",
+      "science": {
+        "Product": [
+          "Launch reporting describes low-compression core, ionomer cover and alignment aid."
+        ],
+        "Manufacturing": [
+          "Secondary reporting identifies a supplier, but primary confirmation is still needed."
+        ],
+        "Public data unavailable": [
+          "Official compression, factory, quality controls and full construction are unavailable."
+        ]
+      },
+      "economics": {
+        "Observed launch price": [
+          "Secondary reporting cited $14.49/dozen in 2025; verify current."
+        ],
+        "Public data unavailable": [
+          "Margin, supplier cost and unit volume are not public."
+        ]
+      },
+      "governance": {
+        "Scope": [
+          "Only golf product, sourcing and conformity are included."
+        ],
+        "Rules": [
+          "Verify exact markings."
+        ],
+        "Public data unavailable": [
+          "Supplier audits and environmental data are unavailable."
+        ]
+      },
+      "inside": {
+        "How golf balls fit": [
+          "Low-price private label extends Amazon Basics into golf."
+        ],
+        "Advantage": [
+          "Distribution and fulfillment."
+        ],
+        "Risk": [
+          "Supplier opacity and weak technical differentiation."
+        ],
+        "Public data unavailable": [
+          "Golf-ball profitability and development ownership are not public."
+        ]
+      },
+      "products": [
+        [
+          "Amazon Basics Core Soft",
+          "Likely 2-piece; verify",
+          "Ionomer reported",
+          "Low; exact value not public",
+          "Beginner/high-loss value"
+        ]
+      ],
+      "sources": [
+        [
+          "Amazon investor relations",
+          "https://ir.aboutamazon.com/",
+          "Official"
+        ],
+        [
+          "Launch reporting",
+          "https://www.golfmonthly.com/news/amazon-just-released-its-first-ever-basics-golf-ball-heres-what-to-know",
+          "Secondary"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    },
+    {
+      "id": "members",
+      "name": "Member's Mark",
+      "category": "Warehouse private label",
+      "confidence": "Medium",
+      "tagline": "Three-piece value \u2022 two-dozen packs \u2022 member distribution",
+      "snapshot": {
+        "Founded": "Member's Mark private-label brand",
+        "Golf headquarters": "Managed through Sam's Club",
+        "Ownership": "Sam's Club / Walmart Inc.",
+        "Route to market": "Sam's Club and SamsClub.com"
+      },
+      "summary": "Only golf-related Member's Mark details are included.",
+      "science": {
+        "Current product": [
+          "Sam's Club lists white and yellow 3-piece balls in 24-ball packs."
+        ],
+        "Manufacturing": [
+          "Supplier, factory and origin were not established."
+        ],
+        "Public data unavailable": [
+          "Cover material, compression, dimples, patents and quality controls are unavailable."
+        ]
+      },
+      "economics": {
+        "Observed price": [
+          "24 balls listed at $29.98, about $1.25 per ball before tax/membership."
+        ],
+        "Public data unavailable": [
+          "Margin, supplier cost and sales volume are not public."
+        ]
+      },
+      "governance": {
+        "Scope": [
+          "Only golf product, sourcing and conformity are included."
+        ],
+        "Rules": [
+          "Verify exact markings."
+        ],
+        "Public data unavailable": [
+          "Supplier audits and sustainability metrics are unavailable."
+        ]
+      },
+      "inside": {
+        "How golf balls fit": [
+          "Low-cost consumable strengthens member value and golf assortment."
+        ],
+        "Advantage": [
+          "Warehouse scale and two-dozen packaging."
+        ],
+        "Risk": [
+          "Supplier changes and limited technical disclosure."
+        ],
+        "Public data unavailable": [
+          "Profitability, supplier identity and R&D ownership are not public."
+        ]
+      },
+      "products": [
+        [
+          "Member's Mark 3-Piece White",
+          "3-piece",
+          "Not public",
+          "Not public",
+          "Warehouse value"
+        ],
+        [
+          "Member's Mark 3-Piece Yellow",
+          "3-piece",
+          "Not public",
+          "Not public",
+          "High-visibility warehouse value"
+        ]
+      ],
+      "sources": [
+        [
+          "Sam's Club golf balls",
+          "https://www.samsclub.com/c/kp/golf-balls",
+          "Retail owner"
+        ],
+        [
+          "Walmart investor relations",
+          "https://stock.walmart.com/",
+          "Official"
+        ],
+        [
+          "USGA conforming list",
+          "https://www.usga.org/ConformingGolfBall/gball_list.pdf",
+          "Rules authority"
+        ]
+      ]
+    }
+  ]
+}
