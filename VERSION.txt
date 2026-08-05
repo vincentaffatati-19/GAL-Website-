@@ -1,32 +1,14 @@
 GOLF ANALYTICS LAB WEBSITE VERSION
 
-Version: GAL-SITE-2.9.0
-Release name: Brand Laboratory V2
-Release type: Minor interactive-tool release
-Status: Review package — flat GitHub build
+Version: GAL-SITE-3.0.1
+Release name: Team Page Visual Upgrade
+Release type: Patch usability and visual-design release
+Status: Review package
 
 Changes:
-- Replaced the previous Brand Laboratory with Version 2.0.
-- Added the brand-type filter and updated brand selector.
-- Added structured product-family tables for construction, cover, compression, and market position.
-- Added research-confidence badges and explicit public-data-unavailable labeling.
-- Added the separate Brand Laboratory JSON database to the flat website package.
-- Preserved the corrected 116-record Cost Calculator database and all Four C's animations.
-- Preserved the independent centered Brand Laboratory layout beneath the brand graphic.
-
-Brand Laboratory files:
-- brand-laboratory__data.js
-- brand-laboratory__database.json
-- brand-laboratory__app.js
-- brand-laboratory__styles.css
-
-GitHub format:
-- All files are located at the ZIP root.
-- No folders are included.
-- Upload the extracted files directly to the GitHub repository root.
-
-Verification:
-- Files included: 109
-- Local references checked: 1005
-- Missing local references: 0
-- ZIP directory entries: 0
+- Preserved the complete 3.0.0 usability architecture.
+- Redesigned the Our Team page with larger, consistently displayed portraits.
+- Replaced cropped thumbnails with fixed portrait stages using object-fit contain.
+- Added a branded How the Lab Works signal-path feature.
+- Added discipline tags and stronger name, role, and focus hierarchy.
+- Improved desktop, tablet, and mobile layouts for team cards.

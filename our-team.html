@@ -10,17 +10,15 @@
 <body>
 <header class="site-header">
   <div class="header-inner">
-    <a href="index.html" aria-label="Golf Analytics Lab home">
-      <img class="logo" src="assets__images__gal-logo.png" alt="Golf Analytics Lab — Data-Driven Equipment Insight">
-    </a>
-    <nav class="nav" aria-label="Primary navigation">
+    <a class="brand-link" href="index.html" aria-label="Golf Analytics Lab home"><img class="logo" src="assets__images__gal-logo.png" alt="Golf Analytics Lab — Data-Driven Equipment Insight"></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation"><span class="menu-toggle-label">Menu</span><span aria-hidden="true">☰</span></button>
+    <nav class="nav" id="primary-navigation" aria-label="Primary navigation">
       <a href="build-a-better-bag.html">Build a Better Bag</a>
-      <a href="golf-ball-learning-center.html">Learning Center</a>
-      <a href="meet-the-brands.html">Meet the Brands</a>
-      <a href="buying-guides.html">Buying Guides</a>
+      <a href="golf-ball-learning-center.html">Learn</a>
+      <a href="tools.html">Tools</a>
       <a href="how-we-test.html">How We Test</a>
       <a href="about.html">About</a>
-      <a class="cta-nav" href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener noreferrer">Golf Ball Buyers Guide</a>
+      <a class="cta-nav" href="golf-balls.html">Golf Balls: Episode 1</a>
     </nav>
   </div>
 </header>
@@ -38,95 +36,78 @@
 </section>
 
 <main>
-  <section class="intro">
-    <h2>Different disciplines. One clear mission.</h2>
-    <p>Our team combines analytical rigor with accessible communication so golfers can better understand equipment, compare options, and make decisions with confidence.</p>
+  <section class="intro team-intro">
+    <div>
+      <div class="section-kicker">One operating system</div>
+      <h2>Different disciplines. One clear mission.</h2>
+      <p>GAL combines research, measurement, business analysis, legal review, digital communication, and golf-media experience. Each discipline strengthens the same goal: helping golfers understand equipment and make better decisions.</p>
+    </div>
   </section>
 
-  <section class="team-list" aria-label="Golf Analytics Lab team">
+  <section class="lab-signal" aria-labelledby="lab-signal-title">
+    <div class="lab-signal-heading">
+      <div class="section-kicker">How the lab works</div>
+      <h2 id="lab-signal-title">Evidence moves through the team</h2>
+      <p>Every guide and tool passes through a repeatable sequence before it reaches the golfer.</p>
+    </div>
+    <ol class="lab-signal-path">
+      <li><span class="signal-number">01</span><strong>Research</strong><span>Find the claims, sources, history, and market context.</span></li>
+      <li><span class="signal-number">02</span><strong>Measure</strong><span>Test methods, data quality, consistency, and practical significance.</span></li>
+      <li><span class="signal-number">03</span><strong>Interpret</strong><span>Turn technical findings into useful equipment guidance.</span></li>
+      <li><span class="signal-number">04</span><strong>Protect &amp; publish</strong><span>Review accuracy, risk, clarity, and communication before release.</span></li>
+    </ol>
+  </section>
 
-    <article class="member">
-      <div class="portrait-wrap">
-        <img class="portrait" src="assets__images__elliot.png" alt="Cartoon portrait of Elliot, Research Editor">
-      </div>
-      <div class="bio">
-        <h3>Elliot</h3>
-        <div class="role">Research Editor</div>
-        <p>Elliot supports source review, fact-checking, and the development of clear, well-supported equipment content. He is a law student at the University of Texas and brings a disciplined approach to research, analysis, and written communication.</p>
-        <p class="focus"><strong>Areas of focus</strong>Research, source verification, editorial review, and fact-checking</p>
-      </div>
-    </article>
+  <section class="team-section" aria-labelledby="team-grid-title">
+    <div class="team-section-heading">
+      <div class="section-kicker">Meet the team</div>
+      <h2 id="team-grid-title">The people behind Golf Analytics Lab</h2>
+    </div>
+    <div class="team-list" aria-label="Golf Analytics Lab team">
 
-    <article class="member">
-      <div class="portrait-wrap">
-        <img class="portrait" src="assets__images__john.png" alt="Cartoon portrait of John, Analytics and Measurement">
-      </div>
-      <div class="bio">
-        <h3>John</h3>
-        <div class="role">Analytics &amp; Measurement</div>
-        <p>John leads analytics and measurement support for Golf Analytics Lab. He brings 45 years of professional experience in precision measurement, giving GAL a practical and disciplined perspective on testing methods, measurement consistency, and data interpretation.</p>
-        <p class="focus"><strong>Areas of focus</strong>Precision measurement, testing methodology, data quality, and performance analysis</p>
-      </div>
-    </article>
+      <article class="member">
+        <div class="portrait-wrap"><img class="portrait" src="assets__images__elliot.png" alt="Illustrated portrait of Elliot, Research Editor"></div>
+        <div class="bio"><div class="discipline-tag">Research &amp; editorial</div><h3>Elliot</h3><div class="role">Research Editor</div><p>Elliot supports source review, fact-checking, and the development of clear, well-supported equipment content. He is a law student at the University of Texas and brings a disciplined approach to research, analysis, and written communication.</p><p class="focus"><strong>Areas of focus</strong><span>Research, source verification, editorial review, and fact-checking</span></p></div>
+      </article>
 
-    <article class="member">
-      <div class="portrait-wrap">
-        <img class="portrait" src="assets__images__louis.png" alt="Cartoon portrait of Louis, Finance and Marketing">
-      </div>
-      <div class="bio">
-        <h3>Louis</h3>
-        <div class="role">Finance &amp; Marketing</div>
-        <p>Louis supports the financial and marketing functions of Golf Analytics Lab. He is a finance student at the University of Montana and contributes to budgeting, market analysis, audience development, and the evaluation of GAL’s business opportunities.</p>
-        <p class="focus"><strong>Areas of focus</strong>Finance, marketing, audience growth, and business analysis</p>
-      </div>
-    </article>
+      <article class="member">
+        <div class="portrait-wrap"><img class="portrait" src="assets__images__john.png" alt="Illustrated portrait of John, Analytics and Measurement"></div>
+        <div class="bio"><div class="discipline-tag">Measurement &amp; data</div><h3>John</h3><div class="role">Analytics &amp; Measurement</div><p>John leads analytics and measurement support for Golf Analytics Lab. He brings 45 years of professional experience in precision measurement, giving GAL a practical and disciplined perspective on testing methods, measurement consistency, and data interpretation.</p><p class="focus"><strong>Areas of focus</strong><span>Precision measurement, testing methodology, data quality, and performance analysis</span></p></div>
+      </article>
 
-    <article class="member">
-      <div class="portrait-wrap">
-        <img class="portrait" src="assets__images__maddy.png" alt="Cartoon portrait of Maddy, Contributing Social Media Editor">
-      </div>
-      <div class="bio">
-        <h3>Maddy</h3>
-        <div class="role">Contributing Social Media Editor</div>
-        <p>Maddy serves as Contributing Social Media Editor for Golf Analytics Lab. She holds a master’s degree in Social Media Communications from Dublin City University and was an Anna Sobel Levy Fellow at Reichman University in Herzliya, Israel.</p>
-        <p>She helps translate GAL’s equipment research, buying guides, and educational content into clear, engaging social content for golfers across digital platforms.</p>
-        <p class="focus"><strong>Areas of focus</strong>Social-media strategy, content development, audience engagement, digital communications, and brand storytelling</p>
-      </div>
-    </article>
+      <article class="member">
+        <div class="portrait-wrap"><img class="portrait" src="assets__images__louis.png" alt="Illustrated portrait of Louis, Finance and Marketing"></div>
+        <div class="bio"><div class="discipline-tag">Business &amp; market</div><h3>Louis</h3><div class="role">Finance &amp; Marketing</div><p>Louis supports the financial and marketing functions of Golf Analytics Lab. He is a finance student at the University of Montana and contributes to budgeting, market analysis, audience development, and the evaluation of GAL’s business opportunities.</p><p class="focus"><strong>Areas of focus</strong><span>Finance, marketing, audience growth, and business analysis</span></p></div>
+      </article>
 
-    <article class="member">
-      <div class="portrait-wrap">
-        <img class="portrait" src="assets__images__michelle.png" alt="Cartoon portrait of Michelle, Consulting Attorney">
-      </div>
-      <div class="bio">
-        <h3>Michelle</h3>
-        <div class="role">Consulting Attorney</div>
-        <p>Michelle serves as Consulting Attorney for Golf Analytics Lab. A graduate of the University of Wisconsin Law School, she advises the company on legal, regulatory, and business matters, including disclosures, contracts, intellectual property, and editorial risk.</p>
-        <p class="focus"><strong>Areas of focus</strong>Legal review, compliance, contracts, and business guidance</p>
-      </div>
-    </article>
+      <article class="member">
+        <div class="portrait-wrap"><img class="portrait" src="assets__images__maddy.png" alt="Illustrated portrait of Maddy, Contributing Social Media Editor"></div>
+        <div class="bio"><div class="discipline-tag">Audience &amp; communication</div><h3>Maddy</h3><div class="role">Contributing Social Media Editor</div><p>Maddy serves as Contributing Social Media Editor for Golf Analytics Lab. She holds a master’s degree in Social Media Communications from Dublin City University and was an Anna Sobel Levy Fellow at Reichman University in Herzliya, Israel.</p><p>She helps translate GAL’s equipment research, buying guides, and educational content into clear, engaging social content for golfers across digital platforms.</p><p class="focus"><strong>Areas of focus</strong><span>Social-media strategy, content development, audience engagement, digital communications, and brand storytelling</span></p></div>
+      </article>
 
-    <article class="member">
-      <div class="portrait-wrap">
-        <img class="portrait portrait-vincent" src="assets__images__vincent.png" alt="Cartoon portrait of Vincent, Editor">
-      </div>
-      <div class="bio">
-        <h3>Vincent</h3>
-        <div class="role">Editor</div>
-        <p>Vincent serves as Editor of Golf Analytics Lab. He brings a background in technology, business, and golf-media production, including experience working behind the scenes on professional golf broadcasts.</p>
-        <p>He leads GAL’s editorial direction, equipment research, buying guides, and interactive tools, translating technical specifications and marketing claims into practical information for everyday golfers.</p>
-        <a class="linkedin" href="https://www.linkedin.com/in/vincentaffatati/" target="_blank" rel="noopener noreferrer">View Vincent on LinkedIn</a>
-        <p class="focus"><strong>Areas of focus</strong>Editorial direction, golf-ball analysis, equipment research, buying guides, golf technology, and equipment history</p>
-      </div>
-    </article>
+      <article class="member">
+        <div class="portrait-wrap"><img class="portrait" src="assets__images__michelle.png" alt="Illustrated portrait of Michelle, Consulting Attorney"></div>
+        <div class="bio"><div class="discipline-tag">Governance &amp; risk</div><h3>Michelle</h3><div class="role">Consulting Attorney</div><p>Michelle serves as Consulting Attorney for Golf Analytics Lab. A graduate of the University of Wisconsin Law School, she advises the company on legal, regulatory, and business matters, including disclosures, contracts, intellectual property, and editorial risk.</p><p class="focus"><strong>Areas of focus</strong><span>Legal review, compliance, contracts, and business guidance</span></p></div>
+      </article>
 
+      <article class="member">
+        <div class="portrait-wrap"><img class="portrait" src="assets__images__vincent.png" alt="Illustrated portrait of Vincent, Editor"></div>
+        <div class="bio"><div class="discipline-tag">Editorial &amp; product</div><h3>Vincent</h3><div class="role">Editor</div><p>Vincent serves as Editor of Golf Analytics Lab. He brings a background in technology, business, and golf-media production, including experience working behind the scenes on professional golf broadcasts.</p><p>He leads GAL’s editorial direction, equipment research, buying guides, and interactive tools, translating technical specifications and marketing claims into practical information for everyday golfers.</p><a class="linkedin" href="https://www.linkedin.com/in/vincentaffatati/" target="_blank" rel="noopener noreferrer">View Vincent on LinkedIn</a><p class="focus"><strong>Areas of focus</strong><span>Editorial direction, golf-ball analysis, equipment research, buying guides, golf technology, and equipment history</span></p></div>
+      </article>
+
+    </div>
   </section>
 </main>
 
-<footer><div class="footer-inner"><div class="footer-grid">
-<div><h3>Golf Analytics Lab</h3><p style="color:rgba(255,255,255,.72)">Independent golf-equipment education, analysis, comparisons, and buying tools for everyday golfers.</p></div>
-<div><h3>Learn</h3><a href="golf-ball-learning-center.html">Golf Ball Learning Center</a><a href="four-cs.html">The Four C’s</a><a href="meet-the-brands.html">Meet the Brands</a><a href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener noreferrer">Golf Ball Buyers Guide</a></div>
-<div><h3>Company &amp; Policies</h3><a href="about.html">About GAL</a><a href="our-team.html">Our Team</a><a href="editorial-standards.html">Editorial Standards</a><a href="affiliate-disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy Policy</a></div>
-</div><div class="amazon-statement"><strong>Amazon disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.<br>© Golf Analytics Lab.</div></div></footer>
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><img src="assets__images__gal-logo.png" alt="Golf Analytics Lab"><p>Independent golf-equipment education, analysis, and practical decision tools.</p></div>
+    <div><h3>Build a Better Bag</h3><a href="build-a-better-bag.html">Series overview</a><a href="golf-balls.html">Episode 1: Golf Balls</a><a href="golf-ball-learning-center.html">Golf Ball Learning Center</a><a href="tools.html">All tools</a></div>
+    <div><h3>Golf Ball Tools</h3><a href="meet-the-brands.html#brand-laboratory-title">Brand Laboratory</a><a href="cost-calculator.html">Cost Calculator</a><a href="https://vincentaffatati-19.github.io/GAL-Buyers-Guide-v720a/" target="_blank" rel="noopener noreferrer">Buyers Guide ↗</a></div>
+    <div><h3>About GAL</h3><a href="how-we-test.html">How We Test</a><a href="about.html">About</a><a href="our-team.html">Our Team</a><a href="contact.html">Contact</a></div>
+  </div>
+  <div class="footer-legal"><span>© Golf Analytics Lab</span><span>As an Amazon Associate I earn from qualifying purchases.</span><span><a href="editorial-standards.html">Editorial Standards</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div>
+</div></footer>
+<script src="site.js"></script>
 </body>
 </html>

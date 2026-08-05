@@ -132,3 +132,27 @@ VERSION 2.9.0 — BRAND LABORATORY V2
 - Included brand-laboratory__database.json as a separate reusable data file.
 - Preserved the corrected Cost Calculator and all Four C's animation integrations.
 - Official flat GitHub package: GAL-SITE-2.9.0_Brand-Laboratory-V2_Flat-GitHub.zip
+
+
+VERSION 2.9.1 — BRAND LABORATORY V2 FIX
+- Restored the complete Brand Laboratory asset set.
+- Scoped the application to its own container and prefixed interactive IDs.
+- Added guarded initialization and visible error handling.
+- Official package: GAL-SITE-2.9.1_Brand-Laboratory-V2-Fix_Flat-GitHub.zip
+
+VERSION 2.10.0 — GUI NAVIGATION CONSISTENCY
+- Standardized the header and official GAL logo across pages and tools.
+- Added Home and Learning Center to all primary menus.
+- Added homepage return links to local tools.
+- Added Learning Center and all tool links to Golf Ball Episode One.
+- Official package: GAL-SITE-2.10.0_GUI-Navigation-Consistency_Flat-GitHub.zip
+
+
+VERSION 3.0.0 — USABILITY ARCHITECTURE
+- Major navigation, hierarchy, typography, and layout redesign.
+- Flat GitHub package.
+
+
+VERSION 3.0.1 — TEAM PAGE VISUAL UPGRADE
+- Larger consistent team portraits and new branded lab-signal GUI feature.
+- Official package: GAL-SITE-3.0.1_Team-Page-Visual-Upgrade_Flat-GitHub.zip

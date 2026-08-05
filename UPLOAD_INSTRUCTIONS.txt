@@ -103,3 +103,22 @@ VERSION 2.8.0 — COST CALCULATOR DATABASE UPDATE
 
 VERSION 2.9.0 — BRAND LABORATORY V2
 This is a flat GitHub package. Extract the ZIP and upload every file directly to the repository root. Do not place the files inside an additional folder.
+
+
+VERSION 2.9.1 — BRAND LABORATORY V2 FIX
+- Restored the complete Brand Laboratory asset set.
+- Scoped the application to its own container and prefixed interactive IDs.
+- Added guarded initialization and visible error handling.
+- Official package: GAL-SITE-2.9.1_Brand-Laboratory-V2-Fix_Flat-GitHub.zip
+
+VERSION 2.10.0 — GUI NAVIGATION CONSISTENCY
+- Standardized the header and official GAL logo across pages and tools.
+- Added Home and Learning Center to all primary menus.
+- Added homepage return links to local tools.
+- Added Learning Center and all tool links to Golf Ball Episode One.
+- Official package: GAL-SITE-2.10.0_GUI-Navigation-Consistency_Flat-GitHub.zip
+
+
+VERSION 3.0.1 — TEAM PAGE VISUAL UPGRADE
+- Larger consistent team portraits and new branded lab-signal GUI feature.
+- Official package: GAL-SITE-3.0.1_Team-Page-Visual-Upgrade_Flat-GitHub.zip
