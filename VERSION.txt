@@ -1,14 +1,23 @@
 GOLF ANALYTICS LAB WEBSITE VERSION
 
-Version: GAL-SITE-3.0.1
-Release name: Team Page Visual Upgrade
-Release type: Patch usability and visual-design release
+Version: GAL-SITE-3.1.0
+Release name: Irons Buyers Guide
+Release type: Minor Build a Better Bag episode/tool release
 Status: Review package
 
 Changes:
-- Preserved the complete 3.0.0 usability architecture.
-- Redesigned the Our Team page with larger, consistently displayed portraits.
-- Replaced cropped thumbnails with fixed portrait stages using object-fit contain.
-- Added a branded How the Lab Works signal-path feature.
-- Added discipline tags and stronger name, role, and focus hierarchy.
-- Improved desktop, tablet, and mobile layouts for team cards.
+- Added the GAL Irons Buyers Guide v2.2 as a native Build a Better Bag tool.
+- Added a dedicated Irons episode navigation and updated Irons overview page.
+- Added Irons to the Build a Better Bag series overview as the next active category.
+- Added a dedicated Irons section to the Tools Center.
+- Preserved the Golf Ball episode, Brand Laboratory, Cost Calculator, Buyers Guide links, and Team page upgrade.
+- Kept the global navigation compact so future episode tools are organized contextually instead of added to the permanent menu.
+- Embedded the supplied GAL Irons Database v1.6 dataset with 117 records.
+- Preserved Irons Buyers Guide v2.2 weighting: Strike 35%, Price 30%, Goal 15%, Look 10%, Flight 8%, Evidence 2%.
+- Scoped Irons Buyers Guide CSS and JavaScript to protect the host website GUI.
+
+GitHub packaging:
+- Flat archive: all files at repository root.
+- Main Irons page: irons.html
+- Irons Buyers Guide: irons-buyers-guide.html
+- Tool assets: irons-buyers-guide__styles.css, irons-buyers-guide__data.js, irons-buyers-guide__app.js

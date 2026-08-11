@@ -156,3 +156,10 @@ VERSION 3.0.0 — USABILITY ARCHITECTURE
 VERSION 3.0.1 — TEAM PAGE VISUAL UPGRADE
 - Larger consistent team portraits and new branded lab-signal GUI feature.
 - Official package: GAL-SITE-3.0.1_Team-Page-Visual-Upgrade_Flat-GitHub.zip
+
+
+VERSION 3.1.0 — IRONS BUYERS GUIDE
+- Added the first live tool for the Build a Better Bag Irons episode.
+- Added Irons Buyers Guide v2.2 using the supplied 117-record GAL Irons Database.
+- Added Irons episode navigation, Tools Center integration, and series-overview integration.
+- Preserved the scalable Learn → Explore → Choose episode architecture.
