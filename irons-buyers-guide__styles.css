@@ -1,4 +1,4 @@
-/* GAL Irons Buyers Guide v2.2 — embedded tool styles */
+/* GAL Irons Buyers Guide v3.1 — embedded tool styles */
 .irons-guide{--navy:#0b2034;--navy2:#153754;--orange:#ef8a26;--orange2:#ffb05e;--paper:#f3f5f7;--white:#fff;--ink:#17232e;--muted:#63717d;--line:#dce3e8;--green:#1f7150;--softgreen:#eaf6ef;--amber:#8e5a15;--softamber:#fff3df;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .irons-guide *{box-sizing:border-box}
 .irons-guide .guide-hero{background:linear-gradient(135deg,#0b2034,#174664);color:#fff;border-radius:20px;overflow:hidden;margin:0 auto 24px}
@@ -18,3 +18,36 @@
 .irons-guide .table-wrap{overflow:auto}.irons-guide table{width:100%;border-collapse:collapse;min-width:900px;font-size:.76rem}.irons-guide th,.irons-guide td{padding:10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}.irons-guide th{background:var(--navy);color:#fff}.irons-guide .method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.irons-guide .method article{background:#f5f8fa;border-radius:13px;padding:16px}.irons-guide .method article>span{color:var(--orange);font-weight:950;font-size:1.2rem}.irons-guide .method h3{margin:5px 0;color:var(--navy)}.irons-guide .method p{font-size:.8rem;line-height:1.5;color:#52616c}.irons-guide .method-note{font-size:.73rem;line-height:1.5;color:var(--muted);margin:18px 0 0}
 @media(max-width:960px){.irons-guide .questions{grid-template-columns:1fr}.irons-guide .results-grid{grid-template-columns:repeat(2,1fr)}.irons-guide .profile-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.irons-guide .guide-hero-inner{padding:32px 16px}.irons-guide .guide-card,.irons-guide .profile-section,.irons-guide .results-section,.irons-guide .compare-section,.irons-guide .method{padding:15px}.irons-guide .options{grid-template-columns:1fr}.irons-guide .results-grid{grid-template-columns:1fr}.irons-guide .profile-grid{grid-template-columns:1fr}.irons-guide .guide-head,.irons-guide .section-title{align-items:flex-start;flex-direction:column}.irons-guide .result-tools{width:100%;display:grid;grid-template-columns:1fr 1fr}.irons-guide .result-tools select{width:100%;min-width:0}.irons-guide .method-grid{grid-template-columns:1fr}.irons-guide .specs{grid-template-columns:repeat(2,1fr)}}
+
+/* v3.1 embedded enhancements */
+.irons-guide .audience-shopping-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:14px;align-items:start}
+.irons-guide .shopping-setup{border-left:1px solid var(--line);padding-left:14px}
+.irons-guide .shopping-label{font-weight:900;color:var(--navy);font-size:.86rem;margin-bottom:4px}
+.irons-guide .shopping-help{font-size:.69rem;line-height:1.35;color:var(--muted);margin-bottom:8px}
+.irons-guide .retailer-options{display:flex;flex-wrap:wrap;gap:6px}
+.irons-guide .retailer-option{border:1px solid #cdd7df;background:#fff;color:#3b4d5a;border-radius:999px;padding:7px 9px;font-size:.68rem;font-weight:850;cursor:pointer}
+.irons-guide .retailer-option.active{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:inset 0 -2px 0 var(--orange)}
+.irons-guide .profile-grid{grid-template-columns:repeat(6,1fr)}
+.irons-guide .score-explainer{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.irons-guide .score-explainer>div{background:#f5f8fa;border-radius:11px;padding:11px}
+.irons-guide .score-explainer b{display:block;color:var(--navy);font-size:.78rem}
+.irons-guide .score-explainer span{font-size:.7rem;color:#63717d;line-height:1.4}
+.irons-guide .iron{position:relative}
+.irons-guide .role-badge{position:absolute;right:12px;top:-9px;background:var(--orange);color:#17232e;border-radius:999px;padding:5px 9px;font-size:.65rem;font-weight:950;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.irons-guide .scores{display:flex;gap:6px;flex:none}
+.irons-guide .score-pill{background:var(--navy);color:#fff;border-radius:10px;min-width:60px;padding:8px 7px;text-align:center}
+.irons-guide .score-pill.value{background:#eaf6ef;color:#195c41}
+.irons-guide .score-pill b{display:block;font-size:1.02rem}.irons-guide .score-pill span{display:block;font-size:.57rem;font-weight:850;letter-spacing:.06em}
+.irons-guide .component-line{background:#f8fafb;border:1px solid #e4e9ed;border-radius:9px;padding:8px;font-size:.68rem;line-height:1.4;color:#53616c}.irons-guide .component-line b{color:var(--navy)}
+.irons-guide .retailer-note{font-size:.68rem;line-height:1.35;color:#66747f;background:#f6f8fa;border-radius:8px;padding:7px 8px}
+.irons-guide .retailer-note.preferred{background:#fff3df;color:#7a4a0c;border:1px solid #f0d6ad}
+.irons-guide .purchase-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.irons-guide .buy-link{background:var(--orange);color:#152330;text-decoration:none;border-radius:8px;padding:7px 9px;font-weight:900;font-size:.7rem}
+.irons-guide .buy-now{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:108px;padding:9px 12px;line-height:1.05;text-align:center}
+.irons-guide .buy-now span{font-size:.75rem;font-weight:950;letter-spacing:.04em}.irons-guide .buy-now small{font-size:.58rem;font-weight:800;margin-top:3px;opacity:.82}
+.irons-guide table{min-width:980px}
+.irons-guide .method-grid.four{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1050px){.irons-guide .profile-grid{grid-template-columns:repeat(3,1fr)}.irons-guide .method-grid.four{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:960px){.irons-guide .score-explainer{grid-template-columns:1fr}}
+@media(max-width:760px){.irons-guide .audience-shopping-grid{grid-template-columns:1fr}.irons-guide .shopping-setup{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:12px}}
+@media(max-width:650px){.irons-guide .profile-grid{grid-template-columns:1fr}.irons-guide .method-grid.four{grid-template-columns:1fr}}
