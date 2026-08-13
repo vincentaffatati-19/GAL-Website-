@@ -22,33 +22,14 @@ const QUESTIONS=[
   ["value","Value matters","Prefer roughly under $150 per iron"],["middle","Mid-market is fine","Roughly $150–$225 per iron"],["premium","Premium is okay","Pay more for the right fit"],["open","Keep price out of it","Rank fit before price"]]}
 ];
 
-const RETAILERS=[
- {id:"amazon",label:"Amazon"},{id:"walmart",label:"Walmart"},{id:"dicks",label:"Dick's Sporting Goods"},
- {id:"golfgalaxy",label:"Golf Galaxy"},{id:"pgatss",label:"PGA TOUR Superstore"},
- {id:"direct",label:"Manufacturer / Direct"},{id:"none",label:"No Preference"}
-];
-
-const AMAZON_VERIFIED={
- "TaylorMade|P·790":"https://www.amazon.com/TaylorMade-Golf-2025-P790-Irons/dp/B0DRMMWYNN",
- "TaylorMade|Qi Max":"https://www.amazon.com/Taylormade-Golf-Irons-Steel-Stiff/dp/B0GC76ZRRB",
- "TaylorMade|Qi Max HL":"https://www.amazon.com/TaylorMade-Qi-Max-HL-Custom/dp/B0GS6TJ133",
- "Callaway|Elyte":"https://www.amazon.com/s?k=callaway+elyte+irons",
- "Callaway|Elyte X":"https://www.amazon.com/Callaway-Golf-Elyte-Individual-Iron/dp/B0DTW4SR74",
- "Callaway|Elyte HL":"https://www.amazon.com/Callaway-Golf-Elyte-Launch-Individual/dp/B0DTW6THZW",
- "Cobra|King Tec-X":"https://www.amazon.com/Cobra-Golf-King-Mens-Iron/dp/B0DC8RRDFF"
-};
-
-// v3.1: verified retailer registry. Empty registries are intentional until GAL verifies
-// model-specific purchase paths. Never infer availability.
-const RETAILER_VERIFIED = {
- amazon: AMAZON_VERIFIED,
- walmart: {},
- dicks: {},
- golfgalaxy: {},
- pgatss: {}
-};
-
-const RETAILER_PRIORITY = ["amazon","golfgalaxy","dicks","pgatss","walmart","direct"];
+const COMMERCE=(window.GAL_IRONS_COMMERCE&&typeof window.GAL_IRONS_COMMERCE==="object")?window.GAL_IRONS_COMMERCE:{retailers:[],priority:["amazon","golfgalaxy","dicks","pgatss","walmart","direct"],routes:[]};
+const RETAILERS=(Array.isArray(COMMERCE.retailers)?COMMERCE.retailers:[])
+ .filter(r=>r&&r.active!==false)
+ .map(r=>({id:r.id,label:r.label||r.id}))
+ .concat([{id:"none",label:"No Preference"}]);
+const RETAILER_PRIORITY=Array.isArray(COMMERCE.priority)&&COMMERCE.priority.length?COMMERCE.priority.slice():["amazon","golfgalaxy","dicks","pgatss","walmart","direct"];
+const COMMERCE_ROUTES=Array.isArray(COMMERCE.routes)?COMMERCE.routes:[];
+const ROUTES_BY_PRODUCT=COMMERCE_ROUTES.reduce((acc,r)=>{if(r&&r.product_id){(acc[r.product_id]||(acc[r.product_id]=[])).push(r)}return acc;},{});
 
 
 const ROOT=document.querySelector(".irons-guide");
@@ -81,14 +62,10 @@ function eligible(i){if(!state.audience)return true;return state.audience==="wom
 
 function retailerAvailability(i,retailer){
  if(!retailer||retailer==="none")return{available:null,url:null,label:"No Preference"};
- const key=String(i.brand||"")+"|"+String(i.model||"");
- if(retailer==="direct"){
-   return{available:!!i.source,url:i.source||null,label:"Manufacturer / Direct"};
- }
- const registry=RETAILER_VERIFIED[retailer]||{};
- const url=registry[key]||null;
- const r=RETAILERS.find(x=>x.id===retailer);
- return{available:!!url,url:url,label:r?r.label:"Retailer"};
+ const label=(RETAILERS.find(x=>x.id===retailer)||{label:"Retailer"}).label;
+ const routes=ROUTES_BY_PRODUCT[i.id]||[];
+ const route=routes.find(r=>r.retailer_id===retailer&&r.route_url);
+ return{available:!!route,url:route?route.route_url:null,label:label,verified:route?route.last_verified:null};
 }
 
 function retailerRank(i){
@@ -162,7 +139,8 @@ function priceTarget(){
 }
 function priceFit(i){
  const p=num(i.pricePerIron);
- if(state.budget==="open")return p===null?72:82;
+ // Before Question 6 is answered, keep price neutral rather than requesting a missing target.
+ if(!state.budget||state.budget==="open")return p===null?72:82;
  if(p===null)return 45;
  const t=priceTarget();
  return clamp(closeness(p,t.target,t.full,t.zero));

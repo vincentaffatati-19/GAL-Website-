@@ -1,17 +1,11 @@
-# GAL Irons Buyers Guide v2.2
+# GAL Irons Buyers Guide v3.1 — Backbone Bridge
 
-Weighting:
-- Strike consistency: 35%
-- Price: 30%
-- Primary goal: 15%
-- Head/look preference: 10%
-- Flight need: 8%
-- Data confidence: 2%
+The Irons Buyers Guide UI and scoring remain v3.1.
 
-Price is scored continuously inside the buyer's chosen price band to differentiate similar models.
-The overall fit score is a weighted average rather than additive bonuses, preventing saturation at 100%.
+Data ownership changed in GAL-SITE-3.1.2:
+- `irons-buyers-guide__data.js` is generated from the private GAL Data Backbone.
+- `irons-buyers-guide__commerce.js` is generated from the GAL Commerce Router registry.
+- Retailer URLs must not be hardcoded into `irons-buyers-guide__app.js`.
+- Manufacturer product/source pages do not count as verified purchase paths unless the Commerce Router record explicitly permits publication.
 
-Fit tiers:
-- Best Fit: 85+
-- Worth a Look: 70–84
-- Stretch Fit: below 70
+The unanswered budget state is price-neutral until Question 6 is selected.

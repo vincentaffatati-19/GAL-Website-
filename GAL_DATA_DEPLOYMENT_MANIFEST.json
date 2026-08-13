@@ -1,0 +1,48 @@
+{
+  "website_version": "GAL-SITE-3.1.2",
+  "backbone_version": "GAL-DATA-BACKBONE-0.3.0",
+  "deployment_type": "flat-github-delta",
+  "file_count": 8,
+  "files": [
+    {
+      "file": "VERSION.txt",
+      "bytes": 881,
+      "sha256": "0c2553b1b1c9d9ab53ba941cfda40daa7c13050c4d772edc7902dce6d1d0f7e2"
+    },
+    {
+      "file": "cost-calculator__data.js",
+      "bytes": 103829,
+      "sha256": "ae9a6bdb5b24eb36d153cbb9b95b10506e1dee8f49496e1a7e1702cec88e3609"
+    },
+    {
+      "file": "golf-ball-guide__data.js",
+      "bytes": 86850,
+      "sha256": "f8f054d50da8ff0f3995f6f044f628b1f1fc3fa6e9b005504bc2a51be60ec0ef"
+    },
+    {
+      "file": "irons-buyers-guide.html",
+      "bytes": 8580,
+      "sha256": "d3831b1161622993e93056bbb003dcbb4f8d2e68d55dddfb953edae4eb2cea27"
+    },
+    {
+      "file": "irons-buyers-guide__README.md",
+      "bytes": 605,
+      "sha256": "d5c5b3b80cd52c81b864fda1931e0baa938010ece5dcb78527dca7ffb9c1e30b"
+    },
+    {
+      "file": "irons-buyers-guide__app.js",
+      "bytes": 25832,
+      "sha256": "fc16720151954df84cb2d980532fcca5b089d516932d4873e403c671640b40d7"
+    },
+    {
+      "file": "irons-buyers-guide__commerce.js",
+      "bytes": 2663,
+      "sha256": "3ab26bde011195d08ec0a7bf81ef4926f3a8eac2aaf1e6c6089978c754deacf7"
+    },
+    {
+      "file": "irons-buyers-guide__data.js",
+      "bytes": 114404,
+      "sha256": "79dae20b5cec4b264c2901532b509902117b14379bfdef7f513e5b0d540e4ff9"
+    }
+  ]
+}

@@ -1,23 +1,19 @@
 GOLF ANALYTICS LAB WEBSITE VERSION
 
-Version: GAL-SITE-3.1.0
-Release name: Irons Buyers Guide
-Release type: Minor Build a Better Bag episode/tool release
+Version: GAL-SITE-3.1.2
+Release name: Data Backbone Bridge
+Release type: Data integration patch
 Status: Review package
 
 Changes:
-- Added the GAL Irons Buyers Guide v2.2 as a native Build a Better Bag tool.
-- Added a dedicated Irons episode navigation and updated Irons overview page.
-- Added Irons to the Build a Better Bag series overview as the next active category.
-- Added a dedicated Irons section to the Tools Center.
-- Preserved the Golf Ball episode, Brand Laboratory, Cost Calculator, Buyers Guide links, and Team page upgrade.
-- Kept the global navigation compact so future episode tools are organized contextually instead of added to the permanent menu.
-- Embedded the supplied GAL Irons Database v1.6 dataset with 117 records.
-- Preserved Irons Buyers Guide v2.2 weighting: Strike 35%, Price 30%, Goal 15%, Look 10%, Flight 8%, Evidence 2%.
-- Scoped Irons Buyers Guide CSS and JavaScript to protect the host website GUI.
+- Switched Golf Ball Buyers Guide data to a GAL Data Backbone generated compatibility feed.
+- Switched Cost Calculator data to a GAL Data Backbone generated 116-product feed.
+- Switched Irons Buyers Guide data to a GAL Data Backbone generated 117-product feed.
+- Added a separate generated Irons Commerce Router feed with 7 currently verified purchase paths.
+- Removed hardcoded retailer URLs from Irons recommendation application code.
+- Stopped treating manufacturer source pages as automatically verified Buy Now routes.
+- Corrected the Irons Buyers Guide v3.1 unanswered-budget initialization defect.
 
-GitHub packaging:
-- Flat archive: all files at repository root.
-- Main Irons page: irons.html
-- Irons Buyers Guide: irons-buyers-guide.html
-- Tool assets: irons-buyers-guide__styles.css, irons-buyers-guide__data.js, irons-buyers-guide__app.js
+Deployment:
+- Flat GitHub Pages delta.
+- Upload files directly to repository root and replace matching files.
