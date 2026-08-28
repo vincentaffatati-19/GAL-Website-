@@ -1,0 +1,25 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Local tooling
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies/build output
+node_modules/
+dist/
+build/
+.next/
+.vercel/
+
+# Supabase local state
+.supabase/
+
+# Temporary/release artifacts
+*.zip
+*.tmp
+*.log
