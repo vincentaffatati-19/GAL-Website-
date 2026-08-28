@@ -1,0 +1,23 @@
+name: GAL Release Policy
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  require-release-branch:
+    name: Require release branch for production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate source branch
+        shell: bash
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          if [[ "$HEAD_REF" != release/* ]]; then
+            echo "Production pull requests must originate from a release/* branch."
+            echo "Received source branch: $HEAD_REF"
+            exit 1
+          fi
+          echo "Valid GAL production release branch: $HEAD_REF"
