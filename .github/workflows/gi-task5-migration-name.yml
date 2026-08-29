@@ -1,0 +1,25 @@
+name: GI Task 5 Migration Name
+
+on:
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - '.github/workflows/gi-task5-migration-name.yml'
+
+jobs:
+  generate-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: 2.116.0
+      - name: Generate Task 5 migration filename
+        shell: bash
+        run: |
+          supabase init --force
+          supabase migration new gi11_inferences
+          echo "GENERATED_MIGRATION=$(ls -1t supabase/migrations/*.sql | head -1 | xargs basename)"
