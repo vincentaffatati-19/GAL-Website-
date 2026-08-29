@@ -180,6 +180,22 @@ function ensureDomain(domains, domain) {
   return domains[domain];
 }
 
+function resolveDependencyStatus(input) {
+  const dependencies = input.dependencies && typeof input.dependencies === 'object'
+    ? input.dependencies
+    : null;
+  if (!dependencies) return {};
+
+  const dependencyStatus = {};
+  if (Object.prototype.hasOwnProperty.call(dependencies, 'bag')) {
+    dependencyStatus.bag = {
+      status: dependencies.bag ? 'AVAILABLE' : 'MISSING',
+    };
+  }
+
+  return dependencyStatus;
+}
+
 export function buildIntelligenceState(input = {}) {
   const facts = Array.isArray(input.facts) ? input.facts : [];
   const inferences = Array.isArray(input.inferences) ? input.inferences : [];
@@ -222,14 +238,16 @@ export function buildIntelligenceState(input = {}) {
     };
   }
 
-  const status = Object.values(domainStatus).some((domain) => domain.status === 'PARTIAL')
-    ? 'PARTIAL'
-    : 'HEALTHY';
+  const dependencyStatus = resolveDependencyStatus(input);
+  const hasPartialDomain = Object.values(domainStatus).some((domain) => domain.status === 'PARTIAL');
+  const hasMissingDependency = Object.values(dependencyStatus).some((dependency) => dependency.status === 'MISSING');
+  const status = hasPartialDomain || hasMissingDependency ? 'PARTIAL' : 'HEALTHY';
 
   return {
     stateSchemaVersion: STATE_SCHEMA_VERSION,
     status,
     domains,
     domainStatus,
+    ...(Object.keys(dependencyStatus).length > 0 ? { dependencyStatus } : {}),
   };
 }
