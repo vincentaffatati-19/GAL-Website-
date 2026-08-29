@@ -5,7 +5,7 @@
 
 create table public.gal_bag_scenarios (
   id uuid primary key default gen_random_uuid(),
-  scenario_id text unique not null default public.gal_public_id('GAL-SCN'),
+  scenario_id text unique not null default ('GAL-SCN-' || gen_random_uuid()::text),
   user_id uuid not null references public.gal_users(id) on delete cascade,
   bag_id uuid not null references public.gal_bags(id) on delete cascade,
   profile_snapshot_id uuid references public.gal_profile_snapshots(id) on delete set null,
@@ -32,7 +32,7 @@ create index gal_bag_scenarios_bag_idx
 
 create table public.gal_bag_scenario_items (
   id uuid primary key default gen_random_uuid(),
-  scenario_item_id text unique not null default public.gal_public_id('GAL-SCI'),
+  scenario_item_id text unique not null default ('GAL-SCI-' || gen_random_uuid()::text),
   scenario_id uuid not null,
   user_id uuid not null,
   action_type text not null check (action_type in ('ADD','REMOVE','REPLACE','RECONFIGURE')),
