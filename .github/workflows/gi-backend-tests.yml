@@ -15,8 +15,7 @@ on:
 
 jobs:
   database-tests:
-    name: Supabase migration replay + pgTAP
-    if: ${{ hashFiles('supabase/BASELINE_READY') != '' }}
+    name: Isolated Supabase baseline + pgTAP
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,11 +26,41 @@ jobs:
         with:
           version: 2.115.0
 
-      - name: Start local Supabase
+      - name: Initialize local Supabase config
+        shell: bash
+        run: |
+          supabase init --force
+          sed -i -E 's/^major_version = .*/major_version = 17/' supabase/config.toml
+          grep -n 'major_version' supabase/config.toml
+
+      - name: Start isolated local Supabase
         run: supabase start
 
-      - name: Verify full migration replay
-        run: supabase db reset
+      - name: Install PostgreSQL client
+        shell: bash
+        run: |
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version
+
+      - name: Apply sanitized production-core baseline
+        env:
+          LOCAL_DB_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: psql "$LOCAL_DB_URL" -v ON_ERROR_STOP=1 -f supabase/test-baseline/gal_core_current_shape.sql
+
+      - name: Apply forward GI migrations
+        env:
+          LOCAL_DB_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(supabase/migrations/*.sql)
+          for file in "${files[@]}"; do
+            echo "Applying $file"
+            psql "$LOCAL_DB_URL" -v ON_ERROR_STOP=1 -f "$file"
+          done
 
       - name: Run pgTAP database tests
         run: supabase test db
