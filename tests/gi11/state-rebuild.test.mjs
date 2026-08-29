@@ -4,6 +4,11 @@ import assert from 'node:assert/strict';
 import { rebuildIntelligenceState } from './state-rebuild.mjs';
 
 const USER_ID = '20510000-0000-0000-0000-000000000001';
+const GENERATION_A = '20530000-0000-4000-8000-000000000001';
+const GENERATION_B = '20530000-0000-4000-8000-000000000002';
+const GENERATION_C = '20530000-0000-4000-8000-000000000003';
+const GENERATION_D = '20530000-0000-4000-8000-000000000004';
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function baseSources() {
   return {
@@ -114,10 +119,10 @@ test('GI-STATE-001 rebuild resolves durable sources and persists only derived ca
     userId: USER_ID,
     sourceRepository,
     stateRepository,
-    generationIdFactory: () => 'GI-GEN-TEST-001',
+    generationIdFactory: () => GENERATION_A,
   });
 
-  assert.equal(result.stateGenerationId, 'GI-GEN-TEST-001');
+  assert.equal(result.stateGenerationId, GENERATION_A);
   assert.equal(result.state.stateSchemaVersion, 'GI-STATE-1.1');
   assert.equal(result.state.status, 'HEALTHY');
   assert.equal(result.state.domains.game.facts['game.handicap_index'].value, 10.9);
@@ -144,7 +149,7 @@ test('GI-STATE-002 missing active bag yields PARTIAL while resolved profile inte
     userId: USER_ID,
     sourceRepository,
     stateRepository,
-    generationIdFactory: () => 'GI-GEN-TEST-002',
+    generationIdFactory: () => GENERATION_B,
   });
 
   assert.equal(result.state.status, 'PARTIAL');
@@ -157,15 +162,16 @@ test('GI-STATE-003 each rebuild advances the generation id without changing sour
   const sources = baseSources();
   const before = structuredClone(sources);
   const { sourceRepository, stateRepository, persisted } = makeRepositories(sources);
+  const generationIds = [GENERATION_A, GENERATION_B];
   let sequence = 0;
 
-  const generationIdFactory = () => `GI-GEN-TEST-${++sequence}`;
+  const generationIdFactory = () => generationIds[sequence++];
 
   const first = await rebuildIntelligenceState({ userId: USER_ID, sourceRepository, stateRepository, generationIdFactory });
   const second = await rebuildIntelligenceState({ userId: USER_ID, sourceRepository, stateRepository, generationIdFactory });
 
   assert.notEqual(first.stateGenerationId, second.stateGenerationId);
-  assert.deepEqual(persisted.map((row) => row.stateGenerationId), ['GI-GEN-TEST-1', 'GI-GEN-TEST-2']);
+  assert.deepEqual(persisted.map((row) => row.stateGenerationId), generationIds);
   assert.deepEqual(sources, before);
 });
 
@@ -184,9 +190,23 @@ test('GI-STATE-004 invalidated behavior is excluded from cache event count and l
     userId: USER_ID,
     sourceRepository,
     stateRepository,
-    generationIdFactory: () => 'GI-GEN-TEST-004',
+    generationIdFactory: () => GENERATION_D,
   });
 
   assert.equal(result.eventCount, 2);
   assert.equal(result.latestSourceEventAt, '2026-08-28T15:00:00.000Z');
+});
+
+test('GI-STATE-005 default generation id is a database-compatible UUID', async () => {
+  const sources = baseSources();
+  const { sourceRepository, stateRepository } = makeRepositories(sources);
+
+  const result = await rebuildIntelligenceState({
+    userId: USER_ID,
+    sourceRepository,
+    stateRepository,
+  });
+
+  assert.match(result.stateGenerationId, UUID_RE);
+  assert.notEqual(result.stateGenerationId, GENERATION_C);
 });
