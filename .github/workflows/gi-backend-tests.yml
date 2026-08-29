@@ -34,8 +34,8 @@ jobs:
           sed -i -E 's/^major_version = .*/major_version = 17/' supabase/config.toml
           grep -n -E 'project_id|major_version' supabase/config.toml
 
-      - name: Start isolated local Supabase
-        run: supabase start --debug
+      - name: Start isolated local database
+        run: supabase db start --debug
 
       - name: Install PostgreSQL client
         shell: bash
