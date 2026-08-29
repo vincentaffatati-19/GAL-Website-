@@ -68,7 +68,7 @@ select lives_ok(
     select public.gal_persist_intelligence_state(
       '20510000-0000-0000-0000-000000000001'::uuid,
       '{
-        "stateGenerationId":"GI-GEN-205-A",
+        "stateGenerationId":"20530000-0000-4000-8000-000000000001",
         "status":"HEALTHY",
         "state":{"stateSchemaVersion":"GI-STATE-1.1","status":"HEALTHY","domains":{"game":{"facts":{"game.handicap_index":{"resolution":"RESOLVED","value":10.9,"valueState":"KNOWN"}}}}},
         "domainStatus":{"game":{"status":"HEALTHY","resolved":1,"inferred":0,"unknown":0,"conflicts":0}},
@@ -86,7 +86,7 @@ select is((select state_schema_version from public.gal_intelligence_state where 
   'GI-STATE-REBUILD-008 persisted row is explicitly GI-STATE-1.1');
 select is((select engine_version from public.gal_intelligence_state where user_id='20510000-0000-0000-0000-000000000001'::uuid),'GI-STATE-BUILDER-1.0',
   'GI-STATE-REBUILD-009 deterministic engine version is persisted');
-select is((select state_generation_id from public.gal_intelligence_state where user_id='20510000-0000-0000-0000-000000000001'::uuid),'GI-GEN-205-A',
+select is((select state_generation_id::text from public.gal_intelligence_state where user_id='20510000-0000-0000-0000-000000000001'::uuid),'20530000-0000-4000-8000-000000000001',
   'GI-STATE-REBUILD-010 generation id is persisted');
 select is((select status from public.gal_intelligence_state where user_id='20510000-0000-0000-0000-000000000001'::uuid),'HEALTHY',
   'GI-STATE-REBUILD-011 state health is persisted');
@@ -116,7 +116,7 @@ select lives_ok(
     select public.gal_persist_intelligence_state(
       '20510000-0000-0000-0000-000000000001'::uuid,
       '{
-        "stateGenerationId":"GI-GEN-205-B",
+        "stateGenerationId":"20530000-0000-4000-8000-000000000002",
         "status":"PARTIAL",
         "state":{"stateSchemaVersion":"GI-STATE-1.1","status":"PARTIAL","domains":{"game":{"facts":{"game.handicap_index":{"resolution":"RESOLVED","value":10.9,"valueState":"KNOWN"}}}},"dependencyStatus":{"bag":{"status":"MISSING"}}},
         "domainStatus":{"game":{"status":"HEALTHY","resolved":1,"inferred":0,"unknown":0,"conflicts":0}},
@@ -130,7 +130,7 @@ select lives_ok(
 
 select is((select count(*) from public.gal_intelligence_state where user_id='20510000-0000-0000-0000-000000000001'::uuid),1::bigint,
   'GI-STATE-REBUILD-019 rebuild replaces cache rather than appending competing current state');
-select is((select state_generation_id from public.gal_intelligence_state where user_id='20510000-0000-0000-0000-000000000001'::uuid),'GI-GEN-205-B',
+select is((select state_generation_id::text from public.gal_intelligence_state where user_id='20510000-0000-0000-0000-000000000001'::uuid),'20530000-0000-4000-8000-000000000002',
   'GI-STATE-REBUILD-020 subsequent rebuild advances generation id');
 select is((select status from public.gal_intelligence_state where user_id='20510000-0000-0000-0000-000000000001'::uuid),'PARTIAL',
   'GI-STATE-REBUILD-021 partial rebuild status can replace prior cache health');
