@@ -29,3 +29,7 @@ on public.gal_consent_records
 for insert
 to authenticated
 with check (user_id = public.gal_current_user_id());
+
+-- GI-SEC-003: remove the obsolete temporary import RPC from the exposed schema.
+-- Historical import secrets are intentionally not preserved in Git.
+drop function if exists public.gal_v64320_import(text, text, jsonb);
