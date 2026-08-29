@@ -1,0 +1,41 @@
+name: GI-1.1 Backend Tests
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - 'release/**'
+      - main
+    paths:
+      - 'supabase/**'
+      - 'docs/superpowers/specs/2026-08-28-golfer-intelligence-data-model-v1.1-design.md'
+      - 'docs/superpowers/plans/2026-08-29-gi-1.1-*.md'
+      - '.github/workflows/gi-backend-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  database-tests:
+    name: Supabase migration replay + pgTAP
+    if: ${{ hashFiles('supabase/BASELINE_READY') != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: 2.115.0
+
+      - name: Start local Supabase
+        run: supabase start
+
+      - name: Verify full migration replay
+        run: supabase db reset
+
+      - name: Run pgTAP database tests
+        run: supabase test db
+
+      - name: Stop local Supabase
+        if: always()
+        run: supabase stop --no-backup
