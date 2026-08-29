@@ -9,6 +9,41 @@ set local search_path = public, extensions, pg_catalog;
 
 select plan(27);
 
+-- Keep the final metadata assertion parser-safe while the columns are intentionally absent in RED.
+create or replace function pg_temp.gi11_consent_metadata_matches(p_consent_id text)
+returns boolean
+language plpgsql
+as $$
+declare
+  v_match boolean;
+begin
+  if not exists (
+    select 1 from information_schema.columns
+    where table_schema='public' and table_name='gal_consent_records' and column_name='interface'
+  ) or not exists (
+    select 1 from information_schema.columns
+    where table_schema='public' and table_name='gal_consent_records' and column_name='jurisdiction'
+  ) or not exists (
+    select 1 from information_schema.columns
+    where table_schema='public' and table_name='gal_consent_records' and column_name='metadata'
+  ) then
+    return false;
+  end if;
+
+  execute $sql$
+    select exists(
+      select 1 from public.gal_consent_records
+      where consent_id=$1
+        and interface='web'
+        and jurisdiction='US-SD'
+        and metadata @> '{"surface":"onboarding"}'::jsonb
+    )
+  $sql$ into v_match using p_consent_id;
+
+  return coalesce(v_match, false);
+end;
+$$;
+
 -- Additive metadata required by the approved GI-1.1 design.
 select has_column('public', 'gal_consent_records', 'interface', 'GI-CNS-001 consent interface metadata exists');
 select has_column('public', 'gal_consent_records', 'jurisdiction', 'GI-CNS-002 consent jurisdiction metadata exists');
@@ -174,13 +209,10 @@ select lives_ok($q$
   )
 $q$, 'GI-CNS-026 trusted path can record new GI-1.1 consent type');
 
-select ok(exists(
-  select 1 from public.gal_consent_records
-  where consent_id='GAL-CNS-TEST-PERSONALIZATION'
-    and interface='web'
-    and jurisdiction='US-SD'
-    and metadata @> '{"surface":"onboarding"}'::jsonb
-), 'GI-CNS-027 consent provenance metadata is preserved');
+select ok(
+  pg_temp.gi11_consent_metadata_matches('GAL-CNS-TEST-PERSONALIZATION'),
+  'GI-CNS-027 consent provenance metadata is preserved'
+);
 
 select * from finish();
 rollback;
