@@ -2,7 +2,7 @@
 -- Buyer events are append-only evidence. The only permitted mutation is adding
 -- invalidation metadata; original event semantics remain immutable.
 
-create or replace function private.gal_guard_buyer_event_invalidation_only()
+create or replace function gal_private.gal_guard_buyer_event_invalidation_only()
 returns trigger
 language plpgsql
 security invoker
@@ -76,12 +76,12 @@ begin
 end;
 $$;
 
-revoke execute on function private.gal_guard_buyer_event_invalidation_only() from public, anon, authenticated, service_role;
+revoke execute on function gal_private.gal_guard_buyer_event_invalidation_only() from public, anon, authenticated, service_role;
 
 drop trigger if exists gal_buyer_events_guard_invalidation_only on public.gal_buyer_events;
 create trigger gal_buyer_events_guard_invalidation_only
 before update on public.gal_buyer_events
-for each row execute function private.gal_guard_buyer_event_invalidation_only();
+for each row execute function gal_private.gal_guard_buyer_event_invalidation_only();
 
 create or replace function public.gal_invalidate_buyer_event(
   p_event_id text,
