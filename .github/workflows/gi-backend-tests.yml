@@ -30,8 +30,9 @@ jobs:
         shell: bash
         run: |
           supabase init --force
+          sed -i -E 's/^project_id = .*/project_id = "galgi11"/' supabase/config.toml
           sed -i -E 's/^major_version = .*/major_version = 17/' supabase/config.toml
-          grep -n 'major_version' supabase/config.toml
+          grep -n -E 'project_id|major_version' supabase/config.toml
 
       - name: Start isolated local Supabase
         run: supabase start --debug
