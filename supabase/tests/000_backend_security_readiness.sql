@@ -1,5 +1,4 @@
 -- GI-1.1 backend readiness regression tests.
--- These are intentionally RED against the current production-shaped baseline.
 -- Run only in local/development/staging test databases.
 
 begin;
@@ -7,7 +6,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path = public, extensions, pg_catalog;
 
-select plan(4);
+select plan(5);
 
 select ok(
   (
@@ -46,6 +45,11 @@ select ok(
     'DELETE'
   ),
   'GI-RLS-006 authenticated cannot delete consent history'
+);
+
+select ok(
+  to_regprocedure('public.gal_v64320_import(text,text,jsonb)') is null,
+  'GI-SEC-003 obsolete temporary import RPC is removed'
 );
 
 select * from finish();
