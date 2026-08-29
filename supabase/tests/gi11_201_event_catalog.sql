@@ -54,6 +54,26 @@ begin
 end;
 $$;
 
+create or replace function pg_temp.gi11_event_active_valid()
+returns boolean
+language plpgsql
+as $$
+declare v_ok boolean;
+begin
+  if not exists(
+    select 1 from information_schema.columns
+    where table_schema='public' and table_name='gal_event_catalog' and column_name='is_active'
+  ) then return false; end if;
+  execute $q$
+    select not exists(
+      select 1 from public.gal_event_catalog
+      where event_version='EVENT-1.0' and is_active is distinct from true
+    )
+  $q$ into v_ok;
+  return v_ok;
+end;
+$$;
+
 select has_column('public','gal_event_catalog','signal_class','GI-EVENT-CAT-001 signal class exists');
 select has_column('public','gal_event_catalog','profile_relevance','GI-EVENT-CAT-002 profile relevance exists');
 select has_column('public','gal_event_catalog','operational_class','GI-EVENT-CAT-003 operational class exists');
@@ -99,7 +119,7 @@ select ok(pg_temp.gi11_event_column_values_valid('commercial_class',array['PERSO
  'GI-EVENT-CAT-033 commercial classes use privacy-governed values');
 select ok(pg_temp.gi11_event_column_values_valid('retention_class',array['SHORT','STANDARD','LONG_TERM']),
  'GI-EVENT-CAT-034 retention classes use governed values');
-select ok(pg_temp.gi11_event_column_values_valid('is_active',array['true']),
+select ok(pg_temp.gi11_event_active_valid(),
  'GI-EVENT-CAT-035 all EVENT-1.0 seed definitions are active');
 
 select * from finish();
