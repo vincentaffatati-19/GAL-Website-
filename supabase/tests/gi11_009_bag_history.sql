@@ -7,7 +7,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path = public, extensions, pg_catalog;
 
-select plan(30);
+select plan(31);
 
 select has_column('public', 'gal_bags', 'bag_type', 'GI-BAG-001A bag type metadata exists');
 select has_column('public', 'gal_bags', 'archived_at', 'GI-BAG-001B bag archive timestamp exists');
