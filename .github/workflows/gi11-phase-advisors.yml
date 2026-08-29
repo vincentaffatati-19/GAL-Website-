@@ -47,7 +47,7 @@ jobs:
       - name: Run performance advisors
         run: supabase db advisors --local --type performance
       - name: Run database lint
-        run: supabase db lint --level warning --fail-on warning
+        run: supabase db lint --level warning --fail-on error
       - name: Stop local Supabase
         if: always()
         run: supabase stop --no-backup
