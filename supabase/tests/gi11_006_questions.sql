@@ -9,6 +9,49 @@ set local search_path = public, extensions, pg_catalog;
 
 select plan(44);
 
+-- Test helpers remain parser-safe while the response table is intentionally absent in RED.
+create or replace function pg_temp.gi11_response_matches(p_response_id text)
+returns boolean
+language plpgsql
+as $$
+declare
+  v_match boolean;
+begin
+  if to_regclass('public.gal_question_responses') is null then
+    return false;
+  end if;
+
+  execute $sql$
+    select exists(
+      select 1 from public.gal_question_responses r
+      where r.response_id = $1
+        and r.question_key = 'game.handicap_index'
+        and r.question_version = 'QUESTION-1.0'
+        and r.source_context = 'IRONS_GUIDE'
+        and r.session_id = 'SESSION-601'
+    )
+  $sql$ into v_match using p_response_id;
+
+  return coalesce(v_match, false);
+end;
+$$;
+
+create or replace function pg_temp.gi11_response_count()
+returns bigint
+language plpgsql
+as $$
+declare
+  v_count bigint;
+begin
+  if to_regclass('public.gal_question_responses') is null then
+    return -1;
+  end if;
+
+  execute 'select count(*)::bigint from public.gal_question_responses' into v_count;
+  return v_count;
+end;
+$$;
+
 -- Question Catalog structure added to the governance-level table.
 select has_column('public', 'gal_question_catalog', 'question_text', 'GI-Q-001 question text exists');
 select has_column('public', 'gal_question_catalog', 'response_type', 'GI-Q-002 response type exists');
@@ -79,19 +122,19 @@ select ok(exists(select 1 from public.gal_question_catalog where question_key='g
 select ok(exists(select 1 from public.gal_question_catalog where question_key='preference.value.price_sensitivity' and question_version='QUESTION-1.0' and status='ACTIVE'), 'GI-Q-033 price-sensitivity question seeded');
 
 select ok(exists(
-  select 1 from public.gal_question_catalog
-  where question_key='swing.driver.speed_mph'
-    and question_version='QUESTION-1.0'
-    and allow_unknown
-    and proxy_group='driver_speed_estimation'
-    and branching_rule @> '{"when_unknown":{"next_question_key":"swing.driver.carry_yards"}}'::jsonb
+  select 1 from public.gal_question_catalog q
+  where q.question_key='swing.driver.speed_mph'
+    and q.question_version='QUESTION-1.0'
+    and coalesce((to_jsonb(q)->>'allow_unknown')::boolean, false)
+    and to_jsonb(q)->>'proxy_group'='driver_speed_estimation'
+    and coalesce(to_jsonb(q)->'branching_rule', '{}'::jsonb) @> '{"when_unknown":{"next_question_key":"swing.driver.carry_yards"}}'::jsonb
 ), 'GI-Q-034 driver speed unknown declares approved carry proxy');
 
 select ok(exists(
-  select 1 from public.gal_question_catalog
-  where question_key='swing.driver.carry_yards'
-    and question_version='QUESTION-1.0'
-    and proxy_group='driver_speed_estimation'
+  select 1 from public.gal_question_catalog q
+  where q.question_key='swing.driver.carry_yards'
+    and q.question_version='QUESTION-1.0'
+    and to_jsonb(q)->>'proxy_group'='driver_speed_estimation'
 ), 'GI-Q-035 driver carry participates in driver-speed proxy group');
 
 select ok(exists(
@@ -157,22 +200,13 @@ select lives_ok($q$
   where q.question_key='game.handicap_index' and q.question_version='QUESTION-1.0'
 $q$, 'GI-Q-039 trusted system can append response evidence');
 
-select ok(coalesce((
-  select exists(
-    select 1 from public.gal_question_responses r
-    where r.response_id='GAL-QR-TEST-601'
-      and r.question_key='game.handicap_index'
-      and r.question_version='QUESTION-1.0'
-      and r.source_context='IRONS_GUIDE'
-      and r.session_id='SESSION-601'
-  )
-), false), 'GI-Q-040 exact question version and source context are preserved');
+select ok(pg_temp.gi11_response_matches('GAL-QR-TEST-601'), 'GI-Q-040 exact question version and source context are preserved');
 
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000e5","role":"authenticated"}', true);
 
 select results_eq(
-  $$select count(*)::bigint from public.gal_question_responses$$,
+  $$select pg_temp.gi11_response_count()$$,
   $$values (1::bigint)$$,
   'GI-Q-041 Golfer A reads own response history'
 );
@@ -180,7 +214,7 @@ select results_eq(
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000f6","role":"authenticated"}', true);
 
 select results_eq(
-  $$select count(*)::bigint from public.gal_question_responses$$,
+  $$select pg_temp.gi11_response_count()$$,
   $$values (0::bigint)$$,
   'GI-Q-042 Golfer B cannot read Golfer A response history'
 );
