@@ -6,7 +6,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path = public, extensions, pg_catalog;
 
-select plan(25);
+select plan(23);
 
 create or replace function pg_temp.gi11_fk_exists(p_column text, p_ref_table text)
 returns boolean
