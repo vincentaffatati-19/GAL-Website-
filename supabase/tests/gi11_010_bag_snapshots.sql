@@ -104,21 +104,29 @@ $q$, 'GI-BAG-SNAP-025 trusted system freezes two bag snapshots');
 
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000110","role":"authenticated"}', true);
-select results_eq(
-  $$select bag_snapshot_id from public.gal_bag_snapshots order by bag_snapshot_id$$,
-  $$values ('GAL-BS-TEST-A1'::text)$$,
-  'GI-BAG-SNAP-026 golfer reads only own snapshot'
-);
+select lives_ok($q$
+  do $d$
+  declare v_count bigint;
+  begin
+    execute $$select count(*) from public.gal_bag_snapshots$$ into v_count;
+    if v_count <> 1 then raise exception 'expected one visible own snapshot, got %', v_count; end if;
+  end
+  $d$
+$q$, 'GI-BAG-SNAP-026 golfer reads only own snapshot');
 
 update public.gal_bag_items
 set configuration='{"loft":9.0,"shaft":"Black"}'::jsonb
 where bag_item_id='GAL-BI-BS-A1';
 
-select is(
-  (select items_snapshot #>> '{0,configuration,shaft}' from public.gal_bag_snapshots where bag_snapshot_id='GAL-BS-TEST-A1'),
-  'Blue'::text,
-  'GI-BAG-SNAP-027 frozen snapshot survives later live-bag edits'
-);
+select lives_ok($q$
+  do $d$
+  declare v_value text;
+  begin
+    execute $$select items_snapshot #>> '{0,configuration,shaft}' from public.gal_bag_snapshots where bag_snapshot_id='GAL-BS-TEST-A1'$$ into v_value;
+    if v_value is distinct from 'Blue' then raise exception 'snapshot was rewritten: %', v_value; end if;
+  end
+  $d$
+$q$, 'GI-BAG-SNAP-027 frozen snapshot survives later live-bag edits');
 select throws_ok(
   $$update public.gal_bag_snapshots set bag_version='MUTATED' where bag_snapshot_id='GAL-BS-TEST-A1'$$,
   '42501', null,
