@@ -1,0 +1,49 @@
+name: GI-1.1 Foundation Advisors
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  advisors:
+    runs-on: ubuntu-24.04
+    env:
+      SUPABASE_INTERNAL_IMAGE_REGISTRY: ghcr.io
+      LOCAL_DB_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.116.0
+      - name: Initialize local Supabase and stage migrations
+        shell: bash
+        run: |
+          supabase init --force
+          sed -i -E 's/^project_id = .*/project_id = "galgi11advisors"/' supabase/config.toml
+          sed -i -E 's/^major_version = .*/major_version = 17/' supabase/config.toml
+          mkdir -p /tmp/gi11-forward-migrations
+          shopt -s nullglob
+          files=(supabase/migrations/*.sql)
+          if (( ${#files[@]} )); then mv "${files[@]}" /tmp/gi11-forward-migrations/; fi
+      - name: Start isolated database
+        run: supabase db start
+      - name: Apply sanitized baseline and forward migrations
+        shell: bash
+        run: |
+          psql "$LOCAL_DB_URL" -v ON_ERROR_STOP=1 -f supabase/test-baseline/gal_core_current_shape.sql
+          psql "$LOCAL_DB_URL" -v ON_ERROR_STOP=1 -f supabase/test-baseline/gal_legacy_current_shape.sql
+          shopt -s nullglob
+          files=(/tmp/gi11-forward-migrations/*.sql)
+          for file in "${files[@]}"; do psql "$LOCAL_DB_URL" -v ON_ERROR_STOP=1 -f "$file"; done
+      - name: Run database advisors
+        run: |
+          echo '=== SECURITY ADVISORS ==='
+          supabase db advisors --local --type security || true
+          echo '=== PERFORMANCE ADVISORS ==='
+          supabase db advisors --local --type performance || true
+      - name: Stop local Supabase
+        if: always()
+        run: supabase stop --no-backup
