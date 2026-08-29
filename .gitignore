@@ -18,6 +18,8 @@ build/
 
 # Supabase local state
 .supabase/
+supabase/.temp/
+supabase/.branches/
 
 # Temporary/release artifacts
 *.zip
