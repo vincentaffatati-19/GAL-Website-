@@ -8,6 +8,26 @@ set local search_path = public, extensions, pg_catalog;
 
 select plan(20);
 
+create or replace function pg_temp.gi11_state_legacy_field_is_null(p_column text)
+returns boolean
+language plpgsql
+as $$
+declare
+  v_exists boolean;
+  v_ok boolean;
+begin
+  select exists(
+    select 1 from information_schema.columns
+    where table_schema='public' and table_name='gal_intelligence_state' and column_name=p_column
+  ) into v_exists;
+  if not v_exists then return false; end if;
+  execute format(
+    'select %I is null from public.gal_intelligence_state where user_id=$1', p_column
+  ) into v_ok using '33000000-0000-0000-0000-000000000001'::uuid;
+  return coalesce(v_ok,false);
+end;
+$$;
+
 select has_column('public','gal_intelligence_state','state_schema_version','GI-STATE-STRUCT-001 state schema version exists');
 select has_column('public','gal_intelligence_state','state_generation_id','GI-STATE-STRUCT-002 state generation id exists');
 select has_column('public','gal_intelligence_state','status','GI-STATE-STRUCT-003 state status exists');
@@ -63,9 +83,9 @@ values ('33000000-0000-0000-0000-000000000001','32000000-0000-0000-0000-00000000
 insert into public.gal_intelligence_state (user_id,engine_version,state,event_count)
 values ('33000000-0000-0000-0000-000000000001','LEGACY-ENGINE','{}',0);
 
-select ok((select state_schema_version is null from public.gal_intelligence_state where user_id='33000000-0000-0000-0000-000000000001'),
+select ok(pg_temp.gi11_state_legacy_field_is_null('state_schema_version'),
  'GI-STATE-STRUCT-019 legacy state remains unversioned until rebuilt');
-select ok((select state_generation_id is null from public.gal_intelligence_state where user_id='33000000-0000-0000-0000-000000000001'),
+select ok(pg_temp.gi11_state_legacy_field_is_null('state_generation_id'),
  'GI-STATE-STRUCT-020 legacy state has no fabricated generation id');
 
 select * from finish();
