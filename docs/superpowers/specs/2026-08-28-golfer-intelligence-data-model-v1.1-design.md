@@ -798,6 +798,8 @@ Consent types should evolve beyond the existing baseline toward:
 
 Consent records are version-specific and retain source/interface/jurisdiction where appropriate.
 
+**Physical-policy requirement:** the live baseline currently allows authenticated golfers `ALL` operations on their own `gal_consent_records` rows. GI-1.1 must tighten this so consent history is not arbitrarily mutable. Normal golfer access should be limited to reading own consent history and appending a new consent/withdrawal decision through a governed path. Normal user `UPDATE` and `DELETE` of prior consent records must be denied. Legal/privacy administration may use a separate controlled privileged workflow where required.
+
 ## 8.5 Consent lineage
 
 Derived intelligence inherits restrictions from the underlying evidence. Transformation does not erase upstream consent/provider restrictions.
@@ -1089,6 +1091,7 @@ The live Supabase schema was inspected during design. The core public tables hav
 - `gal_profile_facts` and `gal_buyer_events` contained zero rows at inspection, providing a favorable window to govern fact/event semantics before longitudinal production data accumulates.
 - `gal_catalog_products` contains the cross-category canonical product layer.
 - `gal_intelligence_state` is already user-read/system-write by policy.
+- `gal_consent_records` currently has a broad authenticated self-`ALL` policy; this is intentionally tightened by GI-1.1 to match the append-only consent-history contract in Section 8.
 
 No production schema mutation was performed during design.
 
@@ -1155,7 +1158,7 @@ Add state schema version, generation ID, status, latest-source timestamp, and do
 
 ### `gal_consent_records`
 
-Extend consent categories/metadata additively; do not destructively rename existing enum values in GI-1.1.
+Extend consent categories/metadata additively; do not destructively rename existing enum values in GI-1.1. Replace the current broad authenticated self-`ALL` policy with explicit policies that support reading one’s own consent history and appending new governed consent/withdrawal records while denying normal authenticated `UPDATE` and `DELETE` of prior rows.
 
 ## 11.4 ADD — Foundational
 
@@ -1230,11 +1233,13 @@ Examples: inferences, recommendation runs/items, bag scores, Intelligence State,
 
 Examples: fact history, question responses, buyer events, consent history.
 
+For consent specifically, “append-only” means prior consent rows are immutable to normal golfer clients; a new withdrawal/decision is represented by a new row rather than mutation of the historical grant/decline row.
+
 ### Class D — System/reference
 
 Examples: Fact Catalog, Question Catalog, Event Catalog, Model Registry, External Source Catalog.
 
-Ownership policies use `TO authenticated` plus `user_id = gal_current_user_id()` (or equivalently governed parent ownership), with explicit `USING` and `WITH CHECK` for updates.
+Ownership policies use `TO authenticated` plus `user_id = gal_current_user_id()` (or equivalently governed parent ownership), with explicit `USING` and `WITH CHECK` for updates where updates are permitted.
 
 Where direct `user_id` denormalization on a private child table materially simplifies secure/indexable RLS, it is acceptable.
 
@@ -1247,7 +1252,7 @@ B. Profile provenance/history
 C. Jerry’s Bag intelligence  
 D. Recommendation audit chain  
 E. Longitudinal intelligence  
-F. Consent + connected services  
+F. Consent + connected services, including consent-policy tightening  
 G. Seed + contract validation  
 H. Deprecation preparation/documentation
 
@@ -1326,6 +1331,7 @@ Fairway Woods & Hybrids is a standing explicit regression gate because of prior 
 - `GI-RLS-003` History update denied
 - `GI-RLS-004` Intelligence-state write denied
 - `GI-RLS-005` Customer raw golfer access denied
+- `GI-RLS-006` Prior consent update/delete denied
 
 ### Questions
 
@@ -1429,6 +1435,10 @@ Synthetic current handicap response normalizes through provider adapter into can
 
 A simulated customer role cannot read raw profile facts, events, Intelligence State, recommendation runs, or individual bag data. Small cohorts fail the commercial privacy gate.
 
+### Consent immutability
+
+A golfer can record a new consent or withdrawal decision through the governed path and read their own consent history. A normal authenticated client cannot rewrite or delete an earlier consent record.
+
 ## 12.6 Guide integration strategy
 
 Migrate guides individually after the intelligence foundation is stable. Existing deterministic scoring should be preserved unless an intentional versioned model change is part of the release.
@@ -1513,13 +1523,14 @@ The following rules are normative across all sections.
 23. AI receives minimum necessary purpose-specific user context.
 24. Existing core tables are extended additively rather than replaced by parallel equivalents.
 25. New public/exposed tables require explicit RLS, grants, policies, indexes, and access tests.
-26. Development/preview environments do not contain unsanitized production golfer data.
-27. Migrations live in Git; production is a promotion target, not a design environment.
-28. Release candidates are immutable and map to one exact source commit.
-29. All Buyer’s Guides must pass before production promotion.
-30. Fairway Woods & Hybrids receives explicit regression verification before every release candidate.
-31. Shared golfer/customer data contracts are updated and verified across both experiences when affected.
-32. No GI-1.1 implementation work begins until this written spec is finally reviewed and approved, after which a separate detailed implementation plan is required.
+26. Consent history is append-only to normal golfer clients; withdrawal is a new historical record, not mutation of an earlier consent row.
+27. Development/preview environments do not contain unsanitized production golfer data.
+28. Migrations live in Git; production is a promotion target, not a design environment.
+29. Release candidates are immutable and map to one exact source commit.
+30. All Buyer’s Guides must pass before production promotion.
+31. Fairway Woods & Hybrids receives explicit regression verification before every release candidate.
+32. Shared golfer/customer data contracts are updated and verified across both experiences when affected.
+33. No GI-1.1 implementation work begins until this written spec is finally reviewed and approved, after which a separate detailed implementation plan is required.
 
 ---
 
@@ -1559,6 +1570,7 @@ Resolved/confirmed:
 - connected-app imported data is both provenance-rich and constrained by golfer consent + provider terms.
 - price/value can influence golfer recommendations, but affiliate payout cannot.
 - production models/history are immutable while current state may be recomputed under newer versions.
+- live consent policy mismatch identified during self-review is resolved normatively: GI-1.1 must replace broad self-`ALL` consent access with append-only consent history semantics for normal golfer clients.
 
 ## Scope check
 
@@ -1577,6 +1589,7 @@ The following design choices are explicit:
 - AI explanation and deterministic ranking are separate layers.
 - Customer systems never receive direct raw golfer-table access.
 - Provider credentials do not live in normal application-readable tables.
+- Consent history is immutable to normal golfer clients; new decisions are appended.
 - GI-1.1 is additive; destructive cleanup is deferred to later expand-and-contract phases.
 
 No contradiction remains that should block implementation planning.
