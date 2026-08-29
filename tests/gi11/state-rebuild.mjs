@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { buildIntelligenceState } from './intelligence-state-builder.mjs';
 
 const ENGINE_VERSION = 'GI-STATE-BUILDER-1.0';
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function numberOrNull(value) {
   if (value === null || value === undefined || value === '') return null;
@@ -71,7 +72,7 @@ function latestEventWatermark(events) {
 }
 
 function defaultGenerationIdFactory() {
-  return `GI-GEN-${randomUUID()}`;
+  return randomUUID();
 }
 
 function requireRepositoryMethod(repository, methodName) {
@@ -118,8 +119,8 @@ export async function rebuildIntelligenceState({
 
   const events = validBuyerEvents(sources.buyerEvents);
   const stateGenerationId = generationIdFactory();
-  if (typeof stateGenerationId !== 'string' || stateGenerationId.trim() === '') {
-    throw new TypeError('generationIdFactory must return a non-empty string');
+  if (typeof stateGenerationId !== 'string' || !UUID_RE.test(stateGenerationId)) {
+    throw new TypeError('generationIdFactory must return a UUID string');
   }
 
   const latestSourceEventAt = latestEventWatermark(events);
