@@ -1,37 +1,20 @@
--- GI-1.1 Longitudinal Intelligence Task 4 — RED contract
--- Rebuildable current intelligence cache with explicit version/generation/health metadata.
+-- GI-1.1 Longitudinal Intelligence Task 4 — compatibility contract
+-- Complements gi11_204_state_structure.sql without relabeling legacy/unrebuilt rows.
 
 begin;
 create extension if not exists pgtap;
-select plan(20);
+select plan(14);
 
-select has_column('public', 'gal_intelligence_state', 'state_schema_version', 'GI-STATE-001 state_schema_version exists');
-select has_column('public', 'gal_intelligence_state', 'state_generation_id', 'GI-STATE-002 state_generation_id exists');
-select has_column('public', 'gal_intelligence_state', 'status', 'GI-STATE-003 status exists');
-select has_column('public', 'gal_intelligence_state', 'latest_source_event_at', 'GI-STATE-004 latest_source_event_at exists');
-select has_column('public', 'gal_intelligence_state', 'domain_status', 'GI-STATE-005 domain_status exists');
+select has_column('public', 'gal_intelligence_state', 'state_schema_version', 'GI-STATE-COMPAT-001 state_schema_version exists');
+select has_column('public', 'gal_intelligence_state', 'state_generation_id', 'GI-STATE-COMPAT-002 state_generation_id exists');
+select has_column('public', 'gal_intelligence_state', 'status', 'GI-STATE-COMPAT-003 status exists');
+select has_column('public', 'gal_intelligence_state', 'latest_source_event_at', 'GI-STATE-COMPAT-004 latest_source_event_at exists');
+select has_column('public', 'gal_intelligence_state', 'domain_status', 'GI-STATE-COMPAT-005 domain_status exists');
 
-select col_not_null('public', 'gal_intelligence_state', 'state_schema_version', 'GI-STATE-006 schema version is required');
-select col_not_null('public', 'gal_intelligence_state', 'state_generation_id', 'GI-STATE-007 generation id is required');
-select col_not_null('public', 'gal_intelligence_state', 'status', 'GI-STATE-008 status is required');
-select col_not_null('public', 'gal_intelligence_state', 'domain_status', 'GI-STATE-009 domain status is required');
-
-select ok(
-  not has_table_privilege('authenticated', 'public.gal_intelligence_state', 'INSERT'),
-  'GI-STATE-010 authenticated cannot insert intelligence state'
-);
-select ok(
-  not has_table_privilege('authenticated', 'public.gal_intelligence_state', 'UPDATE'),
-  'GI-STATE-011 authenticated cannot update intelligence state'
-);
-select ok(
-  has_table_privilege('service_role', 'public.gal_intelligence_state', 'INSERT'),
-  'GI-STATE-012 service role may insert intelligence state'
-);
-select ok(
-  has_table_privilege('service_role', 'public.gal_intelligence_state', 'UPDATE'),
-  'GI-STATE-013 service role may update intelligence state'
-);
+select ok(not has_table_privilege('authenticated', 'public.gal_intelligence_state', 'INSERT'), 'GI-STATE-COMPAT-006 golfer cannot insert derived state');
+select ok(not has_table_privilege('authenticated', 'public.gal_intelligence_state', 'UPDATE'), 'GI-STATE-COMPAT-007 golfer cannot update derived state');
+select ok(has_table_privilege('service_role', 'public.gal_intelligence_state', 'INSERT'), 'GI-STATE-COMPAT-008 service role may insert derived state');
+select ok(has_table_privilege('service_role', 'public.gal_intelligence_state', 'UPDATE'), 'GI-STATE-COMPAT-009 service role may update derived state');
 
 insert into auth.users (id, email)
 values
@@ -51,67 +34,44 @@ insert into public.gal_intelligence_state (
   event_count,
   latest_event_at,
   state_schema_version,
+  state_generation_id,
   status,
   latest_source_event_at,
   domain_status
 ) values (
   '10000000-0000-0000-0000-000000020401',
-  'ENGINE-1.0',
-  '{"profile":{"confidence":0.91}}'::jsonb,
+  'GI-STATE-BUILDER-1.0',
+  '{"stateSchemaVersion":"GI-STATE-1.1","profile":{"confidence":0.91}}'::jsonb,
   12,
   '2026-08-29T20:00:00Z',
-  'STATE-1.0',
-  'READY',
+  'GI-STATE-1.1',
+  '24000000-0000-0000-0000-000000020401',
+  'HEALTHY',
   '2026-08-29T20:05:00Z',
-  '{"profile":"READY","bag":"READY","behavior":"STALE"}'::jsonb
+  '{"profile":"HEALTHY","bag":"HEALTHY","behavior":"STALE"}'::jsonb
 );
 reset role;
 
-select ok(
-  (select state_generation_id is not null from public.gal_intelligence_state where user_id = '10000000-0000-0000-0000-000000020401'),
-  'GI-STATE-014 service write receives a generation id'
-);
-select is(
-  (select state_schema_version from public.gal_intelligence_state where user_id = '10000000-0000-0000-0000-000000020401'),
-  'STATE-1.0',
-  'GI-STATE-015 schema version is preserved'
-);
-select is(
-  (select status from public.gal_intelligence_state where user_id = '10000000-0000-0000-0000-000000020401'),
-  'READY',
-  'GI-STATE-016 health status is preserved'
-);
-select is(
-  (select domain_status->>'behavior' from public.gal_intelligence_state where user_id = '10000000-0000-0000-0000-000000020401'),
-  'STALE',
-  'GI-STATE-017 domain health metadata is preserved'
-);
+select is((select state_schema_version from public.gal_intelligence_state where user_id='10000000-0000-0000-0000-000000020401'), 'GI-STATE-1.1', 'GI-STATE-COMPAT-010 rebuilt row records state schema version');
+select is((select status from public.gal_intelligence_state where user_id='10000000-0000-0000-0000-000000020401'), 'HEALTHY', 'GI-STATE-COMPAT-011 governed health status is preserved');
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000020401', true);
-select is(
-  (select count(*)::bigint from public.gal_intelligence_state),
-  1::bigint,
-  'GI-STATE-018 golfer reads own intelligence state'
-);
-
+select is((select count(*)::bigint from public.gal_intelligence_state), 1::bigint, 'GI-STATE-COMPAT-012 golfer reads own intelligence state');
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000020402', true);
-select is(
-  (select count(*)::bigint from public.gal_intelligence_state),
-  0::bigint,
-  'GI-STATE-019 golfer cannot read another golfer intelligence state'
-);
+select is((select count(*)::bigint from public.gal_intelligence_state), 0::bigint, 'GI-STATE-COMPAT-013 golfer cannot read another golfer intelligence state');
 reset role;
 
 select throws_ok(
   $$insert into public.gal_intelligence_state (
-      user_id, engine_version, state_schema_version, status, domain_status
+      user_id, engine_version, state_schema_version, state_generation_id, status, domain_status
     ) values (
-      '10000000-0000-0000-0000-000000020402', 'ENGINE-1.0', 'STATE-1.0', 'NOT_A_STATUS', '{}'::jsonb
+      '10000000-0000-0000-0000-000000020402', 'GI-STATE-BUILDER-1.0', 'GI-STATE-1.1',
+      '24000000-0000-0000-0000-000000020402', 'NOT_A_STATUS', '{}'::jsonb
     )$$,
   '23514',
   null,
-  'GI-STATE-020 status vocabulary is database constrained'
+  'GI-STATE-COMPAT-014 status vocabulary is database constrained'
 );
 
 select * from finish();
