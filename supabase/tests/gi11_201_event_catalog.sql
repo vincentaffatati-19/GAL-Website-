@@ -8,6 +8,52 @@ set local search_path = public, extensions, pg_catalog;
 
 select plan(35);
 
+create or replace function pg_temp.gi11_event_column_values_valid(p_column text, p_allowed text[])
+returns boolean
+language plpgsql
+as $$
+declare
+  v_exists boolean;
+  v_invalid integer;
+begin
+  select exists(
+    select 1 from information_schema.columns
+    where table_schema='public' and table_name='gal_event_catalog' and column_name=p_column
+  ) into v_exists;
+  if not v_exists then return false; end if;
+  execute format(
+    'select count(*)::integer from public.gal_event_catalog where event_version=''EVENT-1.0'' and %I is not null and not (%I = any($1))',
+    p_column, p_column
+  ) into v_invalid using p_allowed;
+  return v_invalid = 0;
+end;
+$$;
+
+create or replace function pg_temp.gi11_event_rows_complete()
+returns boolean
+language plpgsql
+as $$
+declare v_ok boolean;
+begin
+  if not exists(
+    select 1 from information_schema.columns
+    where table_schema='public' and table_name='gal_event_catalog'
+      and column_name in ('signal_class','profile_relevance','operational_class','commercial_class','retention_class','is_active')
+    group by table_schema, table_name having count(*)=6
+  ) then return false; end if;
+  execute $q$
+    select not exists(
+      select 1 from public.gal_event_catalog
+      where event_version='EVENT-1.0'
+        and (domain is null or object_type is null or action is null or description is null or status <> 'ACTIVE'
+             or signal_class is null or profile_relevance is null or operational_class is null
+             or commercial_class is null or retention_class is null or is_active is distinct from true)
+    )
+  $q$ into v_ok;
+  return v_ok;
+end;
+$$;
+
 select has_column('public','gal_event_catalog','signal_class','GI-EVENT-CAT-001 signal class exists');
 select has_column('public','gal_event_catalog','profile_relevance','GI-EVENT-CAT-002 profile relevance exists');
 select has_column('public','gal_event_catalog','operational_class','GI-EVENT-CAT-003 operational class exists');
@@ -42,46 +88,19 @@ select ok(exists(select 1 from public.gal_event_catalog where event_key='purchas
 select ok(exists(select 1 from public.gal_event_catalog where event_key='equipment.adopted' and event_version='EVENT-1.0'),'GI-EVENT-CAT-027 equipment.adopted exists');
 select ok(exists(select 1 from public.gal_event_catalog where event_key='recommendation.feedback.submitted' and event_version='EVENT-1.0'),'GI-EVENT-CAT-028 recommendation.feedback.submitted exists');
 
-select ok(not exists(
-  select 1 from public.gal_event_catalog
-  where event_version='EVENT-1.0'
-    and (domain is null or object_type is null or action is null or description is null or status <> 'ACTIVE')
-), 'GI-EVENT-CAT-029 every EVENT-1.0 row has governed semantic metadata');
-
-select ok(not exists(
-  select 1 from public.gal_event_catalog
-  where event_version='EVENT-1.0'
-    and signal_class not in ('NAVIGATION','ENGAGEMENT','INTENT','COMMITMENT','OUTCOME')
-), 'GI-EVENT-CAT-030 signal classes use governed values');
-
-select ok(not exists(
-  select 1 from public.gal_event_catalog
-  where event_version='EVENT-1.0'
-    and profile_relevance not in ('NONE','LOW','MEDIUM','HIGH')
-), 'GI-EVENT-CAT-031 profile relevance uses governed values');
-
-select ok(not exists(
-  select 1 from public.gal_event_catalog
-  where event_version='EVENT-1.0'
-    and operational_class not in ('SERVICE_OPERATION','PERSONALIZATION','PRODUCT_ANALYTICS')
-), 'GI-EVENT-CAT-032 operational classes use governed values');
-
-select ok(not exists(
-  select 1 from public.gal_event_catalog
-  where event_version='EVENT-1.0'
-    and commercial_class not in ('PERSONAL_ONLY','AGGREGATE_ELIGIBLE','RESTRICTED_AGGREGATE','EXCLUDED')
-), 'GI-EVENT-CAT-033 commercial classes use privacy-governed values');
-
-select ok(not exists(
-  select 1 from public.gal_event_catalog
-  where event_version='EVENT-1.0'
-    and retention_class not in ('SHORT','STANDARD','LONG_TERM')
-), 'GI-EVENT-CAT-034 retention classes use governed values');
-
-select ok(not exists(
-  select 1 from public.gal_event_catalog
-  where event_version='EVENT-1.0' and is_active is distinct from true
-), 'GI-EVENT-CAT-035 all EVENT-1.0 seed definitions are active');
+select ok(pg_temp.gi11_event_rows_complete(),'GI-EVENT-CAT-029 every EVENT-1.0 row has governed semantic metadata');
+select ok(pg_temp.gi11_event_column_values_valid('signal_class',array['NAVIGATION','ENGAGEMENT','INTENT','COMMITMENT','OUTCOME']),
+ 'GI-EVENT-CAT-030 signal classes use governed values');
+select ok(pg_temp.gi11_event_column_values_valid('profile_relevance',array['NONE','LOW','MEDIUM','HIGH']),
+ 'GI-EVENT-CAT-031 profile relevance uses governed values');
+select ok(pg_temp.gi11_event_column_values_valid('operational_class',array['SERVICE_OPERATION','PERSONALIZATION','PRODUCT_ANALYTICS']),
+ 'GI-EVENT-CAT-032 operational classes use governed values');
+select ok(pg_temp.gi11_event_column_values_valid('commercial_class',array['PERSONAL_ONLY','AGGREGATE_ELIGIBLE','RESTRICTED_AGGREGATE','EXCLUDED']),
+ 'GI-EVENT-CAT-033 commercial classes use privacy-governed values');
+select ok(pg_temp.gi11_event_column_values_valid('retention_class',array['SHORT','STANDARD','LONG_TERM']),
+ 'GI-EVENT-CAT-034 retention classes use governed values');
+select ok(pg_temp.gi11_event_column_values_valid('is_active',array['true']),
+ 'GI-EVENT-CAT-035 all EVENT-1.0 seed definitions are active');
 
 select * from finish();
 rollback;
