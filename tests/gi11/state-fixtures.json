@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "GI-STATE-1.1",
+  "scenarios": [
+    {
+      "id": "verified-import-over-older-declaration",
+      "input": {
+        "factRules": {
+          "game.handicap_index": {
+            "domain": "game",
+            "conflictTolerance": 0.5
+          }
+        },
+        "facts": [
+          {
+            "factKey": "game.handicap_index",
+            "value": 12.4,
+            "valueState": "KNOWN",
+            "sourceType": "DECLARED",
+            "sourceLabel": "golfer_declared",
+            "confidence": 0.85,
+            "userConfirmed": false,
+            "verified": false,
+            "effectiveAt": "2026-02-01T12:00:00Z"
+          },
+          {
+            "factKey": "game.handicap_index",
+            "value": 10.9,
+            "valueState": "KNOWN",
+            "sourceType": "IMPORTED",
+            "sourceLabel": "verified_handicap_import",
+            "confidence": 0.99,
+            "userConfirmed": false,
+            "verified": true,
+            "effectiveAt": "2026-08-20T12:00:00Z"
+          }
+        ],
+        "inferences": [],
+        "expectedFacts": ["game.handicap_index"]
+      },
+      "expected": {
+        "status": "HEALTHY",
+        "factKey": "game.handicap_index",
+        "domain": "game",
+        "resolution": "RESOLVED",
+        "value": 10.9,
+        "valueState": "KNOWN",
+        "sourceType": "IMPORTED",
+        "sourceLabel": "verified_handicap_import",
+        "confidence": 0.99
+      }
+    },
+    {
+      "id": "material-conflict-no-clear-authority",
+      "input": {
+        "factRules": {
+          "game.handicap_index": {
+            "domain": "game",
+            "conflictTolerance": 0.5
+          }
+        },
+        "facts": [
+          {
+            "factKey": "game.handicap_index",
+            "value": 10.2,
+            "valueState": "KNOWN",
+            "sourceType": "DECLARED",
+            "sourceLabel": "golfer_declared_web",
+            "confidence": 0.88,
+            "userConfirmed": false,
+            "verified": false,
+            "effectiveAt": "2026-08-10T12:00:00Z"
+          },
+          {
+            "factKey": "game.handicap_index",
+            "value": 14.8,
+            "valueState": "KNOWN",
+            "sourceType": "DECLARED",
+            "sourceLabel": "golfer_declared_guide",
+            "confidence": 0.86,
+            "userConfirmed": false,
+            "verified": false,
+            "effectiveAt": "2026-08-12T12:00:00Z"
+          }
+        ],
+        "inferences": [],
+        "expectedFacts": ["game.handicap_index"]
+      },
+      "expected": {
+        "status": "PARTIAL",
+        "factKey": "game.handicap_index",
+        "domain": "game",
+        "resolution": "CONFLICT",
+        "value": null,
+        "valueState": "UNKNOWN",
+        "conflictCount": 2
+      }
+    },
+    {
+      "id": "inferred-driver-speed-range",
+      "input": {
+        "factRules": {
+          "swing.driver.speed_mph": {
+            "domain": "swing",
+            "conflictTolerance": 2
+          }
+        },
+        "facts": [],
+        "inferences": [
+          {
+            "factKey": "swing.driver.speed_mph",
+            "value": {
+              "min": 90,
+              "max": 96,
+              "unit": "mph"
+            },
+            "valueState": "INFERRED_ONLY",
+            "sourceType": "INFERRED",
+            "sourceLabel": "driver_speed_proxy",
+            "confidence": 0.82,
+            "userConfirmed": false,
+            "verified": false,
+            "modelVersion": "MODEL-1.0",
+            "effectiveAt": "2026-08-25T12:00:00Z"
+          }
+        ],
+        "expectedFacts": ["swing.driver.speed_mph"]
+      },
+      "expected": {
+        "status": "HEALTHY",
+        "factKey": "swing.driver.speed_mph",
+        "domain": "swing",
+        "resolution": "INFERRED",
+        "value": {
+          "min": 90,
+          "max": 96,
+          "unit": "mph"
+        },
+        "valueState": "INFERRED_ONLY",
+        "sourceType": "INFERRED",
+        "sourceLabel": "driver_speed_proxy",
+        "confidence": 0.82,
+        "modelVersion": "MODEL-1.0"
+      }
+    },
+    {
+      "id": "missing-wedge-carry-remains-unknown",
+      "input": {
+        "factRules": {
+          "swing.wedge.carry_yards": {
+            "domain": "swing",
+            "conflictTolerance": 3
+          }
+        },
+        "facts": [],
+        "inferences": [],
+        "expectedFacts": ["swing.wedge.carry_yards"]
+      },
+      "expected": {
+        "status": "HEALTHY",
+        "factKey": "swing.wedge.carry_yards",
+        "domain": "swing",
+        "resolution": "MISSING",
+        "value": null,
+        "valueState": "UNKNOWN",
+        "sourceType": null,
+        "sourceLabel": null,
+        "confidence": null
+      }
+    }
+  ]
+}
