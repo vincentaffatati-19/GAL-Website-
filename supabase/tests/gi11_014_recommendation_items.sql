@@ -7,7 +7,42 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path = public, extensions, pg_catalog;
 
-select plan(38);
+select plan(39);
+
+create or replace function pg_temp.gi11_component_reconciles()
+returns boolean
+language plpgsql
+as $$
+declare
+  v_components numeric;
+  v_fit numeric;
+begin
+  if to_regclass('public.gal_fit_score_components') is null
+     or to_regclass('public.gal_recommendation_items') is null then
+    return false;
+  end if;
+  execute 'select round(sum(weighted_score)::numeric,2) from public.gal_fit_score_components where recommendation_item_id=$1'
+    into v_components using '60000000-0000-0000-0000-000000000114'::uuid;
+  execute 'select round(fit_score::numeric,2) from public.gal_recommendation_items where id=$1'
+    into v_fit using '60000000-0000-0000-0000-000000000114'::uuid;
+  return v_components is not distinct from v_fit;
+end;
+$$;
+
+create or replace function pg_temp.gi11_visible_count(p_table text)
+returns integer
+language plpgsql
+as $$
+declare
+  v_count integer;
+begin
+  if to_regclass('public.' || quote_ident(p_table)) is null then
+    return -1;
+  end if;
+  execute format('select count(*)::integer from public.%I', p_table) into v_count;
+  return v_count;
+end;
+$$;
 
 select has_table('public','gal_recommendation_items','GI-REC-ITEM-001 recommendation items table exists');
 select has_column('public','gal_recommendation_items','recommendation_item_id','GI-REC-ITEM-002 stable public item id exists');
@@ -103,11 +138,8 @@ select lives_ok($q$
  ('60000000-0000-0000-0000-000000000114','10000000-0000-0000-0000-000000000114','forgiveness_fit',84,84,0.50,42.0,'{"source":"deterministic"}','FIT-1.0')
 $q$, 'GI-REC-001 deterministic Fit Score components are persisted');
 
-select is(
- (select round(sum(weighted_score)::numeric,2) from public.gal_fit_score_components where recommendation_item_id='60000000-0000-0000-0000-000000000114'),
- (select round(fit_score::numeric,2) from public.gal_recommendation_items where id='60000000-0000-0000-0000-000000000114'),
- 'GI-REC-002 component weighted scores reconcile to stored Fit Score'
-);
+select ok(pg_temp.gi11_component_reconciles(),
+ 'GI-REC-002 component weighted scores reconcile to stored Fit Score');
 
 select throws_ok($q$
  insert into public.gal_recommendation_items(recommendation_run_id,user_id,result_type,eligibility_status,fit_score,confidence)
@@ -116,8 +148,8 @@ $q$, '23514', null, 'GI-REC-006 Fit Score is bounded at 100');
 
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"00000000-0000-0000-0000-000000000114","role":"authenticated"}',true);
-select is((select count(*)::integer from public.gal_recommendation_items),3,'GI-REC-ITEM-021 golfer reads own complete shortlist evidence');
-select is((select count(*)::integer from public.gal_fit_score_components),2,'GI-REC-COMP-013 golfer reads own component evidence');
+select is(pg_temp.gi11_visible_count('gal_recommendation_items'),3,'GI-REC-ITEM-021 golfer reads own complete shortlist evidence');
+select is(pg_temp.gi11_visible_count('gal_fit_score_components'),2,'GI-REC-COMP-013 golfer reads own component evidence');
 
 reset role;
 select * from finish();
