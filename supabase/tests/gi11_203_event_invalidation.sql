@@ -10,11 +10,11 @@ select plan(14);
 
 select has_function('public','gal_invalidate_buyer_event',array['text','text'],'GI-EVT-INV-001 invalidation function exists');
 
-select ok(not has_function_privilege('anon','public.gal_invalidate_buyer_event(text,text)','EXECUTE'),
+select ok(coalesce(not has_function_privilege('anon',to_regprocedure('public.gal_invalidate_buyer_event(text,text)'),'EXECUTE'),true),
  'GI-EVT-INV-002 anon cannot invalidate events');
-select ok(not has_function_privilege('authenticated','public.gal_invalidate_buyer_event(text,text)','EXECUTE'),
+select ok(coalesce(not has_function_privilege('authenticated',to_regprocedure('public.gal_invalidate_buyer_event(text,text)'),'EXECUTE'),true),
  'GI-EVT-INV-003 normal golfer cannot invalidate events directly');
-select ok(has_function_privilege('service_role','public.gal_invalidate_buyer_event(text,text)','EXECUTE'),
+select ok(coalesce(has_function_privilege('service_role',to_regprocedure('public.gal_invalidate_buyer_event(text,text)'),'EXECUTE'),false),
  'GI-EVT-INV-004 trusted service may invalidate events');
 
 with au as (
