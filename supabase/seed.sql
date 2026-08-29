@@ -1,0 +1,3 @@
+-- GAL GI-1.1 development/test seed entrypoint.
+-- Synthetic data only. Never copy production golfer data into development or preview environments.
+-- Add deterministic fixture inserts here only after the remote schema baseline is imported.
