@@ -16,8 +16,14 @@ select has_column('public','gal_buyer_events','signal_class','GI-BUYER-EVT-005 s
 select has_column('public','gal_buyer_events','invalidated_at','GI-BUYER-EVT-006 invalidated_at exists');
 select has_column('public','gal_buyer_events','invalidation_reason','GI-BUYER-EVT-007 invalidation_reason exists');
 
-select col_is_not_null('public','gal_buyer_events','event_version','GI-BUYER-EVT-008 event_version is required for governed events');
-select col_is_not_null('public','gal_buyer_events','signal_class','GI-BUYER-EVT-009 signal_class is required');
+select ok(exists(
+  select 1 from information_schema.columns
+  where table_schema='public' and table_name='gal_buyer_events' and column_name='event_version' and is_nullable='NO'
+), 'GI-BUYER-EVT-008 event_version is required for governed events');
+select ok(exists(
+  select 1 from information_schema.columns
+  where table_schema='public' and table_name='gal_buyer_events' and column_name='signal_class' and is_nullable='NO'
+), 'GI-BUYER-EVT-009 signal_class is required');
 
 select ok(exists(
   select 1
