@@ -118,14 +118,24 @@ select is((select configuration->>'shaft' from public.gal_bag_items where bag_it
   'GI-BAG-004 scenario editing does not mutate the live bag');
 
 set local role service_role;
-insert into public.gal_bag_scenarios (id,scenario_id,user_id,bag_id,name,status,context,fit_model_version,bag_optimization_version,equipment_data_version)
-values ('40000000-0000-0000-0000-000000000211','GAL-SCN-TEST-B','10000000-0000-0000-0000-000000000211','20000000-0000-0000-0000-000000000211','Other golfer','OPEN','{}','FIT-1','BAG-1','EQ-1');
+do $d$
+begin
+  begin
+    execute $sql$
+      insert into public.gal_bag_scenarios (id,scenario_id,user_id,bag_id,name,status,context,fit_model_version,bag_optimization_version,equipment_data_version)
+      values ('40000000-0000-0000-0000-000000000211','GAL-SCN-TEST-B','10000000-0000-0000-0000-000000000211','20000000-0000-0000-0000-000000000211','Other golfer','OPEN','{}','FIT-1','BAG-1','EQ-1')
+    $sql$;
+  exception when undefined_table then
+    null;
+  end;
+end
+$d$;
 
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"00000000-0000-0000-0000-000000000111","role":"authenticated"}',true);
 select lives_ok($q$
  do $d$ declare v_count bigint; begin
-   select count(*) into v_count from public.gal_bag_scenarios;
+   execute 'select count(*) from public.gal_bag_scenarios' into v_count;
    if v_count <> 1 then raise exception 'expected only own scenario, got %',v_count; end if;
  end $d$
 $q$, 'GI-BAG-SCN-031 cross-user scenario is invisible');
@@ -135,8 +145,12 @@ select lives_ok($q$
   select gal_private.gal_adopt_bag_scenario('40000000-0000-0000-0000-000000000111'::uuid,'BAG-1.1')
 $q$, 'GI-BAG-005 trusted adoption transaction succeeds');
 
-select is((select status from public.gal_bag_scenarios where scenario_id='GAL-SCN-TEST-A'),'ADOPTED'::text,
-  'GI-BAG-SCN-033 adopted scenario is closed as ADOPTED');
+select lives_ok($q$
+ do $d$ declare v_status text; begin
+   execute $$select status from public.gal_bag_scenarios where scenario_id='GAL-SCN-TEST-A'$$ into v_status;
+   if v_status is distinct from 'ADOPTED' then raise exception 'expected ADOPTED, got %',v_status; end if;
+ end $d$
+$q$, 'GI-BAG-SCN-033 adopted scenario is closed as ADOPTED');
 select is((select configuration->>'shaft' from public.gal_bag_items where bag_item_id='GAL-BI-SCN-DRIVER'),'Black'::text,
   'GI-BAG-SCN-034 adoption updates the real bag only after explicit adoption');
 
