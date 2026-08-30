@@ -4,6 +4,14 @@ with u as (select id from public.gal_users limit 1)
 insert into public.gal_insights(user_id,insight_domain,insight_code,subject_type,subject_key,scope_key,status,severity,confidence,materiality_score,headline,golfer_message,governance_version)
 select id,'bag_composition','task11_verify','bag_zone','top_of_bag','active_bag','ACKNOWLEDGED','HIGH',0.9,0.9,'Test','Test','task11-test' from u;
 
+insert into public.gal_insight_delivery_state(insight_id,user_id,status,presentation_count,last_presented_at,last_surface)
+select id,user_id,'ACTED',1,'2026-08-29T17:55:00-06','portal'
+from public.gal_insights where insight_code='task11_verify';
+
+insert into public.gal_insight_exposures(insight_id,user_id,surface,status,presentation_count,last_presented_at)
+select id,user_id,'portal','ACTED',1,'2026-08-29T17:55:00-06'
+from public.gal_insights where insight_code='task11_verify';
+
 insert into public.gal_insight_responses(insight_id,exposure_id,user_id,response_type,surface,source_system,source_event_key,occurred_at)
 select i.id,e.id,i.user_id,'ACTED','portal','portal_ui','t11-response','2026-08-29T18:00:00-06'
 from public.gal_insights i
