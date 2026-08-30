@@ -1,0 +1,3 @@
+create index gal_insight_resolution_events_rule_idx on public.gal_insight_resolution_events(resolution_rule_id) where resolution_rule_id is not null;
+create index gal_insight_resolution_state_outcome_idx on public.gal_insight_resolution_state(qualifying_outcome_id) where qualifying_outcome_id is not null;
+create index gal_insight_resolution_state_rule_idx on public.gal_insight_resolution_state(resolution_rule_id) where resolution_rule_id is not null;
