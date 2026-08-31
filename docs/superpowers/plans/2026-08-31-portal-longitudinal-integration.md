@@ -1,763 +1,263 @@
-# GAL Authenticated Portal Longitudinal Integration Implementation Plan
+# My GAL Equipment Intelligence — Phase 1 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the first authenticated GAL portal release at `/portal/`, showing each golfer only their governed longitudinal insights and sending all longitudinal mutations through narrow Supabase Edge Functions.
+**Goal:** Build the first authenticated **My GAL — Your Equipment Intelligence Center** release at `/portal/`, helping a golfer immediately understand what GAL knows about their equipment, what deserves attention, why it matters, what to do next, and what has changed over time.
 
-**Architecture:** Preserve the existing flat public website. Add a Vite + TypeScript single-page application under `portal/` that uses Supabase Auth and RLS-protected browser reads with the publishable key only. Implement one shared authenticated mutation Edge Function with an internal action router that exposes only named portal actions and calls the existing service-only longitudinal RPCs; keep the service-role key only in the Edge Function runtime. Registered-user and subscriber experiences share the same components and data contract, with an entitlement resolver controlling additive subscriber UI.
+**Architecture:** Preserve the existing flat public site. Add a Vite + TypeScript SPA at `/portal/` using Supabase Auth and golfer-safe RLS reads. The customer-facing architecture is `Today -> My Bag -> Insights -> Guides -> Progress`; Today is the default Equipment Brief, while the governed longitudinal engine remains underneath the experience. All longitudinal mutations pass through a narrow authenticated Supabase Edge Function and service-role credentials remain server-only.
 
 **Tech Stack:** Vite, TypeScript, `@supabase/supabase-js`, Vitest, Testing Library DOM, Playwright, Supabase Edge Functions/Deno, existing PostgreSQL/RLS/RPC contract.
 
-**Spec:** `docs/superpowers/specs/2026-08-31-portal-longitudinal-integration-design.md`
+**Specs:**
+- `docs/superpowers/specs/2026-08-31-portal-longitudinal-integration-design.md`
+- `docs/superpowers/specs/2026-08-31-my-gal-equipment-intelligence-product-design.md`
 
 ## Global Constraints
 
-- Preserve the existing public flat-file website; do not migrate the public site to a framework.
-- Portal route is `/portal/`.
-- Browser receives only `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`.
-- `SUPABASE_SERVICE_ROLE_KEY` must never be included in browser code, built assets, or committed configuration.
-- Golfer-safe reads rely on production RLS and `gal_current_user_id()`; JavaScript filtering is presentation-only.
-- Longitudinal mutations must use narrow Supabase Edge Function actions; never add a generic table/RPC proxy.
-- Server authorization must derive the golfer from the authenticated Supabase access token and must ignore/reject browser-supplied `user_id` authority.
-- Registered-user and subscriber portal states use the same components and contracts.
-- Subscriber behavior uses staging/test entitlements until a production billing/entitlement source is explicitly integrated.
-- Staging verification is mandatory before production release.
-- Do not copy production golfer data into development or staging unless explicitly anonymized/sanitized.
-- Keep GAL branding on the locked Option 7 system: Navy `#0B245F`, Orange `#FF5A1F`, white/light gray, current header/footer treatment.
-- Existing Supabase leaked-password-protection warning remains a separate launch blocker until the plan tier supports it.
+- Product name: **My GAL**; descriptor: **Your Equipment Intelligence Center**.
+- Product loop: `My Bag -> What GAL sees -> What matters -> What I should do -> What happened afterward`.
+- Primary navigation: **Today, My Bag, Insights, Guides, Progress**; Today is default.
+- Do not present the product as a generic customer portal/dashboard in golfer-facing copy.
+- Never fabricate Bag Health, dollar savings, fit labels, confidence, recommendations, or other intelligence when governed evidence is absent.
+- Preserve the public flat-file website; portal route remains `/portal/`.
+- Browser receives only public Supabase configuration and authenticated session state.
+- Service-role credentials must never appear in browser code, built assets, or committed configuration.
+- Golfer-safe reads rely on RLS; JavaScript filtering is presentation-only.
+- Mutations use an allowlisted Supabase Edge Function; no generic table/RPC proxy.
+- Server derives golfer identity from the authenticated access token; client `user_id` is never authority.
+- Registered and subscriber experiences use the same components/contracts; subscriber features are additive only.
+- Production subscriber behavior remains base-only until an authoritative entitlement source is integrated; staging fixtures may exercise subscriber UI.
+- Staging verification is mandatory before production release; no production golfer data is copied to staging unless sanitized/anonymized.
+- Locked GAL brand: Option 7, Navy `#0B245F`, Orange `#FF5A1F`, white/light gray, current header/footer treatment.
+- Existing leaked-password-protection warning remains a separate registered-golfer launch blocker until the Supabase plan supports it.
 
 ---
 
 ## File Structure
 
-Create a focused portal package rather than adding authenticated logic to root static pages.
-
 ```text
 portal/
-  index.html                         # SPA entry document, GAL shell mount point
-  package.json                       # portal-only build/test dependencies and scripts
+  index.html
+  package.json
   tsconfig.json
-  vite.config.ts                     # base: /portal/
+  vite.config.ts
   src/
-    main.ts                          # app bootstrap only
-    config.ts                        # validated public Supabase runtime config
-    supabase.ts                      # browser Supabase client singleton
-    auth.ts                          # session load, auth-state observer, sign-in/out helpers
-    types.ts                         # normalized golfer-safe portal domain types
+    main.ts                       # bootstrap/router orchestration only
+    config.ts                     # public Supabase config validation
+    supabase.ts                   # browser client singleton
+    auth.ts                       # session/sign-in/sign-out helpers
+    router.ts                     # Today/My Bag/Insights/Guides/Progress routes
+    types.ts                      # golfer-safe product models
     data/
-      insights.ts                    # RLS-protected read queries + presentation model assembly
-      entitlements.ts                # shared base/subscriber entitlement resolver
+      insights.ts                 # RLS insight/delivery/resolution reads
+      bag.ts                      # golfer-safe bag summary reads when available
+      progress.ts                 # evidence-backed longitudinal timeline assembly
+      entitlements.ts             # registered/subscriber capability resolver
     api/
-      insightActions.ts              # typed client wrapper for Edge Function actions
+      insightActions.ts           # typed Edge Function client
     ui/
-      appShell.ts                    # authenticated/unauthenticated shell renderer
-      insightFeed.ts                 # feed renderer and sorting
-      insightDetail.ts               # detail renderer
-      insightActions.ts              # acknowledge/dismiss/snooze/action controls
-      status.ts                      # lifecycle/resolution labels and accessibility text
-      states.ts                      # loading/empty/error/session-expired views
-    styles/
-      portal.css                     # GAL-branded responsive portal styles
+      appShell.ts                 # My GAL shell/navigation/session state
+      today.ts                    # Equipment Brief composition
+      bag.ts                      # My Bag summary + honest incomplete state
+      insightFeed.ts              # prioritized insight list
+      insightDetail.ts            # explanation/history/action detail
+      guides.ts                   # authenticated guide entry/personalization-ready shell
+      progress.ts                 # evidence-backed optimization history
+      insightActions.ts           # response controls
+      status.ts                   # backend -> golfer-language state translation
+      states.ts                   # loading/empty/error/session states
+    styles/portal.css
     __tests__/
+      config.test.ts
       auth.test.ts
+      router.test.ts
       insights.test.ts
       entitlements.test.ts
+      productLanguage.test.ts
       insightActions.test.ts
       ui.test.ts
-  e2e/
-    portal.spec.ts                   # browser staging acceptance scenarios
+  e2e/portal.spec.ts
   playwright.config.ts
 
 supabase/functions/portal-insight-action/
-  index.ts                           # HTTP/auth boundary + action dispatch only
-  auth.ts                            # access-token -> auth user -> active gal_users resolver
-  actions.ts                         # allowlisted action handlers
-  errors.ts                          # safe error normalization
-  types.ts                           # request/response action contracts
-  index.test.ts                      # Deno tests for auth/action routing
+  index.ts
+  auth.ts
+  actions.ts
+  errors.ts
+  types.ts
+  index.test.ts
 
-supabase/tests/
-  portal_rls_acceptance.sql          # two-user RLS and direct-RPC denial test
-
-docs/data/longitudinal/
-  portal-staging-acceptance.md       # executable release checklist and expected evidence
-
-index.html and selected public pages # add only a portal/sign-in entry link after portal staging passes
+supabase/tests/portal_rls_acceptance.sql
+docs/data/longitudinal/portal-staging-acceptance.md
 ```
 
 ---
 
-### Task 1: Portal Build Skeleton and Public Runtime Configuration
-
-**Files:**
-- Create: `portal/package.json`
-- Create: `portal/tsconfig.json`
-- Create: `portal/vite.config.ts`
-- Create: `portal/index.html`
-- Create: `portal/src/config.ts`
-- Create: `portal/src/main.ts`
-- Create: `portal/src/styles/portal.css`
-- Test: `portal/src/__tests__/config.test.ts`
+### Task 1: My GAL Build Skeleton, Branding, and Product Router
 
-**Interfaces:**
-- Produces: `getPortalConfig(): { supabaseUrl: string; supabasePublishableKey: string }`
-- Produces: Vite build output rooted at `/portal/`.
-
-- [ ] **Step 1: Write the failing runtime-config tests**
-
-```ts
-import { describe, expect, it, vi } from 'vitest';
-import { getPortalConfig } from '../config';
-
-describe('getPortalConfig', () => {
-  it('returns only public Supabase settings', () => {
-    vi.stubEnv('VITE_SUPABASE_URL', 'https://example.supabase.co');
-    vi.stubEnv('VITE_SUPABASE_PUBLISHABLE_KEY', 'publishable');
-    expect(getPortalConfig()).toEqual({
-      supabaseUrl: 'https://example.supabase.co',
-      supabasePublishableKey: 'publishable',
-    });
-  });
+**Files:** Create `portal/package.json`, `portal/tsconfig.json`, `portal/vite.config.ts`, `portal/index.html`, `portal/src/config.ts`, `portal/src/router.ts`, `portal/src/main.ts`, `portal/src/styles/portal.css`; test `portal/src/__tests__/config.test.ts`, `portal/src/__tests__/router.test.ts`.
 
-  it('fails closed when configuration is missing', () => {
-    vi.stubEnv('VITE_SUPABASE_URL', '');
-    vi.stubEnv('VITE_SUPABASE_PUBLISHABLE_KEY', '');
-    expect(() => getPortalConfig()).toThrow('Portal Supabase configuration is incomplete');
-  });
-});
-```
+**Produces:** `getPortalConfig()`, route union `'today' | 'bag' | 'insights' | 'guides' | 'progress'`, Today default, `/portal/` build.
 
-- [ ] **Step 2: Run the test and verify failure**
+- [ ] Write failing tests proving missing public Supabase config fails closed, `/portal/` resolves to Today, and each primary navigation destination resolves deterministically.
+- [ ] Run `cd portal && npm test -- --run src/__tests__/config.test.ts src/__tests__/router.test.ts`; expect failure because modules do not exist.
+- [ ] Create Vite/TypeScript/Vitest/Playwright package; set Vite `base: '/portal/'`; implement config using only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`.
+- [ ] Implement router with exactly Today, My Bag, Insights, Guides, Progress and Today as fallback/default.
+- [ ] Add shell CSS variables for GAL Navy/Orange and responsive primitives; do not add a numeric Bag Health placeholder.
+- [ ] Run tests and `npm run build`; inspect built assets for `service_role` and `SUPABASE_SERVICE_ROLE_KEY`; expected zero secret exposure.
+- [ ] Commit: `feat(my-gal): scaffold equipment intelligence experience`.
 
-Run: `cd portal && npm test -- --run src/__tests__/config.test.ts`
+### Task 2: Supabase Browser Client and Authentication
 
-Expected: FAIL because `../config` does not exist.
+**Files:** Create `portal/src/supabase.ts`, `portal/src/auth.ts`; modify `portal/src/main.ts`; test `portal/src/__tests__/auth.test.ts`.
 
-- [ ] **Step 3: Add the portal package and minimal config implementation**
+**Produces:** singleton public client; `getCurrentSession`, `signInWithPassword`, `signOut`, `subscribeToAuth`.
 
-`portal/package.json` must include scripts:
+- [ ] Write failing mocked-client tests for session load, sign-in, sign-out, auth subscription cleanup, and absence of any `user_id` argument.
+- [ ] Run auth tests; expect missing implementation failure.
+- [ ] Implement singleton client with persisted/auto-refreshed Supabase Auth session using public config only.
+- [ ] Implement auth helpers; browser must not map auth user to `gal_users` for authorization.
+- [ ] Run auth tests; expect PASS.
+- [ ] Commit: `feat(my-gal): add authenticated session state`.
 
-```json
-{
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "test": "vitest",
-    "test:run": "vitest run",
-    "e2e": "playwright test"
-  }
-}
-```
+### Task 3: Golfer-Safe Equipment Intelligence Read Model
 
-Use dependencies `@supabase/supabase-js` and dev dependencies `vite`, `typescript`, `vitest`, `@testing-library/dom`, `jsdom`, `@playwright/test`.
+**Files:** Create `portal/src/types.ts`, `portal/src/data/insights.ts`, `portal/src/data/bag.ts`, `portal/src/data/progress.ts`; test `portal/src/__tests__/insights.test.ts`.
 
-`portal/src/config.ts`:
+**Produces:** `PortalInsight`, `BagSummary`, `ProgressEvent`, `loadPortalInsights()`, `loadBagSummary()`, `loadProgressHistory()`.
 
-```ts
-export type PortalConfig = {
-  supabaseUrl: string;
-  supabasePublishableKey: string;
-};
+- [ ] Write failing tests asserting browser queries only golfer-safe relations and never signals, exposure events, learning tables, governance actors, resolution rules/events, or contributors.
+- [ ] Define `PortalInsight` with ID/domain/code/headline/message/severity/backend status/delivery status/resolution status/updated timestamp; define bag/progress models with nullable/unknown states rather than inferred fit claims.
+- [ ] Implement insight read using RLS with no client user-id filter; merge delivery/resolution state by insight ID.
+- [ ] Implement bag summary only from currently available golfer-safe bag data; when data is unavailable return an explicit incomplete/empty state, never `Good fit` by inference.
+- [ ] Implement progress history from evidence-backed response/outcome/resolution timestamps only; do not calculate dollar savings.
+- [ ] Sort actionable material insights first, then severity and recency.
+- [ ] Run tests; expect PASS.
+- [ ] Commit: `feat(my-gal): add golfer-safe equipment intelligence model`.
 
-export function getPortalConfig(): PortalConfig {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim();
-  const supabasePublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY?.trim();
-  if (!supabaseUrl || !supabasePublishableKey) {
-    throw new Error('Portal Supabase configuration is incomplete');
-  }
-  return { supabaseUrl, supabasePublishableKey };
-}
-```
+### Task 4: Golfer-Language Translation and Subscriber Entitlements
 
-Set `base: '/portal/'` in `vite.config.ts`.
+**Files:** Create `portal/src/ui/status.ts`, `portal/src/data/entitlements.ts`; test `portal/src/__tests__/productLanguage.test.ts`, `portal/src/__tests__/entitlements.test.ts`.
 
-- [ ] **Step 4: Add initial GAL shell HTML/CSS**
+**Produces:** `toGolferStatus(insightStatus, resolutionStatus)` and `resolveEntitlements(claims)`.
 
-`portal/index.html` must contain a single `#app` mount, GAL logo alt text, viewport meta, and no inline secrets. `portal.css` should define brand CSS variables using the locked values and responsive shell primitives only; no feature-specific styling yet.
+- [ ] Write failing tests for mappings: ACTIVE→Needs Attention; ACKNOWLEDGED→Watching; RESOLVED→Solved; REGRESSED→Came Back; EVIDENCE_PENDING→Checking Progress; INEFFECTIVE→Still Needs Attention.
+- [ ] Add negative copy tests proving primary UI does not render `ACTIVE`, `ACKNOWLEDGED`, `REGRESSED`, `EVIDENCE_PENDING`, `SUPPRESSED`, or `EXPIRED` as unexplained golfer-facing labels.
+- [ ] Write entitlement tests: malformed/unknown claims default REGISTERED; staging `gal_portal_tier='SUBSCRIBER'` enables only additive presentation capabilities.
+- [ ] Implement translations and entitlement resolver; entitlements must never affect RLS ownership.
+- [ ] Run tests; expect PASS.
+- [ ] Commit: `feat(my-gal): add golfer language and shared entitlements`.
 
-- [ ] **Step 5: Run config tests and production build**
+### Task 5: Edge Function Authentication and Safe Contract
 
-Run:
+**Files:** Create `supabase/functions/portal-insight-action/{types.ts,errors.ts,auth.ts,index.test.ts}`.
 
-```bash
-cd portal
-npm test -- --run src/__tests__/config.test.ts
-npm run build
-```
+**Produces:** authenticated actor resolution and allowlisted payload union for `present`, `acknowledge`, `dismiss`, `snooze`, `act`.
 
-Expected: tests PASS and Vite emits a `/portal/` build without service-role strings.
+- [ ] Write failing Deno tests: missing/invalid Authorization→401; active mapped user resolves; client `user_id` rejected.
+- [ ] Run Deno tests; expect failure.
+- [ ] Implement bearer-token validation using caller-scoped Supabase client, then server-side active `gal_users` lookup using service client.
+- [ ] Normalize external errors to `UNAUTHENTICATED`, `ACCOUNT_NOT_READY`, `NOT_FOUND`, `NOT_ALLOWED`, `STALE_ACTION`, `TEMPORARY_FAILURE`.
+- [ ] Run tests; expect PASS.
+- [ ] Commit: `feat(my-gal-api): add authenticated action boundary`.
 
-- [ ] **Step 6: Commit**
+### Task 6: Allowlisted Insight Mutation Handlers
 
-```bash
-git add portal
- git commit -m "feat(portal): scaffold authenticated portal build"
-```
+**Files:** Create `supabase/functions/portal-insight-action/actions.ts`, `index.ts`; modify `index.test.ts`.
 
----
+**Produces:** server-derived ownership check and exact mapping to `gal_record_insight_presentation` / `gal_record_insight_response`.
 
-### Task 2: Supabase Browser Client and Authentication State
+- [ ] Add failing tests for five allowed actions plus rejection of `outcome`, `resolve`, `regress`, `publish_learning`, `promote`, arbitrary `rpc`, wrong owner, malformed snooze, client user ID.
+- [ ] Run tests; expect failure.
+- [ ] Verify target insight belongs to server-derived GAL user without revealing other-user existence.
+- [ ] Map present→presentation RPC; acknowledge/dismiss/snooze/act→response RPC; set `source_system='gal_portal'`; generate source event keys server-side.
+- [ ] Ensure no browser action can create an outcome or claim resolution.
+- [ ] Run tests; expect PASS.
+- [ ] Commit: `feat(my-gal-api): add governed insight actions`.
 
-**Files:**
-- Create: `portal/src/supabase.ts`
-- Create: `portal/src/auth.ts`
-- Modify: `portal/src/main.ts`
-- Test: `portal/src/__tests__/auth.test.ts`
+### Task 7: Typed Browser Mutation Client
 
-**Interfaces:**
-- Produces: `getSupabaseClient(): SupabaseClient`
-- Produces: `getCurrentSession(): Promise<Session | null>`
-- Produces: `signInWithPassword(email: string, password: string): Promise<void>`
-- Produces: `signOut(): Promise<void>`
-- Produces: `subscribeToAuth(callback: (session: Session | null) => void): () => void`
+**Files:** Create `portal/src/api/insightActions.ts`; test `portal/src/__tests__/insightActions.test.ts`.
 
-- [ ] **Step 1: Write failing auth tests using a mocked Supabase client**
+**Produces:** `presentInsight`, `acknowledgeInsight`, `dismissInsight`, `snoozeInsight`, `actOnInsight`.
 
-Verify session load, successful sign-in, sign-out, and auth subscription cleanup. Explicitly assert no helper accepts a `user_id` parameter.
+- [ ] Write failing tests proving calls go only through `functions.invoke('portal-insight-action')` and never send user IDs, actor IDs, RPC names, rule codes, or table names.
+- [ ] Implement typed wrappers and safe discriminated `ActionResult`; never surface raw Postgres/schema errors.
+- [ ] Run tests; expect PASS.
+- [ ] Commit: `feat(my-gal): add typed equipment insight actions`.
 
-- [ ] **Step 2: Run the tests and verify failure**
+### Task 8: My GAL Shared Shell and Five Product Surfaces
 
-Run: `cd portal && npm test -- --run src/__tests__/auth.test.ts`
+**Files:** Create `portal/src/ui/{appShell.ts,today.ts,bag.ts,insightFeed.ts,insightDetail.ts,guides.ts,progress.ts,insightActions.ts,states.ts}`; modify `main.ts`, `portal.css`; test `portal/src/__tests__/ui.test.ts`.
 
-Expected: FAIL because auth helpers do not exist.
+**Produces:** shared registered/subscriber UI with Today default.
 
-- [ ] **Step 3: Implement the singleton client**
-
-```ts
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { getPortalConfig } from './config';
-
-let client: SupabaseClient | undefined;
-
-export function getSupabaseClient(): SupabaseClient {
-  if (!client) {
-    const config = getPortalConfig();
-    client = createClient(config.supabaseUrl, config.supabasePublishableKey, {
-      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
-    });
-  }
-  return client;
-}
-```
-
-- [ ] **Step 4: Implement auth helpers around Supabase Auth only**
-
-Return normalized errors to the UI, but do not map auth users to GAL users in browser code.
-
-- [ ] **Step 5: Run tests**
-
-Run: `cd portal && npm test -- --run src/__tests__/auth.test.ts`
-
-Expected: PASS.
-
-- [ ] **Step 6: Commit**
-
-```bash
-git add portal/src/supabase.ts portal/src/auth.ts portal/src/main.ts portal/src/__tests__/auth.test.ts
- git commit -m "feat(portal): add Supabase authentication state"
-```
-
----
-
-### Task 3: Golfer-Safe Longitudinal Read Model
-
-**Files:**
-- Create: `portal/src/types.ts`
-- Create: `portal/src/data/insights.ts`
-- Test: `portal/src/__tests__/insights.test.ts`
-
-**Interfaces:**
-- Produces type `PortalInsight` with fields:
-
-```ts
-export type PortalInsight = {
-  insightId: string;
-  domain: string;
-  code: string;
-  headline: string;
-  message: string;
-  severity: 'INFO' | 'MATERIAL' | 'HIGH';
-  insightStatus: string;
-  deliveryStatus: string | null;
-  resolutionStatus: 'OPEN' | 'EVIDENCE_PENDING' | 'RESOLVED' | 'INEFFECTIVE' | 'REGRESSED' | null;
-  updatedAt: string;
-};
-```
-
-- Produces: `loadPortalInsights(): Promise<PortalInsight[]>`
-
-- [ ] **Step 1: Write failing read-model tests**
-
-Mock `.from()` calls and assert the browser reads only these golfer-safe relations: `gal_insights`, `gal_insight_delivery_state`, `gal_insight_resolution_state`. Do not query raw signals, exposure events, learning tables, governance actors, or resolution events.
-
-- [ ] **Step 2: Verify test failure**
-
-Run: `cd portal && npm test -- --run src/__tests__/insights.test.ts`
-
-Expected: FAIL because the reader is missing.
-
-- [ ] **Step 3: Implement the minimal RLS-protected reader**
-
-Do not pass a user ID filter from the browser. Query golfer-safe data under the authenticated session and merge by `insight_id` locally.
-
-The `gal_insights` select must request only golfer-facing fields required by the UI, including `insight_id`, `insight_domain`, `insight_code`, `headline`, `golfer_message`, `severity`, `status`, `updated_at`.
-
-- [ ] **Step 4: Implement sorting**
-
-Sort ACTIVE/ACKNOWLEDGED before RESOLVED/SUPPRESSED/EXPIRED; within state groups sort HIGH before MATERIAL before INFO, then newest `updatedAt` first.
-
-- [ ] **Step 5: Run tests**
-
-Run: `cd portal && npm test -- --run src/__tests__/insights.test.ts`
-
-Expected: PASS.
-
-- [ ] **Step 6: Commit**
-
-```bash
-git add portal/src/types.ts portal/src/data/insights.ts portal/src/__tests__/insights.test.ts
- git commit -m "feat(portal): add governed insight read model"
-```
-
----
-
-### Task 4: Shared Registered-User and Subscriber Entitlement Resolver
-
-**Files:**
-- Create: `portal/src/data/entitlements.ts`
-- Test: `portal/src/__tests__/entitlements.test.ts`
-
-**Interfaces:**
-- Produces:
-
-```ts
-export type PortalEntitlements = {
-  tier: 'REGISTERED' | 'SUBSCRIBER';
-  advancedHistory: boolean;
-  enhancedExplanation: boolean;
-};
-
-export function resolveEntitlements(claims: Record<string, unknown>): PortalEntitlements;
-```
-
-- [ ] **Step 1: Write failing tests**
-
-Base behavior must always resolve safely to REGISTERED. Staging/test claims containing `gal_portal_tier: 'SUBSCRIBER'` enable additive UI flags. Unknown or malformed claims must never expand access.
-
-- [ ] **Step 2: Run tests and verify failure**
-
-Run: `cd portal && npm test -- --run src/__tests__/entitlements.test.ts`
-
-- [ ] **Step 3: Implement the resolver**
-
-```ts
-export function resolveEntitlements(claims: Record<string, unknown>): PortalEntitlements {
-  const subscriber = claims.gal_portal_tier === 'SUBSCRIBER';
-  return {
-    tier: subscriber ? 'SUBSCRIBER' : 'REGISTERED',
-    advancedHistory: subscriber,
-    enhancedExplanation: subscriber,
-  };
-}
-```
-
-Document in code that these claims are staging/test fixtures until a governed production entitlement source is connected; they affect UI capability only, never RLS.
-
-- [ ] **Step 4: Run tests and commit**
-
-```bash
-cd portal && npm test -- --run src/__tests__/entitlements.test.ts
-git add src/data/entitlements.ts src/__tests__/entitlements.test.ts
-git commit -m "feat(portal): add shared entitlement resolver"
-```
-
----
-
-### Task 5: Edge Function Authentication and Safe Action Contract
-
-**Files:**
-- Create: `supabase/functions/portal-insight-action/types.ts`
-- Create: `supabase/functions/portal-insight-action/errors.ts`
-- Create: `supabase/functions/portal-insight-action/auth.ts`
-- Create: `supabase/functions/portal-insight-action/index.test.ts`
-
-**Interfaces:**
-- Consumes: `Authorization: Bearer <access_token>`
-- Produces `resolvePortalActor(req: Request): Promise<{ authUserId: string; galUserId: string }>`
-- Produces action union:
-
-```ts
-export type PortalInsightAction =
-  | { action: 'present'; insightId: string; surface: 'portal' }
-  | { action: 'acknowledge'; insightId: string; surface: 'portal' }
-  | { action: 'dismiss'; insightId: string; surface: 'portal' }
-  | { action: 'snooze'; insightId: string; surface: 'portal'; snoozedUntil: string }
-  | { action: 'act'; insightId: string; surface: 'portal' };
-```
-
-- [ ] **Step 1: Write failing Deno tests for auth boundary**
-
-Tests must prove: missing Authorization => 401; invalid token => 401; mapped active user => resolved GAL user; caller-supplied `user_id` is rejected from payload parsing.
-
-- [ ] **Step 2: Run tests and verify failure**
-
-Run: `deno test supabase/functions/portal-insight-action/index.test.ts --allow-env`
-
-- [ ] **Step 3: Implement separate user-token and service-role clients**
-
-`auth.ts` must validate the access token using a Supabase client scoped to the bearer token, obtain `auth.users.id`, then use the service client to query exactly one active `gal_users` row by `auth_user_id`.
-
-Never return the service client to browser-facing code.
-
-- [ ] **Step 4: Add safe error normalization**
-
-Define only these external codes initially: `UNAUTHENTICATED`, `ACCOUNT_NOT_READY`, `NOT_FOUND`, `NOT_ALLOWED`, `STALE_ACTION`, `TEMPORARY_FAILURE`.
-
-- [ ] **Step 5: Run Deno tests and commit**
-
-```bash
-deno test supabase/functions/portal-insight-action/index.test.ts --allow-env
-git add supabase/functions/portal-insight-action
-git commit -m "feat(portal-api): add authenticated mutation boundary"
-```
-
----
-
-### Task 6: Allowlisted Longitudinal Mutation Handlers
-
-**Files:**
-- Create: `supabase/functions/portal-insight-action/actions.ts`
-- Create: `supabase/functions/portal-insight-action/index.ts`
-- Modify: `supabase/functions/portal-insight-action/index.test.ts`
-
-**Interfaces:**
-- Produces: `handlePortalInsightAction(actor, payload)`
-- Calls only: `gal_record_insight_presentation` and `gal_record_insight_response` for this first slice.
-- Does not expose generic outcome, resolution, learning, governance, or arbitrary-RPC invocation to the browser.
-
-- [ ] **Step 1: Add failing tests for all five allowlisted actions**
-
-For each action assert the exact RPC invoked and exact server-derived `p_user_id`. Add negative tests for unknown action, wrong-owner insight, malformed snooze timestamp, and client `user_id` field.
-
-- [ ] **Step 2: Run tests to verify failure**
-
-Run: `deno test supabase/functions/portal-insight-action/index.test.ts --allow-env`
-
-- [ ] **Step 3: Implement ownership verification**
-
-Before any mutation, service client must fetch `gal_insights.id` where `insight_id = payload.insightId` and `user_id = actor.galUserId`. Missing row returns `NOT_FOUND` without revealing whether another golfer owns the insight ID.
-
-- [ ] **Step 4: Implement action-to-RPC mapping**
-
-Mapping:
-
-```text
-present     -> gal_record_insight_presentation(surface='portal')
-acknowledge -> gal_record_insight_response(response_type='ACKNOWLEDGED')
-dismiss     -> gal_record_insight_response(response_type='DISMISSED')
-snooze      -> gal_record_insight_response(response_type='SNOOZED', snoozed_until validated future timestamp)
-act         -> gal_record_insight_response(response_type='ACTED')
-```
-
-Generate `source_event_key` server-side using action + insight + crypto UUID. Use `source_system = 'gal_portal'`.
-
-- [ ] **Step 5: Ensure trusted outcomes/resolution are not browser actions**
-
-Add tests that `outcome`, `resolve`, `regress`, `publish_learning`, `promote`, and arbitrary `rpc` action names return 400 `NOT_ALLOWED`.
-
-- [ ] **Step 6: Run Deno tests and commit**
-
-```bash
-deno test supabase/functions/portal-insight-action/index.test.ts --allow-env
-git add supabase/functions/portal-insight-action
-git commit -m "feat(portal-api): add allowlisted insight actions"
-```
-
----
-
-### Task 7: Browser Mutation Client
-
-**Files:**
-- Create: `portal/src/api/insightActions.ts`
-- Test: `portal/src/__tests__/insightActions.test.ts`
-
-**Interfaces:**
-- Produces functions:
-
-```ts
-presentInsight(insightId: string): Promise<ActionResult>
-acknowledgeInsight(insightId: string): Promise<ActionResult>
-dismissInsight(insightId: string): Promise<ActionResult>
-snoozeInsight(insightId: string, snoozedUntil: string): Promise<ActionResult>
-actOnInsight(insightId: string): Promise<ActionResult>
-```
-
-- [ ] **Step 1: Write failing tests**
-
-Assert calls go only through `supabase.functions.invoke('portal-insight-action', { body })`; assert no function accepts or adds `user_id`, actor IDs, RPC names, rule codes, or table names.
-
-- [ ] **Step 2: Run tests to verify failure**
-
-Run: `cd portal && npm test -- --run src/__tests__/insightActions.test.ts`
-
-- [ ] **Step 3: Implement typed wrappers**
-
-Normalize Edge Function error codes into a stable `ActionResult` discriminated union; never surface raw PostgreSQL/schema errors.
-
-- [ ] **Step 4: Run tests and commit**
-
-```bash
-cd portal && npm test -- --run src/__tests__/insightActions.test.ts
-git add src/api/insightActions.ts src/__tests__/insightActions.test.ts
-git commit -m "feat(portal): add typed insight action client"
-```
-
----
-
-### Task 8: Shared Portal Shell, Feed, Detail, and Response Controls
-
-**Files:**
-- Create: `portal/src/ui/appShell.ts`
-- Create: `portal/src/ui/insightFeed.ts`
-- Create: `portal/src/ui/insightDetail.ts`
-- Create: `portal/src/ui/insightActions.ts`
-- Create: `portal/src/ui/status.ts`
-- Create: `portal/src/ui/states.ts`
-- Modify: `portal/src/main.ts`
-- Modify: `portal/src/styles/portal.css`
-- Test: `portal/src/__tests__/ui.test.ts`
-
-**Interfaces:**
-- Consumes: `PortalInsight[]`, `PortalEntitlements`, typed mutation functions.
-- Produces: one shared registered/subscriber portal UI.
-
-- [ ] **Step 1: Write failing DOM tests**
-
-Cover: unauthenticated sign-in state; loading; empty insights; active insight card; resolved history card; HIGH status text not color-only; subscriber enhancement rendered only with entitlement; Acknowledge/Dismiss/Snooze/Take Action controls; duplicate-submit disabled state; safe error rendering.
-
-- [ ] **Step 2: Run tests and verify failure**
-
-Run: `cd portal && npm test -- --run src/__tests__/ui.test.ts`
-
-- [ ] **Step 3: Implement status semantics**
-
-Use native headings/buttons/details where possible. Resolution labels must include Open, Evidence pending, Resolved, Ineffective, Regressed. Dismissed delivery state must never render as analytically “Resolved.”
-
-- [ ] **Step 4: Implement feed and detail rendering**
-
-Render only golfer-facing fields. Do not render detector source keys, raw evidence JSON, governance actor IDs, learning policy IDs, contributor information, or internal event IDs.
-
-- [ ] **Step 5: Implement action controls**
-
-On successful action, reload `loadPortalInsights()` rather than fabricating local analytical state. `Take Action` records ACTED then routes to a configured GAL workflow URL only when one exists; otherwise show a safe “Action recorded” state without inventing a recommendation destination.
-
-- [ ] **Step 6: Add mobile/accessibility CSS**
-
-Require 44px minimum interactive target height where practical, visible focus outline, no horizontal scrolling at 320px, status icon/text pairing, and locked brand colors.
-
-- [ ] **Step 7: Run tests and production build**
-
-```bash
-cd portal
-npm test -- --run src/__tests__/ui.test.ts
-npm run build
-```
-
-Expected: PASS.
-
-- [ ] **Step 8: Commit**
-
-```bash
-git add portal/src
- git commit -m "feat(portal): build shared longitudinal insight experience"
-```
-
----
-
-### Task 9: Database RLS and Direct-RPC Acceptance Test
-
-**Files:**
-- Create: `supabase/tests/portal_rls_acceptance.sql`
-
-**Interfaces:**
-- Validates the production/staging schema contract; does not alter schema.
-
-- [ ] **Step 1: Write the SQL test inside a transaction**
-
-Create two synthetic `auth.users` identities and their GAL mappings using staging-safe fixture patterns. Seed one governed insight per user. Use `set local role authenticated` plus JWT claims to prove:
-
-1. User A reads only User A `gal_insights`.
-2. User A reads only User A delivery/response/outcome/resolution state.
-3. User A reads zero rows from internal-only tables.
-4. User A cannot execute `gal_record_insight_presentation`, `gal_record_insight_response`, `gal_record_insight_outcome`, or learning-governance service RPCs directly.
-5. User B cannot discover User A insight rows.
-
-End with `rollback;`.
-
-- [ ] **Step 2: Run against GAL Longitudinal Staging**
-
-Expected: every assertion passes and synthetic counts return to baseline after rollback.
-
-- [ ] **Step 3: Commit**
-
-```bash
-git add supabase/tests/portal_rls_acceptance.sql
-git commit -m "test(portal): prove golfer isolation and RPC denial"
-```
-
----
-
-### Task 10: Deploy Edge Function and Portal to Staging
-
-**Files:**
-- Create: `docs/data/longitudinal/portal-staging-acceptance.md`
-- Create: `portal/playwright.config.ts`
-- Create: `portal/e2e/portal.spec.ts`
-
-**Interfaces:**
-- Consumes staging Supabase project `GAL Longitudinal Staging` only.
-- Produces repeatable staging evidence for the release gate.
-
-- [ ] **Step 1: Write the acceptance checklist before deployment**
-
-Checklist must record environment, Git commit, Edge Function version, portal build version, two synthetic user IDs/public IDs, and PASS/FAIL evidence for every scenario below.
-
-- [ ] **Step 2: Add Playwright tests**
-
-Use staging-only synthetic credentials supplied through CI/runtime secrets. Scenarios:
-
-```text
-A signs in -> sees A insight
-B signs in -> does not see A insight
-A presentation -> accepted once
-A duplicate/replay -> safe
-A acknowledge -> portal refresh reflects new state
-A snooze -> delivery state reflects cooldown
-A dismiss -> delivery changes without resolution claim
-subscriber fixture -> same feed components plus entitlement enhancement
-logout -> protected portal returns to sign-in state
-320px viewport -> no horizontal overflow
-keyboard -> all action controls reachable and visibly focused
-```
-
-- [ ] **Step 3: Deploy Edge Function to staging**
-
-Set staging secrets only in Supabase function secret storage: project URL, publishable/anon verification settings as required by Supabase runtime, and service-role key. Do not commit any secret values.
-
-- [ ] **Step 4: Deploy portal preview/staging build**
-
-Build with staging `VITE_SUPABASE_URL` and staging publishable key. Verify built JS contains no service-role secret name/value and no production Supabase project URL.
-
-- [ ] **Step 5: Run SQL acceptance + unit tests + Playwright**
-
-```bash
-cd portal && npm run test:run && npm run build && npm run e2e
-```
-
-Also run `supabase/tests/portal_rls_acceptance.sql` against staging.
-
-Expected: all PASS.
-
-- [ ] **Step 6: Manual synchronized registered/subscriber review**
-
-Using the same portal build, verify registered and subscriber fixture experiences share navigation, card structure, action behavior, mobile layout, and error handling. Subscriber-only differences must be additive and entitlement-driven.
-
-- [ ] **Step 7: Commit acceptance artifacts**
-
-Do not commit passwords, tokens, user emails, or secret values. Commit only sanitized IDs/results/checklist evidence.
-
-```bash
-git add portal/e2e portal/playwright.config.ts docs/data/longitudinal/portal-staging-acceptance.md
-git commit -m "test(portal): add staging acceptance gate"
-```
-
----
-
-### Task 11: Public-Site Portal Entry Points
-
-**Files:**
-- Modify: `index.html`
-- Modify: `assets__styles.css` only if required for existing shared nav styling
-- Test: manual/static link validation plus portal E2E navigation assertion
-
-**Interfaces:**
-- Produces: public-site navigation into `/portal/` only after staging portal is GREEN.
-
-- [ ] **Step 1: Add a failing Playwright assertion for public-site entry**
-
-From staged home page, clicking the account/portal entry must navigate to `/portal/` and render sign-in or authenticated portal shell.
-
-- [ ] **Step 2: Verify failure before adding the link**
-
-Run the specific Playwright test; expected FAIL because no portal entry exists.
-
-- [ ] **Step 3: Add one consistent portal entry point**
-
-Use existing GAL header/nav conventions. Do not duplicate separate “user portal” and “subscriber portal” links; both go to the same `/portal/` application.
-
-- [ ] **Step 4: Run static-site smoke checks and Playwright**
-
-Verify existing Buyers Guides, Build a Better Bag navigation, footer/legal links, and public pages remain functional.
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add index.html assets__styles.css portal/e2e/portal.spec.ts
-git commit -m "feat(site): add shared authenticated portal entry"
-```
-
----
-
-### Task 12: Release Review and Production Promotion Gate
-
-**Files:**
-- Modify: `docs/data/longitudinal/portal-staging-acceptance.md`
-- Modify: `VERSION.txt` only when the portal RC is approved for production.
-
-**Interfaces:**
-- Produces: production promotion decision; no automatic production deployment.
-
-- [ ] **Step 1: Run complete verification from a clean checkout/worktree**
-
-Run portal unit tests, portal build, Deno Edge Function tests, SQL RLS acceptance against staging, and Playwright staging acceptance.
-
-- [ ] **Step 2: Security review built artifacts**
-
-Search generated portal assets for `service_role`, `SUPABASE_SERVICE_ROLE_KEY`, production secret values, internal table names that the browser must never query, and generic RPC passthrough strings. Any hit requires review before release.
-
-- [ ] **Step 3: Supabase staging advisors**
-
-Run Security and Performance Advisors after Edge Function/database acceptance. No new WARN/ERROR database finding may be introduced. Existing leaked-password-protection warning remains separately tracked.
-
-- [ ] **Step 4: Create release-candidate PR**
-
-PR description must include test evidence, staging URL, sanitized acceptance results, explicit statement that registered/subscriber experiences use shared components, and confirmation that service-role credentials are server-only.
-
-- [ ] **Step 5: Production promotion only after review approval**
-
-Deploy the reviewed portal assets and Edge Function using production runtime secrets. Do not copy staging users/data. Do not alter Tasks 8–13 schema unless a separately reviewed migration is required.
-
-- [ ] **Step 6: Production smoke test with admin-controlled/synthetic account**
-
-Verify sign-in, own-insight read, another-user isolation, one presentation, one response, logout, and public-site navigation. Remove any explicitly persistent synthetic records immediately after smoke verification; prefer rollback/admin-controlled fixtures where possible.
-
-- [ ] **Step 7: Final advisors and release record**
-
-Re-run production Security/Performance Advisors and record results in the release PR/checklist. Do not remove useful indexes based only on pre-launch `unused_index` INFO notices.
-
-- [ ] **Step 8: Commit version/release documentation**
-
-```bash
-git add VERSION.txt docs/data/longitudinal/portal-staging-acceptance.md
-git commit -m "release(portal): record authenticated portal production candidate"
-```
+- [ ] Write failing DOM tests for My GAL name/descriptor, five navigation labels, Today default, Equipment Brief, prioritized material insight, honest My Bag incomplete state, Insights status translation, Guides authenticated entry, Progress evidence timeline, subscriber additive content, loading/empty/error/session states, and action controls.
+- [ ] Add tests proving no fabricated `Bag Health`, `$ saved`, `Good fit`, or personalized recommendation appears when its governed source is absent.
+- [ ] Implement My GAL shell and Today Equipment Brief. Today leads with what deserves attention and next action; it is not a raw chart dashboard.
+- [ ] Implement My Bag summary. Render only supported equipment/status data; unknown remains unknown.
+- [ ] Implement Insights detail with progressive disclosure: what GAL sees → why → golfer-safe context → next action → history. Never expose detector/source/governance internals.
+- [ ] Implement Guides entry designed to accept known-data prefills later; do not silently skip questions in Phase 1 unless current guide semantics and editable prefill support are explicitly wired.
+- [ ] Implement Progress from evidence-backed longitudinal events; no golf-score tracking or invented savings.
+- [ ] Wire actions; after mutation reload governed data instead of fabricating local analytical state.
+- [ ] Add mobile-first CSS: 44px practical touch targets, visible focus, status text not color-only, no 320px horizontal overflow, familiar mobile bottom nav when accessible.
+- [ ] Run UI tests and production build; expect PASS.
+- [ ] Commit: `feat(my-gal): build equipment intelligence product surfaces`.
+
+### Task 9: Two-User RLS and Direct-RPC Acceptance
+
+**Files:** Create `supabase/tests/portal_rls_acceptance.sql`.
+
+- [ ] Write transaction-wrapped staging test with two synthetic users and one governed insight each.
+- [ ] Assert User A sees only A golfer-safe data; A cannot read internal tables; A cannot execute service-only presentation/response/outcome/learning RPCs directly; B cannot discover A rows.
+- [ ] End with `ROLLBACK` and verify synthetic row counts return to baseline.
+- [ ] Run against GAL Longitudinal Staging; all assertions must pass.
+- [ ] Commit: `test(my-gal): prove golfer isolation and RPC denial`.
+
+### Task 10: Staging Deployment and End-to-End Product Acceptance
+
+**Files:** Create `portal/playwright.config.ts`, `portal/e2e/portal.spec.ts`, `docs/data/longitudinal/portal-staging-acceptance.md`.
+
+- [ ] Write checklist recording environment, Git SHA, function/build version, sanitized fixture IDs, and PASS/FAIL evidence.
+- [ ] Add Playwright scenarios: A sees A insight; B cannot see A; presentation/replay safe; acknowledge/snooze/dismiss update correctly; My GAL Today default; all five nav destinations work; subscriber fixture uses same components plus additive enhancement; logout protects portal; 320px no overflow; keyboard focus reaches controls.
+- [ ] Add product-language assertions: no raw lifecycle jargon and no fabricated Bag Health/savings/fit claims.
+- [ ] Deploy Edge Function to staging with secrets in Supabase secret storage only.
+- [ ] Deploy portal staging build with staging URL/publishable key; verify no service-role value/name and no production project URL in built JS.
+- [ ] Run unit, Deno, SQL RLS, Playwright, mobile/accessibility acceptance; record evidence.
+- [ ] Commit: `test(my-gal): record staging acceptance`.
+
+### Task 11: Public-Site Entry and Guide Continuity
+
+**Files:** Modify only the shared public navigation/header files actually used by current site; modify E2E tests.
+
+- [ ] First verify staging is GREEN; do not expose public My GAL entry before that gate.
+- [ ] Add one consistent **My GAL** sign-in/account entry across public and buyer-guide navigation using the existing locked header treatment.
+- [ ] Verify public Buyers Guides remain available anonymously and existing guide/navigation/footer/legal behavior is unchanged.
+- [ ] Verify authenticated guide entry can route into My GAL Guides without creating a second portal implementation.
+- [ ] Run regression/E2E suite; expect PASS.
+- [ ] Commit: `feat(site): add My GAL authenticated entry`.
+
+### Task 12: Release Review and Production Gate
+
+**Files:** Update `docs/data/longitudinal/portal-staging-acceptance.md`; update `VERSION.txt` only for an approved RC.
+
+- [ ] Run complete verification from clean checkout/worktree: unit, build, Deno, SQL staging RLS, Playwright.
+- [ ] Search built assets for service-role material, production secrets, forbidden internal-table browser queries, generic RPC passthroughs, and fabricated placeholder intelligence.
+- [ ] Run staging Supabase Security/Performance Advisors; no new WARN/ERROR introduced. Track existing leaked-password warning separately.
+- [ ] Create RC PR with staging URL, sanitized evidence, shared registered/subscriber confirmation, server-only service-role confirmation, and screenshots/manual review evidence for Today/My Bag/Insights/Guides/Progress on mobile/desktop.
+- [ ] Production promotion requires explicit RC approval; do not automatically deploy from this plan.
+- [ ] After approval, deploy reviewed assets/function with production secrets; no staging users/data copied.
+- [ ] Run production smoke: sign-in, own data, cross-user isolation, presentation, response, five navigation surfaces, logout, public-site navigation; remove persistent synthetic records if any.
+- [ ] Re-run production advisors and record release evidence; do not remove useful indexes because of pre-launch `unused_index` INFO.
+- [ ] Commit approved version/release record: `release(my-gal): record equipment intelligence production candidate`.
 
 ---
 
 ## Plan Self-Review Results
 
-- **Spec coverage:** Authentication, RLS reads, trusted mutation boundary, insight feed/detail/actions, resolution semantics, shared entitlements, privacy, mobile/accessibility, two-user isolation, staging gate, synchronized registered/subscriber verification, and public-site preservation all map to explicit tasks.
-- **Scope:** The plan intentionally excludes payment checkout, notification delivery, My Bag redesign, generic AI chat, external Equipment Migration Intelligence, and legacy PR #3 extraction.
-- **Security boundary:** No task grants browser execution of service-only RPCs; browser mutation API is allowlisted and derives user identity server-side.
-- **Type consistency:** Portal action names and `PortalInsight`/`PortalEntitlements` contracts are defined once and consumed consistently by later tasks.
-- **Placeholder scan:** No TBD/TODO/“implement later” placeholders are part of execution instructions.
+- **Product-model coverage:** Today Equipment Brief, My Bag, golfer-language Insights, personalized-ready Guides, and equipment Progress all have explicit tasks and acceptance criteria.
+- **No invented metrics:** Bag Health, dollar savings, unsupported fit labels, and recommendations are explicitly prohibited until governed sources/policies exist.
+- **Architecture preservation:** Existing Supabase Auth/RLS/service-only RPC security boundaries remain unchanged.
+- **Shared user/subscriber rule:** One component/data model with additive entitlements is tested in unit and E2E acceptance.
+- **Scope:** Full visual bag intelligence, governed Bag Health formula, production billing, advanced guide prefilling, notification delivery, and Equipment Migration Intelligence remain later increments rather than hidden Phase 1 work.
+- **Placeholder scan:** No TBD/TODO execution placeholders.
