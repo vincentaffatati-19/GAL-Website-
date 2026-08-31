@@ -1,4 +1,5 @@
 import './styles/portal.css';
+import { BRAND_FONT_FAMILY, BRAND_LOGO_ALT, BRAND_LOGO_SRC } from './branding';
 import { resolvePortalRoute, type PortalRoute } from './router';
 
 const NAV_ITEMS: Array<{ route: PortalRoute; label: string }> = [
@@ -17,19 +18,22 @@ function renderShell(): void {
   const app = document.querySelector<HTMLElement>('#app');
   if (!app) throw new Error('My GAL app mount is missing');
 
+  document.documentElement.style.fontFamily = BRAND_FONT_FAMILY;
   const currentRoute = resolvePortalRoute(window.location.pathname);
   const currentLabel = NAV_ITEMS.find((item) => item.route === currentRoute)?.label ?? 'Today';
 
   app.innerHTML = `
     <div class="my-gal-shell">
       <header class="my-gal-header">
-        <a class="my-gal-brand" href="/portal/" aria-label="My GAL home">
-          <span class="my-gal-brand-mark" aria-hidden="true">GAL</span>
-          <span>
+        <div class="my-gal-header-inner">
+          <a class="my-gal-brand" href="/portal/" aria-label="My GAL home">
+            <img class="my-gal-brand-logo" src="${BRAND_LOGO_SRC}" alt="${BRAND_LOGO_ALT}">
+          </a>
+          <div class="my-gal-product-name">
             <strong>My GAL</strong>
             <small>Your Equipment Intelligence Center</small>
-          </span>
-        </a>
+          </div>
+        </div>
       </header>
       <nav class="my-gal-nav" aria-label="My GAL primary navigation">
         ${NAV_ITEMS.map((item) => `<a href="${routeHref(item.route)}"${item.route === currentRoute ? ' aria-current="page"' : ''}>${item.label}</a>`).join('')}
