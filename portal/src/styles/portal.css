@@ -1,0 +1,120 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #0B245F;
+  background: #f5f7fa;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --gal-navy: #0B245F;
+  --gal-orange: #FF5A1F;
+  --gal-white: #ffffff;
+  --gal-light: #f5f7fa;
+  --gal-border: #dbe2ea;
+  --gal-text: #172033;
+}
+
+* { box-sizing: border-box; }
+
+html { min-width: 320px; background: var(--gal-light); }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: var(--gal-light); color: var(--gal-text); }
+a { color: inherit; }
+
+.my-gal-shell { min-height: 100vh; }
+
+.my-gal-header {
+  background: var(--gal-navy);
+  color: var(--gal-white);
+  padding: 14px clamp(16px, 4vw, 40px);
+}
+
+.my-gal-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.my-gal-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--gal-orange);
+  border-radius: 12px;
+  color: var(--gal-white);
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.my-gal-brand strong,
+.my-gal-brand small { display: block; }
+.my-gal-brand strong { font-size: 1.05rem; }
+.my-gal-brand small { margin-top: 2px; opacity: .82; font-size: .78rem; }
+
+.my-gal-nav {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px clamp(10px, 4vw, 40px);
+  background: var(--gal-white);
+  border-bottom: 1px solid var(--gal-border);
+}
+
+.my-gal-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--gal-navy);
+}
+
+.my-gal-nav a[aria-current="page"] {
+  background: var(--gal-navy);
+  color: var(--gal-white);
+}
+
+.my-gal-nav a:focus-visible,
+.my-gal-brand:focus-visible {
+  outline: 3px solid var(--gal-orange);
+  outline-offset: 3px;
+}
+
+.my-gal-main {
+  width: min(1040px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: clamp(30px, 6vw, 72px) 0;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--gal-orange);
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+h1 { margin: 0; color: var(--gal-navy); font-size: clamp(2rem, 6vw, 4rem); line-height: 1; }
+.intro { max-width: 700px; font-size: 1.05rem; line-height: 1.65; }
+
+.my-gal-state {
+  margin-top: 28px;
+  padding: clamp(20px, 4vw, 32px);
+  background: var(--gal-white);
+  border: 1px solid var(--gal-border);
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(11, 36, 95, .07);
+}
+
+.my-gal-state h2 { margin-top: 0; color: var(--gal-navy); }
+.my-gal-state p { margin-bottom: 0; line-height: 1.6; }
+
+@media (max-width: 600px) {
+  .my-gal-brand small { font-size: .72rem; }
+  .my-gal-nav { position: sticky; top: 0; z-index: 10; }
+  .my-gal-nav a { padding-inline: 12px; }
+}
