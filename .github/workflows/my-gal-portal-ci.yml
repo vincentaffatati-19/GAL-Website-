@@ -1,0 +1,36 @@
+name: My GAL Portal CI
+
+on:
+  pull_request:
+    paths:
+      - 'portal/**'
+      - '.github/workflows/my-gal-portal-ci.yml'
+
+jobs:
+  portal:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: portal
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: portal/package-lock.json
+      - name: Install dependencies
+        run: npm install --package-lock-only && npm ci
+      - name: Unit tests
+        run: npm run test:run
+      - name: Production build
+        env:
+          VITE_SUPABASE_URL: https://example.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: test-publishable-key
+        run: npm run build
+      - name: Reject service-role material in browser build
+        run: |
+          if grep -R -E 'SUPABASE_SERVICE_ROLE_KEY|service_role' dist; then
+            echo 'Forbidden service-role material found in portal build.'
+            exit 1
+          fi
