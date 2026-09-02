@@ -1,11 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm --prefix portal install",
-  "buildCommand": "npm --prefix portal run build",
-  "outputDirectory": "portal/dist",
-  "rewrites": [
-    { "source": "/portal/assets/:path*", "destination": "/assets/:path*" },
-    { "source": "/portal/:path*", "destination": "/index.html" },
-    { "source": "/portal", "destination": "/index.html" }
-  ]
+  "installCommand": "echo skip-install",
+  "buildCommand": "echo single-file-preview",
+  "outputDirectory": "phone-preview"
 }
