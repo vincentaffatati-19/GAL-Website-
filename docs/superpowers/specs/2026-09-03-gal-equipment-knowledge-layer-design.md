@@ -324,7 +324,93 @@ Commercial factors must not alter analytical equipment characteristics or analyt
 
 Price may be used as a golfer-declared fitting constraint/value consideration only through a governed product rule; commission remains excluded from analytical ranking.
 
-## 12. Current Locked Decisions
+## 12. Locked Equipment Source Ingestion & Governance
+
+GAL will use a governed staging pipeline rather than direct-to-production ingestion or fully manual production entry.
+
+The canonical flow is:
+
+`Source -> Raw Ingest -> Normalize -> Validate -> Resolve Conflicts -> Review -> Approve -> Promote -> Production Equipment Knowledge`
+
+### Raw Source Preservation
+
+Manufacturer feeds/documents, GAL test data, licensed partner data, manual research, and future approved APIs enter through a raw/source layer that preserves the original source evidence and provenance.
+
+An ingested source record does not automatically become an approved GAL equipment characteristic.
+
+### Normalization
+
+Source-specific terminology and schemas are mapped into GAL's canonical product structure and GAL-owned ontology.
+
+Normalization must preserve the original source value and source terminology so GAL can audit how a normalized value was produced.
+
+### Validation
+
+Validation may include:
+- required identity checks;
+- unit normalization;
+- category/schema validation;
+- component/configuration compatibility checks;
+- source/license eligibility checks;
+- duplicate detection;
+- expected range and data-type checks;
+- provenance completeness;
+- conflict detection against existing qualifying evidence.
+
+### Governance States
+
+Equipment source/knowledge records may progress through governed states such as:
+
+`INGESTED -> NORMALIZED -> VALIDATED -> REVIEW_PENDING -> APPROVED -> PRODUCTION`
+
+Exception/lifecycle states include:
+- `CONFLICT`;
+- `REJECTED`;
+- `STALE`;
+- `RETIRED`.
+
+State semantics must be governed and auditable.
+
+### Production Promotion Gate
+
+**No newly ingested equipment characteristic becomes eligible for AI Fitting merely because it exists in the database.**
+
+Only records that satisfy the appropriate validation, review, and promotion policy may enter the golfer-facing production knowledge set used by AI Fitting.
+
+Research and experimental data may exist outside the production knowledge set without influencing golfer recommendations.
+
+### Conflict Preservation
+
+When sources disagree, GAL must preserve the competing observations rather than silently overwriting them.
+
+Resolution is characteristic-specific and evidence-specific. Examples:
+- current manufacturer documentation may control officially offered lofts/options;
+- GAL measurement may control a GAL-measured physical property for the tested sample;
+- GAL testing may support a performance classification;
+- unresolved disagreement may require a qualified state or `Unknown / Insufficient Evidence`.
+
+A generic newest-record-wins rule is prohibited for fitting-relevant knowledge.
+
+### Repeated Testing and Immutable Evidence
+
+Individual GAL test runs and qualifying external observations remain immutable evidence records.
+
+Repeated testing adds evidence; it does not erase prior qualifying tests.
+
+GAL may generate a derived or aggregate characteristic from multiple tests, but the aggregate must reference:
+- contributing test/evidence IDs;
+- methodology version;
+- aggregation policy;
+- relevant sample/configuration/environment context;
+- creation/effective date.
+
+### Research vs Production Boundary
+
+GAL must keep experimental/research evidence distinguishable from approved production equipment knowledge.
+
+Interesting, incomplete, exploratory, or newly collected data must not become a golfer-facing claim or AI Fitting input until it passes the applicable governance gate.
+
+## 13. Current Locked Decisions
 
 The following #4 architectural decisions are approved and locked:
 
@@ -342,20 +428,23 @@ The following #4 architectural decisions are approved and locked:
 12. A derived claim cannot exceed the strength of its supporting evidence.
 13. Unknown is preferable to fabricated or unsupported precision.
 14. Analytical equipment knowledge is separated from commerce influence.
+15. Governed source pipeline: Source -> Raw Ingest -> Normalize -> Validate -> Resolve Conflicts -> Review -> Approve -> Promote -> Production.
+16. Raw/source evidence is preserved and does not automatically become production knowledge.
+17. No new equipment characteristic is eligible for AI Fitting until it passes its required governance/promotion gate.
+18. Source conflicts are preserved and resolved with characteristic-specific rules; newest-record-wins is prohibited.
+19. Individual test runs remain immutable; aggregate characteristics reference all contributing evidence and methodology.
+20. Research/experimental knowledge remains separated from golfer-facing production knowledge.
 
-## 13. Design Status / Next Sections
+## 14. Design Status / Next Sections
 
 The Equipment Knowledge Layer design is not yet complete. The approved sections above are locked architectural requirements.
 
 Remaining design topics should include:
-- equipment source ingestion and source governance;
 - test/sample/configuration representation;
 - versioning and product lifecycle;
 - compatibility/configuration rules;
 - category completeness requirements for AI Fitting eligibility;
-- handling conflicting measurements and repeated tests;
 - equipment image/media rights and provenance;
-- data review/promotion workflow from research to production;
 - Equipment Knowledge completeness/quality states;
 - update cadence and new-model onboarding;
 - public Buyers Guide reuse;
