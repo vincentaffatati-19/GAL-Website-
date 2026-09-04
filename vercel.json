@@ -1,6 +1,6 @@
 {
-  "buildCommand": "corepack enable && corepack prepare pnpm@10.15.1 --activate && cd portal && CI=false pnpm install --no-frozen-lockfile && pnpm build && find . -mindepth 1 -maxdepth 1 ! -name dist -exec rm -rf {} + && cp -R dist/. . && rm -rf dist",
-  "outputDirectory": ".",
+  "buildCommand": "echo 'Using prebuilt verified UX preview'",
+  "outputDirectory": "preview",
   "rewrites": [
     {
       "source": "/portal/:path*",
