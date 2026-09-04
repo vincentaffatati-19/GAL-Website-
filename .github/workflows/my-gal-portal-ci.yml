@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '22'
       - name: Install dependencies
-        run: npm install --package-lock-only && npm ci
+        run: npm install
       - name: Unit tests
         run: npm run test:run
       - name: Production build
