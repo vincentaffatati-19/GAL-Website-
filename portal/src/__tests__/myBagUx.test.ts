@@ -10,23 +10,26 @@ vi.mock('../bag/client', () => ({
 
 import { renderMyBag } from '../bag/render';
 
-describe('GAL UX5 My Bag visual contract', () => {
+describe('GAL UX10 My Bag visual contract', () => {
   beforeEach(() => {
     mocks.fetchMyBag.mockReset();
     mocks.fetchMyBag.mockResolvedValue([]);
   });
 
-  it('reuses the locked bag environment and honest incomplete states', async () => {
+  it('reuses the independent tee-box + bag environment and honest incomplete states', async () => {
     const html = await renderMyBag();
 
-    expect(html).toContain('ux5-bag-environment');
-    expect(html).toContain('ux5-status-rail');
-    expect(html).toContain('ux5-bag-visual');
+    expect(html).toContain('ux10-bag-environment');
+    expect(html).toContain('ux10-status-rail');
+    expect(html).toContain('ux10-tee-box-background');
+    expect(html).toContain('ux10-bag-image');
     expect((html.match(/data-bag-category=/g) ?? []).length).toBe(7);
     expect(html).toContain('Choose My Tee Box');
+    expect(html).toContain('Bag Visual');
     expect(html).toContain('Customize My Bag');
     expect(html).toContain('How My Bag Works');
     expect(html).toContain('Not evaluated');
+    expect(html).toContain('independently from your tee-box background');
     expect(html).not.toContain('Optimized');
     expect(html).not.toContain('Bag Score');
   });
