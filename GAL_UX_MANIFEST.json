@@ -1,28 +1,21 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "LOCKED",
   "locked_at": "2026-09-04",
-  "ux_version": "GAL-UX5-MID",
-  "release_name": "My GAL Intelligence Dashboard",
-  "next_review_candidate": "GAL-UX5-MID-RC1",
-  "authoritative_spec": "docs/superpowers/specs/2026-09-04-gal-ux5-mid-locked-design.md",
+  "ux_family": "GAL-UX10",
+  "ux_version": "GAL-UX10.01",
+  "release_name": "Tee Box Personalization",
+  "next_review_candidate": "GAL-UX10.01-RC1",
+  "authoritative_spec": "docs/superpowers/specs/2026-09-04-gal-ux10-01-tee-box-personalization-design.md",
   "inherits_from": [
     "docs/superpowers/specs/2026-09-02-my-gal-tee-box-ux-design.md",
     "docs/superpowers/specs/2026-08-31-my-gal-equipment-intelligence-product-design.md"
   ],
   "visual_reference": {
-    "filename": "My Gal Dashboard with landing.png",
-    "width_px": 1536,
-    "height_px": 1024,
-    "sha256": "3f0cf896cb88632d6bcf0f780de110bad6516b3264a8755de2c932edbca44f84"
-  },
-  "governance_archive": {
-    "system": "Google Drive",
-    "folder": "Golf Analytics Lab/00 Governance & Standards",
-    "document_title": "GAL UX5 — My GAL Intelligence Dashboard — LOCKED",
-    "document_id": "1nu1_s0bTMx9-RleayxbiFpdZKspmsrt0HVGUfkwB4uE",
-    "document_url": "https://docs.google.com/document/d/1nu1_s0bTMx9-RleayxbiFpdZKspmsrt0HVGUfkwB4uE/edit?usp=drivesdk",
-    "contains_visual_reference": true
+    "filename": "gal_golf_analytics_dashboard.png",
+    "width_px": 1619,
+    "height_px": 971,
+    "sha256": "895f2c68b4be457356ba104b7a5d3335bc361cacfc73effe18138de5368a81c3"
   },
   "brand": {
     "system": "Option 7A Motion Arc / GAL Custom Hybrid",
@@ -34,6 +27,19 @@
       "Progress"
     ]
   },
+  "versioning": {
+    "family_rule": "Whole-number UX family changes require an explicit user-approved architectural replacement decision.",
+    "minor_rule": "Revisions within GAL-UX10 increment sequentially as GAL-UX10.01, GAL-UX10.02, GAL-UX10.03, and so on.",
+    "candidate_rule": "Review candidates append -RC1, -RC2, and so on to the locked minor version.",
+    "atomic_update_rule": "Every locked UX revision updates the manifest, current UX pointer, governing specification, and governance archive together."
+  },
+  "architecture_rules": {
+    "tee_box_and_bag_are_independent": true,
+    "tee_box_is_presentation_only": true,
+    "bag_visual_is_presentation_only": true,
+    "presentation_preferences_must_not_affect_analytics": true,
+    "combined_course_and_bag_scene_is_forbidden": true
+  },
   "authority_precedence": [
     "Explicit later user-approved UX lock",
     "GAL_UX_MANIFEST.json",
@@ -43,6 +49,7 @@
     "current implementation/code"
   ],
   "rules": {
+    "mandatory_preflight_before_gal_work": true,
     "implementation_may_lag_lock": true,
     "code_does_not_supersede_lock": true,
     "invented_golfer_metrics_forbidden": true,
