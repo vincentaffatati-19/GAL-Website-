@@ -9,6 +9,7 @@ const repoRoot = resolve(srcRoot, '../..');
 const main = readFileSync(resolve(srcRoot, 'main.ts'), 'utf8');
 const today = readFileSync(resolve(srcRoot, 'surfaces/today.ts'), 'utf8');
 const bag = readFileSync(resolve(srcRoot, 'bag/render.ts'), 'utf8');
+const bagEnvironment = readFileSync(resolve(srcRoot, 'ux5/bagEnvironment.ts'), 'utf8');
 const driver = readFileSync(resolve(srcRoot, 'fitting/driver/render.ts'), 'utf8');
 const manifest = JSON.parse(readFileSync(resolve(repoRoot, 'GAL_UX_MANIFEST.json'), 'utf8')) as {
   ux_version: string;
@@ -28,7 +29,8 @@ describe('GAL-UX5-MID-RC1 locked portal contract', () => {
     expect(main).not.toContain("import './styles/rcux4-visuals.css'");
   });
 
-  it('implements the locked dashboard landmarks', () => {
+  it('implements the locked dashboard landmarks through the shared bag environment', () => {
+    const dashboardSource = today + bagEnvironment;
     for (const token of [
       'ux5-dashboard',
       'ux5-bag-environment',
@@ -42,9 +44,11 @@ describe('GAL-UX5-MID-RC1 locked portal contract', () => {
       'How It Works',
       'Works for Every Club',
     ]) {
-      expect(today).toContain(token);
+      expect(dashboardSource).toContain(token);
     }
-    expect(bag).toContain('ux5-bag-environment');
+    expect(bag).toContain('renderUx5BagEnvironment');
+    expect(bagEnvironment).toContain('ux5-bag-environment');
+    expect(bagEnvironment).toContain('ux5-status-rail');
   });
 
   it('uses contextual club intelligence tabs without sample-fact leakage', () => {
@@ -52,7 +56,7 @@ describe('GAL-UX5-MID-RC1 locked portal contract', () => {
       expect(driver).toContain(token);
     }
     for (const forbidden of ['94 mph', '247 yds', '+12 Yards', '$3,840', '78%', '71%', '+11.3 yds']) {
-      expect(today + driver + bag).not.toContain(forbidden);
+      expect(today + driver + bag + bagEnvironment).not.toContain(forbidden);
     }
   });
 });
