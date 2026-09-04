@@ -28,6 +28,12 @@ jobs:
           node-version: '22'
           cache: 'pnpm'
           cache-dependency-path: portal/pnpm-lock.yaml
+      - name: Restore locked GAL Option 7A logo
+        working-directory: .
+        run: |
+          cat portal/brand/gal-option7a-motion.b64.part* | base64 --decode > portal/public/gal-option7a-motion.jpg
+          test "$(wc -c < portal/public/gal-option7a-motion.jpg)" -eq 15946
+          echo "26ccad548313c1d018cb6421efdfc4a95fb18d2e5123eccdc0518777a5b7047a  portal/public/gal-option7a-motion.jpg" | sha256sum --check --strict
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Unit tests
