@@ -42,37 +42,30 @@ jobs:
               base64 --decode "$part" >> "$output"
             done
           }
-          restore_bag() {
-            head_file="$1"
-            tail_file="$2"
-            output="$3"
-            python -c "import base64,re,sys; t=open(sys.argv[1],encoding='utf-8').read(); c=re.sub(r'[^A-Za-z0-9+/=]','',t)[:20000]; assert len(c)==20000, (sys.argv[1],len(c)); open(sys.argv[2],'wb').write(base64.b64decode(c,validate=True))" "$head_file" "$output"
-            base64 --decode "$tail_file" >> "$output"
-          }
           mkdir -p portal/public/ux10/tee-boxes portal/public/ux10/bags
           restore_parts 'portal/ux10-assets/coastal-01.b64.part*' portal/public/ux10/tee-boxes/coastal-01.webp
           restore_parts 'portal/ux10-assets/cliffs-01.b64.part*' portal/public/ux10/tee-boxes/cliffs-01.webp
-          restore_bag portal/ux10-assets/gal-tour-bag.b64.part1 portal/ux10-assets/gal-tour-bag.tail.b64 portal/public/ux10/bags/gal-tour-bag.png
-          restore_bag portal/ux10-assets/gal-stand-bag.b64.part1 portal/ux10-assets/gal-stand-bag.tail.b64 portal/public/ux10/bags/gal-stand-bag.png
+          restore_parts 'portal/ux10-assets/gal-tour-bag.b64.part*' portal/public/ux10/bags/gal-tour-bag.png
+          restore_parts 'portal/ux10-assets/gal-stand-bag.b64.part*' portal/public/ux10/bags/gal-stand-bag.png
           test "$(wc -c < portal/public/ux10/tee-boxes/coastal-01.webp)" -eq 23560
           test "$(wc -c < portal/public/ux10/tee-boxes/cliffs-01.webp)" -eq 30352
-          test "$(wc -c < portal/public/ux10/bags/gal-tour-bag.png)" -eq 23372
-          test "$(wc -c < portal/public/ux10/bags/gal-stand-bag.png)" -eq 19207
+          test "$(wc -c < portal/public/ux10/bags/gal-tour-bag.png)" -eq 17841
+          test "$(wc -c < portal/public/ux10/bags/gal-stand-bag.png)" -eq 14867
           echo "a2573d5603e24d67ba00b9bdc784340c57d5a35e3e92c40c51b53e5667faf7f9  portal/public/ux10/tee-boxes/coastal-01.webp" | sha256sum --check --strict
           echo "4391c368868fee62aeb7c7cc002e2529bfb9ba8e0a6af96472bddb81f9a82f47  portal/public/ux10/tee-boxes/cliffs-01.webp" | sha256sum --check --strict
-          echo "7bf811eb4f7352779f6f3af1dfc50b4b8bf71f01fa5f6c21380dc3b7cdfb375d  portal/public/ux10/bags/gal-tour-bag.png" | sha256sum --check --strict
-          echo "488e4f6fec76007f0f4f6e2a32a5a57fbdea849c8da78ccd9bdb634a6150ca28  portal/public/ux10/bags/gal-stand-bag.png" | sha256sum --check --strict
+          echo "94d18e5ca9dd4045ddbe199b4b91cce7c537beba9c030166a5c02f65b2aadc9f  portal/public/ux10/bags/gal-tour-bag.png" | sha256sum --check --strict
+          echo "7ffd0881aafdc8885e468ad929a88d4a3dcbc1cece8b0e9b471720da27443d4c  portal/public/ux10/bags/gal-stand-bag.png" | sha256sum --check --strict
       - name: Install verified dependencies
         working-directory: portal
         run: pnpm install --frozen-lockfile
       - name: Verify portal
         working-directory: portal
         run: pnpm run test:run
-      - name: Build static review portal against staging
+      - name: Build static review portal
         working-directory: portal
         env:
-          VITE_SUPABASE_URL: https://ylrxwtbzavhxxpoqqmho.supabase.co
-          VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_Jgy4llwo5UhX4mg3EZ6VSA_xhyPOcVp
+          VITE_SUPABASE_URL: https://example.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: test-publishable-key
         run: pnpm run build
       - name: Reject forbidden browser material and sample facts
         working-directory: portal
