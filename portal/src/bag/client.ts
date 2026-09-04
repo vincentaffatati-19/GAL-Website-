@@ -1,5 +1,6 @@
 import { getCurrentSession } from '../auth/session';
 import { fetchAiFitEquipment } from '../equipment/client';
+import type { AiFitEquipmentRead } from '../equipment/types';
 import { getSupabaseClient } from '../supabase/client';
 import { projectBagItems, type BagEquipmentView, type BagItemRow } from './model';
 
@@ -31,7 +32,7 @@ export async function fetchMyBag(): Promise<BagEquipmentView[]> {
     .order('created_at', { ascending: true });
   if (itemError) throw new Error(itemError.message);
 
-  let aiFit = [];
+  let aiFit: AiFitEquipmentRead[] = [];
   try { aiFit = await fetchAiFitEquipment(); } catch { aiFit = []; }
   return projectBagItems((rows ?? []) as BagItemRow[], aiFit);
 }
