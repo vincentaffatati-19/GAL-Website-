@@ -32,11 +32,11 @@ jobs:
       - name: Verify portal
         working-directory: portal
         run: pnpm run test:run
-      - name: Build static review portal
+      - name: Build static review portal against staging
         working-directory: portal
         env:
-          VITE_SUPABASE_URL: https://example.supabase.co
-          VITE_SUPABASE_PUBLISHABLE_KEY: review-publishable-key
+          VITE_SUPABASE_URL: https://ylrxwtbzavhxxpoqqmho.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_Jgy4llwo5UhX4mg3EZ6VSA_xhyPOcVp
         run: pnpm run build
       - name: Reject service-role material
         working-directory: portal
