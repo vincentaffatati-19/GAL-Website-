@@ -17,9 +17,9 @@ const vercelConfig = JSON.parse(readFileSync(resolve(siteRoot, 'vercel.json'), '
   routes?: Array<Record<string, string>>;
   rewrites?: unknown;
 };
-const visualLayerPath = resolve(srcRoot, 'styles/rcux4-visuals.css');
+const visualLayerPath = resolve(srcRoot, 'styles/ux5-mid.css');
 
-describe('RC-UX4 candidate visual packaging', () => {
+describe('GAL-UX5-MID candidate visual packaging', () => {
   it('serves the locked GAL logo from a stable portal asset route before the SPA fallback', () => {
     expect(BRAND_LOGO_SRC).toBe('/portal/gal-option7a-motion.jpg');
     expect(viteConfig).toContain("base: './'");
@@ -28,9 +28,10 @@ describe('RC-UX4 candidate visual packaging', () => {
     expect(vercelConfig.routes?.some((route) => route.dest === '/portal/index.html')).toBe(true);
   });
 
-  it('uses one clean GAL data-product visual system with no legacy illustration primitives', () => {
+  it('uses UX5 as the only active current visual layer', () => {
     expect(profile).not.toContain('representation placeholder');
-    expect(main).toContain("import './styles/rcux4-visuals.css'");
+    expect(main).toContain("import './styles/ux5-mid.css'");
+    expect(main).not.toContain("import './styles/rcux4-visuals.css'");
     expect(existsSync(visualLayerPath)).toBe(true);
 
     for (const [source, primitive] of [
@@ -57,7 +58,7 @@ describe('RC-UX4 candidate visual packaging', () => {
       const visuals = readFileSync(visualLayerPath, 'utf8');
       expect(visuals).not.toContain('data:image/svg+xml');
       expect(visuals).not.toContain('base64,');
-      for (const contract of ['--gal-navy', '--gal-orange', '.tee-box-hero', '.my-bag-hero', '.golfer-figure', '.measurement-figure', 'linear-gradient', 'radial-gradient']) {
+      for (const contract of ['--ux5-navy', '--ux5-orange', '.ux5-shell', '.ux5-bag-environment', '.ux5-club-panel']) {
         expect(visuals).toContain(contract);
       }
     }
