@@ -36,7 +36,7 @@ function areaCard(label: string, key: string, facts: ProfileFactRow[]): string {
 }
 
 function measurementGuidance(): string {
-  return `<section class="profile-deep-dive" id="you-details"><div><p class="eyebrow">You · Measurement</p><h2>Wrist-to-floor</h2><p>Stand naturally on a level floor in normal golf shoes or similar footwear. Let your arms hang naturally and measure vertically from the wrist crease to the floor.</p></div><div class="measurement-figure" aria-label="Wrist-to-floor measurement illustration"><span class="measure-person" aria-hidden="true"></span><span class="measure-line" aria-hidden="true"></span><small>Wrist crease → floor</small></div></section>`;
+  return `<section class="profile-deep-dive" id="you-details"><div><p class="eyebrow">You · Measurement</p><h2>Wrist-to-floor</h2><p>Stand naturally on a level floor in normal golf shoes or similar footwear. Let your arms hang naturally and measure vertically from the wrist crease to the floor.</p></div><div class="measurement-figure" role="img" aria-label="Wrist-to-floor measurement guide"><small>Wrist crease → floor</small></div></section>`;
 }
 
 function missGuidance(): string {
@@ -68,7 +68,7 @@ export async function renderGolferProfile(): Promise<string> {
       <header class="profile-hero"><div><p class="eyebrow">Build Your GAL Golfer</p><h1>The more GAL understands your game, the better we can fit your equipment.</h1><p><strong>Tell GAL Once.</strong> GAL responsibly reuses valid, semantically compatible information and asks again only when data is missing, stale, or genuinely context-specific.</p></div><div class="profile-completeness"><strong>${completed} of 5</strong><span>Profile completeness · data coverage</span><small>This measures known profile areas, not golfer quality or fitting confidence.</small></div></header>
 
       <div class="golfer-profile-hub">
-        <div class="golfer-figure" role="img" aria-label="Adaptive golfer representation"><span class="golfer-head"></span><span class="golfer-body"></span><span class="golfer-club"></span><small>Representation adapts only from known age-band, presentation and handedness data.</small></div>
+        <div class="golfer-figure" role="img" aria-label="Golfer profile data coverage"><small>Profile intelligence uses only known, sourced and current golfer data.</small></div>
         ${areas.map((area) => areaCard(area.label, area.key, area.facts)).join('')}
       </div>
 
