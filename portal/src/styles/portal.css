@@ -1,0 +1,49 @@
+:root {
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #0B245F;
+  background: #f5f7fa;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --gal-navy: #0B245F;
+  --gal-navy-dark: #07183f;
+  --gal-orange: #FF5A1F;
+  --gal-white: #ffffff;
+  --gal-light: #f5f7fa;
+  --gal-border: #dbe2ea;
+  --gal-text: #172033;
+}
+* { box-sizing: border-box; }
+html { min-width: 320px; background: var(--gal-light); }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: var(--gal-light); color: var(--gal-text); }
+a { color: inherit; }
+.my-gal-shell { min-height: 100vh; }
+.my-gal-header { position: relative; z-index: 20; background: rgba(255,255,255,.97); border-bottom: 1px solid rgba(11,36,95,.09); backdrop-filter: blur(12px); }
+.my-gal-header-inner { width: min(1220px, calc(100% - 32px)); min-height: 78px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 10px 0; }
+.my-gal-brand { display: inline-flex; align-items: center; color: inherit; text-decoration: none; }
+.my-gal-brand-logo { width: 184px; max-width: 48vw; height: auto; display: block; }
+.my-gal-product-name { margin-left: auto; padding-left: 22px; border-left: 1px solid var(--gal-border); color: var(--gal-navy); }
+.my-gal-product-name strong, .my-gal-product-name small { display: block; }
+.my-gal-product-name strong { font-size: 1rem; font-weight: 800; letter-spacing: -.01em; }
+.my-gal-product-name small { margin-top: 2px; color: #667085; font-size: .73rem; font-weight: 600; }
+.my-gal-nav { position: sticky; top: 0; z-index: 15; display: flex; gap: 22px; overflow-x: auto; padding: 0 max(16px, calc((100vw - 1220px) / 2)); background: var(--gal-white); border-bottom: 1px solid var(--gal-border); scrollbar-width: none; }
+.my-gal-nav::-webkit-scrollbar { display: none; }
+.my-gal-nav a { position: relative; min-height: 48px; display: inline-flex; align-items: center; padding: 0 2px; text-decoration: none; white-space: nowrap; font-size: .78rem; font-weight: 800; letter-spacing: .045em; text-transform: uppercase; color: var(--gal-navy); }
+.my-gal-nav a[aria-current="page"] { color: var(--gal-orange); }
+.my-gal-nav a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 5px; height: 2px; background: var(--gal-orange); }
+.my-gal-nav a:focus-visible, .my-gal-brand:focus-visible { outline: 3px solid var(--gal-orange); outline-offset: 3px; }
+.my-gal-main { width: min(1040px, calc(100% - 32px)); margin: 0 auto; padding: clamp(34px, 6vw, 72px) 0; }
+.eyebrow { margin: 0 0 8px; color: var(--gal-orange); font-size: .75rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+h1 { margin: 0; color: var(--gal-navy); font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1; letter-spacing: -.035em; }
+.intro { max-width: 700px; font-size: 1.05rem; line-height: 1.65; }
+.my-gal-state { margin-top: 28px; padding: clamp(20px, 4vw, 32px); background: var(--gal-white); border: 1px solid var(--gal-border); border-top: 3px solid var(--gal-orange); border-radius: 18px; box-shadow: 0 8px 28px rgba(11,36,95,.07); }
+.my-gal-state h2 { margin-top: 0; color: var(--gal-navy); }
+.my-gal-state p { margin-bottom: 0; line-height: 1.6; }
+@media (max-width: 600px) {
+  .my-gal-header-inner { min-height: 70px; width: calc(100% - 28px); gap: 12px; }
+  .my-gal-brand-logo { width: 154px; max-width: 52vw; }
+  .my-gal-product-name { padding-left: 12px; }
+  .my-gal-product-name small { display: none; }
+  .my-gal-product-name strong { font-size: .9rem; }
+  .my-gal-nav { gap: 18px; padding-inline: 16px; }
+  .my-gal-nav a { min-height: 46px; font-size: .72rem; }
+}

@@ -1,0 +1,45 @@
+name: My GAL Portal CI
+
+on:
+  pull_request:
+    paths:
+      - 'portal/**'
+      - 'drivers.html'
+      - 'supabase/migrations/20260904022000_consumer_commercial_consent.sql'
+      - 'supabase/tests/consumer_commercial_consent.sql'
+      - '.github/workflows/my-gal-portal-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  portal:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: portal
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+          cache-dependency-path: portal/pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Unit tests
+        run: pnpm run test:run
+      - name: Production build
+        env:
+          VITE_SUPABASE_URL: https://example.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: test-publishable-key
+        run: pnpm run build
+      - name: Reject service-role material in browser build
+        run: |
+          if grep -R -E 'SUPABASE_SERVICE_ROLE_KEY|service_role' dist; then
+            echo 'Forbidden service-role material found in portal build.'
+            exit 1
+          fi
