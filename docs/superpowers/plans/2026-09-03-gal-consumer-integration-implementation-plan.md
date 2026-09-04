@@ -2,52 +2,29 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Connect My GAL, My Bag, Buyers Guides, and GAL AI Fitting to one governed Equipment Knowledge consumer layer, activate Driver as the first full vertical slice, and preserve the future privacy-safe B2B Industry Intelligence monetization path.
+**Goal:** Connect My GAL, My Bag, Buyers Guides, and GAL AI Fitting to one governed Equipment Knowledge consumer layer, activate Driver as the first complete vertical slice, and preserve the future privacy-safe B2B Industry Intelligence monetization path.
 
-**Architecture:** Reconcile the existing My GAL shell onto the current integration branch, then add one browser-safe Supabase client, one shared equipment read model, and one category-adapter registry for all seven equipment categories. Driver is the only initially active fitter. Consumer surfaces share the same governed read contracts; commercial-data participation is explicit opt-in and contributes only through the existing privacy-safe aggregate-learning boundary.
+**Architecture:** Reconcile the existing My GAL shell onto the current integration branch, then add one browser-safe Supabase client, one shared equipment read model, and one category registry for all seven equipment categories. Driver is the only initially active fitter. My Bag, Buyers Guides, AI Fitting, Today, Insights, and Progress consume the same governed equipment truth. Commercial aggregate-data participation is explicit opt-in and extends the existing append-only consent and privacy-safe aggregate-learning architecture rather than creating a second data stack.
 
-**Tech Stack:** Vite, TypeScript, browser Supabase client, PostgreSQL/Supabase migrations and RPCs, existing GAL longitudinal privacy/consent tables, Vitest, SQL acceptance tests, GitHub Actions, Vercel preview/staging.
+**Tech Stack:** Vite, TypeScript, `@supabase/supabase-js`, PostgreSQL/Supabase migrations and RPCs, existing GAL longitudinal consent/aggregate-learning structures, Vitest, SQL acceptance tests, GitHub Actions, Vercel preview/staging.
 
 **Spec:** `docs/superpowers/specs/2026-09-03-gal-consumer-integration-design.md`
 
 ## Global Constraints
 
 - Production deployment and production Supabase migration are NOT authorized by this plan.
-- Exact approved GAL Motion Arc brand asset only; do not recreate or approximate the logo.
+- Use the exact approved GAL Motion Arc brand asset; do not recreate or approximate the logo.
 - Browser configuration is limited to `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`; no service-role material may enter browser code.
 - Public Buyers Guides use `public.gal_public_equipment_guide()`; authenticated fitting uses `public.gal_authenticated_equipment_ai_fit()`.
-- My Bag, Guides, Today, Insights, Progress, and AI Fitting must not maintain independent equipment-product truth or direct equipment-knowledge query paths.
+- No consumer surface may maintain an independent equipment-product truth or direct equipment-knowledge query path.
 - Characteristics Before Brands is mandatory: `Golfer Evidence -> Golfer Need -> Required Equipment Characteristics -> Candidate Configurations -> Brands/Models -> Commerce`.
 - Unknown is not good fit; missing critical evidence narrows or blocks recommendations.
-- `AI_FIT_LIMITED` must remain distinct from `AI_FIT_READY`.
+- `AI_FIT_LIMITED` remains visibly and behaviorally distinct from `AI_FIT_READY`.
 - Unknown compatibility is not compatible; only governed eligible configurations may become fitting candidates.
-- Registered and subscriber users use the same components and contracts; entitlements add capability but never alter equipment truth or ranking.
-- Commercial aggregate-data participation is explicit opt-in, separate from ordinary product-use consent.
+- Registered and subscriber users use the same components and data contracts; entitlements add capability but never alter equipment truth or analytical rank.
+- Commercial aggregate-data participation is explicit opt-in and separate from ordinary product-use consent.
 - Industry customers never receive direct access to identifiable golfer operational data.
-- Existing minimum-cohort aggregate-learning governance remains the privacy floor; future B2B products consume only governed aggregates, reports, or approved exports.
-
----
-
-## File Structure
-
-Implementation should converge on these responsibilities:
-
-- `portal/src/supabase/client.ts` — browser-safe Supabase client singleton.
-- `portal/src/auth/session.ts` — authenticated-session resolution only.
-- `portal/src/equipment/types.ts` — stable consumer equipment types.
-- `portal/src/equipment/categories.ts` — seven-category registry and activation flags.
-- `portal/src/equipment/normalize.ts` — governed RPC row -> consumer read model transformation.
-- `portal/src/equipment/client.ts` — sole browser equipment read boundary.
-- `portal/src/equipment/state.ts` — explicit ready/limited/missing/stale/error state mapping.
-- `portal/src/bag/*` — My Bag consumer presentation; no independent fitting logic.
-- `portal/src/fitting/driver/*` — Driver-only active fitting workflow.
-- `portal/src/guides/*` — public/logged-in guide integration using shared model.
-- `portal/src/surfaces/*` — Today, Insights, Progress views consuming shared state.
-- `portal/src/privacy/commercialConsent.ts` — explicit commercial aggregate-data opt-in UI/data boundary.
-- `supabase/migrations/<timestamp>_consumer_commercial_consent.sql` — extend existing append-only consent model for commercial aggregate participation.
-- `supabase/tests/consumer_commercial_consent.sql` — consent/RLS/withdrawal eligibility acceptance.
-- `portal/src/__tests__/*` — unit tests for auth, normalization, categories, state, and surfaces.
-- `.github/workflows/my-gal-portal-ci.yml` — portal tests/build/service-role scan.
+- Existing privacy-safe aggregate-learning governance remains the minimum privacy floor; future B2B products consume only governed aggregate outputs, reports, or approved exports.
 
 ---
 
@@ -63,16 +40,18 @@ Implementation should converge on these responsibilities:
 - Reconcile from PR #25: `portal/src/main.ts`
 - Reconcile from PR #25: `portal/src/router.ts`
 - Reconcile from PR #25: `portal/src/styles/portal.css`
-- Reconcile tests: `portal/src/__tests__/branding.test.ts`, `config.test.ts`, `router.test.ts`
+- Reconcile tests: `portal/src/__tests__/branding.test.ts`
+- Reconcile tests: `portal/src/__tests__/config.test.ts`
+- Reconcile tests: `portal/src/__tests__/router.test.ts`
+- Reconcile: `portal/tsconfig.json`
+- Reconcile: `portal/vite.config.ts`
 
 **Interfaces:**
 - Produces `resolvePortalRoute(pathname: string): PortalRoute`.
 - Produces `getPortalConfig(): { supabaseUrl: string; supabasePublishableKey: string }`.
 - Preserves routes `today | bag | insights | guides | progress`.
 
-- [ ] **Step 1: Branch from current integration head**
-
-Create the implementation branch from current `portal-integration-plan` head, not from PR #25:
+- [ ] **Step 1: Create an implementation branch from the current integration head**
 
 ```bash
 git switch portal-integration-plan
@@ -82,17 +61,17 @@ git switch -c consumer-integration-implementation
 
 - [ ] **Step 2: Reapply the PR #25 shell files without merging the stale branch wholesale**
 
-Preserve the existing router contract:
+Preserve this router contract:
 
 ```ts
 export type PortalRoute = 'today' | 'bag' | 'insights' | 'guides' | 'progress';
 
+const ROUTES = new Set<PortalRoute>(['today', 'bag', 'insights', 'guides', 'progress']);
+
 export function resolvePortalRoute(pathname: string): PortalRoute {
   const normalized = pathname.replace(/\/+$/, '');
   const segment = normalized.split('/').filter(Boolean)[1]?.toLowerCase() as PortalRoute | undefined;
-  return segment && new Set<PortalRoute>(['today', 'bag', 'insights', 'guides', 'progress']).has(segment)
-    ? segment
-    : 'today';
+  return segment && ROUTES.has(segment) ? segment : 'today';
 }
 ```
 
@@ -105,9 +84,9 @@ npm test -- --run
 npm run build
 ```
 
-Expected: branding/config/router tests pass; Vite build succeeds under `/portal/`.
+Expected: branding/config/router tests pass and Vite builds under `/portal/`.
 
-- [ ] **Step 4: Verify browser bundle contains no service-role material**
+- [ ] **Step 4: Verify no service-role material in the browser bundle**
 
 ```bash
 grep -RniE 'service[_-]?role|SUPABASE_SERVICE_ROLE|service_role' dist && exit 1 || true
@@ -132,37 +111,37 @@ git commit -m "feat: reconcile My GAL shell onto consumer integration"
 - Create: `portal/src/__tests__/supabaseClient.test.ts`
 - Create: `portal/src/__tests__/session.test.ts`
 - Modify: `portal/package.json`
+- Modify: `portal/package-lock.json`
 
 **Interfaces:**
 - Produces `getSupabaseClient(): SupabaseClient`.
 - Produces `getCurrentSession(): Promise<Session | null>`.
 - Consumes `getPortalConfig()` from Task 1.
 
-- [ ] **Step 1: Write failing client tests**
+- [ ] **Step 1: Write failing tests for the client/session boundary**
 
 ```ts
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('browser Supabase boundary', () => {
-  it('does not expose service-role configuration', async () => {
+  it('contains no service-role API surface', async () => {
     const mod = await import('../supabase/client');
     expect(JSON.stringify(mod)).not.toMatch(/service[_-]?role/i);
   });
 });
 ```
 
-- [ ] **Step 2: Run the focused tests and confirm failure**
+- [ ] **Step 2: Verify the tests fail before implementation**
 
 ```bash
 npm test -- --run src/__tests__/supabaseClient.test.ts src/__tests__/session.test.ts
 ```
 
-Expected: FAIL because the modules do not yet exist.
+Expected: FAIL because the modules do not exist.
 
-- [ ] **Step 3: Add `@supabase/supabase-js` and implement the singleton**
+- [ ] **Step 3: Add `@supabase/supabase-js` and implement the browser singleton**
 
 ```ts
-// portal/src/supabase/client.ts
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { getPortalConfig } from '../config';
 
@@ -179,8 +158,9 @@ export function getSupabaseClient(): SupabaseClient {
 }
 ```
 
+- [ ] **Step 4: Implement session lookup**
+
 ```ts
-// portal/src/auth/session.ts
 import type { Session } from '@supabase/supabase-js';
 import { getSupabaseClient } from '../supabase/client';
 
@@ -191,19 +171,12 @@ export async function getCurrentSession(): Promise<Session | null> {
 }
 ```
 
-- [ ] **Step 4: Run unit tests and build**
+- [ ] **Step 5: Run all portal tests/build and commit**
 
 ```bash
 npm test -- --run
 npm run build
-```
-
-Expected: PASS.
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add portal/package.json portal/package-lock.json portal/src/supabase portal/src/auth portal/src/__tests__
+git add portal/package.json portal/package-lock.json portal/src/supabase portal/src/auth portal/src/__tests__/supabaseClient.test.ts portal/src/__tests__/session.test.ts
 git commit -m "feat: add browser Supabase and session boundary"
 ```
 
@@ -222,24 +195,24 @@ git commit -m "feat: add browser Supabase and session boundary"
 - Create: `portal/src/__tests__/equipmentState.test.ts`
 
 **Interfaces:**
-- Produces `EquipmentItem`, `EquipmentConfiguration`, `EquipmentOpportunity`, `EquipmentRecommendation`.
+- Produces `EquipmentItem`, `EquipmentConfiguration`, `EquipmentOpportunity`, and `EquipmentRecommendation`.
 - Produces `EquipmentCategory = 'DRIVER' | 'FAIRWAY_WOOD' | 'HYBRID' | 'IRON' | 'WEDGE' | 'PUTTER' | 'GOLF_BALL'`.
-- Produces `CATEGORY_REGISTRY` with Driver active and all six other categories inactive.
+- Produces `CATEGORY_REGISTRY` with Driver active and the other six categories inactive.
 - Produces `normalizeGuideRows(rows)` and `normalizeAiFitRows(rows)`.
 
-- [ ] **Step 1: Write failing registry/state tests**
+- [ ] **Step 1: Write the category activation test**
 
 ```ts
 import { CATEGORY_REGISTRY } from '../equipment/categories';
 
-it('declares every GAL equipment category and activates only Driver', () => {
+it('declares seven categories and activates only Driver', () => {
   expect(Object.keys(CATEGORY_REGISTRY)).toHaveLength(7);
   expect(CATEGORY_REGISTRY.DRIVER.active).toBe(true);
-  expect(Object.entries(CATEGORY_REGISTRY).filter(([, v]) => v.active).map(([k]) => k)).toEqual(['DRIVER']);
+  expect(Object.entries(CATEGORY_REGISTRY).filter(([, value]) => value.active).map(([key]) => key)).toEqual(['DRIVER']);
 });
 ```
 
-- [ ] **Step 2: Implement stable types**
+- [ ] **Step 2: Implement stable consumer types**
 
 ```ts
 export type EquipmentReadiness = 'GUIDE_READY' | 'AI_FIT_LIMITED' | 'AI_FIT_READY';
@@ -276,8 +249,6 @@ export interface EquipmentConfiguration {
 
 - [ ] **Step 3: Implement explicit consumer state mapping**
 
-Use a discriminated union rather than booleans:
-
 ```ts
 export type ConsumerEquipmentState =
   | { kind: 'ready' }
@@ -294,20 +265,13 @@ export type ConsumerEquipmentState =
 
 - [ ] **Step 4: Implement normalizers using only governed RPC fields**
 
-`normalizeAiFitRows()` must map `approved_characteristics`, `readiness_state`, `blocking_gap_count`, `configuration_id`, `equipment_configuration_id`, `configuration_key`, `configuration_name`, `support_state`, and `limited_evidence`. It must not synthesize a fit score, savings value, confidence score, or recommendation.
+`normalizeAiFitRows()` maps `approved_characteristics`, `readiness_state`, `blocking_gap_count`, `configuration_id`, `equipment_configuration_id`, `configuration_key`, `configuration_name`, `support_state`, and `limited_evidence`. It must not synthesize fit scores, savings, confidence scores, or recommendations.
 
-- [ ] **Step 5: Run tests**
+- [ ] **Step 5: Run tests and commit**
 
 ```bash
 npm test -- --run src/__tests__/equipmentTypes.test.ts src/__tests__/equipmentCategories.test.ts src/__tests__/equipmentNormalize.test.ts src/__tests__/equipmentState.test.ts
-```
-
-Expected: PASS.
-
-- [ ] **Step 6: Commit**
-
-```bash
-git add portal/src/equipment portal/src/__tests__
+git add portal/src/equipment portal/src/__tests__/equipmentTypes.test.ts portal/src/__tests__/equipmentCategories.test.ts portal/src/__tests__/equipmentNormalize.test.ts portal/src/__tests__/equipmentState.test.ts
 git commit -m "feat: add shared equipment consumer model"
 ```
 
@@ -317,7 +281,9 @@ git commit -m "feat: add shared equipment consumer model"
 
 **Files:**
 - Create: `portal/src/equipment/client.ts`
+- Create: `portal/src/equipment/errors.ts`
 - Create: `portal/src/__tests__/equipmentClient.test.ts`
+- Create: `portal/src/__tests__/equipmentArchitecture.test.ts`
 
 **Interfaces:**
 - Produces `fetchGuideEquipment(): Promise<EquipmentItem[]>`.
@@ -326,9 +292,9 @@ git commit -m "feat: add shared equipment consumer model"
 
 - [ ] **Step 1: Write failing RPC-routing tests**
 
-Test that public guide calls `gal_public_equipment_guide` and AI Fit calls `gal_authenticated_equipment_ai_fit`, and that an auth failure maps to `unauthorized` rather than falling back to public product ranking.
+Verify the public client calls `gal_public_equipment_guide`; authenticated fitting calls `gal_authenticated_equipment_ai_fit`; unauthenticated fitting returns `AUTH_REQUIRED` and never falls back to product-first ranking.
 
-- [ ] **Step 2: Implement the shared data boundary**
+- [ ] **Step 2: Implement the data boundary**
 
 ```ts
 export async function fetchGuideEquipment() {
@@ -348,14 +314,14 @@ export async function fetchAiFitEquipment() {
 
 - [ ] **Step 3: Add an architecture guard test**
 
-Scan `portal/src` and fail if either equipment RPC name appears outside `portal/src/equipment/client.ts` and its tests.
+Scan `portal/src` and fail if either equipment RPC name appears outside `portal/src/equipment/client.ts` and `portal/src/__tests__/equipmentClient.test.ts`.
 
 - [ ] **Step 4: Run tests/build and commit**
 
 ```bash
 npm test -- --run
 npm run build
-git add portal/src/equipment portal/src/__tests__
+git add portal/src/equipment portal/src/__tests__/equipmentClient.test.ts portal/src/__tests__/equipmentArchitecture.test.ts
 git commit -m "feat: add governed equipment browser client"
 ```
 
@@ -364,59 +330,47 @@ git commit -m "feat: add governed equipment browser client"
 ### Task 5: Add Explicit Commercial Aggregate-Data Opt-In Groundwork
 
 **Files:**
-- Create: `supabase/migrations/<timestamp>_consumer_commercial_consent.sql`
+- Create: `supabase/migrations/20260904022000_consumer_commercial_consent.sql`
 - Create: `supabase/tests/consumer_commercial_consent.sql`
 - Create: `portal/src/privacy/commercialConsent.ts`
 - Create: `portal/src/__tests__/commercialConsent.test.ts`
+- Modify only if required by the existing consent vocabulary constraint: `supabase/migrations/20260904022000_consumer_commercial_consent.sql`
 
 **Interfaces:**
 - Reuses existing append-only `gal_consent_records` behavior and current-user RLS.
-- Introduces consent purpose `COMMERCIAL_AGGREGATE` as separate from ordinary product-use and `ANALYTICS_OPTIONAL` consent.
+- Introduces consent purpose `COMMERCIAL_AGGREGATE` separately from ordinary product use and `ANALYTICS_OPTIONAL`.
 - Produces `getCommercialAggregateConsent()` and `recordCommercialAggregateConsent(decision)`.
-- Does NOT create a B2B dashboard or expose individual golfer records.
+- Does not create a B2B dashboard or expose individual golfer records.
 
-- [ ] **Step 1: Write a SQL acceptance test first**
+- [ ] **Step 1: Write the SQL acceptance test first**
 
-The test must prove:
+The test proves:
 1. latest `COMMERCIAL_AGGREGATE` decision controls commercial eligibility;
-2. `ACCEPTED` and `DECLINED/WITHDRAWN` remain append-only events;
-3. authenticated users can only read/insert their own consent records;
-4. ordinary product use still works without `COMMERCIAL_AGGREGATE=ACCEPTED`;
-5. commercial aggregate eligibility requires BOTH the existing privacy-safe analytics eligibility and latest `COMMERCIAL_AGGREGATE=ACCEPTED`.
+2. consent history is append-only;
+3. authenticated golfers can only read/insert their own consent records;
+4. ordinary product use still works without commercial opt-in;
+5. commercial aggregate eligibility requires the existing analytics eligibility AND latest `COMMERCIAL_AGGREGATE=ACCEPTED`.
 
-- [ ] **Step 2: Extend the existing consent vocabulary in an additive migration**
+- [ ] **Step 2: Implement the additive migration**
 
-Do not create a parallel consent table. Preserve existing history and policies. If the purpose is constrained by a CHECK constraint or enum, replace/extend that constraint additively to allow `COMMERCIAL_AGGREGATE` while retaining every existing allowed value.
+Extend the current consent vocabulary to allow `COMMERCIAL_AGGREGATE` while retaining every currently allowed consent value. Preserve the existing append-only table and RLS policies. Create a non-browser-readable service/internal eligibility view named `gal_commercial_aggregate_eligible_users_v` whose rows contain only `user_id` and the effective consent timestamp; revoke browser-role access.
 
-Create a service/internal eligibility view or function that returns only eligible user IDs for aggregate builders; do not grant browser roles direct select on it.
-
-- [ ] **Step 3: Add the browser preference helper**
+- [ ] **Step 3: Implement the browser preference helper against the actual current consent column names**
 
 ```ts
 export type CommercialConsentDecision = 'ACCEPTED' | 'DECLINED' | 'WITHDRAWN';
-
-export async function recordCommercialAggregateConsent(decision: CommercialConsentDecision): Promise<void> {
-  const session = await getCurrentSession();
-  if (!session) throw new Error('Authentication required');
-  const { error } = await getSupabaseClient().from('gal_consent_records').insert({
-    user_id: session.user.id,
-    consent_type: 'COMMERCIAL_AGGREGATE',
-    consent_status: decision,
-  });
-  if (error) throw error;
-}
 ```
 
-During implementation, bind the field names to the actual existing `gal_consent_records` schema before committing; do not alter the append-only model.
+The helper must resolve the signed-in user, insert a new consent event, and never update/delete prior consent rows.
 
-- [ ] **Step 4: Run SQL tests in staging and portal unit tests**
+- [ ] **Step 4: Run SQL acceptance in staging and portal unit tests**
 
-Expected: explicit opt-in gates commercial eligibility; withdrawal removes future aggregate eligibility without deleting consent history.
+Expected: explicit opt-in gates commercial eligibility; withdrawal removes future eligibility without deleting history.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add supabase/migrations supabase/tests portal/src/privacy portal/src/__tests__/commercialConsent.test.ts
+git add supabase/migrations/20260904022000_consumer_commercial_consent.sql supabase/tests/consumer_commercial_consent.sql portal/src/privacy/commercialConsent.ts portal/src/__tests__/commercialConsent.test.ts
 git commit -m "feat: add commercial aggregate consent boundary"
 ```
 
@@ -426,21 +380,22 @@ git commit -m "feat: add commercial aggregate consent boundary"
 
 **Files:**
 - Create: `portal/src/bag/model.ts`
+- Create: `portal/src/bag/client.ts`
 - Create: `portal/src/bag/render.ts`
 - Create: `portal/src/__tests__/bagModel.test.ts`
 - Modify: `portal/src/main.ts`
 
 **Interfaces:**
-- Consumes existing golfer-owned `gal_bags` / `gal_bag_items` through an approved golfer-safe read path.
+- Reads golfer-owned `gal_bags` / `gal_bag_items` through golfer-safe RLS.
 - Uses `gal_bag_items.equipment_configuration_id` as governed configuration identity when present.
 - Treats legacy `configuration` JSON as a migration bridge only.
-- Produces `BagEquipmentView` with known, missing-configuration, and opportunity-link states.
+- Produces `BagEquipmentView` with `KNOWN` and `MISSING_CONFIGURATION` states.
 
 - [ ] **Step 1: Write tests proving unknown is not good fit**
 
-A bag item with no governed configuration reference must render `Configuration details needed`, not `Good fit` or an inferred configuration.
+A bag item without governed configuration identity must render `Configuration details needed`, never `Good fit` or an inferred configuration.
 
-- [ ] **Step 2: Implement bag projection**
+- [ ] **Step 2: Implement the bag projection**
 
 ```ts
 export interface BagEquipmentView {
@@ -453,9 +408,9 @@ export interface BagEquipmentView {
 }
 ```
 
-- [ ] **Step 3: Route `/portal/bag` to the bag renderer**
+- [ ] **Step 3: Route `/portal/bag` through the bag renderer**
 
-Keep the shell/nav unchanged; replace only the main-content body for the `bag` route.
+Preserve the shell/navigation and replace only the route content.
 
 - [ ] **Step 4: Run tests/build and commit**
 
@@ -468,7 +423,7 @@ git commit -m "feat: connect My Bag to governed equipment identity"
 
 ---
 
-### Task 7: Implement Driver-Only AI Fitting Vertical Slice
+### Task 7: Implement the Driver-Only AI Fitting Vertical Slice
 
 **Files:**
 - Create: `portal/src/fitting/driver/model.ts`
@@ -480,20 +435,15 @@ git commit -m "feat: connect My Bag to governed equipment identity"
 
 **Interfaces:**
 - Consumes shared equipment client and Driver category adapter.
-- Produces ordered phases: Need -> Target Characteristics -> Candidate Configurations -> Brand/Model -> Commerce.
-- Produces peer actions `KEEP | ADJUST | RECONFIGURE | REPLACE` only when supported.
-- Must never create candidate rank from affiliate/commercial metadata.
+- Produces fixed sequence `Need -> Target Characteristics -> Candidate Configurations -> Brands/Models -> Commerce`.
+- Produces peer analytical actions `KEEP | ADJUST | RECONFIGURE | REPLACE` when evidence supports them.
+- Commercial metadata cannot affect analytical ordering.
 
-- [ ] **Step 1: Write ordering and trust tests**
+- [ ] **Step 1: Write ordering/trust tests**
 
-Tests must prove:
-- target characteristics render before any brand/model section;
-- `AI_FIT_LIMITED` displays a limitation banner and blocking-gap count;
-- unready/ineligible configurations never render as candidates;
-- no `fit score`, `bag health`, or fabricated yardage is created;
-- commercial fields cannot alter analytical ordering.
+Tests prove target characteristics render before any brand/model section; `AI_FIT_LIMITED` shows its limitation; unready/ineligible configurations never render; no fit score, Bag Health, or fabricated yardage is created; commerce cannot alter analytical ordering.
 
-- [ ] **Step 2: Implement a Driver target model separate from product candidates**
+- [ ] **Step 2: Implement Driver target characteristics separately from candidates**
 
 ```ts
 export interface DriverTargetProfile {
@@ -506,15 +456,11 @@ export interface DriverTargetProfile {
 }
 ```
 
-- [ ] **Step 3: Implement Driver render flow**
+- [ ] **Step 3: Implement safe failure/resume behavior**
 
-The UI order must be fixed in code and tested. A missing target profile blocks candidate recommendations rather than skipping directly to brands.
+Unauthorized -> sign-in; limited -> missing-evidence explanation; service error -> retry; missing configuration -> return to My Bag configuration action.
 
-- [ ] **Step 4: Add safe failure/resume states**
-
-Unauthorized -> sign-in action; limited -> explain missing evidence; service error -> retry; missing configuration -> return to My Bag configuration action.
-
-- [ ] **Step 5: Run tests/build and commit**
+- [ ] **Step 4: Run tests/build and commit**
 
 ```bash
 npm test -- --run src/__tests__/driverFit.test.ts
@@ -525,49 +471,47 @@ git commit -m "feat: add Driver-first governed AI fitting flow"
 
 ---
 
-### Task 8: Integrate Public and Logged-In Driver Buyers Guide with the Shared Model
+### Task 8: Integrate the Driver Buyers Guide with the Shared Model
 
 **Files:**
+- Modify: `drivers.html`
 - Create: `portal/src/guides/model.ts`
 - Create: `portal/src/guides/driver.ts`
 - Create: `portal/src/guides/profileReuse.ts`
 - Create: `portal/src/__tests__/guideIntegration.test.ts`
-- Modify the current Driver Buyers Guide entry point(s) identified during execution.
+- Modify: `portal/src/main.ts`
 
 **Interfaces:**
-- Anonymous guide uses `fetchGuideEquipment()` only.
-- Logged-in guide may reuse semantically compatible golfer profile facts.
+- `drivers.html` is the current public Driver category foundation; it becomes the public entry point to the governed Driver Guide experience rather than maintaining a separate product dataset.
+- Anonymous Guide uses `fetchGuideEquipment()` only.
+- Logged-in Guide may reuse semantically compatible golfer profile facts.
 - Reused values are visible/editable and retain source/freshness semantics.
 - Guide shortlist remains a lightweight guide result, not a full AI Fit.
 
 - [ ] **Step 1: Write anonymous/logged-in parity tests**
 
-Prove both states use the same canonical family/characteristic truth, while only the logged-in state reuses profile data.
+Both states must use the same canonical equipment identity/current governed characteristics; only logged-in state receives Tell GAL Once reuse.
 
-- [ ] **Step 2: Implement visible Tell GAL Once reuse**
+- [ ] **Step 2: Implement visible profile reuse**
 
-Use copy:
+Use copy `Using what GAL already knows about you.` with `Looks right` and `Update` actions for reused material inputs.
 
-```text
-Using what GAL already knows about you.
-```
+- [ ] **Step 3: Add a contradiction guard test**
 
-Provide `Looks right` and `Update` actions for material reused answers.
+For the same family returned by Guide and AI Fit contracts, canonical identity and current governed characteristics must match exactly.
 
-- [ ] **Step 3: Add contradiction test**
+- [ ] **Step 4: Update `drivers.html` to launch/link the governed Driver Guide experience**
 
-Given the same product family returned by Guide and AI Fit contracts, canonical identity and current governed characteristics must match exactly.
+Retain educational content and public accessibility; do not embed a second static Driver product truth dataset in the page.
 
-- [ ] **Step 4: Run guide acceptance and commit**
+- [ ] **Step 5: Run tests/build and commit**
 
 ```bash
 npm test -- --run src/__tests__/guideIntegration.test.ts
 npm run build
-git add portal/src/guides portal/src/__tests__/guideIntegration.test.ts <driver-guide-files>
+git add drivers.html portal/src/guides portal/src/main.ts portal/src/__tests__/guideIntegration.test.ts
 git commit -m "feat: connect Driver Buyers Guide to shared equipment truth"
 ```
-
-Before committing, replace `<driver-guide-files>` with the exact current guide files discovered in the implementation worktree; do not commit a placeholder path.
 
 ---
 
@@ -585,30 +529,26 @@ Before committing, replace `<driver-guide-files>` with the exact current guide f
 - Insights translates governed lifecycle state into golfer-safe labels.
 - Progress consumes longitudinal outcome/resolution state; it does not invent golf-score activity.
 
-- [ ] **Step 1: Write translation tests**
+- [ ] **Step 1: Lock insight-language mappings in tests**
 
-Lock mappings:
-
-```ts
-ACTIVE -> 'Needs Attention'
-ACKNOWLEDGED -> 'Watching'
-RESOLVED -> 'Solved'
-REGRESSED -> 'Came Back'
-EVIDENCE_PENDING -> 'Checking Progress'
-INEFFECTIVE -> 'Still Needs Attention'
+```text
+ACTIVE -> Needs Attention
+ACKNOWLEDGED -> Watching
+RESOLVED -> Solved
+REGRESSED -> Came Back
+EVIDENCE_PENDING -> Checking Progress
+INEFFECTIVE -> Still Needs Attention
 ```
 
-SUPPRESSED/EXPIRED must not become prominent golfer labels.
+`SUPPRESSED` and `EXPIRED` do not become prominent golfer labels.
 
-- [ ] **Step 2: Implement Today Driver opportunity card**
+- [ ] **Step 2: Implement the Today Driver opportunity card**
 
-Preferred headline: `GAL Sees a Driver Opportunity`.
+Preferred headline: `GAL Sees a Driver Opportunity`. Do not show it merely because evidence is missing.
 
-Do not show it when the system merely lacks evidence; missing evidence gets a separate completion/action state.
+- [ ] **Step 3: Implement Progress continuity**
 
-- [ ] **Step 3: Implement progress connection**
-
-Render recommendation/change -> outcome -> resolution state when governed longitudinal data exists. No invented savings, yards, or score improvement.
+Render recommendation/change -> outcome -> resolution only when governed longitudinal data exists. No invented savings, yards, or score improvement.
 
 - [ ] **Step 4: Run tests/build and commit**
 
@@ -621,23 +561,22 @@ git commit -m "feat: connect Driver intelligence to My GAL surfaces"
 
 ---
 
-### Task 10: Add Registered/Subscriber Entitlement Tests Without Duplicating Components
+### Task 10: Enforce Registered/Subscriber Component and Truth Invariants
 
 **Files:**
 - Create: `portal/src/entitlements/model.ts`
 - Create: `portal/src/__tests__/entitlements.test.ts`
-- Modify shared renderers only where premium depth is actually needed.
 
 **Interfaces:**
-- Produces `Entitlements` capability flags.
-- Same My Bag/Guide/Fit components receive entitlement props/context.
+- Produces capability flags only.
+- Same My Bag/Guide/Fit components receive entitlements.
 - Equipment facts and analytical ordering remain invariant across entitlement levels.
 
 - [ ] **Step 1: Write invariant tests**
 
-For the same golfer/equipment data, registered and subscriber fixtures must produce identical canonical equipment identity, readiness, characteristics, compatibility, and candidate analytical order.
+For identical golfer/equipment inputs, registered and subscriber fixtures must produce identical canonical identity, readiness, characteristics, compatibility, and candidate analytical order.
 
-- [ ] **Step 2: Implement capability-only entitlement model**
+- [ ] **Step 2: Implement capability-only entitlements**
 
 ```ts
 export interface Entitlements {
@@ -647,9 +586,9 @@ export interface Entitlements {
 }
 ```
 
-No `subscriberRankBoost`, alternate product source, or separate portal route is allowed.
+No subscriber rank boost, alternate equipment source, or duplicate portal route is allowed.
 
-- [ ] **Step 3: Run tests and commit**
+- [ ] **Step 3: Run tests/build and commit**
 
 ```bash
 npm test -- --run src/__tests__/entitlements.test.ts
@@ -663,13 +602,14 @@ git commit -m "test: enforce registered subscriber equipment invariants"
 ### Task 11: Full Staging Acceptance and Release Gate
 
 **Files:**
-- Create/update: `docs/superpowers/reviews/2026-09-04-consumer-integration-staging-acceptance.md`
-- Modify: `.github/workflows/my-gal-portal-ci.yml` only if needed to execute the full suite.
+- Create: `docs/superpowers/reviews/2026-09-04-consumer-integration-staging-acceptance.md`
+- Modify only if required by new test coverage: `.github/workflows/my-gal-portal-ci.yml`
 
 **Interfaces:**
-- Produces auditable acceptance evidence; does not promote production.
+- Produces auditable staging acceptance evidence.
+- Does not promote production.
 
-- [ ] **Step 1: Run all portal unit tests and build**
+- [ ] **Step 1: Run all portal tests/build**
 
 ```bash
 cd portal
@@ -678,45 +618,36 @@ npm test -- --run
 npm run build
 ```
 
-Expected: all pass.
-
 - [ ] **Step 2: Run SQL contract/privacy tests against staging**
 
-Run the existing Equipment Knowledge tests plus `consumer_commercial_consent.sql`. Verify:
-- anon can execute only the public Guide contract;
-- authenticated can execute Guide + AI Fit contracts;
-- underlying equipment views remain non-browser-readable;
-- commercial consent remains append-only and explicit opt-in;
-- non-opted-in golfers are excluded from commercial eligibility;
-- minimum-cohort aggregate governance still holds.
+Run existing Equipment Knowledge tests plus `supabase/tests/consumer_commercial_consent.sql`. Verify public/authenticated RPC privileges, non-browser internal view access, append-only consent, explicit commercial opt-in, and minimum-cohort aggregate governance.
 
 - [ ] **Step 3: Execute two-user RLS acceptance**
 
-Use two test golfers. Each may see only their own bag/profile/consent data. Neither may read internal equipment-governance tables or another golfer's consent history.
+Each test golfer sees only their own bag/profile/consent data; neither sees internal governance tables or the other golfer's consent history.
 
-- [ ] **Step 4: Execute surface/E2E acceptance**
+- [ ] **Step 4: Execute four surface/E2E scenarios**
 
-Verify four scenarios:
-1. anonymous Driver Guide;
-2. registered golfer with incomplete Driver configuration;
-3. registered golfer with `AI_FIT_LIMITED` Driver data;
-4. subscriber golfer with `AI_FIT_READY` Driver data.
+1. Anonymous Driver Guide.
+2. Registered golfer with incomplete Driver configuration.
+3. Registered golfer with `AI_FIT_LIMITED` Driver evidence.
+4. Subscriber golfer with `AI_FIT_READY` Driver evidence.
 
-Across all authenticated scenarios verify My Bag -> Driver opportunity -> AI Driver Fit -> target characteristics -> governed candidates -> explanation -> next action -> outcome/progress continuity.
+For authenticated flows verify My Bag -> Driver opportunity -> AI Driver Fit -> target characteristics -> governed candidates -> explanation -> next action -> outcome/progress continuity.
 
-- [ ] **Step 5: Verify editorial/commercial firewall**
+- [ ] **Step 5: Verify the commercial/editorial firewall**
 
-Inject differing commerce/affiliate metadata into test fixtures and prove candidate analytical order does not change.
+Vary commerce/affiliate metadata in fixtures and prove analytical candidate ordering is unchanged.
 
-- [ ] **Step 6: Run staging security/performance advisors and record results**
+- [ ] **Step 6: Run staging security/performance advisors and record findings**
 
-Known leaked-password protection warning remains a separate account-plan blocker; do not enable paid features without approval.
+The known leaked-password protection warning remains a separate account-plan blocker; do not enable paid features without approval.
 
-- [ ] **Step 7: Document acceptance evidence**
+- [ ] **Step 7: Record acceptance evidence**
 
-The review file must include branch SHA, test commands, CI run, staging environment, Supabase advisor findings, Vercel preview URL, known issues, rollback path, and explicit statement `PRODUCTION NOT PROMOTED`.
+The review includes branch SHA, tests, CI run, staging environment, advisor findings, Vercel preview URL, known issues, rollback path, and the explicit statement `PRODUCTION NOT PROMOTED`.
 
-- [ ] **Step 8: Commit acceptance record**
+- [ ] **Step 8: Commit the acceptance record**
 
 ```bash
 git add docs/superpowers/reviews/2026-09-04-consumer-integration-staging-acceptance.md .github/workflows/my-gal-portal-ci.yml
@@ -729,38 +660,35 @@ git commit -m "docs: record consumer integration staging acceptance"
 
 **Files:**
 - Create: `docs/superpowers/reviews/2026-09-04-driver-consumer-gate.md`
-- No category activation changes in this task.
 
 **Interfaces:**
 - Produces a binary Driver gate decision.
-- If PASS, the shared architecture becomes the baseline for category-by-category activation.
-- If FAIL, fix Driver/shared architecture before activating another category.
+- PASS makes the shared architecture the baseline for category-by-category activation.
+- FAIL requires fixing Driver/shared architecture before another category is activated.
 
-- [ ] **Step 1: Evaluate the locked Driver acceptance criteria**
+- [ ] **Step 1: Evaluate Driver acceptance**
 
 PASS only if all are true:
-- governed current Driver/configuration appears correctly in My Bag;
-- unknown/missing data is not represented as good fit;
+- governed Driver/configuration is correct in My Bag;
+- unknown/missing data is never represented as good fit;
 - `AI_FIT_LIMITED` and `AI_FIT_READY` are distinct;
 - target characteristics appear before brands/models;
-- only compatibility-eligible/readiness-eligible configurations appear;
-- Keep/Adjust/Reconfigure/Replace remain peer actions where supported;
+- only eligibility/readiness-valid configurations appear;
+- Keep/Adjust/Reconfigure/Replace remain peer analytical actions where supported;
 - public/logged-in Guide and AI Fit share canonical equipment truth;
 - registered/subscriber equipment truth and analytical order are invariant;
-- commercial opt-in does not affect consumer recommendation/ranking;
-- no individual golfer data is exposed to any B2B surface because no B2B consumer surface is built in this phase.
+- commercial opt-in does not affect recommendation/ranking;
+- no B2B surface exposes golfer-level data because no B2B consumer surface is built in this phase.
 
-- [ ] **Step 2: Record next category order**
-
-After Driver PASS, activate through separate review gates:
+- [ ] **Step 2: Record the post-Driver category order**
 
 ```text
 Fairway Wood -> Hybrid -> Irons -> Wedges -> Putter -> Golf Ball
 ```
 
-A later category that requires a new shared concept must trigger shared-architecture review rather than silently changing an adapter.
+A later category requiring a new shared concept triggers shared-architecture review rather than a silent adapter change.
 
-- [ ] **Step 3: Commit gate record**
+- [ ] **Step 3: Commit the gate record**
 
 ```bash
 git add docs/superpowers/reviews/2026-09-04-driver-consumer-gate.md
@@ -769,17 +697,14 @@ git commit -m "docs: record Driver consumer integration gate"
 
 ---
 
-## Self-Review Checklist
+## Self-Review Result
 
-Before execution begins, confirm:
-
-- Every consumer surface uses the shared equipment client rather than direct equipment-knowledge queries.
-- Driver is the only active category; all seven categories exist in the registry.
-- No task creates a second equipment truth store.
-- No task makes affiliate/commerce fields part of analytical ranking.
-- No task treats lack of evidence as good fit.
-- Commercial aggregate participation is explicit opt-in and separate from product use.
-- Existing append-only consent and privacy-safe aggregate-learning governance are reused rather than replaced.
-- No B2B dashboard or direct row-level industry export is built in this phase.
-- Production remains a separate explicit release decision.
-- The plan contains no implementation placeholders in code or committed file paths; runtime-discovered current guide files must be replaced with exact paths before any commit command is executed.
+- Spec coverage: all approved consumer-integration sections are assigned to implementation tasks.
+- B2B monetization boundary: explicit commercial opt-in is implemented now; B2B dashboards/direct datasets are intentionally deferred.
+- One-equipment-truth rule: enforced by shared client plus architecture guard tests.
+- Category compromise: all seven categories exist structurally; Driver alone is activated initially.
+- Registered/subscriber synchronization: enforced through shared components and invariant tests.
+- Editorial integrity: commerce cannot influence analytical ordering.
+- Privacy: commercial eligibility reuses existing append-only consent and aggregate governance; no direct industry access to golfer records.
+- Placeholder scan: no placeholder migration name, no placeholder guide file, no `TODO`, and no `TBD` remain.
+- Production gate: explicit throughout; staging acceptance does not authorize promotion.
