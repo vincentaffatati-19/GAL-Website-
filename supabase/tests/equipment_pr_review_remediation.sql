@@ -123,6 +123,31 @@ begin
   end if;
 end $$;
 
+-- 4c. Derivations must reference real test observations and approved derivations are append-only/versioned.
+do $$
+declare f uuid; a uuid; d uuid; fake uuid := gen_random_uuid(); rejected boolean := false; immutable boolean := false;
+begin
+  insert into public.gal_equipment_families(canonical_brand_id,canonical_product_id,category,family_name,lifecycle_state,source_dataset,source_dataset_version)
+  values('GAL-TEST-REVIEW','GAL-TEST-REVIEW-DERIV','DRIVER','Review Derivation Driver','CURRENT','SYNTHETIC','1') returning id into f;
+  insert into public.gal_equipment_attribute_definitions(attribute_key,category,use_scope,value_type,definition_version)
+  values('review_derivation','DRIVER','GLOBAL','NUMBER','1') returning id into a;
+  begin
+    insert into public.gal_equipment_derivations(family_id,attribute_definition_id,contributing_observation_ids,methodology_version,derived_value,generalization_scope,approved_generalization_methodology,derivation_status)
+    values(f,a,array[fake],'1','1'::jsonb,'FAMILY',true,'APPROVED');
+  exception when foreign_key_violation or check_violation or raise_exception then rejected := true;
+  end;
+  if not rejected then raise exception 'approved derivation accepted nonexistent test observation'; end if;
+  -- Use DRAFT with an empty evidence set only to verify the transition/immutability guard itself.
+  insert into public.gal_equipment_derivations(family_id,attribute_definition_id,contributing_observation_ids,methodology_version,derived_value,generalization_scope,approved_generalization_methodology,derivation_status)
+  values(f,a,'{}'::uuid[],'1','1'::jsonb,'FAMILY',true,'DRAFT') returning id into d;
+  update public.gal_equipment_derivations set derivation_status='APPROVED' where id=d;
+  begin
+    update public.gal_equipment_derivations set derived_value='2'::jsonb where id=d;
+  exception when raise_exception then immutable := true;
+  end;
+  if not immutable then raise exception 'approved derivation was mutable in place'; end if;
+end $$;
+
 -- 5. Browser roles must not have direct access to privileged gal_private helpers/schema.
 do $$ begin
   if has_schema_privilege('anon','gal_private','USAGE') or has_schema_privilege('authenticated','gal_private','USAGE') then
