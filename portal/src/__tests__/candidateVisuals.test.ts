@@ -86,4 +86,10 @@ describe('GAL-UX5-MID candidate visual packaging', () => {
       }
     }
   });
+
+  it('overrides legacy navigation and quick-action presentation in the UX5 layer', () => {
+    const visuals = readFileSync(visualLayerPath, 'utf8');
+    expect(visuals).toMatch(/\.ux5-primary-nav\s*\{[^}]*background:\s*transparent;/s);
+    expect(visuals).toContain('.ux5-dashboard .quick-actions a');
+  });
 });
