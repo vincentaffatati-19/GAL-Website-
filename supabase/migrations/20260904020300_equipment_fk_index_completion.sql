@@ -1,0 +1,27 @@
+-- Complete covering indexes for Equipment Knowledge foreign keys flagged by Supabase advisor.
+create index if not exists gal_equipment_aliases_family_idx on public.gal_equipment_aliases(family_id) where family_id is not null;
+create index if not exists gal_equipment_aliases_variant_idx on public.gal_equipment_aliases(variant_id) where variant_id is not null;
+create index if not exists gal_equipment_char_component_idx on public.gal_equipment_characteristics(component_id) where component_id is not null;
+create index if not exists gal_equipment_char_variant_idx on public.gal_equipment_characteristics(variant_id) where variant_id is not null;
+create index if not exists gal_equipment_char_supersedes_idx on public.gal_equipment_characteristics(supersedes_characteristic_id) where supersedes_characteristic_id is not null;
+create index if not exists gal_equipment_conflicts_attribute_idx on public.gal_equipment_conflicts(attribute_definition_id);
+create index if not exists gal_equipment_conflicts_observation_b_idx on public.gal_equipment_conflicts(observation_b_id);
+create index if not exists gal_equipment_derivations_attribute_idx on public.gal_equipment_derivations(attribute_definition_id);
+create index if not exists gal_equipment_derivations_configuration_idx on public.gal_equipment_derivations(configuration_id) where configuration_id is not null;
+create index if not exists gal_equipment_derivations_variant_idx on public.gal_equipment_derivations(variant_id) where variant_id is not null;
+create index if not exists gal_equipment_gaps_configuration_idx on public.gal_equipment_evidence_gaps(configuration_id) where configuration_id is not null;
+create index if not exists gal_equipment_gaps_variant_idx on public.gal_equipment_evidence_gaps(variant_id) where variant_id is not null;
+create index if not exists gal_equipment_legacy_reconciliation_family_idx on public.gal_equipment_legacy_reconciliation(family_id) where family_id is not null;
+create index if not exists gal_equipment_lifecycle_variant_idx on public.gal_equipment_lifecycle_events(variant_id) where variant_id is not null;
+create index if not exists gal_equipment_media_component_idx on public.gal_equipment_media_assets(component_id) where component_id is not null;
+create index if not exists gal_equipment_media_configuration_idx on public.gal_equipment_media_assets(configuration_id) where configuration_id is not null;
+create index if not exists gal_equipment_media_sample_idx on public.gal_equipment_media_assets(sample_id) where sample_id is not null;
+create index if not exists gal_equipment_media_supersedes_idx on public.gal_equipment_media_assets(supersedes_media_asset_id) where supersedes_media_asset_id is not null;
+create index if not exists gal_equipment_media_variant_idx on public.gal_equipment_media_assets(variant_id) where variant_id is not null;
+create index if not exists gal_equipment_obs_supersedes_idx on public.gal_equipment_observations(supersedes_observation_id) where supersedes_observation_id is not null;
+create index if not exists gal_equipment_readiness_eval_policy_idx on public.gal_equipment_readiness_evaluations(readiness_policy_id) where readiness_policy_id is not null;
+create index if not exists gal_equipment_readiness_requirement_attribute_idx on public.gal_equipment_readiness_requirements(attribute_definition_id);
+create index if not exists gal_equipment_readiness_variant_idx on public.gal_equipment_readiness_state(variant_id) where variant_id is not null;
+create index if not exists gal_equipment_samples_component_idx on public.gal_equipment_samples(component_id) where component_id is not null;
+create index if not exists gal_equipment_samples_family_idx on public.gal_equipment_samples(family_id) where family_id is not null;
+create index if not exists gal_equipment_test_obs_supersedes_idx on public.gal_equipment_test_observations(supersedes_observation_id) where supersedes_observation_id is not null;
