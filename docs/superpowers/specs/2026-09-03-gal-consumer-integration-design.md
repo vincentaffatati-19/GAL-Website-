@@ -1,7 +1,7 @@
 # GAL Consumer Integration Design
 
 Date: 2026-09-03 / 2026-09-04 UTC
-Status: USER-APPROVED DESIGN
+Status: USER-APPROVED DESIGN — INCLUDING INDUSTRY INTELLIGENCE MONETIZATION BOUNDARY
 Target branch: `portal-integration-plan`
 Implementation branch: to be created from current `portal-integration-plan`
 Production deployment: NOT AUTHORIZED
@@ -17,8 +17,11 @@ The consumer phase covers:
 - Logged-in Buyers Guides
 - Authenticated GAL AI Fitting
 - Registered and subscriber experiences using shared components and shared data contracts
+- Preservation of a future privacy-safe B2B Industry Intelligence monetization path
 
 The rollout strategy is a compromise between category-by-category implementation and an all-at-once release: build the shared consumer architecture for every equipment category now, but activate and acceptance-test Driver first as the complete vertical slice.
+
+The architecture must also preserve the business value of GAL longitudinal data by structuring consented evidence, fitting activity, equipment actions, and outcomes so that eligible records can later contribute to privacy-safe aggregate industry intelligence without redesigning the consumer data model.
 
 ## 2. Governing Product Rules
 
@@ -35,7 +38,10 @@ The implementation must preserve these locked GAL rules:
 8. Commerce metadata and compensation have zero analytical influence on ranking.
 9. Tell GAL Once applies across My Bag, Guides, fitting workflows, and profile data when values are semantically compatible.
 10. Registered and subscriber experiences use the same components and contracts. Entitlements add depth or capability; they do not create a parallel portal or a different equipment truth.
-11. No production deployment or production Supabase migration is authorized by this design.
+11. Commercial aggregate-data participation is explicit opt-in and separate from ordinary GAL product-use consent.
+12. Industry customers may purchase access to GAL intelligence and may commission research questions, but may not purchase a desired conclusion, recommendation, rank, methodology outcome, suppression of unfavorable results, or access to an identifiable golfer.
+13. B2B industry intelligence must be generated through a governed privacy/aggregation boundary rather than through direct access to golfer operational data.
+14. No production deployment or production Supabase migration is authorized by this design.
 
 ## 3. Consumer Integration Architecture
 
@@ -372,3 +378,142 @@ The Driver-first consumer integration is successful when a golfer can:
 10. Receive the same underlying equipment truth regardless of registered/subscriber entitlement level.
 
 The architecture is also successful when the remaining six categories can be added through category-specific adapters and acceptance gates without creating a second consumer data stack or redesigning the shared product model.
+
+## 12. Industry Intelligence & Data Monetization Boundary
+
+GAL will preserve a separate B2B monetization architecture while keeping golfer trust, privacy, and analytical independence intact.
+
+### 12.1 Revenue Model Separation
+
+GAL recognizes four distinct monetization paths:
+
+1. **B2C Golfer Membership** — premium personalization, My Bag intelligence, AI Fitting, Progress, history, and advanced golfer workflows.
+2. **B2B GAL Industry Intelligence** — recurring subscriptions or licenses to privacy-safe aggregate intelligence, benchmarking, category trends, configuration demand, replacement cycles, consideration patterns, and outcome trends.
+3. **B2B GAL Custom Research** — commissioned aggregate studies for manufacturers, brands, component companies, retailers, PR/marketing agencies, and other qualified industry customers.
+4. **Commerce / Affiliate / Referral** — downstream monetization after the analytical decision; never an input to analytical rank.
+
+These revenue models may reinforce one another, but they must remain logically and technically separable.
+
+### 12.2 Editorial and Analytical Firewall
+
+The governing principle is:
+
+> **Industry customers can buy intelligence from GAL. They cannot buy influence over GAL intelligence.**
+
+A paying company may purchase access to approved intelligence or fund a research question. Payment may not influence:
+- golfer need determination;
+- target characteristics;
+- candidate eligibility;
+- candidate or product ranking;
+- recommendation wording;
+- evidence strength;
+- methodology result;
+- publication of an analytically required caveat;
+- suppression or alteration of unfavorable findings.
+
+A customer commissions the question, not the answer.
+
+Commercial agreements may define confidentiality, embargo, delivery format, or publication rights where appropriate, but must not permit the sponsor to modify GAL's underlying findings or methodology record.
+
+GAL should ordinarily retain ownership of its underlying methodologies, generalized learnings, and derived aggregate intelligence. Customers normally purchase access or a license unless a specific agreement explicitly grants different rights.
+
+### 12.3 Explicit Opt-In Consent
+
+Commercial aggregate-data participation is separate from ordinary GAL product use.
+
+A golfer may use GAL products without agreeing that eligible golfer data contributes to commercial aggregate intelligence.
+
+Commercial-use eligibility must be based on an explicit opt-in consent record that is versioned and auditable.
+
+At minimum, each eligible source record or governed contribution path must be resolvable to:
+- permitted-use status;
+- consent version;
+- effective time window;
+- source/provenance class;
+- withdrawal state where applicable.
+
+Consent withdrawal must be honored in future aggregate generation and in existing aggregate artifacts where technically and legally required by the governing policy.
+
+### 12.4 Privacy and Aggregation Boundary
+
+Industry customers must never query individual golfer operational records directly.
+
+The approved flow is:
+
+`Golfer / Profile / Bag / Fitting / Action / Outcome Data`
+-> `Consent + Permitted-Use Check`
+-> `Privacy / De-identification`
+-> `Minimum Cohort / Disclosure-Risk Gate`
+-> `Governed Aggregate Dataset`
+-> `Approved Intelligence Product / Research Output`
+
+The B2B layer must enforce:
+- no identifiable golfer exports;
+- no direct row-level access to operational golfer records;
+- minimum cohort/privacy thresholds before release;
+- suppression of slices that create re-identification risk;
+- no customer-defined filters that bypass those thresholds;
+- reproducible aggregate dataset versions;
+- provenance back to governed source classes;
+- explicit separation of raw evidence, GAL-derived intelligence, and customer-facing outputs;
+- entitlement isolation between golfer subscriptions and industry subscriptions.
+
+### 12.5 B2B Product Tiers
+
+GAL may develop three B2B product classes from the governed aggregate layer:
+
+**GAL Industry Intelligence Subscription**
+- recurring access to approved dashboards and predefined aggregate intelligence products;
+- entitlement-controlled views;
+- no access to individual golfer records.
+
+**GAL Intelligence Reports / Benchmarking**
+- periodic or one-time reports covering categories, product launches, golfer segments, fitting needs, configuration trends, or market shifts;
+- may be sold individually or bundled into subscription tiers.
+
+**GAL Custom Research**
+- commissioned research where the sponsor may define the business question and proposed cohort criteria;
+- GAL controls final inclusion rules, methodology, statistical treatment, privacy thresholds, evidence standards, interpretation, and findings;
+- sponsor receives only approved aggregate outputs, not raw golfer-level data.
+
+### 12.6 Initial Customer Access Model
+
+Initial B2B access will be limited to:
+- dashboards;
+- GAL-generated reports;
+- GAL-generated approved exports.
+
+Direct downloadable row-level aggregate datasets and external customer-queryable APIs are explicitly deferred until GAL has mature privacy governance, redistribution controls, contractual protections, and sufficient scale.
+
+This is a staged capability decision, not a permanent prohibition.
+
+### 12.7 Longitudinal Intelligence Asset
+
+The consumer architecture should preserve the future ability to analyze the full outcome chain:
+
+`Golfer Need`
+-> `GAL Recommendation`
+-> `Equipment Considered`
+-> `Configuration Selected`
+-> `Purchase / Adjustment / Change`
+-> `Observed Outcome`
+-> `Resolved / Ineffective / Regressed`
+
+When records are properly consented and privacy-safe, this longitudinal structure can support differentiated GAL industry intelligence about equipment needs, configuration behavior, market demand, and measured post-change outcomes.
+
+The system must therefore preserve provenance and linkage across fitting sessions, recommendations, actions, outcomes, and longitudinal resolution without exposing those links to B2B customers at golfer level.
+
+### 12.8 B2B Success Criteria
+
+The architecture preserves the GAL business model when:
+
+1. Golfer subscription features and industry subscription features remain entitlement-separated.
+2. A golfer can use GAL without opting into commercial aggregate-data participation.
+3. Only explicitly opted-in eligible data can contribute to commercial aggregate products.
+4. No industry customer can directly access an identifiable golfer or operational golfer-level row.
+5. Minimum cohort and disclosure-risk rules block unsafe slices.
+6. Aggregate datasets and reports are reproducible and versioned.
+7. A sponsor can commission a research question without controlling the answer.
+8. Commercial relationships cannot alter recommendation ranking or analytical conclusions.
+9. GAL can build future dashboards, benchmarking, launch tracking, demand signals, outcome studies, and licensed intelligence products from the same governed aggregate layer without changing the consumer product-truth architecture.
+10. B2B data monetization increases the value of GAL's privacy-safe longitudinal intelligence asset without compromising golfer trust or editorial independence.
