@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - ux-reconciliation-rc
+      - feature/gal-ux5-mid-rc1
     paths-ignore:
       - 'preview/**'
 
@@ -16,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ux-reconciliation-rc
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
@@ -31,6 +32,12 @@ jobs:
           cat portal/brand/gal-option7a-motion.b64.part* | base64 --decode > portal/public/gal-option7a-motion.jpg
           test "$(wc -c < portal/public/gal-option7a-motion.jpg)" -eq 15946
           echo "26ccad548313c1d018cb6421efdfc4a95fb18d2e5123eccdc0518777a5b7047a  portal/public/gal-option7a-motion.jpg" | sha256sum --check --strict
+      - name: Restore governed UX5 realistic scene
+        run: |
+          mkdir -p portal/public/ux5
+          cat portal/ux5-assets/reference-bag.b64.part* | base64 --decode > portal/public/ux5/reference-bag.webp
+          test "$(wc -c < portal/public/ux5/reference-bag.webp)" -eq 20240
+          echo "11c1f63ab18cb952d1d3ca1a9831905117e93231257b37535a6855b168e3b85f  portal/public/ux5/reference-bag.webp" | sha256sum --check --strict
       - name: Install verified dependencies
         working-directory: portal
         run: pnpm install --frozen-lockfile
@@ -43,17 +50,21 @@ jobs:
           VITE_SUPABASE_URL: https://ylrxwtbzavhxxpoqqmho.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_Jgy4llwo5UhX4mg3EZ6VSA_xhyPOcVp
         run: pnpm run build
-      - name: Reject service-role material
+      - name: Reject forbidden browser material and sample facts
         working-directory: portal
         run: |
           if grep -R -E 'SUPABASE_SERVICE_ROLE_KEY|service_role' dist; then
             echo 'Forbidden service-role material found in portal build.'
             exit 1
           fi
+          if grep -R -n -E '94 mph|247 yds|\+12 Yards|\$3,840|78%|71%|\+11\.3 yds|rcux4-visuals' dist; then
+            echo 'Forbidden sample fact or retired visual authority found in UX5 build.'
+            exit 1
+          fi
       - name: Upload verified RC artifact
         uses: actions/upload-artifact@v4
         with:
-          name: GAL-RC-UX4-verified-preview
+          name: GAL-UX5-MID-RC1-verified-preview
           path: portal/dist
           if-no-files-found: error
           retention-days: 7
@@ -64,10 +75,10 @@ jobs:
           cp -R portal/dist/. preview/portal/
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f portal/public/gal-option7a-motion.jpg preview
+          git add -f portal/public/gal-option7a-motion.jpg portal/public/ux5/reference-bag.webp preview
           if git diff --cached --quiet; then
             echo 'Preview already current.'
             exit 0
           fi
-          git commit -m 'preview: publish verified UX static build [skip ci]'
-          git push origin HEAD:ux-reconciliation-rc
+          git commit -m 'preview: publish verified GAL UX5 MID RC1 [skip ci]'
+          git push origin HEAD:${GITHUB_REF_NAME}
