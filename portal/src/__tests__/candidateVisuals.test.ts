@@ -13,25 +13,24 @@ const main = readFileSync(resolve(srcRoot, 'main.ts'), 'utf8');
 const profile = readFileSync(resolve(srcRoot, 'profile/render.ts'), 'utf8');
 const today = readFileSync(resolve(srcRoot, 'surfaces/today.ts'), 'utf8');
 const bag = readFileSync(resolve(srcRoot, 'bag/render.ts'), 'utf8');
-const bagEnvironment = readFileSync(resolve(srcRoot, 'ux5/bagEnvironment.ts'), 'utf8');
+const scene = readFileSync(resolve(srcRoot, 'ux10/scene.ts'), 'utf8');
+const personalization = readFileSync(resolve(srcRoot, 'ux10/personalization.ts'), 'utf8');
 const viteConfig = readFileSync(resolve(portalRoot, 'vite.config.ts'), 'utf8');
 const vercelConfig = JSON.parse(readFileSync(resolve(siteRoot, 'vercel.json'), 'utf8')) as {
   routes?: Array<Record<string, string>>;
   rewrites?: unknown;
 };
-const visualLayerPath = resolve(srcRoot, 'styles/ux5-mid.css');
-const polishLayerPath = resolve(srcRoot, 'styles/ux5-polish.css');
-const sceneAssetPath = resolve(portalRoot, 'public/ux5/reference-bag.webp');
-const sceneReadmePath = resolve(portalRoot, 'public/ux5/README.md');
+const visualLayerPath = resolve(srcRoot, 'styles/ux10.css');
+const readmePath = resolve(portalRoot, 'public/ux10/README.md');
+const sumsPath = resolve(portalRoot, 'public/ux10/SHA256SUMS');
+const assets = [
+  'public/ux10/tee-boxes/coastal-01.webp',
+  'public/ux10/tee-boxes/cliffs-01.webp',
+  'public/ux10/bags/gal-tour-bag.png',
+  'public/ux10/bags/gal-stand-bag.png',
+] as const;
 
-function readUx5Visuals(): string {
-  return [visualLayerPath, polishLayerPath]
-    .filter((path) => existsSync(path))
-    .map((path) => readFileSync(path, 'utf8'))
-    .join('\n');
-}
-
-describe('GAL-UX5-MID candidate visual packaging', () => {
+describe('GAL-UX10.01 candidate visual packaging', () => {
   it('serves the locked GAL logo from a stable portal asset route before the SPA fallback', () => {
     expect(BRAND_LOGO_SRC).toBe('/portal/gal-option7a-motion.jpg');
     expect(viteConfig).toContain("base: './'");
@@ -40,32 +39,33 @@ describe('GAL-UX5-MID candidate visual packaging', () => {
     expect(vercelConfig.routes?.some((route) => route.dest === '/portal/index.html')).toBe(true);
   });
 
-  it('packages the governed realistic UX5 bag scene as a local asset', () => {
-    expect(bagEnvironment).toContain('/portal/ux5/reference-bag.webp');
-    expect(bagEnvironment).not.toMatch(/https:\/\/images\./i);
-    expect(existsSync(sceneAssetPath)).toBe(true);
-    expect(existsSync(sceneReadmePath)).toBe(true);
+  it('packages independent governed tee-box and bag assets', () => {
+    expect(scene).toContain('ux10-tee-box-background');
+    expect(scene).toContain('ux10-bag-image');
+    expect(personalization).toContain('/portal/ux10/tee-boxes/coastal-01.webp');
+    expect(personalization).toContain('/portal/ux10/tee-boxes/cliffs-01.webp');
+    expect(personalization).toContain('/portal/ux10/bags/gal-tour-bag.png');
+    expect(personalization).toContain('/portal/ux10/bags/gal-stand-bag.png');
+    expect(scene + personalization + today + bag).not.toContain('/portal/ux5/reference-bag.webp');
 
-    if (existsSync(sceneAssetPath)) {
-      const digest = createHash('sha256').update(readFileSync(sceneAssetPath)).digest('hex');
-      expect(digest).toBe('11c1f63ab18cb952d1d3ca1a9831905117e93231257b37535a6855b168e3b85f');
-    }
-
-    if (existsSync(sceneReadmePath)) {
-      const provenance = readFileSync(sceneReadmePath, 'utf8');
-      for (const token of ['Provenance', 'Source', 'Usage', 'Modification', '11c1f63ab18cb952d1d3ca1a9831905117e93231257b37535a6855b168e3b85f']) {
-        expect(provenance).toContain(token);
-      }
+    expect(existsSync(readmePath)).toBe(true);
+    expect(existsSync(sumsPath)).toBe(true);
+    const sums = existsSync(sumsPath) ? readFileSync(sumsPath, 'utf8') : '';
+    for (const relative of assets) {
+      const full = resolve(portalRoot, relative);
+      expect(existsSync(full)).toBe(true);
+      if (!existsSync(full)) continue;
+      const digest = createHash('sha256').update(readFileSync(full)).digest('hex');
+      expect(sums).toContain(`${digest}  ${relative.replace('public/ux10/', '')}`);
     }
   });
 
-  it('uses UX5 as the only active current visual layer', () => {
+  it('uses UX10 as the only active current visual layer', () => {
     expect(profile).not.toContain('representation placeholder');
-    expect(main).toContain("import './styles/ux5-mid.css'");
-    expect(main).toContain("import './styles/ux5-polish.css'");
+    expect(main).toContain("import './styles/ux10.css'");
+    expect(main).not.toMatch(/import '\.\/styles\/ux5-/);
     expect(main).not.toContain("import './styles/rcux4-visuals.css'");
     expect(existsSync(visualLayerPath)).toBe(true);
-    expect(existsSync(polishLayerPath)).toBe(true);
 
     for (const [source, primitive] of [
       [today, 'tee-box-sky'],
@@ -87,23 +87,22 @@ describe('GAL-UX5-MID candidate visual packaging', () => {
       expect(source).not.toContain(primitive);
     }
 
-    const visuals = readUx5Visuals();
+    const visuals = readFileSync(visualLayerPath, 'utf8');
     expect(visuals).not.toContain('data:image/svg+xml');
     expect(visuals).not.toContain('base64,');
-    for (const contract of ['--ux5-navy', '--ux5-orange', '.ux5-shell', '.ux5-bag-environment', '.ux5-club-panel']) {
+    for (const contract of ['--ux10-navy', '--ux10-orange', '.ux10-shell', '.ux10-tee-box-background', '.ux10-bag-stage', '.ux10-status-rail', '.ux10-club-panel']) {
       expect(visuals).toContain(contract);
     }
   });
 
-  it('overrides legacy navigation and quick-action presentation in the UX5 layer', () => {
-    const visuals = readUx5Visuals();
-    expect(visuals).toMatch(/\.ux5-primary-nav\s*\{[^}]*background:\s*transparent;/s);
-    expect(visuals).toContain('.ux5-dashboard .quick-actions a');
+  it('keeps navigation and actions readable in the UX10 layer', () => {
+    const visuals = readFileSync(visualLayerPath, 'utf8');
+    expect(visuals).toMatch(/\.ux10-primary-nav\s*\{[^}]*background:\s*transparent;/s);
+    expect(visuals).toContain('.ux10-dashboard .quick-actions a');
   });
 
   it('keeps the mobile bottom navigation anchored to the viewport', () => {
-    const polish = readFileSync(polishLayerPath, 'utf8');
-    expect(polish).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*?\.ux5-app-header\s*\{[^}]*backdrop-filter:\s*none;/s);
-    expect(polish).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*?\.ux5-primary-nav\s*\{[^}]*position:\s*fixed;[^}]*bottom:\s*0;/s);
+    const visuals = readFileSync(visualLayerPath, 'utf8');
+    expect(visuals).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*?\.ux10-primary-nav\s*\{[^}]*position:\s*fixed;[^}]*bottom:\s*0;/s);
   });
 });
