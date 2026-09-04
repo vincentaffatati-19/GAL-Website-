@@ -1,6 +1,12 @@
 import './styles/portal.css';
 import { BRAND_FONT_FAMILY, BRAND_LOGO_ALT, BRAND_LOGO_SRC } from './branding';
 import { resolvePortalRoute, type PortalRoute } from './router';
+import { renderMyBag } from './bag/render';
+import { renderDriverFit } from './fitting/driver/render';
+import { renderDriverGuide } from './guides/driver';
+import { renderTodaySurface } from './surfaces/today';
+import { renderInsightsSurface } from './surfaces/insights';
+import { renderProgressSurface } from './surfaces/progress';
 
 const NAV_ITEMS: Array<{ route: PortalRoute; label: string }> = [
   { route: 'today', label: 'Today' },
@@ -14,7 +20,17 @@ function routeHref(route: PortalRoute): string {
   return route === 'today' ? '/portal/' : `/portal/${route}`;
 }
 
-function renderShell(): void {
+async function routeContent(route: PortalRoute): Promise<string> {
+  const params = new URLSearchParams(window.location.search);
+  if (route === 'bag') return renderMyBag();
+  if (route === 'guides' && (params.get('category') ?? 'driver').toLowerCase() === 'driver') return renderDriverGuide();
+  if (route === 'insights' && params.get('fit')?.toLowerCase() === 'driver') return renderDriverFit();
+  if (route === 'insights') return renderInsightsSurface();
+  if (route === 'progress') return renderProgressSurface();
+  return renderTodaySurface();
+}
+
+async function renderShell(): Promise<void> {
   const app = document.querySelector<HTMLElement>('#app');
   if (!app) throw new Error('My GAL app mount is missing');
 
@@ -41,14 +57,14 @@ function renderShell(): void {
       <main class="my-gal-main" id="main-content">
         <p class="eyebrow">Equipment Intelligence</p>
         <h1>${currentLabel}</h1>
-        <p class="intro">My GAL will show what deserves your attention, why it matters, and what to do next using governed equipment intelligence.</p>
-        <section class="my-gal-state" aria-labelledby="building-title">
-          <h2 id="building-title">Your equipment intelligence is being prepared.</h2>
-          <p>This first release shell is ready for authenticated data and the Equipment Brief in the next implementation tasks.</p>
-        </section>
+        <p class="intro">My GAL shows what GAL knows, what deserves attention, why it matters, and what to do next without inventing fit claims.</p>
+        <div id="route-content"><section class="my-gal-state"><h2>Loading your equipment intelligence…</h2></section></div>
       </main>
     </div>
   `;
+
+  const routeMount = document.querySelector<HTMLElement>('#route-content');
+  if (routeMount) routeMount.innerHTML = await routeContent(currentRoute);
 }
 
-renderShell();
+void renderShell();
