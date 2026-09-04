@@ -1,0 +1,38 @@
+.my-bag-experience { display:grid; gap:20px; }
+.my-bag-heading { display:flex; align-items:end; justify-content:space-between; gap:20px; }
+.my-bag-heading h2 { margin:0 0 8px; color:var(--gal-navy); font-size:clamp(1.7rem,4vw,2.7rem); }
+.my-bag-heading p { max-width:720px; color:#596579; line-height:1.6; }
+.bag-guide-link { min-height:44px; display:inline-flex; align-items:center; padding:0 14px; border:1px solid var(--gal-border); border-radius:999px; color:var(--gal-navy); font-weight:850; text-decoration:none; white-space:nowrap; }
+.my-bag-hero { position:relative; min-height:620px; overflow:hidden; border-radius:28px; background:linear-gradient(180deg,#a6d0df 0 35%,#4a7a86 35% 48%,#6b9256 48%); box-shadow:0 20px 54px rgba(7,24,63,.15); }
+.my-bag-course { position:absolute; inset:45% 0 0; background:linear-gradient(145deg,#4d783f,#87aa68 45%,#416638); clip-path:polygon(0 26%,30% 8%,55% 0,77% 12%,100% 32%,100% 100%,0 100%); }
+.my-bag-stage { position:relative; min-height:620px; display:grid; place-items:end center; padding-bottom:35px; }
+.bag-hero-detail { margin-bottom:28px; }
+.bag-category-target { position:absolute; z-index:5; min-width:145px; min-height:52px; display:flex; flex-direction:column; justify-content:center; padding:8px 11px; border:1px solid rgba(255,255,255,.6); border-radius:14px; background:rgba(255,255,255,.93); box-shadow:0 10px 28px rgba(7,24,63,.13); text-decoration:none; }
+.bag-category-target strong { color:var(--gal-navy); font-size:.76rem; }.bag-category-target small { margin-top:2px; max-width:170px; color:#657083; font-size:.62rem; }
+.bag-category-target.is-present { border-top:3px solid var(--gal-orange); }
+.bag-category-driver{left:8%;top:9%}.bag-category-fairway_wood{left:4%;top:28%}.bag-category-hybrid{left:7%;top:48%}.bag-category-iron{right:7%;top:11%}.bag-category-wedge{right:4%;top:31%}.bag-category-putter{right:8%;top:51%}.bag-category-golf_ball{left:50%;bottom:24px;transform:translateX(-50%)}
+.bag-detail-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.bag-detail-card { min-height:180px; padding:18px; border:1px solid var(--gal-border); border-radius:18px; background:white; box-shadow:0 8px 24px rgba(11,36,95,.05); }
+.bag-detail-card h3 { margin:0 0 8px; color:var(--gal-navy); }.bag-detail-card p { color:#596579; line-height:1.5; }
+.bag-empty { grid-column:1 / -1; }
+
+.driver-fit-workspace { display:grid; gap:14px; }
+.driver-fit-hero { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end; padding:clamp(24px,5vw,44px); border-radius:28px; background:linear-gradient(135deg,var(--gal-navy-dark),var(--gal-navy)); color:white; }
+.driver-fit-hero h1 { max-width:850px; color:white; font-size:clamp(2rem,5vw,4rem); }.driver-fit-hero p { max-width:760px; color:rgba(255,255,255,.84); line-height:1.6; }
+.driver-fit-hero .button { background:var(--gal-orange); }
+.driver-fit-step { display:grid; grid-template-columns:72px 1fr; gap:18px; padding:22px; border:1px solid var(--gal-border); border-radius:20px; background:white; }
+.driver-fit-step h2 { margin:0 0 8px; color:var(--gal-navy); }.driver-fit-step p { color:#596579; line-height:1.58; }.driver-fit-step a { color:var(--gal-navy); font-weight:850; }
+.step-number { width:54px; height:54px; display:grid; place-items:center; border-radius:50%; background:#eef2f7; color:var(--gal-navy); font-weight:950; }
+.driver-fit-targets { border-top:4px solid var(--gal-orange); }
+.driver-target-grid,.driver-candidate-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+.driver-target-grid article,.driver-candidate { padding:14px; border:1px solid var(--gal-border); border-radius:14px; background:#f7f9fc; }.driver-target-grid strong,.driver-target-grid span { display:block; }.driver-target-grid strong { color:var(--gal-navy); text-transform:capitalize; }.driver-target-grid span { margin-top:3px; color:var(--gal-orange); font-size:.72rem; font-weight:900; }
+.driver-candidate h3 { margin:0 0 6px; color:var(--gal-navy); }.driver-candidate small { color:#657083; line-height:1.45; }
+.driver-action-peers { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }.driver-action-peers span { min-height:44px; display:inline-flex; align-items:center; padding:0 13px; border:1px solid var(--gal-border); border-radius:999px; color:var(--gal-navy); font-size:.75rem; font-weight:850; background:#fff; }
+.fit-firewall { padding:12px 14px; border-left:3px solid var(--gal-orange); background:#fff8f4; }
+
+@media (max-width:800px){
+  .my-bag-heading,.driver-fit-hero { grid-template-columns:1fr; display:grid; }.bag-detail-grid { grid-template-columns:repeat(2,1fr); }.driver-target-grid,.driver-candidate-grid { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:600px){
+  .my-bag-hero,.my-bag-stage { min-height:600px; }.bag-category-target { min-width:105px; max-width:125px; min-height:44px; padding:6px 8px; }.bag-category-target small { font-size:.54rem; }.bag-category-driver{left:2%;top:5%}.bag-category-fairway_wood{left:2%;top:23%}.bag-category-hybrid{left:2%;top:41%}.bag-category-iron{right:2%;top:8%}.bag-category-wedge{right:2%;top:26%}.bag-category-putter{right:2%;top:44%}.bag-category-golf_ball{bottom:12px}.bag-detail-grid { grid-template-columns:1fr; }.driver-fit-step { grid-template-columns:48px 1fr; padding:16px; }.step-number { width:42px;height:42px; }.driver-target-grid,.driver-candidate-grid { grid-template-columns:1fr; }
+}

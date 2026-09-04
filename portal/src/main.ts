@@ -1,14 +1,17 @@
 import './styles/portal.css';
+import './styles/rcux3.css';
+import './styles/rcux4-visuals.css';
 import { BRAND_FONT_FAMILY, BRAND_LOGO_ALT, BRAND_LOGO_SRC } from './branding';
 import { resolvePortalRoute, type PortalRoute } from './router';
 import { renderMyBag } from './bag/render';
 import { renderDriverFit } from './fitting/driver/render';
 import { renderDriverGuide } from './guides/driver';
+import { renderGolferProfile } from './profile/render';
 import { renderTodaySurface } from './surfaces/today';
 import { renderInsightsSurface } from './surfaces/insights';
 import { renderProgressSurface } from './surfaces/progress';
 
-const NAV_ITEMS: Array<{ route: PortalRoute; label: string }> = [
+const NAV_ITEMS: Array<{ route: Exclude<PortalRoute, 'profile'>; label: string }> = [
   { route: 'today', label: 'Today' },
   { route: 'bag', label: 'My Bag' },
   { route: 'insights', label: 'Insights' },
@@ -16,12 +19,13 @@ const NAV_ITEMS: Array<{ route: PortalRoute; label: string }> = [
   { route: 'progress', label: 'Progress' },
 ];
 
-function routeHref(route: PortalRoute): string {
+function routeHref(route: Exclude<PortalRoute, 'profile'>): string {
   return route === 'today' ? '/portal/' : `/portal/${route}`;
 }
 
 async function routeContent(route: PortalRoute): Promise<string> {
   const params = new URLSearchParams(window.location.search);
+  if (route === 'profile') return renderGolferProfile();
   if (route === 'bag') return renderMyBag();
   if (route === 'guides' && (params.get('category') ?? 'driver').toLowerCase() === 'driver') return renderDriverGuide();
   if (route === 'insights' && params.get('fit')?.toLowerCase() === 'driver') return renderDriverFit();
@@ -36,7 +40,9 @@ async function renderShell(): Promise<void> {
 
   document.documentElement.style.fontFamily = BRAND_FONT_FAMILY;
   const currentRoute = resolvePortalRoute(window.location.pathname);
-  const currentLabel = NAV_ITEMS.find((item) => item.route === currentRoute)?.label ?? 'Today';
+  const currentLabel = currentRoute === 'profile'
+    ? 'Golfer Profile'
+    : NAV_ITEMS.find((item) => item.route === currentRoute)?.label ?? 'Today';
 
   app.innerHTML = `
     <div class="my-gal-shell">
@@ -49,15 +55,14 @@ async function renderShell(): Promise<void> {
             <strong>My GAL</strong>
             <small>Your Equipment Intelligence Center</small>
           </div>
+          <a class="profile-access" href="/portal/profile" aria-label="Golfer Profile"${currentRoute === 'profile' ? ' aria-current="page"' : ''}>Golfer Profile</a>
         </div>
       </header>
       <nav class="my-gal-nav" aria-label="My GAL primary navigation">
         ${NAV_ITEMS.map((item) => `<a href="${routeHref(item.route)}"${item.route === currentRoute ? ' aria-current="page"' : ''}>${item.label}</a>`).join('')}
       </nav>
-      <main class="my-gal-main" id="main-content">
-        <p class="eyebrow">Equipment Intelligence</p>
-        <h1>${currentLabel}</h1>
-        <p class="intro">My GAL shows what GAL knows, what deserves attention, why it matters, and what to do next without inventing fit claims.</p>
+      <main class="my-gal-main${currentRoute === 'today' ? ' my-gal-main-today' : ''}${currentRoute === 'profile' ? ' my-gal-main-profile' : ''}" id="main-content">
+        ${currentRoute === 'today' || currentRoute === 'profile' ? '' : `<p class="eyebrow">Equipment Intelligence</p><h1>${currentLabel}</h1><p class="intro">My GAL shows what GAL knows, what deserves attention, why it matters, and what to do next without inventing fit claims.</p>`}
         <div id="route-content"><section class="my-gal-state"><h2>Loading your equipment intelligence…</h2></section></div>
       </main>
     </div>

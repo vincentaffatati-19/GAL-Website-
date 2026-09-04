@@ -1,0 +1,367 @@
+/* RC-UX4 production visual layer.
+   GAL data-product treatment: no embedded illustration artwork. */
+
+:root {
+  --gal-navy: #0B245F;
+  --gal-navy-deep: #07183F;
+  --gal-orange: #FF5A1F;
+  --gal-ink: #13213B;
+  --gal-muted: #667085;
+  --gal-line: rgba(11, 36, 95, 0.12);
+  --gal-soft: #F5F7FB;
+  --gal-white: #FFFFFF;
+  --gal-shadow: 0 24px 70px rgba(7, 24, 63, 0.11);
+}
+
+/* Shared intelligence field ------------------------------------------------ */
+.tee-box-hero,
+.my-bag-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gal-line);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 78% 16%, rgba(255, 90, 31, 0.10) 0 3px, transparent 4px),
+    radial-gradient(circle at 78% 16%, transparent 0 70px, rgba(255, 90, 31, 0.08) 71px 72px, transparent 73px),
+    linear-gradient(rgba(11, 36, 95, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 36, 95, 0.035) 1px, transparent 1px),
+    linear-gradient(145deg, #FFFFFF 0%, #F7F9FC 58%, #EEF3F8 100%);
+  background-size: auto, auto, 32px 32px, 32px 32px, auto;
+  box-shadow: var(--gal-shadow);
+}
+
+.tee-box-hero::before,
+.my-bag-hero::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 46%;
+  height: 2px;
+  right: 4%;
+  top: 21%;
+  transform: rotate(-8deg);
+  transform-origin: right center;
+  background: linear-gradient(90deg, transparent, rgba(255, 90, 31, 0.22) 28%, var(--gal-orange));
+  box-shadow: 0 0 18px rgba(255, 90, 31, 0.16);
+  pointer-events: none;
+}
+
+.tee-box-hero::after,
+.my-bag-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 9px;
+  height: 9px;
+  right: 3.5%;
+  top: calc(21% - 3px);
+  border-radius: 50%;
+  background: var(--gal-orange);
+  box-shadow: 0 0 0 7px rgba(255, 90, 31, 0.10);
+  pointer-events: none;
+}
+
+.tee-box-content,
+.my-bag-stage {
+  position: relative;
+  z-index: 1;
+}
+
+.tee-box-sky,
+.tee-box-water,
+.tee-box-fairway,
+.my-bag-course {
+  display: none !important;
+}
+
+/* Central bag becomes an intelligence module, not a cartoon illustration. */
+.bag-hero {
+  position: relative;
+  width: 238px;
+  height: 294px;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 30px;
+  background:
+    linear-gradient(rgba(255,255,255,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.055) 1px, transparent 1px),
+    radial-gradient(circle at 82% 18%, rgba(255,90,31,0.28) 0 4px, transparent 5px),
+    linear-gradient(150deg, #173C76 0%, var(--gal-navy) 50%, var(--gal-navy-deep) 100%);
+  background-size: 28px 28px, 28px 28px, auto, auto;
+  box-shadow: 0 28px 55px rgba(7,24,63,0.20);
+}
+
+.bag-hero::before {
+  content: "GAL";
+  position: absolute;
+  left: 26px;
+  top: 30px;
+  color: #FFFFFF;
+  font-size: 42px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.bag-hero::after {
+  content: "BAG INTELLIGENCE\A Evidence  •  Fit  •  Gaps";
+  white-space: pre;
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 32px;
+  padding-top: 20px;
+  border-top: 2px solid var(--gal-orange);
+  color: rgba(255,255,255,0.88);
+  font-size: 11px;
+  line-height: 1.7;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+
+.bag-hero .bag-clubs,
+.bag-hero .bag-body,
+.bag-hero .bag-base {
+  display: none !important;
+}
+
+.bag-marker,
+.bag-category-target {
+  border: 1px solid rgba(11,36,95,0.12) !important;
+  background: rgba(255,255,255,0.94) !important;
+  box-shadow: 0 10px 26px rgba(7,24,63,0.07) !important;
+  backdrop-filter: blur(10px);
+}
+
+.bag-marker:hover,
+.bag-category-target:hover,
+.bag-category-target.is-present {
+  border-color: rgba(255,90,31,0.45) !important;
+  box-shadow: 0 14px 30px rgba(7,24,63,0.10) !important;
+}
+
+/* Golfer Profile ----------------------------------------------------------- */
+.golfer-figure {
+  position: relative;
+  min-height: 390px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 34px;
+  border: 1px solid var(--gal-line);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 74% 31%, rgba(255,90,31,0.11) 0 5px, transparent 6px),
+    radial-gradient(circle at 74% 31%, transparent 0 70px, rgba(11,36,95,0.08) 71px 72px, transparent 73px),
+    radial-gradient(circle at 74% 31%, transparent 0 118px, rgba(11,36,95,0.055) 119px 120px, transparent 121px),
+    linear-gradient(rgba(11,36,95,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11,36,95,0.035) 1px, transparent 1px),
+    linear-gradient(145deg, #FFFFFF, #F2F6FA);
+  background-size: auto, auto, auto, 30px 30px, 30px 30px, auto;
+  box-shadow: 0 20px 50px rgba(7,24,63,0.08);
+}
+
+.golfer-figure::before {
+  content: "GOLFER PROFILE";
+  position: absolute;
+  left: 34px;
+  top: 34px;
+  color: var(--gal-navy);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 2.4px;
+}
+
+.golfer-figure::after {
+  content: "KNOWN DATA\A 5 evidence areas\A Source + freshness retained";
+  white-space: pre;
+  position: absolute;
+  left: 34px;
+  top: 82px;
+  color: var(--gal-ink);
+  font-size: 23px;
+  line-height: 1.55;
+  font-weight: 750;
+}
+
+.golfer-figure .golfer-head,
+.golfer-figure .golfer-body,
+.golfer-figure .golfer-club {
+  display: none !important;
+}
+
+.golfer-figure small {
+  position: relative;
+  z-index: 1;
+  max-width: 330px;
+  margin: 0;
+  padding: 10px 13px;
+  border: 1px solid var(--gal-line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.94);
+  color: var(--gal-muted);
+  box-shadow: 0 8px 22px rgba(7,24,63,0.05);
+}
+
+/* Technical measurement, reduced to a clean schematic. */
+.measurement-figure {
+  position: relative;
+  min-height: 270px;
+  overflow: hidden;
+  border: 1px solid var(--gal-line);
+  border-radius: 22px;
+  background:
+    linear-gradient(90deg, transparent 49.65%, rgba(255,90,31,0.95) 49.65% 50.35%, transparent 50.35%),
+    linear-gradient(180deg, transparent 78%, rgba(11,36,95,0.52) 78% 79%, transparent 79%),
+    linear-gradient(rgba(11,36,95,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11,36,95,0.035) 1px, transparent 1px),
+    linear-gradient(145deg, #FFFFFF, #F4F7FB);
+  background-size: auto, auto, 28px 28px, 28px 28px, auto;
+  box-shadow: 0 14px 36px rgba(7,24,63,0.06);
+}
+
+.measurement-figure::before,
+.measurement-figure::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.6px;
+}
+
+.measurement-figure::before {
+  content: "WRIST CREASE";
+  top: 28px;
+  background: var(--gal-orange);
+  color: #FFFFFF;
+}
+
+.measurement-figure::after {
+  content: "LEVEL FLOOR";
+  bottom: 28px;
+  background: var(--gal-navy);
+  color: #FFFFFF;
+}
+
+.measurement-figure .measure-person,
+.measurement-figure .measure-line {
+  display: none !important;
+}
+
+.measurement-figure small {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  color: var(--gal-muted);
+  font-weight: 700;
+}
+
+/* Miss capture ------------------------------------------------------------- */
+.shot-shape-lane {
+  position: relative;
+  overflow: hidden;
+  padding-top: 72px;
+  border: 1px solid var(--gal-line);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 20px, var(--gal-orange) 0 4px, rgba(255,90,31,0.12) 5px 11px, transparent 12px),
+    linear-gradient(102deg, transparent 0 18%, rgba(11,36,95,0.08) 18.2% 18.7%, transparent 19% 39%, rgba(255,90,31,0.30) 39.2% 39.8%, transparent 40% 60%, rgba(11,36,95,0.08) 60.2% 60.7%, transparent 61% 81%, rgba(11,36,95,0.08) 81.2% 81.7%, transparent 82%),
+    linear-gradient(180deg, #FFFFFF, #F4F7FB);
+}
+
+.strike-grid {
+  overflow: hidden;
+  padding: 10px;
+  border: 1px solid var(--gal-line);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,90,31,0.15) 0 18%, transparent 19%),
+    #F7F9FC;
+}
+
+.strike-grid span {
+  border-color: rgba(11,36,95,0.14) !important;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.82);
+}
+
+/* Cards -------------------------------------------------------------------- */
+.tee-panel,
+.today-card,
+.profile-area,
+.profile-deep-dive,
+.bag-detail-card,
+.connect-golf article,
+.profile-trust {
+  border-color: var(--gal-line) !important;
+  box-shadow: 0 12px 32px rgba(7,24,63,0.055);
+}
+
+.tee-panel,
+.today-card,
+.profile-area,
+.bag-detail-card,
+.connect-golf article {
+  background: rgba(255,255,255,0.96) !important;
+}
+
+.eyebrow {
+  color: var(--gal-orange) !important;
+  letter-spacing: 0.12em;
+}
+
+.button,
+.quick-actions a,
+.profile-access {
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.button:hover,
+.quick-actions a:hover,
+.profile-access:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 800px) {
+  .tee-box-hero,
+  .my-bag-hero {
+    border-radius: 20px;
+  }
+
+  .bag-hero {
+    width: 205px;
+    height: 250px;
+    border-radius: 24px;
+  }
+
+  .bag-hero::before {
+    left: 22px;
+    top: 26px;
+    font-size: 36px;
+  }
+
+  .bag-hero::after {
+    left: 22px;
+    right: 22px;
+    bottom: 26px;
+    font-size: 9px;
+  }
+
+  .golfer-figure {
+    min-height: 330px;
+    padding: 26px;
+  }
+
+  .golfer-figure::before,
+  .golfer-figure::after {
+    left: 26px;
+  }
+
+  .golfer-figure::before { top: 26px; }
+  .golfer-figure::after { top: 70px; font-size: 19px; }
+  .measurement-figure { min-height: 230px; }
+}

@@ -1,0 +1,73 @@
+name: Publish UX Preview
+
+on:
+  push:
+    branches:
+      - ux-reconciliation-rc
+    paths-ignore:
+      - 'preview/**'
+
+permissions:
+  contents: write
+
+jobs:
+  publish-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ux-reconciliation-rc
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+          cache-dependency-path: portal/pnpm-lock.yaml
+      - name: Restore locked GAL Option 7A logo
+        run: |
+          cat portal/brand/gal-option7a-motion.b64.part* | base64 --decode > portal/public/gal-option7a-motion.jpg
+          test "$(wc -c < portal/public/gal-option7a-motion.jpg)" -eq 15946
+          echo "26ccad548313c1d018cb6421efdfc4a95fb18d2e5123eccdc0518777a5b7047a  portal/public/gal-option7a-motion.jpg" | sha256sum --check --strict
+      - name: Install verified dependencies
+        working-directory: portal
+        run: pnpm install --frozen-lockfile
+      - name: Verify portal
+        working-directory: portal
+        run: pnpm run test:run
+      - name: Build static review portal against staging
+        working-directory: portal
+        env:
+          VITE_SUPABASE_URL: https://ylrxwtbzavhxxpoqqmho.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_Jgy4llwo5UhX4mg3EZ6VSA_xhyPOcVp
+        run: pnpm run build
+      - name: Reject service-role material
+        working-directory: portal
+        run: |
+          if grep -R -E 'SUPABASE_SERVICE_ROLE_KEY|service_role' dist; then
+            echo 'Forbidden service-role material found in portal build.'
+            exit 1
+          fi
+      - name: Upload verified RC artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GAL-RC-UX4-verified-preview
+          path: portal/dist
+          if-no-files-found: error
+          retention-days: 7
+      - name: Publish prebuilt preview into branch
+        run: |
+          rm -rf preview
+          mkdir -p preview/portal
+          cp -R portal/dist/. preview/portal/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f portal/public/gal-option7a-motion.jpg preview
+          if git diff --cached --quiet; then
+            echo 'Preview already current.'
+            exit 0
+          fi
+          git commit -m 'preview: publish verified UX static build [skip ci]'
+          git push origin HEAD:ux-reconciliation-rc
