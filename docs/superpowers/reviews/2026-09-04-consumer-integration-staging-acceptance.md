@@ -68,6 +68,10 @@ Earlier Wave 2 preview deployments are READY, including deployment `dpl_W2yrZ72z
 
 The exact merged integration commit `ed6f24668502f5126535adf9f72933520e26622b` received a Vercel build-rate-limit failure (`upgradeToPro=build-rate-limit`). This is an infrastructure quota condition, not a test/build failure. Wave 3 remains CONDITIONAL until an exact-head preview is READY and can be smoke-tested.
 
+### Rerun request
+
+A documentation-only commit was pushed on 2026-09-04 to trigger a fresh Vercel preview without changing application code. The resulting branch head remains code-equivalent to the verified Wave 2 integration and is the exact candidate for the rerun smoke test.
+
 ## Rollback
 
 - Code: do not merge Wave 3 review records if final acceptance fails; Wave 2 integration merge can be reverted by normal Git rollback if required before production promotion.
