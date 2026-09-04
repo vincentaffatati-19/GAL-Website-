@@ -24,10 +24,7 @@ export async function renderTodaySurface(): Promise<string> {
     : `<p class="eyebrow">Learning Your Bag</p><h2>Next Opportunity</h2><p><strong>GAL needs more information</strong> before identifying a governed equipment opportunity.</p><a class="button" href="/portal/bag">Review My Bag</a>`;
 
   return `
-    <section class="tee-box-hero" aria-label="My GAL tee box equipment intelligence">
-      <div class="tee-box-sky" aria-hidden="true"></div>
-      <div class="tee-box-water" aria-hidden="true"></div>
-      <div class="tee-box-fairway" aria-hidden="true"></div>
+    <section class="tee-box-hero" aria-label="My GAL equipment intelligence overview">
       <div class="tee-box-content">
         <article class="tee-panel tee-panel-status">
           <p class="eyebrow">Bag Status</p>
@@ -36,7 +33,7 @@ export async function renderTodaySurface(): Promise<string> {
           <a href="/portal/bag">Review My Bag</a>
         </article>
 
-        <div class="bag-stage" aria-label="Interactive equipment bag">
+        <div class="bag-stage" aria-label="Interactive equipment categories">
           ${categoryMarker('Driver', 'driver')}
           ${categoryMarker('Fairway', 'fairway')}
           ${categoryMarker('Hybrid', 'hybrid')}
@@ -44,11 +41,7 @@ export async function renderTodaySurface(): Promise<string> {
           ${categoryMarker('Wedges', 'wedges')}
           ${categoryMarker('Putter', 'putter')}
           ${categoryMarker('Ball', 'ball')}
-          <div class="bag-hero" role="img" aria-label="GAL golf bag equipment visualization">
-            <div class="bag-clubs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-            <div class="bag-body"><span class="bag-gal-mark">GAL</span><span>MY BAG</span></div>
-            <div class="bag-base" aria-hidden="true"></div>
-          </div>
+          <div class="bag-hero" role="img" aria-label="GAL bag intelligence summary"></div>
         </div>
 
         <article class="tee-panel tee-panel-opportunity">
