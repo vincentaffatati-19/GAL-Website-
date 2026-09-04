@@ -10,21 +10,24 @@ vi.mock('../surfaces/insights', () => ({
 
 import { renderTodaySurface } from '../surfaces/today';
 
-describe('GAL UX5 Today intelligence dashboard', () => {
+describe('GAL UX10 Today intelligence dashboard', () => {
   beforeEach(() => {
     mocks.fetchGolferInsights.mockReset();
     mocks.fetchGolferInsights.mockResolvedValue([]);
   });
 
-  it('renders the locked bag-first dashboard without invented metrics', async () => {
+  it('renders the locked bag-first dashboard with independent presentation choices and no invented metrics', async () => {
     const html = await renderTodaySurface();
 
-    expect(html).toContain('ux5-dashboard');
-    expect(html).toContain('ux5-bag-environment');
-    expect(html).toContain('ux5-status-rail');
-    expect(html).toContain('ux5-bag-visual');
+    expect(html).toContain('ux10-dashboard');
+    expect(html).toContain('ux10-bag-environment');
+    expect(html).toContain('ux10-status-rail');
+    expect(html).toContain('ux10-tee-box-background');
+    expect(html).toContain('ux10-bag-image');
     expect((html.match(/data-bag-category=/g) ?? []).length).toBe(7);
     expect(html).toContain('Choose My Tee Box');
+    expect(html).toContain('Changes the background only.');
+    expect(html).toContain('Bag Visual');
     expect(html).toContain('Customize My Bag');
     expect(html).toContain('Bag Status');
     expect(html).toContain('Next Opportunity');
