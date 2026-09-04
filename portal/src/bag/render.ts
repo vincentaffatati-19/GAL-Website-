@@ -1,14 +1,15 @@
 import { escapeHtml } from '../render/escape';
+import type { EquipmentCategory } from '../equipment/types';
 import { fetchMyBag } from './client';
 import type { BagEquipmentView } from './model';
 
-const CATEGORY_ORDER = ['DRIVER','FAIRWAY_WOOD','HYBRID','IRON','WEDGE','PUTTER','GOLF_BALL'];
-const CATEGORY_LABELS: Record<string,string> = {
+const CATEGORY_ORDER: EquipmentCategory[] = ['DRIVER','FAIRWAY_WOOD','HYBRID','IRON','WEDGE','PUTTER','GOLF_BALL'];
+const CATEGORY_LABELS: Record<EquipmentCategory,string> = {
   DRIVER:'Driver', FAIRWAY_WOOD:'Fairway Woods', HYBRID:'Hybrids', IRON:'Irons', WEDGE:'Wedges', PUTTER:'Putter', GOLF_BALL:'Ball',
 };
 
-function categoryTarget(category: string, item?: BagEquipmentView): string {
-  const label = CATEGORY_LABELS[category] ?? category.replaceAll('_',' ');
+function categoryTarget(category: EquipmentCategory, item?: BagEquipmentView): string {
+  const label = CATEGORY_LABELS[category];
   const known = Boolean(item);
   const detail = !item
     ? 'Not in your recorded bag'
@@ -23,13 +24,13 @@ function equipmentDetail(item: BagEquipmentView): string {
   const config = item.state === 'KNOWN'
     ? item.configuration ? `Configuration: ${escapeHtml(item.configuration.name)}` : 'Configuration linked to GAL Equipment Knowledge.'
     : 'Configuration details needed';
-  return `<article class="bag-detail-card"><p class="eyebrow">${escapeHtml(CATEGORY_LABELS[item.category] ?? item.category.replaceAll('_',' '))}</p><h3>${escapeHtml(item.equipmentName)}</h3><p>${config}</p>${item.fittingHref ? `<a class="button" href="${escapeHtml(item.fittingHref)}">${item.state === 'KNOWN' ? 'Open Driver Fit' : 'Complete Driver Details'}</a>` : ''}</article>`;
+  return `<article class="bag-detail-card"><p class="eyebrow">${escapeHtml(CATEGORY_LABELS[item.category])}</p><h3>${escapeHtml(item.equipmentName)}</h3><p>${config}</p>${item.fittingHref ? `<a class="button" href="${escapeHtml(item.fittingHref)}">${item.state === 'KNOWN' ? 'Open Driver Fit' : 'Complete Driver Details'}</a>` : ''}</article>`;
 }
 
 export async function renderMyBag(): Promise<string> {
   try {
     const items = await fetchMyBag();
-    const byCategory = new Map(items.map((item) => [item.category, item]));
+    const byCategory = new Map<EquipmentCategory, BagEquipmentView>(items.map((item) => [item.category, item]));
 
     return `<section class="my-bag-experience">
       <header class="my-bag-heading"><div><p class="eyebrow">My Bag</p><h2>Your equipment, as GAL currently knows it.</h2><p>Select a category to see what is known, what still needs details, and where governed equipment intelligence can help. Missing information is not treated as a good fit.</p></div><a class="bag-guide-link" href="#bag-guide">How My Bag Works</a></header>
