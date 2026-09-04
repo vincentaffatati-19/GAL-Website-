@@ -23,9 +23,15 @@
 }
 
 @media (max-width: 900px) {
+  .ux5-app-header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   .ux5-primary-nav {
     position: fixed;
     top: auto;
+    bottom: 0;
     padding: 0 0 env(safe-area-inset-bottom);
     border-top: 1px solid var(--ux5-line);
     background: rgba(3, 15, 25, 0.98);
