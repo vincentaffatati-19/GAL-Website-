@@ -4,6 +4,7 @@ import { resolvePortalRoute, type PortalRoute } from './router';
 import { renderMyBag } from './bag/render';
 import { renderDriverFit } from './fitting/driver/render';
 import { renderDriverGuide } from './guides/driver';
+import { renderGolferProfile } from './profile/render';
 import { renderTodaySurface } from './surfaces/today';
 import { renderInsightsSurface } from './surfaces/insights';
 import { renderProgressSurface } from './surfaces/progress';
@@ -22,9 +23,7 @@ function routeHref(route: Exclude<PortalRoute, 'profile'>): string {
 
 async function routeContent(route: PortalRoute): Promise<string> {
   const params = new URLSearchParams(window.location.search);
-  if (route === 'profile') {
-    return '<section class="my-gal-state profile-coming"><p class="eyebrow">Golfer Profile</p><h2>Build Your GAL Golfer</h2><p>The new graphical Golfer Profile is the next review stage. RC-UX2 will add You, Your Game, Your Swing, Your Miss, Where You Play, and Connect Your Golf.</p><a class="button" href="/portal/">Back to Today</a></section>';
-  }
+  if (route === 'profile') return renderGolferProfile();
   if (route === 'bag') return renderMyBag();
   if (route === 'guides' && (params.get('category') ?? 'driver').toLowerCase() === 'driver') return renderDriverGuide();
   if (route === 'insights' && params.get('fit')?.toLowerCase() === 'driver') return renderDriverFit();
@@ -54,14 +53,14 @@ async function renderShell(): Promise<void> {
             <strong>My GAL</strong>
             <small>Your Equipment Intelligence Center</small>
           </div>
-          <a class="profile-access" href="/portal/profile" aria-label="Golfer Profile">Golfer Profile</a>
+          <a class="profile-access" href="/portal/profile" aria-label="Golfer Profile"${currentRoute === 'profile' ? ' aria-current="page"' : ''}>Golfer Profile</a>
         </div>
       </header>
       <nav class="my-gal-nav" aria-label="My GAL primary navigation">
         ${NAV_ITEMS.map((item) => `<a href="${routeHref(item.route)}"${item.route === currentRoute ? ' aria-current="page"' : ''}>${item.label}</a>`).join('')}
       </nav>
-      <main class="my-gal-main${currentRoute === 'today' ? ' my-gal-main-today' : ''}" id="main-content">
-        ${currentRoute === 'today' ? '' : `<p class="eyebrow">Equipment Intelligence</p><h1>${currentLabel}</h1><p class="intro">My GAL shows what GAL knows, what deserves attention, why it matters, and what to do next without inventing fit claims.</p>`}
+      <main class="my-gal-main${currentRoute === 'today' ? ' my-gal-main-today' : ''}${currentRoute === 'profile' ? ' my-gal-main-profile' : ''}" id="main-content">
+        ${currentRoute === 'today' || currentRoute === 'profile' ? '' : `<p class="eyebrow">Equipment Intelligence</p><h1>${currentLabel}</h1><p class="intro">My GAL shows what GAL knows, what deserves attention, why it matters, and what to do next without inventing fit claims.</p>`}
         <div id="route-content"><section class="my-gal-state"><h2>Loading your equipment intelligence…</h2></section></div>
       </main>
     </div>
