@@ -49,7 +49,15 @@ jobs:
             head_file="$1"
             tail_file="$2"
             output="$3"
-            head -c 20000 "$head_file" | base64 --decode > "$output"
+            python - "$head_file" "$output" <<'PY'
+          import base64, re, sys
+          source, output = sys.argv[1], sys.argv[2]
+          text = open(source, 'r', encoding='utf-8').read()
+          clean = re.sub(r'[^A-Za-z0-9+/=]', '', text)[:20000]
+          if len(clean) != 20000:
+              raise SystemExit(f'Expected 20000 clean base64 chars in {source}, got {len(clean)}')
+          open(output, 'wb').write(base64.b64decode(clean, validate=True))
+          PY
             base64 --decode "$tail_file" >> "$output"
           }
           mkdir -p portal/public/ux10/tee-boxes portal/public/ux10/bags
