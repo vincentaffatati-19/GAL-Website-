@@ -324,7 +324,85 @@ A retailer or partner providing superior imagery does not receive analytical adv
 ### Governing Rule
 **Only media with established rights for the intended use may appear in golfer-facing production. Media provenance and permitted-use scope must be auditable, and media has zero analytical influence.**
 
-## 18. Current Locked Decisions
+## 18. Locked Update Cadence and New-Model Onboarding
+
+GAL uses a progressive, event-driven onboarding model so new equipment can become discoverable quickly without being treated as analytically complete before the evidence supports that conclusion.
+
+The canonical progression is:
+
+`Discovered -> Identity Verified -> CATALOG_READY -> GUIDE_READY -> AI_FIT_LIMITED -> AI_FIT_READY -> Monitored`
+
+Readiness remains governed by the category/use-case rules in Section 16. Progression is not automatic merely because time has passed or a product is commercially important.
+
+### Progressive Onboarding
+A newly announced product may reach `CATALOG_READY` once GAL verifies canonical identity, relevant variants, qualifying published specifications, and source provenance. That state does not imply GAL knows the product's performance characteristics.
+
+The product may advance to `GUIDE_READY`, `AI_FIT_LIMITED`, or `AI_FIT_READY` only as the required governed equipment knowledge becomes available for those use cases.
+
+GAL may therefore publish verified facts about a new product before it has enough evidence to make a full AI Fitting recommendation.
+
+### Event-Driven Re-Evaluation
+The following events should trigger equipment-knowledge reevaluation where relevant:
+- manufacturer product launch or revision;
+- corrected identity or specification data;
+- new variant, shaft, grip, adapter, grind, hosel, set composition, or other component/configuration option;
+- new GAL test result;
+- qualifying partner or independent evidence;
+- methodology or aggregation revision;
+- compatibility-rule change;
+- source conflict or conflict resolution;
+- commercial lifecycle change;
+- material evidence correction or supersession.
+
+Routine monitoring may supplement these events, but GAL does not rely only on calendar-based refreshes.
+
+### Separate Freshness Concepts
+GAL distinguishes:
+- **Source freshness** — when the underlying source was last verified or observed.
+- **Knowledge freshness** — whether the approved characteristic remains valid for the product/configuration and current approved methodology.
+- **Coverage freshness** — whether GAL has evaluated the latest relevant variants, components, and configuration options.
+
+Age alone does not make qualifying evidence stale. Historical test evidence remains valid within its original scope unless a material product, methodology, configuration, source, or context change affects its applicability.
+
+### New-Model Onboarding Package
+Each new product family/variant should accumulate a governed onboarding package containing, where applicable:
+- canonical identity and aliases;
+- category/product family linkage;
+- variants;
+- published specifications;
+- components and factory-supported configurations;
+- compatibility rules;
+- lifecycle/release information;
+- source provenance;
+- media-rights status;
+- Required / Conditionally Required / Optional attribute coverage;
+- unresolved conflicts;
+- current readiness by use case;
+- testing/research/evidence gaps.
+
+### Evidence Gap Queue
+GAL maintains an explicit Evidence Gap Queue for information preventing a product from reaching a desired readiness state.
+
+A gap should identify, where applicable:
+- equipment entity/configuration;
+- target use case/readiness state;
+- missing or insufficient attribute;
+- required evidence type or methodology;
+- priority/materiality;
+- source/research/test action needed;
+- status and owner/workstream where operationally assigned.
+
+The queue is an operational prioritization tool. It does not itself change analytical readiness.
+
+### Launch-Day Governance
+**A new-model launch does not reset GAL's evidence standards. New equipment progresses through the same readiness and evidence gates as existing equipment, regardless of market attention, manufacturer relationship, retailer pressure, or commercial importance.**
+
+### Published Facts vs Performance Knowledge
+**GAL may publish what is known immediately, but must clearly distinguish published specifications from GAL-measured, independent-observed, or GAL-derived performance knowledge.**
+
+Manufacturer launch language remains subject to the marketing-separation rule and cannot substitute for qualifying performance evidence.
+
+## 19. Current Locked Decisions
 
 The following #4 architectural decisions are approved and locked:
 1. Multi-source equipment evidence with preserved provenance.
@@ -374,11 +452,18 @@ The following #4 architectural decisions are approved and locked:
 45. GAL test/sample imagery preserves its physical-sample/configuration linkage where relevant.
 46. Media cannot increase analytical confidence, evidence strength, readiness, or candidate rank.
 47. Retailer/manufacturer/partner media quality or availability creates no analytical advantage.
+48. New-model onboarding is progressive and event-driven rather than release-day full-trust or full-test-before-discovery.
+49. Readiness progression is `Discovered -> Identity Verified -> CATALOG_READY -> GUIDE_READY -> AI_FIT_LIMITED -> AI_FIT_READY -> Monitored`.
+50. Source freshness, Knowledge freshness, and Coverage freshness are independent concepts.
+51. Age alone does not invalidate qualifying historical equipment evidence.
+52. Material equipment/source/methodology/configuration events trigger readiness reevaluation.
+53. New products maintain an explicit Evidence Gap Queue identifying what blocks higher readiness.
+54. Market attention and commercial importance do not relax GAL evidence standards.
+55. Launch-day published facts must remain distinguishable from measured, observed, or derived performance knowledge.
 
-## 19. Design Status / Next Sections
+## 20. Design Status / Next Sections
 
 The Equipment Knowledge Layer design is not yet complete. Remaining design topics should include:
-- update cadence and new-model onboarding;
 - public Buyers Guide reuse;
 - schema implications and Supabase gap analysis.
 
