@@ -45,6 +45,13 @@ jobs:
             echo 'Forbidden service-role material found in portal build.'
             exit 1
           fi
+      - name: Upload verified RC artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GAL-RC-UX4-verified-preview
+          path: portal/dist
+          if-no-files-found: error
+          retention-days: 7
       - name: Publish prebuilt preview into branch
         run: |
           rm -rf preview
