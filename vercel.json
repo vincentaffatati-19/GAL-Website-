@@ -1,10 +1,9 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "echo 'Using prebuilt verified UX preview'",
   "outputDirectory": "preview",
-  "rewrites": [
-    {
-      "source": "/portal/:path*",
-      "destination": "/portal/index.html"
-    }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/portal(?:/.*)?", "dest": "/portal/index.html" }
   ]
 }
