@@ -16,50 +16,19 @@ The Equipment Knowledge Layer must not be shaped around manufacturer marketing l
 
 ## 2. Locked Source Philosophy — Multi-Source Equipment Evidence
 
-GAL will use a multi-source equipment evidence model.
-
-Different sources may coexist for the same product characteristic. GAL must preserve provenance and must not silently overwrite one source with another.
+GAL will use a multi-source equipment evidence model. Different sources may coexist for the same product characteristic. GAL must preserve provenance and must not silently overwrite one source with another.
 
 ### Manufacturer / Authoritative Published Data
-
-Manufacturer or authoritative technical documentation is appropriate for factual published specifications such as:
-- product/model identity;
-- stated loft options;
-- published dimensions;
-- published head or component weight where available;
-- materials and construction;
-- stock shaft/component choices;
-- adjustability mechanisms and setting ranges;
-- stated model-year/lifecycle information;
-- officially offered configuration options.
-
-Manufacturer marketing claims do not automatically become GAL analytical characteristics merely because they are published by the manufacturer.
+Manufacturer or authoritative technical documentation is appropriate for factual published specifications such as product/model identity, stated loft options, published dimensions, published head/component weight, materials/construction, stock component choices, adjustability mechanisms/settings, lifecycle information, and officially offered configurations. Manufacturer marketing claims do not automatically become GAL analytical characteristics.
 
 ### GAL Measured / Tested Data
-
-GAL-controlled laboratory, fitting, or equipment-testing data is a primary source for characteristics GAL actually measures or observes, including where methodology supports them:
-- launch behavior;
-- spin behavior;
-- dispersion behavior;
-- strike/face performance;
-- forgiveness/stability patterns;
-- friction/spin-related performance;
-- configuration response;
-- category-specific performance characteristics.
-
-GAL testing must preserve test method, sample/configuration, date, relevant environment, instrumentation, and methodology version.
+GAL-controlled laboratory, fitting, or equipment-testing data is a primary source for characteristics GAL actually measures or observes, including launch, spin, dispersion, strike/face performance, forgiveness/stability patterns, friction/spin-related performance, configuration response, and category-specific performance. Testing must preserve test method, sample/configuration, date, relevant environment, instrumentation, and methodology version.
 
 ### Independent / Partner Evidence
-
-Licensed or otherwise permitted independent testing, partner data, structured fitting evidence, and other credible external evidence may be incorporated where useful.
-
-Such data must remain attributed to its source and must comply with license, access, privacy, and commercial-use requirements.
+Licensed or otherwise permitted independent testing, partner data, structured fitting evidence, and other credible external evidence may be incorporated where useful. Such data must remain attributed and comply with license, access, privacy, and commercial-use requirements.
 
 ### GAL Derived Characteristics
-
-GAL may calculate or classify equipment characteristics from one or more underlying evidence sources using a governed, versioned methodology.
-
-A GAL-derived characteristic must preserve the evidence references and methodology version that produced it.
+GAL may calculate or classify equipment characteristics from one or more underlying evidence sources using a governed, versioned methodology. A derived characteristic must preserve evidence references and methodology version.
 
 ## 3. Locked Canonical Equipment Structure
 
@@ -69,214 +38,50 @@ GAL will use a canonical:
 
 model rather than treating every retailer SKU or product listing as an isolated fitting object.
 
-### Product Family
+- **Product Family** represents the stable named equipment family/model line.
+- **Product Variant** represents meaningful variants such as driver loft/head, fairway/hybrid loft, iron/set architecture, wedge loft/bounce/grind, putter head/hosel, or ball version.
+- **Component** represents independently meaningful pieces such as head, shaft, adapter/hosel, grip, or category-specific components.
+- **Compatible Configuration** represents a concrete fitting build assembled from compatible variants/components/settings.
 
-Represents the stable named equipment family or model line.
-
-Examples conceptually include a named driver family, iron family, wedge family, putter family, or golf-ball family.
-
-### Product Variant
-
-Represents meaningful variants within the family, such as:
-- driver loft/head variant;
-- fairway-wood loft;
-- hybrid loft;
-- iron/set member or set architecture variant;
-- wedge loft/bounce/grind combination;
-- putter head/hosel variant;
-- ball version/model variant.
-
-### Component
-
-Represents independently meaningful components where the category supports them, for example:
-- club head;
-- shaft;
-- adapter/hosel mechanism;
-- grip;
-- iron/wedge component specification;
-- putter head/neck/grip components.
-
-### Compatible Configuration
-
-Represents a concrete fitting configuration assembled from compatible variants/components/settings.
-
-Examples may include:
-- driver head + loft + adapter setting + shaft + flex + weight + playing length + grip;
-- iron head + shaft + length + lie + grip + set composition;
-- wedge loft + bounce + grind + shaft + length + lie + grip;
-- putter head + hosel + length + lie + loft + grip.
-
-GAL fits configurations, not merely model names.
-
-Compatibility rules must determine which components/settings can legitimately form a configuration.
+GAL fits configurations, not merely model names. Compatibility rules determine which components/settings can legitimately form a configuration.
 
 ## 4. Locked GAL-Owned Equipment Ontology
 
-GAL will maintain its own equipment attribute ontology.
-
-Manufacturer terminology may be stored as source metadata and mapped into GAL concepts, but manufacturer naming does not define GAL's analytical schema.
-
-This protects AI Fitting from annual marketing-language changes and allows products from different manufacturers to be compared against the same golfer target.
+GAL maintains its own equipment attribute ontology. Manufacturer terminology may be stored as source metadata and mapped into GAL concepts, but manufacturer naming does not define GAL's analytical schema.
 
 ### Universal Attribute Concepts
-
-Where relevant by category, universal GAL concepts may include:
-- forgiveness / stability;
-- launch tendency;
-- spin tendency;
-- directional bias;
-- adjustability;
-- head / shape characteristics;
-- weight characteristics;
-- length;
-- lie;
-- loft;
-- material / construction;
-- feel;
-- durability;
-- intended role;
-- skill-demand level;
-- configuration flexibility.
-
-Universal concepts do not imply that every category uses every attribute.
+Where relevant by category: forgiveness/stability, launch tendency, spin tendency, directional bias, adjustability, head/shape characteristics, weight characteristics, length, lie, loft, material/construction, feel, durability, intended role, skill-demand level, and configuration flexibility.
 
 ### Category-Specific Attributes
-
-#### Driver
-Potential fitting-relevant attributes include:
-- MOI/stability measures or governed proxies;
-- center-of-gravity characteristics where known;
-- face-depth/geometry characteristics;
-- effective loft and adjustment range;
-- directional bias capability;
-- launch/spin tendency;
-- forgiveness pattern;
-- head adjustability;
-- shaft and playing-length compatibility.
-
-#### Fairway Woods / Hybrids
-Potential fitting-relevant attributes include:
-- loft/gapping role;
-- ease of launch;
-- face height;
-- sole/turf interaction;
-- tee-versus-turf role;
-- forgiveness;
-- launch/spin/stopping tendency;
-- directional bias;
-- shaft/length compatibility.
-
-#### Irons
-Potential fitting-relevant attributes include:
-- set architecture;
-- blade/head dimensions;
-- offset;
-- sole width/geometry;
-- topline/shape characteristics;
-- center-of-gravity characteristics where known;
-- forgiveness/stability;
-- launch/spin/stopping tendency;
-- length/lie ranges;
-- shaft compatibility;
-- grip sizing options;
-- transition role to hybrids/woods and wedges.
-
-#### Wedges
-Potential fitting-relevant attributes include:
-- loft;
-- bounce;
-- grind;
-- sole geometry;
-- leading-edge characteristics;
-- heel/toe relief;
-- turf/sand interaction;
-- full-shot versus finesse-shot role;
-- shaft/length/lie/grip configuration.
-
-#### Putter
-Potential fitting-relevant attributes include:
-- head shape;
-- stability characteristics;
-- hosel/neck type;
-- toe-hang / face-balance behavior where supported;
-- alignment system;
-- head weight;
-- face technology;
-- loft;
-- lie;
-- length;
-- grip characteristics.
-
-#### Ball
-Potential fitting-relevant attributes include:
-- compression/performance relationship;
-- construction;
-- cover type;
-- driver flight/spin tendency;
-- iron flight/spin/stopping tendency;
-- greenside spin/feel;
-- durability;
-- price/value classification.
+- **Driver:** MOI/stability measures or governed proxies, CG characteristics where known, face/geometry, effective loft/adjustment range, bias capability, launch/spin tendency, forgiveness pattern, head adjustability, shaft/length compatibility.
+- **Fairway Woods / Hybrids:** loft/gapping role, ease of launch, face height, sole/turf interaction, tee-vs-turf role, forgiveness, launch/spin/stopping tendency, bias, shaft/length compatibility.
+- **Irons:** set architecture, dimensions, offset, sole geometry, topline/shape, CG where known, forgiveness/stability, launch/spin/stopping tendency, length/lie ranges, shaft/grip options, transition roles.
+- **Wedges:** loft, bounce, grind, sole geometry, leading edge, heel/toe relief, turf/sand interaction, full-shot vs finesse role, shaft/length/lie/grip configuration.
+- **Putter:** head shape, stability, hosel/neck, toe-hang/face-balance behavior where supported, alignment, head weight, face technology, loft, lie, length, grip.
+- **Ball:** compression/performance relationship, construction, cover, driver flight/spin tendency, iron flight/spin/stopping tendency, greenside spin/feel, durability, price/value classification.
 
 ## 5. Attribute Record Requirements
 
-Every fitting-relevant equipment attribute must support enough metadata to answer what GAL knows and why it believes it.
-
-Conceptually an attribute observation/derivation should support:
+Every fitting-relevant equipment attribute must support enough metadata to answer what GAL knows and why it believes it:
 
 `attribute + value/range/class + unit where applicable + source + source type + observed/published/derived state + methodology version when derived + effective date + evidence state + underlying evidence references`
 
-Unknown values remain unknown.
-
-GAL must not fabricate precision simply to make a fitting record look complete.
+Unknown values remain unknown. GAL must not fabricate precision simply to make a fitting record look complete.
 
 ## 6. Locked Equipment Evidence Hierarchy
 
-GAL uses four evidence classes for equipment knowledge.
-
-### Class 1 — Published Specification
-
-Directly supported by manufacturer or authoritative technical documentation.
-
-Appropriate for factual specifications and officially offered options.
-
-### Class 2 — GAL Measured
-
-Produced through GAL-controlled testing, laboratory work, fitting, or other approved measurement processes.
-
-This is the strongest basis for claims about what GAL itself observed, subject to the quality and scope of the test.
-
-### Class 3 — Independent Observed
-
-Produced by credible independent/partner evidence under appropriate licensing and provenance.
-
-The original source remains visible internally and where golfer-facing attribution is relevant.
-
-### Class 4 — GAL Derived
-
-Calculated or classified by GAL from one or more supporting sources using a versioned methodology.
-
-A derived characteristic must reference its underlying evidence.
+GAL uses four evidence classes:
+1. **Published Specification** — directly supported by manufacturer or authoritative technical documentation.
+2. **GAL Measured** — produced through GAL-controlled testing, laboratory work, fitting, or other approved measurement processes.
+3. **Independent Observed** — credible independent/partner evidence under appropriate licensing and provenance.
+4. **GAL Derived** — calculated/classified by GAL from one or more supporting sources using a versioned methodology.
 
 ## 7. Locked Claim-State Model
 
-Fitting-relevant product claims use explicit support states.
-
-### Known
-
-The characteristic is directly supported by authoritative published data or qualifying measured evidence.
-
-Examples may include stated loft, measured weight, supported adjustment range, or directly measured performance data.
-
-### Derived
-
-GAL calculated/classified the characteristic using an approved methodology and traceable evidence.
-
-Examples may include a GAL launch-tendency class, forgiveness classification, or directional-support classification derived from qualifying evidence.
-
-### Unknown / Insufficient Evidence
-
-GAL does not currently have enough evidence to make a defensible claim.
+Fitting-relevant product claims use explicit support states:
+- **Known** — directly supported by authoritative published data or qualifying measured evidence.
+- **Derived** — calculated/classified by GAL using an approved methodology and traceable evidence.
+- **Unknown / Insufficient Evidence** — GAL does not currently have enough evidence to make a defensible claim.
 
 GAL must prefer Unknown / Insufficient Evidence over invented precision or unverified marketing language.
 
@@ -284,223 +89,153 @@ GAL must prefer Unknown / Insufficient Evidence over invented precision or unver
 
 **A derived equipment characteristic can never be stronger than the evidence supporting it.**
 
-A GAL derivation must not convert weak, incomplete, or purely promotional source material into a strong analytical claim.
-
-Where supporting sources disagree, GAL must preserve the disagreement and either:
-- apply an approved context-specific resolution method;
-- present a qualified derived state;
-- or leave the characteristic Unknown / Insufficient Evidence.
+Weak, incomplete, or purely promotional source material cannot be converted into a strong analytical claim. When sources disagree, GAL preserves the disagreement and either applies an approved context-specific resolution method, presents a qualified derived state, or leaves the characteristic Unknown / Insufficient Evidence.
 
 ## 9. Manufacturer Marketing Separation
 
-Manufacturer language such as "Max," "HD," "Tour," "Fast," "LS," "forgiving," "high launch," or similar descriptors may be retained for identity/search/display purposes.
-
-Such terminology must not automatically populate GAL analytical attributes.
-
-GAL must map products into its own ontology based on qualifying evidence.
+Manufacturer terms such as "Max," "HD," "Tour," "Fast," "LS," "forgiving," or "high launch" may be retained for identity/search/display but must not automatically populate GAL analytical attributes. GAL maps products into its own ontology based on qualifying evidence.
 
 ## 10. Relationship to AI Fitting
 
-The Equipment Knowledge Layer supplies candidate configuration characteristics to the shared GAL AI Fitting engine only after the golfer's brand-neutral target characteristics have been established and frozen.
-
-Conceptually:
+The Equipment Knowledge Layer supplies candidate configuration characteristics to the shared GAL AI Fitting engine only after the golfer's brand-neutral target characteristics have been established and frozen:
 
 `Frozen Golfer Target Characteristics + Equipment Knowledge -> Candidate Configuration Matching`
 
-The same GAL target set must be usable to evaluate products across manufacturers.
+The same target set must be usable to evaluate products across manufacturers.
 
 ## 11. Commerce Separation
 
-Equipment Knowledge used for analytical ranking remains separate from commerce metadata such as:
-- affiliate commission;
-- retailer economics;
-- paid placement;
-- advertising relationship;
-- sponsorship;
-- inventory economics;
-- promotional incentives.
-
-Commercial factors must not alter analytical equipment characteristics or analytical candidate rank.
-
-Price may be used as a golfer-declared fitting constraint/value consideration only through a governed product rule; commission remains excluded from analytical ranking.
+Analytical Equipment Knowledge remains separate from affiliate commission, retailer economics, paid placement, advertising relationship, sponsorship, inventory economics, and promotional incentives. Commercial factors must not alter analytical equipment characteristics or candidate rank. Price may be used as a golfer-declared fitting constraint/value consideration through a governed rule; commission remains excluded from analytical ranking.
 
 ## 12. Locked Equipment Source Ingestion & Governance
 
-GAL will use a governed staging pipeline rather than direct-to-production ingestion or fully manual production entry.
-
-The canonical flow is:
+GAL uses a governed staging pipeline:
 
 `Source -> Raw Ingest -> Normalize -> Validate -> Resolve Conflicts -> Review -> Approve -> Promote -> Production Equipment Knowledge`
 
 ### Raw Source Preservation
-
-Manufacturer feeds/documents, GAL test data, licensed partner data, manual research, and future approved APIs enter through a raw/source layer that preserves the original source evidence and provenance.
-
-An ingested source record does not automatically become an approved GAL equipment characteristic.
+Manufacturer feeds/documents, GAL test data, licensed partner data, manual research, and future approved APIs enter through a raw/source layer that preserves original source evidence and provenance. An ingested source record does not automatically become approved equipment knowledge.
 
 ### Normalization
-
-Source-specific terminology and schemas are mapped into GAL's canonical product structure and GAL-owned ontology.
-
-Normalization must preserve the original source value and source terminology so GAL can audit how a normalized value was produced.
+Source-specific terminology/schemas are mapped into GAL's canonical product structure and ontology while preserving original source value/terminology.
 
 ### Validation
-
-Validation may include:
-- required identity checks;
-- unit normalization;
-- category/schema validation;
-- component/configuration compatibility checks;
-- source/license eligibility checks;
-- duplicate detection;
-- expected range and data-type checks;
-- provenance completeness;
-- conflict detection against existing qualifying evidence.
+Validation may include identity checks, unit normalization, category/schema validation, compatibility checks, license eligibility, duplicate detection, range/type checks, provenance completeness, and conflict detection.
 
 ### Governance States
-
-Equipment source/knowledge records may progress through governed states such as:
-
 `INGESTED -> NORMALIZED -> VALIDATED -> REVIEW_PENDING -> APPROVED -> PRODUCTION`
 
-Exception/lifecycle states include:
-- `CONFLICT`;
-- `REJECTED`;
-- `STALE`;
-- `RETIRED`.
-
-State semantics must be governed and auditable.
+Exception/lifecycle states include `CONFLICT`, `REJECTED`, `STALE`, and `RETIRED`.
 
 ### Production Promotion Gate
-
-**No newly ingested equipment characteristic becomes eligible for AI Fitting merely because it exists in the database.**
-
-Only records that satisfy the appropriate validation, review, and promotion policy may enter the golfer-facing production knowledge set used by AI Fitting.
-
-Research and experimental data may exist outside the production knowledge set without influencing golfer recommendations.
+**No newly ingested equipment characteristic becomes eligible for AI Fitting merely because it exists in the database.** Only records satisfying validation, review, and promotion policy may enter golfer-facing production knowledge.
 
 ### Conflict Preservation
-
-When sources disagree, GAL must preserve the competing observations rather than silently overwriting them.
-
-Resolution is characteristic-specific and evidence-specific. Examples:
-- current manufacturer documentation may control officially offered lofts/options;
-- GAL measurement may control a GAL-measured physical property for the tested sample;
-- GAL testing may support a performance classification;
-- unresolved disagreement may require a qualified state or `Unknown / Insufficient Evidence`.
-
-A generic newest-record-wins rule is prohibited for fitting-relevant knowledge.
+Competing observations are preserved rather than overwritten. Resolution is characteristic-specific and evidence-specific; a generic newest-record-wins rule is prohibited.
 
 ### Repeated Testing and Immutable Evidence
-
-Individual GAL test runs and qualifying external observations remain immutable evidence records.
-
-Repeated testing adds evidence; it does not erase prior qualifying tests.
-
-GAL may generate a derived or aggregate characteristic from multiple tests, but the aggregate must reference:
-- contributing test/evidence IDs;
-- methodology version;
-- aggregation policy;
-- relevant sample/configuration/environment context;
-- creation/effective date.
+Individual GAL test runs and qualifying external observations remain immutable evidence. Repeated testing adds evidence. Derived/aggregate characteristics reference contributing evidence IDs, methodology version, aggregation policy, sample/configuration/environment context, and effective date.
 
 ### Research vs Production Boundary
-
-GAL must keep experimental/research evidence distinguishable from approved production equipment knowledge.
-
-Interesting, incomplete, exploratory, or newly collected data must not become a golfer-facing claim or AI Fitting input until it passes the applicable governance gate.
+Experimental/research evidence remains distinguishable from approved production equipment knowledge and cannot influence golfer-facing recommendations until it passes the applicable governance gate.
 
 ## 13. Locked Test, Sample, Configuration, and Observation Model
 
-GAL will represent equipment testing using the governed chain:
+GAL represents equipment testing using:
 
 `Product/Variant -> Physical Sample -> Tested Configuration -> Test Session -> Test Run/Observation -> Derived Equipment Characteristic`
 
-This structure preserves the exact object and setup that generated evidence without fragmenting the canonical product catalog into isolated test records.
-
 ### Physical Sample
-
-A Physical Sample represents the actual equipment unit or lot GAL possessed, inspected, measured, or tested.
-
-Where applicable it should preserve:
-- canonical product/variant reference;
-- GAL sample identifier;
-- manufacturer serial/lot/batch identifier when available and appropriate;
-- acquisition/source and date;
-- condition and prior-use state;
-- measured physical properties relevant to the test;
-- sample history and disposition;
-- provenance and ownership/loan status where relevant.
-
-A sample is evidence context, not a new product identity.
+Represents the actual equipment unit or lot GAL possessed, inspected, measured, or tested, preserving canonical identity, GAL sample ID, serial/lot when appropriate, acquisition/source/date, condition/prior use, measured physical properties, history/disposition, and provenance. A sample is evidence context, not a new product identity.
 
 ### Tested Configuration
-
-A Tested Configuration freezes the exact assembly/settings used to produce the observations.
-
-For a driver this may include head variant, stated/measured loft where applicable, adapter setting, shaft model, flex, shaft weight, playing length, lie/setting, grip, and ball used.
-
-Other categories use their applicable configuration dimensions, such as iron set member/shaft/length/lie, wedge loft/bounce/grind, putter head/hosel/loft/lie/length/grip, or golf-ball model/lot.
-
-Changing a fitting-relevant configuration dimension creates a distinct tested-configuration record rather than rewriting the prior configuration.
+Freezes the exact assembly/settings used to produce observations. A material fitting-relevant configuration change creates a distinct tested-configuration record rather than rewriting prior history.
 
 ### Test Session
-
-A Test Session captures the shared context under which one or more test runs occurred, including where applicable:
-- date/time;
-- facility/location;
-- tester, panel, robot, or other test agent;
-- instrumentation/launch monitor/test rig;
-- calibration status;
-- ball and consumable controls where not configuration-specific;
-- environmental conditions;
-- protocol/methodology version;
-- session notes and anomalies.
+Captures date/time, facility, tester/panel/robot, instrumentation, calibration, ball/consumable controls, environmental conditions, protocol/methodology version, and anomalies as applicable.
 
 ### Test Run / Observation
-
-Individual qualifying test runs preserve raw or minimally normalized observations.
-
-Depending on category and methodology, observations may include ball speed, launch, spin, carry, total distance, dispersion, strike location, delivered-club variables, friction, durability, dimensional measurements, or other approved metrics.
-
-Raw observations are append-oriented/immutable after validation. Corrections are represented through auditable correction/supersession records rather than silent mutation.
+Preserves raw or minimally normalized qualifying observations. Raw observations are append-oriented/immutable after validation. Corrections use auditable correction/supersession records.
 
 ### Exclusions
-
-Rejected or excluded observations must not simply disappear when the methodology requires exclusion tracking.
-
-The system must preserve the observation or exclusion record, exclusion reason, governing protocol/rule, and reviewer/system actor where appropriate. Derived calculations use only observations that qualify under the applicable methodology version.
+Rejected/excluded observations remain auditable with exclusion reason, governing protocol/rule, and actor where appropriate.
 
 ### Derived and Aggregate Characteristics
-
-GAL may aggregate qualifying observations into a governed derived equipment characteristic such as a launch tendency, spin tendency, stability/forgiveness classification, directional tendency, or other approved ontology attribute.
-
-Every aggregate/derivation must preserve:
-- contributing observations/tests;
-- physical samples represented;
-- tested configurations represented;
-- methodology and aggregation version;
-- relevant context/environment constraints;
-- sample/run counts where material;
-- effective date;
-- evidence/claim state.
-
-Repeated tests add evidence and may support a new derivation version; they do not erase prior test history.
+Aggregates preserve contributing observations/tests, physical samples, tested configurations, methodology/aggregation version, context constraints, sample/run counts where material, effective date, and evidence/claim state.
 
 ### Scope-of-Generalization Rule
-
 **GAL never attributes a measured result to an entire product family when the evidence was generated from only one specific sample/configuration unless an approved methodology explicitly supports that generalization.**
 
-A result may therefore be scoped to a physical sample, tested configuration, variant, or product family depending on what the evidence and methodology defensibly support.
+## 14. Locked Versioning and Product Lifecycle Model
 
-Where generalization is not justified, the broader characteristic remains `Unknown / Insufficient Evidence` or otherwise qualified.
+GAL separates **stable product identity**, **commercial lifecycle**, and **knowledge version**.
 
-## 14. Current Locked Decisions
+### Stable Product Identity
+A product family, variant, or component remains the same historical identity even after discontinuation. GAL does not create a new identity merely because availability or GAL knowledge changes.
+
+### Commercial Lifecycle
+Lifecycle is time-based metadata independent of product identity. Governed states may include:
+- `ANNOUNCED`
+- `CURRENT`
+- `PRIOR_GENERATION`
+- `DISCONTINUED`
+- `HISTORICAL`
+
+Availability is separate from lifecycle because a discontinued product may still be available new, used, or through secondary markets.
+
+### Time-Bounded Published Specifications
+Manufacturer changes to stock components, regional offerings, settings, or other published details are effective-dated rather than overwritten. Prior qualifying specifications remain reproducible and auditable.
+
+### Versioned GAL Knowledge
+GAL-derived characteristics carry methodology version, evidence references, and effective dates. When GAL methodology or evidence changes, a new derivation version is created rather than rewriting historical analytical results.
+
+### Governing Rule
+**Products are never rewritten to match the present. GAL preserves what the product was, what was known about it at the time, and how GAL's understanding evolved.**
+
+This supports My Bag and longitudinal analysis of older equipment without forcing current-generation assumptions onto historical products.
+
+## 15. Locked Rules-Based Configuration Engine
+
+GAL uses a rules-based configuration engine between the canonical equipment catalog and AI Fitting:
+
+`Components + Settings + Compatibility Rules + Build Constraints -> Valid GAL Configuration`
+
+### Hard Compatibility Gates
+Hard rules determine whether a configuration can legitimately exist. Examples include adapter/head compatibility, shaft-tip requirements, available loft/lie settings, supported playing-length ranges, iron/set availability, wedge loft/bounce/grind combinations, putter head/hosel combinations, and other category-specific constraints.
+
+A candidate that fails a hard compatibility rule cannot enter AI Fitting as a valid recommendation.
+
+### Configuration Support States
+Valid/invalid configurations remain distinguishable as:
+- `FACTORY_STANDARD` — officially offered stock configuration.
+- `FACTORY_CUSTOM` — manufacturer-supported custom-order configuration.
+- `AFTERMARKET_VALID` — technically valid configuration assembled outside the standard manufacturer catalog.
+- `UNVERIFIED / INVALID` — compatibility has not been established or is known not to work.
+
+Unknown compatibility is not treated as compatible.
+
+### Manufacturer vs Aftermarket
+GAL may recommend technically valid aftermarket configurations when supported by evidence and compatibility rules, but must not imply the manufacturer offers that exact build when it does not.
+
+### Dependent-Effect Rules
+Configuration variables may affect other equipment characteristics. Where defensible, GAL must represent dependencies such as adapter-setting effects on loft/lie/face orientation, shaft-length effects on swing weight and delivery, iron bending effects on bounce, or wedge loft changes on effective bounce. Configuration optimization must not silently improve one characteristic while degrading another.
+
+### Structured / Whole-Bag Configurations
+The rule engine must support category structures such as iron set composition, combo sets, wedge progression, wood/hybrid replacement architecture, and other multi-club structures where the fitting problem is not a single isolated club.
+
+### Current-Equipment Optimization
+Compatibility/configuration rules are a first-class foundation for `keep`, `adjust`, `reconfigure`, or `replace` recommendations. GAL may recommend optimizing a current club through a valid setting/component/configuration change instead of requiring replacement.
+
+### Governing Rules
+**GAL recommends only configurations whose compatibility is established. Unknown compatibility is not treated as compatible. Manufacturer-standard, manufacturer-custom, and valid aftermarket configurations remain distinguishable.**
+
+**Configuration changes must carry their known dependent effects so GAL does not optimize one equipment characteristic while silently degrading another.**
+
+## 16. Current Locked Decisions
 
 The following #4 architectural decisions are approved and locked:
-
 1. Multi-source equipment evidence with preserved provenance.
-2. Manufacturer data is authoritative for qualifying published specifications, not automatically for GAL performance claims.
+2. Manufacturer data supports qualifying published specifications, not automatic performance claims.
 3. GAL measured/tested evidence supports GAL-observed performance characteristics.
 4. Independent/partner evidence may coexist when credible and permitted.
 5. GAL-derived characteristics require traceable evidence and methodology versioning.
@@ -510,33 +245,38 @@ The following #4 architectural decisions are approved and locked:
 9. Manufacturer terminology maps into GAL concepts and does not define them.
 10. Four evidence classes: Published Specification, GAL Measured, Independent Observed, GAL Derived.
 11. Three claim states: Known, Derived, Unknown / Insufficient Evidence.
-12. A derived claim cannot exceed the strength of its supporting evidence.
+12. A derived claim cannot exceed the strength of supporting evidence.
 13. Unknown is preferable to fabricated or unsupported precision.
 14. Analytical equipment knowledge is separated from commerce influence.
-15. Governed source pipeline: Source -> Raw Ingest -> Normalize -> Validate -> Resolve Conflicts -> Review -> Approve -> Promote -> Production.
+15. Governed staging/promotion pipeline controls production knowledge.
 16. Raw/source evidence is preserved and does not automatically become production knowledge.
-17. No new equipment characteristic is eligible for AI Fitting until it passes its required governance/promotion gate.
-18. Source conflicts are preserved and resolved with characteristic-specific rules; newest-record-wins is prohibited.
-19. Individual test runs remain immutable; aggregate characteristics reference all contributing evidence and methodology.
+17. No new equipment characteristic is eligible for AI Fitting until it passes governance/promotion gates.
+18. Conflicts are preserved and resolved with characteristic-specific rules; newest-record-wins is prohibited.
+19. Individual test runs remain immutable; aggregate characteristics reference contributing evidence and methodology.
 20. Research/experimental knowledge remains separated from golfer-facing production knowledge.
 21. Testing uses `Product/Variant -> Physical Sample -> Tested Configuration -> Test Session -> Test Run/Observation -> Derived Equipment Characteristic`.
-22. Physical samples preserve the identity/history of the actual equipment tested without becoming separate product identities.
-23. Tested configurations freeze all fitting-relevant assembly/settings; material configuration changes create new records rather than rewriting history.
+22. Physical samples preserve actual-unit history without becoming separate product identities.
+23. Tested configurations freeze fitting-relevant assembly/settings.
 24. Test sessions preserve instrumentation, protocol, environment, calibration, and tester/robot context.
 25. Raw qualifying observations are append-oriented/immutable; exclusions remain auditable.
 26. Aggregate characteristics preserve contributing evidence, methodology, context, and scope.
-27. GAL does not generalize one sample/configuration to an entire product family unless an approved methodology supports that inference.
+27. GAL does not generalize a sample/configuration to an entire product family without approved methodology.
+28. Product identity, lifecycle, and knowledge version are independent.
+29. Historical products/specifications remain preserved for My Bag and reproducibility.
+30. Published specifications and GAL derivations use effective dating/versioning rather than overwrite.
+31. Rules-based configuration validation sits between Equipment Knowledge and AI Fitting.
+32. Hard compatibility failures exclude candidates.
+33. Factory-standard, factory-custom, aftermarket-valid, and unverified/invalid configurations remain distinguishable.
+34. Unknown compatibility is not compatible.
+35. Configuration dependencies must be represented where defensible.
+36. Keep/adjust/reconfigure/replace are peer analytical outcomes; replacement is not assumed.
 
-## 15. Design Status / Next Sections
+## 17. Design Status / Next Sections
 
-The Equipment Knowledge Layer design is not yet complete. The approved sections above are locked architectural requirements.
-
-Remaining design topics should include:
-- versioning and product lifecycle;
-- compatibility/configuration rules;
+The Equipment Knowledge Layer design is not yet complete. Remaining design topics should include:
 - category completeness requirements for AI Fitting eligibility;
-- equipment image/media rights and provenance;
 - Equipment Knowledge completeness/quality states;
+- equipment image/media rights and provenance;
 - update cadence and new-model onboarding;
 - public Buyers Guide reuse;
 - schema implications and Supabase gap analysis.
