@@ -81,8 +81,12 @@ do $$ declare f uuid; a uuid; d uuid; fake uuid:=gen_random_uuid(); rejected boo
   if not immutable then raise exception 'approved derivation mutable'; end if;
 end $$;
 
--- Browser roles cannot access privileged helper schema/functions directly.
+-- Read contracts use least privilege: no private CREATE, no anon AI Fit helper, no direct view reads, public wrappers remain SECURITY INVOKER.
 do $$ begin
-  if has_schema_privilege('anon','gal_private','USAGE') or has_schema_privilege('authenticated','gal_private','USAGE') then raise exception 'browser retains gal_private schema usage'; end if;
-  if has_function_privilege('anon','gal_private.equipment_guide_reader()','EXECUTE') or has_function_privilege('authenticated','gal_private.equipment_guide_reader()','EXECUTE') or has_function_privilege('authenticated','gal_private.equipment_ai_fit_reader()','EXECUTE') then raise exception 'browser retains private function execute'; end if;
+  if has_schema_privilege('anon','gal_private','CREATE') or has_schema_privilege('authenticated','gal_private','CREATE') then raise exception 'browser has private schema CREATE'; end if;
+  if not has_schema_privilege('anon','gal_private','USAGE') or not has_schema_privilege('authenticated','gal_private','USAGE') then raise exception 'required private schema USAGE missing'; end if;
+  if not has_function_privilege('anon','gal_private.equipment_guide_reader()','EXECUTE') or not has_function_privilege('authenticated','gal_private.equipment_guide_reader()','EXECUTE') then raise exception 'guide helper execute missing'; end if;
+  if has_function_privilege('anon','gal_private.equipment_ai_fit_reader()','EXECUTE') or not has_function_privilege('authenticated','gal_private.equipment_ai_fit_reader()','EXECUTE') then raise exception 'AI Fit helper privilege boundary wrong'; end if;
+  if has_table_privilege('anon','public.gal_equipment_guide_v','SELECT') or has_table_privilege('authenticated','public.gal_equipment_ai_fit_v','SELECT') then raise exception 'browser can directly read internal views'; end if;
+  if (select prosecdef from pg_proc where oid='public.gal_public_equipment_guide()'::regprocedure) or (select prosecdef from pg_proc where oid='public.gal_authenticated_equipment_ai_fit()'::regprocedure) then raise exception 'public wrapper unexpectedly SECURITY DEFINER'; end if;
 end $$;
