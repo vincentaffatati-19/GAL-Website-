@@ -174,14 +174,7 @@ GAL separates **stable product identity**, **commercial lifecycle**, and **knowl
 A product family, variant, or component remains the same historical identity even after discontinuation. GAL does not create a new identity merely because availability or GAL knowledge changes.
 
 ### Commercial Lifecycle
-Lifecycle is time-based metadata independent of product identity. Governed states may include:
-- `ANNOUNCED`
-- `CURRENT`
-- `PRIOR_GENERATION`
-- `DISCONTINUED`
-- `HISTORICAL`
-
-Availability is separate from lifecycle because a discontinued product may still be available new, used, or through secondary markets.
+Lifecycle is time-based metadata independent of product identity. Governed states may include `ANNOUNCED`, `CURRENT`, `PRIOR_GENERATION`, `DISCONTINUED`, and `HISTORICAL`. Availability is separate from lifecycle because a discontinued product may still be available new, used, or through secondary markets.
 
 ### Time-Bounded Published Specifications
 Manufacturer changes to stock components, regional offerings, settings, or other published details are effective-dated rather than overwritten. Prior qualifying specifications remain reproducible and auditable.
@@ -192,217 +185,88 @@ GAL-derived characteristics carry methodology version, evidence references, and 
 ### Governing Rule
 **Products are never rewritten to match the present. GAL preserves what the product was, what was known about it at the time, and how GAL's understanding evolved.**
 
-This supports My Bag and longitudinal analysis of older equipment without forcing current-generation assumptions onto historical products.
-
 ## 15. Locked Rules-Based Configuration Engine
 
-GAL uses a rules-based configuration engine between the canonical equipment catalog and AI Fitting:
+GAL uses a rules-based configuration engine:
 
 `Components + Settings + Compatibility Rules + Build Constraints -> Valid GAL Configuration`
 
-### Hard Compatibility Gates
-Hard rules determine whether a configuration can legitimately exist. Examples include adapter/head compatibility, shaft-tip requirements, available loft/lie settings, supported playing-length ranges, iron/set availability, wedge loft/bounce/grind combinations, putter head/hosel combinations, and other category-specific constraints.
-
-A candidate that fails a hard compatibility rule cannot enter AI Fitting as a valid recommendation.
-
-### Configuration Support States
-Valid/invalid configurations remain distinguishable as:
-- `FACTORY_STANDARD` — officially offered stock configuration.
-- `FACTORY_CUSTOM` — manufacturer-supported custom-order configuration.
-- `AFTERMARKET_VALID` — technically valid configuration assembled outside the standard manufacturer catalog.
-- `UNVERIFIED / INVALID` — compatibility has not been established or is known not to work.
-
-Unknown compatibility is not treated as compatible.
-
-### Manufacturer vs Aftermarket
-GAL may recommend technically valid aftermarket configurations when supported by evidence and compatibility rules, but must not imply the manufacturer offers that exact build when it does not.
-
-### Dependent-Effect Rules
-Configuration variables may affect other equipment characteristics. Where defensible, GAL must represent dependencies such as adapter-setting effects on loft/lie/face orientation, shaft-length effects on swing weight and delivery, iron bending effects on bounce, or wedge loft changes on effective bounce. Configuration optimization must not silently improve one characteristic while degrading another.
-
-### Structured / Whole-Bag Configurations
-The rule engine must support category structures such as iron set composition, combo sets, wedge progression, wood/hybrid replacement architecture, and other multi-club structures where the fitting problem is not a single isolated club.
-
-### Current-Equipment Optimization
-Compatibility/configuration rules are a first-class foundation for `keep`, `adjust`, `reconfigure`, or `replace` recommendations. GAL may recommend optimizing a current club through a valid setting/component/configuration change instead of requiring replacement.
-
-### Governing Rules
-**GAL recommends only configurations whose compatibility is established. Unknown compatibility is not treated as compatible. Manufacturer-standard, manufacturer-custom, and valid aftermarket configurations remain distinguishable.**
-
-**Configuration changes must carry their known dependent effects so GAL does not optimize one equipment characteristic while silently degrading another.**
+Hard compatibility failures exclude candidates. Configuration support states are `FACTORY_STANDARD`, `FACTORY_CUSTOM`, `AFTERMARKET_VALID`, and `UNVERIFIED / INVALID`. Unknown compatibility is not treated as compatible. Configuration dependencies must be represented where defensible, and GAL may recommend `keep`, `adjust`, `reconfigure`, or `replace` as peer analytical outcomes rather than assuming replacement.
 
 ## 16. Locked AI Fitting Eligibility and Equipment Knowledge Completeness
 
 GAL evaluates equipment readiness against the specific use case rather than assigning a single generic completeness percentage.
 
-### Governed Readiness States
-- **`CATALOG_READY`** — identity and core published specifications are sufficiently complete for product display, search, and canonical resolution.
-- **`GUIDE_READY`** — enough governed attributes exist for inclusion in the applicable GAL Buyers Guide.
-- **`AI_FIT_LIMITED`** — GAL can evaluate the product against some target characteristics, but one or more important fitting attributes remain unavailable, conditional, stale, or insufficiently supported. Recommendation scope must be explicitly qualified.
-- **`AI_FIT_READY`** — all category-specific attributes required for the applicable AI Fitting use case are available, governed, and eligible for analytical matching.
-
-These states are use-case and category specific. A product may be Guide Ready while remaining AI Fit Limited.
-
-### Attribute Criticality by Use Case
-Each category/use case defines equipment attributes as:
-- **Required** — absence blocks the applicable readiness state or fitting decision.
-- **Conditionally Required** — required only when a particular golfer target, configuration path, or analytical claim depends on it.
-- **Optional** — useful enrichment that does not block the applicable readiness state.
-
-GAL must not use arbitrary percentage thresholds such as "80% complete" as the primary readiness rule. A single missing critical attribute may matter more than many completed optional fields.
-
-### Category-Specific Readiness
-Readiness requirements differ by category. For example, Driver AI Fitting may require validated product/configuration identity, loft/adjustability, compatibility rules, launch tendency, spin tendency, forgiveness/stability, and other governed performance characteristics. Directional tendency may be conditionally required when the golfer target includes directional correction. Exact CG coordinates may remain optional unless an approved methodology explicitly requires them.
-
-Wedges, irons, putters, balls, fairway woods, and hybrids must define their own Required / Conditional / Optional attribute sets according to the shared AI Fitting framework.
-
-### Limited-Evidence Behavior
-Missing critical evidence narrows the recommendation rather than being filled with assumptions. GAL may present a candidate as a qualified or potential match only when the Evidence Ladder and readiness policy permit that wording.
-
-A product with incomplete analytical evidence may therefore remain visible as **Potential Match — additional evidence needed** or an equivalent governed state rather than being falsely ranked as fully understood.
-
-### Separation from Media and Commerce Completeness
-Retail imagery, affiliate links, promotional metadata, commission data, and other commercial/display fields do not determine analytical AI Fitting readiness. Analytical readiness depends only on governed equipment knowledge required by the use case.
-
-### Governing Rule
-**Missing critical equipment evidence narrows or blocks the recommendation; it is never filled with assumptions.**
+Readiness states are `CATALOG_READY`, `GUIDE_READY`, `AI_FIT_LIMITED`, and `AI_FIT_READY`. Each category/use case defines attributes as Required, Conditionally Required, or Optional. Missing critical evidence narrows or blocks the recommendation; it is never filled with assumptions. Media and commerce completeness do not determine analytical AI Fitting readiness.
 
 ## 17. Locked Equipment Media Asset Governance
 
-GAL maintains equipment imagery and media in a governed presentation layer separate from analytical Equipment Knowledge and commerce influence.
-
-The canonical relationship is:
+GAL maintains equipment imagery and media in a governed presentation layer separate from analytical Equipment Knowledge and commerce influence:
 
 `Equipment Entity -> Media Asset -> Source / Rights -> Approved Uses -> Effective Period`
 
-### Media Rights / Provenance States
-Every production media asset must carry a governed rights/provenance state:
-- **`GAL_OWNED`** — created or photographed by GAL under rights GAL controls.
-- **`MANUFACTURER_AUTHORIZED`** — supplied or licensed by a manufacturer for the applicable use.
-- **`PARTNER_LICENSED`** — supplied under a partner, retailer, photographer, agency, or other third-party license with explicit permitted scope.
-- **`PUBLIC_REFERENCE_ONLY`** — usable for internal research/reference where lawful, but not approved for golfer-facing redistribution.
-- **`UNVERIFIED_RIGHTS`** — rights are not sufficiently established; the asset cannot be used in golfer-facing production.
-
-### Required Media Metadata
-A governed media record should preserve, where applicable:
-- equipment/product/variant/component/configuration or physical-sample linkage;
-- asset type and role;
-- source/provider;
-- ownership/license status;
-- source URL/document/reference where permitted;
-- acquisition/import date;
-- approved products/surfaces/use cases;
-- attribution requirements;
-- crop/transform/edit permissions;
-- territory or channel restrictions;
-- effective/expiration dates;
-- reviewer/approval state;
-- supersession/replacement relationship.
-
-### Media Roles
-GAL may maintain multiple media roles instead of one generic product image, including hero, thumbnail, address/topline, face, sole, crown, detail, shaft, grip, configuration-specific, comparison, test/sample, and other approved presentation roles.
-
-### Physical-Sample Imagery
-GAL test photography showing a specific physical sample or tested configuration must retain that sample/configuration linkage. It must not silently be represented as universal imagery of an entire product family when meaningful visible differences could mislead the golfer.
-
-### Analytical Firewall
-**An equipment record can be analytically complete without approved imagery, and approved imagery can never increase analytical confidence, evidence strength, readiness, or candidate rank.**
-
-AI Fitting uses imagery only for presentation and explanation after analytical candidate evaluation. Media presence, quality, source relationship, advertising value, and visual appeal do not influence analytical ranking.
-
-### Commerce Separation
-Equipment Knowledge, Media Assets, and Commerce Assets remain separate concerns:
-
-`Equipment Knowledge = analytical truth`
-
-`Media Assets = governed presentation`
-
-`Commerce Assets = downstream merchandising / transaction support`
-
-A retailer or partner providing superior imagery does not receive analytical advantage.
-
-### Governing Rule
-**Only media with established rights for the intended use may appear in golfer-facing production. Media provenance and permitted-use scope must be auditable, and media has zero analytical influence.**
+Media-rights states are `GAL_OWNED`, `MANUFACTURER_AUTHORIZED`, `PARTNER_LICENSED`, `PUBLIC_REFERENCE_ONLY`, and `UNVERIFIED_RIGHTS`. Only media with established rights for the intended use may appear in golfer-facing production. GAL test/sample imagery preserves physical-sample/configuration linkage where relevant. Media cannot increase analytical confidence, evidence strength, readiness, or candidate rank.
 
 ## 18. Locked Update Cadence and New-Model Onboarding
 
-GAL uses a progressive, event-driven onboarding model so new equipment can become discoverable quickly without being treated as analytically complete before the evidence supports that conclusion.
-
-The canonical progression is:
+GAL uses a progressive, event-driven onboarding model:
 
 `Discovered -> Identity Verified -> CATALOG_READY -> GUIDE_READY -> AI_FIT_LIMITED -> AI_FIT_READY -> Monitored`
 
-Readiness remains governed by the category/use-case rules in Section 16. Progression is not automatic merely because time has passed or a product is commercially important.
+Progression is governed by evidence and use-case readiness, not by time, market attention, or commercial importance. Relevant product, source, configuration, testing, lifecycle, conflict, and methodology events trigger reevaluation.
 
-### Progressive Onboarding
-A newly announced product may reach `CATALOG_READY` once GAL verifies canonical identity, relevant variants, qualifying published specifications, and source provenance. That state does not imply GAL knows the product's performance characteristics.
+GAL separately tracks Source freshness, Knowledge freshness, and Coverage freshness. Age alone does not invalidate qualifying historical evidence.
 
-The product may advance to `GUIDE_READY`, `AI_FIT_LIMITED`, or `AI_FIT_READY` only as the required governed equipment knowledge becomes available for those use cases.
+Each new-model onboarding package preserves canonical identity, variants, published specifications, components/configurations, compatibility rules, lifecycle/release information, provenance, media-rights status, attribute coverage, unresolved conflicts, readiness, and testing/research gaps.
 
-GAL may therefore publish verified facts about a new product before it has enough evidence to make a full AI Fitting recommendation.
+GAL maintains an explicit Evidence Gap Queue for missing or insufficient knowledge blocking a desired readiness state. A new-model launch does not reset GAL's evidence standards, and published facts must remain distinguishable from measured, observed, or derived performance knowledge.
 
-### Event-Driven Re-Evaluation
-The following events should trigger equipment-knowledge reevaluation where relevant:
-- manufacturer product launch or revision;
-- corrected identity or specification data;
-- new variant, shaft, grip, adapter, grind, hosel, set composition, or other component/configuration option;
-- new GAL test result;
-- qualifying partner or independent evidence;
-- methodology or aggregation revision;
-- compatibility-rule change;
-- source conflict or conflict resolution;
-- commercial lifecycle change;
-- material evidence correction or supersession.
+## 19. Locked Public Buyers Guide Reuse of the Equipment Knowledge Layer
 
-Routine monitoring may supplement these events, but GAL does not rely only on calendar-based refreshes.
+GAL uses one governed Equipment Knowledge Layer for both public Buyers Guides and authenticated GAL AI Fitting. Buyers Guides and AI Fitting consume different approved views of the same canonical equipment truth rather than maintaining separate product-truth databases.
 
-### Separate Freshness Concepts
-GAL distinguishes:
-- **Source freshness** — when the underlying source was last verified or observed.
-- **Knowledge freshness** — whether the approved characteristic remains valid for the product/configuration and current approved methodology.
-- **Coverage freshness** — whether GAL has evaluated the latest relevant variants, components, and configuration options.
+The canonical relationship is:
 
-Age alone does not make qualifying evidence stale. Historical test evidence remains valid within its original scope unless a material product, methodology, configuration, source, or context change affects its applicability.
+`GAL Equipment Knowledge Layer -> Public Buyers Guide View -> Authenticated AI Fitting View`
 
-### New-Model Onboarding Package
-Each new product family/variant should accumulate a governed onboarding package containing, where applicable:
-- canonical identity and aliases;
-- category/product family linkage;
-- variants;
-- published specifications;
-- components and factory-supported configurations;
-- compatibility rules;
-- lifecycle/release information;
-- source provenance;
-- media-rights status;
-- Required / Conditionally Required / Optional attribute coverage;
-- unresolved conflicts;
-- current readiness by use case;
-- testing/research/evidence gaps.
+### One Equipment Truth
+Canonical equipment identity, published specifications, GAL ontology, evidence provenance, lifecycle, configuration rules, readiness state, media governance, and approved analytical characteristics are shared. A specification or analytical characteristic is not copied into an independent Buyers Guide database merely to support a public experience.
 
-### Evidence Gap Queue
-GAL maintains an explicit Evidence Gap Queue for information preventing a product from reaching a desired readiness state.
+The same governed equipment fact must therefore resolve consistently in Buyers Guides, My Bag, comparisons, and AI Fitting unless the surface intentionally presents a different approved level of detail.
 
-A gap should identify, where applicable:
-- equipment entity/configuration;
-- target use case/readiness state;
-- missing or insufficient attribute;
-- required evidence type or methodology;
-- priority/materiality;
-- source/research/test action needed;
-- status and owner/workstream where operationally assigned.
+### Public Buyers Guide Eligibility
+Normal analytical inclusion in a public Buyers Guide requires the applicable equipment entity/configuration to satisfy at least `GUIDE_READY` for that category/use case.
 
-The queue is an operational prioritization tool. It does not itself change analytical readiness.
+A public guide may use approved characteristics such as construction, forgiveness/stability class, launch/spin tendency, role, configuration availability, price/value classification where governed, and qualifying GAL-tested findings. Manufacturer marketing claims remain subject to GAL's evidence and marketing-separation rules.
 
-### Launch-Day Governance
-**A new-model launch does not reset GAL's evidence standards. New equipment progresses through the same readiness and evidence gates as existing equipment, regardless of market attention, manufacturer relationship, retailer pressure, or commercial importance.**
+### Different Product Experience, Not Different Equipment Facts
+Public Buyers Guides are lightweight discovery and education products. They may collect temporary/self-reported golfer answers and use those answers to generate a useful shortlist, but the public experience does not imply the depth of evidence available to an authenticated persistent GAL Profile and AI Fitting workflow.
 
-### Published Facts vs Performance Knowledge
-**GAL may publish what is known immediately, but must clearly distinguish published specifications from GAL-measured, independent-observed, or GAL-derived performance knowledge.**
+A Buyers Guide result is therefore a **guide recommendation / shortlist**, not automatically a full GAL AI Fit.
 
-Manufacturer launch language remains subject to the marketing-separation rule and cannot substitute for qualifying performance evidence.
+### Tell GAL Once Continuity
+When a golfer authenticates, semantically compatible Buyers Guide answers may become golfer evidence with preserved provenance, source surface, time, and self-reported status. Those answers can be reused by the Golfer Profile and AI Fitting rather than asking the golfer for the same valid information again.
 
-## 19. Current Locked Decisions
+Conceptually:
+
+`Public Guide -> Useful Shortlist -> Build My GAL Fit -> Sign In/Register -> Reuse Compatible Guide Answers -> Add Profile/Connected Evidence -> Ask Only Missing Inputs -> Target Characteristics -> Full AI Fitting`
+
+Reused values remain editable and subject to the same freshness, semantic-compatibility, and evidence-quality rules as other golfer evidence.
+
+### Why Recommendations May Differ
+A public Buyers Guide and authenticated AI Fitting may legitimately produce different recommendations because AI Fitting has more golfer-specific evidence, contextual evidence, My Bag information, measured/connected performance, or configuration detail.
+
+They must not differ because the two products maintain contradictory equipment facts.
+
+**The public Buyers Guide and GAL AI Fitting may differ in recommendation because AI Fitting knows more about the golfer—not because they use different equipment facts.**
+
+### Commerce Separation
+Commerce remains downstream in both experiences. Retailer availability, affiliate eligibility, commission, paid placement, sponsorship, or inventory may determine which transaction options can be shown after analytical selection, but cannot change the underlying equipment characteristic, guide analytical rank, or AI Fitting analytical rank.
+
+### Governing Rule
+**There is one governed Equipment Knowledge Layer. Buyers Guides and AI Fitting consume different approved views of that same truth; neither maintains an independent product-truth database.**
+
+## 20. Current Locked Decisions
 
 The following #4 architectural decisions are approved and locked:
 1. Multi-source equipment evidence with preserved provenance.
@@ -447,24 +311,28 @@ The following #4 architectural decisions are approved and locked:
 40. Missing critical evidence narrows or blocks recommendation scope; GAL does not fill missing equipment knowledge with assumptions.
 41. Media and commerce completeness do not determine analytical AI Fitting readiness.
 42. Equipment media is governed separately from analytical Equipment Knowledge and commerce.
-43. Media rights states are `GAL_OWNED`, `MANUFACTURER_AUTHORIZED`, `PARTNER_LICENSED`, `PUBLIC_REFERENCE_ONLY`, and `UNVERIFIED_RIGHTS`.
-44. Only media with established rights for the intended use may appear in golfer-facing production.
-45. GAL test/sample imagery preserves its physical-sample/configuration linkage where relevant.
-46. Media cannot increase analytical confidence, evidence strength, readiness, or candidate rank.
-47. Retailer/manufacturer/partner media quality or availability creates no analytical advantage.
-48. New-model onboarding is progressive and event-driven rather than release-day full-trust or full-test-before-discovery.
-49. Readiness progression is `Discovered -> Identity Verified -> CATALOG_READY -> GUIDE_READY -> AI_FIT_LIMITED -> AI_FIT_READY -> Monitored`.
-50. Source freshness, Knowledge freshness, and Coverage freshness are independent concepts.
-51. Age alone does not invalidate qualifying historical equipment evidence.
-52. Material equipment/source/methodology/configuration events trigger readiness reevaluation.
-53. New products maintain an explicit Evidence Gap Queue identifying what blocks higher readiness.
-54. Market attention and commercial importance do not relax GAL evidence standards.
-55. Launch-day published facts must remain distinguishable from measured, observed, or derived performance knowledge.
+43. Only media with established rights for the intended use may appear in golfer-facing production.
+44. Media cannot increase analytical confidence, evidence strength, readiness, or candidate rank.
+45. New-model onboarding is progressive and event-driven.
+46. Source freshness, Knowledge freshness, and Coverage freshness are independent concepts.
+47. Evidence Gap Queue identifies what blocks higher equipment readiness.
+48. Market attention and commercial importance do not relax evidence standards.
+49. Launch-day published facts remain distinguishable from performance knowledge.
+50. Public Buyers Guides and authenticated AI Fitting use one governed Equipment Knowledge Layer.
+51. `GUIDE_READY` is the normal minimum analytical readiness for public Buyers Guide inclusion.
+52. Buyers Guides provide lightweight recommendations/shortlists and do not imply full authenticated AI Fitting evidence depth.
+53. Semantically compatible Buyers Guide answers may flow into authenticated golfer evidence under Tell GAL Once with provenance and freshness preserved.
+54. Public Guide and AI Fitting recommendations may differ because AI Fitting knows more about the golfer, not because equipment facts differ.
+55. Buyers Guides do not maintain an independent product-truth database.
+56. Commerce remains downstream and cannot alter analytical guide or AI Fitting rank.
 
-## 20. Design Status / Next Sections
+## 21. Design Status / Next Section
 
-The Equipment Knowledge Layer design is not yet complete. Remaining design topics should include:
-- public Buyers Guide reuse;
-- schema implications and Supabase gap analysis.
+The Equipment Knowledge Layer architecture is now complete through the product/evidence/governance, test representation, lifecycle/versioning, configuration validation, readiness, media governance, new-model onboarding, and Buyers Guide reuse layers.
 
-No production schema changes are authorized by this design document alone.
+The remaining architectural activity is:
+- schema implications and Supabase gap analysis against the existing GAL staging/production data model;
+- identification of what already exists, what can be reused, what requires extension, and what should remain outside the operational database;
+- a proposed migration boundary and implementation sequence.
+
+No production schema changes are authorized by this design document alone. The schema-gap review must be completed and separately approved before implementation planning or database migration work begins.
