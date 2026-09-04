@@ -22,6 +22,8 @@ const STATUS_LABEL: Record<Ux5BagStatus, string> = {
   NOT_EVALUATED: 'Not evaluated',
 };
 
+const UX5_BAG_SCENE_SRC = '/portal/ux5/reference-bag.webp';
+
 export function renderUx5BagEnvironment(options: Ux5BagEnvironmentOptions): string {
   const categories = options.categories.map((category) => `
     <a class="ux5-status-item" data-bag-category="${escapeHtml(category.key)}" data-status="${escapeHtml(category.status)}" href="${escapeHtml(category.href)}" aria-label="${escapeHtml(`${category.label}: ${STATUS_LABEL[category.status]}`)}">
@@ -38,10 +40,11 @@ export function renderUx5BagEnvironment(options: Ux5BagEnvironmentOptions): stri
         <nav class="ux5-status-rail" aria-label="Equipment category status">
           ${categories}
         </nav>
-        <div class="ux5-bag-visual" role="img" aria-label="My GAL bag visualization">
-          <div class="ux5-bag-photo-frame" aria-hidden="true">
-            <span class="ux5-bag-photo-mark">GAL</span>
-          </div>
+        <div class="ux5-bag-visual" aria-label="My GAL bag environment">
+          <figure class="ux5-bag-photo-frame" aria-label="Illustrative GAL bag scene">
+            <img class="ux5-bag-photo" src="${UX5_BAG_SCENE_SRC}" alt="" aria-hidden="true" loading="eager" decoding="async">
+          </figure>
+          <small class="ux5-scene-disclaimer">Illustrative scene · equipment status comes from your governed My Bag data.</small>
           <a class="ux5-customize-bag" href="/portal/bag#customize">Customize My Bag</a>
         </div>
       </div>
