@@ -1,6 +1,9 @@
 import './styles/portal.css';
 import './styles/rcux3.css';
-import './styles/rcux4-visuals.css';
+import './styles/ux5-mid.css';
+import './styles/ux5-scene.css';
+import './styles/ux5-driver.css';
+import './styles/ux5-polish.css';
 import { BRAND_FONT_FAMILY, BRAND_LOGO_ALT, BRAND_LOGO_SRC } from './branding';
 import { resolvePortalRoute, type PortalRoute } from './router';
 import { renderMyBag } from './bag/render';
@@ -45,23 +48,23 @@ async function renderShell(): Promise<void> {
     : NAV_ITEMS.find((item) => item.route === currentRoute)?.label ?? 'Today';
 
   app.innerHTML = `
-    <div class="my-gal-shell">
-      <header class="my-gal-header">
-        <div class="my-gal-header-inner">
-          <a class="my-gal-brand" href="/portal/" aria-label="My GAL home">
-            <img class="my-gal-brand-logo" src="${BRAND_LOGO_SRC}" alt="${BRAND_LOGO_ALT}">
+    <div class="my-gal-shell ux5-shell" data-ux-version="GAL-UX5-MID-RC1">
+      <header class="my-gal-header ux5-app-header">
+        <div class="my-gal-header-inner ux5-app-header-inner">
+          <a class="my-gal-brand ux5-brand" href="/portal/" aria-label="My GAL home">
+            <img class="my-gal-brand-logo ux5-brand-logo" src="${BRAND_LOGO_SRC}" alt="${BRAND_LOGO_ALT}">
           </a>
-          <div class="my-gal-product-name">
+          <div class="my-gal-product-name ux5-product-name">
             <strong>My GAL</strong>
             <small>Your Equipment Intelligence Center</small>
           </div>
-          <a class="profile-access" href="/portal/profile" aria-label="Golfer Profile"${currentRoute === 'profile' ? ' aria-current="page"' : ''}>Golfer Profile</a>
+          <nav class="my-gal-nav ux5-primary-nav" aria-label="My GAL primary navigation">
+            ${NAV_ITEMS.map((item) => `<a href="${routeHref(item.route)}"${item.route === currentRoute ? ' aria-current="page"' : ''}>${item.label}</a>`).join('')}
+          </nav>
+          <a class="profile-access ux5-profile-access" href="/portal/profile" aria-label="Golfer Profile"${currentRoute === 'profile' ? ' aria-current="page"' : ''}>Golfer Profile</a>
         </div>
       </header>
-      <nav class="my-gal-nav" aria-label="My GAL primary navigation">
-        ${NAV_ITEMS.map((item) => `<a href="${routeHref(item.route)}"${item.route === currentRoute ? ' aria-current="page"' : ''}>${item.label}</a>`).join('')}
-      </nav>
-      <main class="my-gal-main${currentRoute === 'today' ? ' my-gal-main-today' : ''}${currentRoute === 'profile' ? ' my-gal-main-profile' : ''}" id="main-content">
+      <main class="my-gal-main ux5-main${currentRoute === 'today' ? ' my-gal-main-today ux5-main-today' : ''}${currentRoute === 'profile' ? ' my-gal-main-profile ux5-main-profile' : ''}" id="main-content">
         ${currentRoute === 'today' || currentRoute === 'profile' ? '' : `<p class="eyebrow">Equipment Intelligence</p><h1>${currentLabel}</h1><p class="intro">My GAL shows what GAL knows, what deserves attention, why it matters, and what to do next without inventing fit claims.</p>`}
         <div id="route-content"><section class="my-gal-state"><h2>Loading your equipment intelligence…</h2></section></div>
       </main>

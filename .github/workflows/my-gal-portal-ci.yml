@@ -34,6 +34,13 @@ jobs:
           cat portal/brand/gal-option7a-motion.b64.part* | base64 --decode > portal/public/gal-option7a-motion.jpg
           test "$(wc -c < portal/public/gal-option7a-motion.jpg)" -eq 15946
           echo "26ccad548313c1d018cb6421efdfc4a95fb18d2e5123eccdc0518777a5b7047a  portal/public/gal-option7a-motion.jpg" | sha256sum --check --strict
+      - name: Restore governed UX5 realistic scene
+        working-directory: .
+        run: |
+          mkdir -p portal/public/ux5
+          cat portal/ux5-assets/reference-bag.b64.part* | base64 --decode > portal/public/ux5/reference-bag.webp
+          test "$(wc -c < portal/public/ux5/reference-bag.webp)" -eq 20240
+          echo "11c1f63ab18cb952d1d3ca1a9831905117e93231257b37535a6855b168e3b85f  portal/public/ux5/reference-bag.webp" | sha256sum --check --strict
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Unit tests

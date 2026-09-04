@@ -12,8 +12,8 @@ const bag = readFileSync(resolve(srcRoot, 'bag/render.ts'), 'utf8');
 const profile = readFileSync(resolve(srcRoot, 'profile/render.ts'), 'utf8');
 const driver = readFileSync(resolve(srcRoot, 'fitting/driver/render.ts'), 'utf8');
 
-describe('RC-UX4 integrated locked UX candidate', () => {
-  it('ships the locked My GAL shell and connected golfer journey in one build', () => {
+describe('shared analytical contracts retained through GAL UX5', () => {
+  it('keeps the connected golfer journey and route contracts intact', () => {
     for (const label of ['Today', 'My Bag', 'Insights', 'Guides', 'Progress', 'Golfer Profile']) {
       expect(main).toContain(label);
     }

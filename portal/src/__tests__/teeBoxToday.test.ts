@@ -10,17 +10,22 @@ vi.mock('../surfaces/insights', () => ({
 
 import { renderTodaySurface } from '../surfaces/today';
 
-describe('RC-UX1 Today tee-box experience', () => {
+describe('GAL UX5 Today intelligence dashboard', () => {
   beforeEach(() => {
     mocks.fetchGolferInsights.mockReset();
     mocks.fetchGolferInsights.mockResolvedValue([]);
   });
 
-  it('renders the locked My GAL tee-box composition without invented metrics', async () => {
+  it('renders the locked bag-first dashboard without invented metrics', async () => {
     const html = await renderTodaySurface();
 
-    expect(html).toContain('tee-box-hero');
-    expect(html).toContain('bag-hero');
+    expect(html).toContain('ux5-dashboard');
+    expect(html).toContain('ux5-bag-environment');
+    expect(html).toContain('ux5-status-rail');
+    expect(html).toContain('ux5-bag-visual');
+    expect((html.match(/data-bag-category=/g) ?? []).length).toBe(7);
+    expect(html).toContain('Choose My Tee Box');
+    expect(html).toContain('Customize My Bag');
     expect(html).toContain('Bag Status');
     expect(html).toContain('Next Opportunity');
     expect(html).toContain('Bag Value');
@@ -28,14 +33,17 @@ describe('RC-UX1 Today tee-box experience', () => {
     expect(html).toContain('Quick Actions');
     expect(html).toContain('Recent Insight');
     expect(html).toContain('Progress at a Glance');
+    expect(html).toContain('How It Works');
+    expect(html).toContain('Works for Every Club');
+    expect(html).toContain('Not evaluated');
     expect(html).toContain('GAL needs more information');
 
-    expect(html).not.toContain('12 yards');
-    expect(html).not.toContain('$3,840');
-    expect(html).not.toContain('71%');
+    for (const forbidden of ['12 yards', '$3,840', '71%', '94 mph', '247 yds', '+11.3 yds']) {
+      expect(html).not.toContain(forbidden);
+    }
   });
 
-  it('uses governed active Driver insight copy but does not invent quantified impact', async () => {
+  it('marks Driver as needing attention only when a governed active Driver insight exists', async () => {
     mocks.fetchGolferInsights.mockResolvedValue([
       {
         insight_id: 'i1',
@@ -51,6 +59,7 @@ describe('RC-UX1 Today tee-box experience', () => {
     const html = await renderTodaySurface();
     expect(html).toContain('GAL Sees a Driver Opportunity');
     expect(html).toContain('Your current Driver configuration deserves review.');
+    expect(html).toMatch(/data-bag-category="driver"[^>]*data-status="NEEDS_ATTENTION"/);
     expect(html).not.toMatch(/\b\d+\s*yards?\b/i);
   });
 });
