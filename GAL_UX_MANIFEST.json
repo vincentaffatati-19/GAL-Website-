@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "LOCKED",
+  "locked_at": "2026-09-04",
+  "ux_version": "GAL-UX5-MID",
+  "release_name": "My GAL Intelligence Dashboard",
+  "next_review_candidate": "GAL-UX5-MID-RC1",
+  "authoritative_spec": "docs/superpowers/specs/2026-09-04-gal-ux5-mid-locked-design.md",
+  "inherits_from": [
+    "docs/superpowers/specs/2026-09-02-my-gal-tee-box-ux-design.md",
+    "docs/superpowers/specs/2026-08-31-my-gal-equipment-intelligence-product-design.md"
+  ],
+  "visual_reference": {
+    "filename": "My Gal Dashboard with landing.png",
+    "width_px": 1536,
+    "height_px": 1024,
+    "sha256": "3f0cf896cb88632d6bcf0f780de110bad6516b3264a8755de2c932edbca44f84"
+  },
+  "brand": {
+    "system": "Option 7A Motion Arc / GAL Custom Hybrid",
+    "primary_navigation": [
+      "Today",
+      "My Bag",
+      "Insights",
+      "Guides",
+      "Progress"
+    ]
+  },
+  "authority_precedence": [
+    "Explicit later user-approved UX lock",
+    "GAL_UX_MANIFEST.json",
+    "GAL_UX_CURRENT.md",
+    "authoritative_spec",
+    "older approved UX specifications",
+    "current implementation/code"
+  ],
+  "rules": {
+    "implementation_may_lag_lock": true,
+    "code_does_not_supersede_lock": true,
+    "invented_golfer_metrics_forbidden": true,
+    "production_promotion_requires_explicit_user_approval": true
+  }
+}
