@@ -267,7 +267,64 @@ Retail imagery, affiliate links, promotional metadata, commission data, and othe
 ### Governing Rule
 **Missing critical equipment evidence narrows or blocks the recommendation; it is never filled with assumptions.**
 
-## 17. Current Locked Decisions
+## 17. Locked Equipment Media Asset Governance
+
+GAL maintains equipment imagery and media in a governed presentation layer separate from analytical Equipment Knowledge and commerce influence.
+
+The canonical relationship is:
+
+`Equipment Entity -> Media Asset -> Source / Rights -> Approved Uses -> Effective Period`
+
+### Media Rights / Provenance States
+Every production media asset must carry a governed rights/provenance state:
+- **`GAL_OWNED`** — created or photographed by GAL under rights GAL controls.
+- **`MANUFACTURER_AUTHORIZED`** — supplied or licensed by a manufacturer for the applicable use.
+- **`PARTNER_LICENSED`** — supplied under a partner, retailer, photographer, agency, or other third-party license with explicit permitted scope.
+- **`PUBLIC_REFERENCE_ONLY`** — usable for internal research/reference where lawful, but not approved for golfer-facing redistribution.
+- **`UNVERIFIED_RIGHTS`** — rights are not sufficiently established; the asset cannot be used in golfer-facing production.
+
+### Required Media Metadata
+A governed media record should preserve, where applicable:
+- equipment/product/variant/component/configuration or physical-sample linkage;
+- asset type and role;
+- source/provider;
+- ownership/license status;
+- source URL/document/reference where permitted;
+- acquisition/import date;
+- approved products/surfaces/use cases;
+- attribution requirements;
+- crop/transform/edit permissions;
+- territory or channel restrictions;
+- effective/expiration dates;
+- reviewer/approval state;
+- supersession/replacement relationship.
+
+### Media Roles
+GAL may maintain multiple media roles instead of one generic product image, including hero, thumbnail, address/topline, face, sole, crown, detail, shaft, grip, configuration-specific, comparison, test/sample, and other approved presentation roles.
+
+### Physical-Sample Imagery
+GAL test photography showing a specific physical sample or tested configuration must retain that sample/configuration linkage. It must not silently be represented as universal imagery of an entire product family when meaningful visible differences could mislead the golfer.
+
+### Analytical Firewall
+**An equipment record can be analytically complete without approved imagery, and approved imagery can never increase analytical confidence, evidence strength, readiness, or candidate rank.**
+
+AI Fitting uses imagery only for presentation and explanation after analytical candidate evaluation. Media presence, quality, source relationship, advertising value, and visual appeal do not influence analytical ranking.
+
+### Commerce Separation
+Equipment Knowledge, Media Assets, and Commerce Assets remain separate concerns:
+
+`Equipment Knowledge = analytical truth`
+
+`Media Assets = governed presentation`
+
+`Commerce Assets = downstream merchandising / transaction support`
+
+A retailer or partner providing superior imagery does not receive analytical advantage.
+
+### Governing Rule
+**Only media with established rights for the intended use may appear in golfer-facing production. Media provenance and permitted-use scope must be auditable, and media has zero analytical influence.**
+
+## 18. Current Locked Decisions
 
 The following #4 architectural decisions are approved and locked:
 1. Multi-source equipment evidence with preserved provenance.
@@ -311,11 +368,16 @@ The following #4 architectural decisions are approved and locked:
 39. Category attributes are classified as Required, Conditionally Required, or Optional for each use case.
 40. Missing critical evidence narrows or blocks recommendation scope; GAL does not fill missing equipment knowledge with assumptions.
 41. Media and commerce completeness do not determine analytical AI Fitting readiness.
+42. Equipment media is governed separately from analytical Equipment Knowledge and commerce.
+43. Media rights states are `GAL_OWNED`, `MANUFACTURER_AUTHORIZED`, `PARTNER_LICENSED`, `PUBLIC_REFERENCE_ONLY`, and `UNVERIFIED_RIGHTS`.
+44. Only media with established rights for the intended use may appear in golfer-facing production.
+45. GAL test/sample imagery preserves its physical-sample/configuration linkage where relevant.
+46. Media cannot increase analytical confidence, evidence strength, readiness, or candidate rank.
+47. Retailer/manufacturer/partner media quality or availability creates no analytical advantage.
 
-## 18. Design Status / Next Sections
+## 19. Design Status / Next Sections
 
 The Equipment Knowledge Layer design is not yet complete. Remaining design topics should include:
-- equipment image/media rights and provenance;
 - update cadence and new-model onboarding;
 - public Buyers Guide reuse;
 - schema implications and Supabase gap analysis.
