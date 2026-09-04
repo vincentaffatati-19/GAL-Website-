@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -12,12 +13,15 @@ const main = readFileSync(resolve(srcRoot, 'main.ts'), 'utf8');
 const profile = readFileSync(resolve(srcRoot, 'profile/render.ts'), 'utf8');
 const today = readFileSync(resolve(srcRoot, 'surfaces/today.ts'), 'utf8');
 const bag = readFileSync(resolve(srcRoot, 'bag/render.ts'), 'utf8');
+const bagEnvironment = readFileSync(resolve(srcRoot, 'ux5/bagEnvironment.ts'), 'utf8');
 const viteConfig = readFileSync(resolve(portalRoot, 'vite.config.ts'), 'utf8');
 const vercelConfig = JSON.parse(readFileSync(resolve(siteRoot, 'vercel.json'), 'utf8')) as {
   routes?: Array<Record<string, string>>;
   rewrites?: unknown;
 };
 const visualLayerPath = resolve(srcRoot, 'styles/ux5-mid.css');
+const sceneAssetPath = resolve(portalRoot, 'public/ux5/reference-bag.webp');
+const sceneReadmePath = resolve(portalRoot, 'public/ux5/README.md');
 
 describe('GAL-UX5-MID candidate visual packaging', () => {
   it('serves the locked GAL logo from a stable portal asset route before the SPA fallback', () => {
@@ -26,6 +30,25 @@ describe('GAL-UX5-MID candidate visual packaging', () => {
     expect(vercelConfig.rewrites).toBeUndefined();
     expect(vercelConfig.routes?.[0]).toEqual({ handle: 'filesystem' });
     expect(vercelConfig.routes?.some((route) => route.dest === '/portal/index.html')).toBe(true);
+  });
+
+  it('packages the governed realistic UX5 bag scene as a local asset', () => {
+    expect(bagEnvironment).toContain('/portal/ux5/reference-bag.webp');
+    expect(bagEnvironment).not.toMatch(/https:\/\/images\./i);
+    expect(existsSync(sceneAssetPath)).toBe(true);
+    expect(existsSync(sceneReadmePath)).toBe(true);
+
+    if (existsSync(sceneAssetPath)) {
+      const digest = createHash('sha256').update(readFileSync(sceneAssetPath)).digest('hex');
+      expect(digest).toBe('11c1f63ab18cb952d1d3ca1a9831905117e93231257b37535a6855b168e3b85f');
+    }
+
+    if (existsSync(sceneReadmePath)) {
+      const provenance = readFileSync(sceneReadmePath, 'utf8');
+      for (const token of ['Provenance', 'Source', 'Usage', 'Modification', '11c1f63ab18cb952d1d3ca1a9831905117e93231257b37535a6855b168e3b85f']) {
+        expect(provenance).toContain(token);
+      }
+    }
   });
 
   it('uses UX5 as the only active current visual layer', () => {
