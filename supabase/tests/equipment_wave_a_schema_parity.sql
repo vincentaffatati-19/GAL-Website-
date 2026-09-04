@@ -48,16 +48,25 @@ begin
   ) then raise exception 'gal_profile_facts.fact_key missing'; end if;
 end $$;
 
--- Fingerprint-critical constraints used by later migrations.
+-- Fingerprint-critical semantics used by later migrations.
 do $$
 begin
-  if not exists (select 1 from pg_constraint where conname='gal_catalog_products_pkey') then
-    raise exception 'gal_catalog_products primary key missing';
-  end if;
-  if not exists (select 1 from pg_constraint where conname='gal_bag_items_canonical_product_id_fkey') then
-    raise exception 'gal_bag_items canonical product FK missing';
-  end if;
-  if not exists (select 1 from pg_constraint where conname='gal_profile_facts_user_fact_scope_key') then
-    raise exception 'gal_profile_facts unique scope constraint missing';
-  end if;
+  if not exists (
+    select 1 from pg_constraint
+    where conrelid='public.gal_catalog_products'::regclass and contype='p'
+  ) then raise exception 'gal_catalog_products primary key missing'; end if;
+
+  if not exists (
+    select 1 from pg_constraint
+    where conrelid='public.gal_bag_items'::regclass
+      and contype='f'
+      and pg_get_constraintdef(oid) like 'FOREIGN KEY (canonical_product_id)%'
+  ) then raise exception 'gal_bag_items canonical product FK missing'; end if;
+
+  if not exists (
+    select 1 from pg_constraint
+    where conrelid='public.gal_profile_facts'::regclass
+      and contype='u'
+      and pg_get_constraintdef(oid)='UNIQUE (user_id, fact_key, scope)'
+  ) then raise exception 'gal_profile_facts unique (user_id, fact_key, scope) missing'; end if;
 end $$;
