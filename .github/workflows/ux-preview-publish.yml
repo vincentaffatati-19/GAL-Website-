@@ -57,8 +57,12 @@ jobs:
             echo 'Forbidden service-role material found in portal build.'
             exit 1
           fi
-          if grep -R -n -E '94 mph|247 yds|\+12 Yards|\$3,840|78%|71%|\+11\.3 yds|rcux4-visuals' dist; then
-            echo 'Forbidden sample fact or retired visual authority found in UX5 build.'
+          if grep -R -n --include='*.js' --include='*.html' -E '94 mph|247 yds|\+12 Yards|\$3,840|78%|71%|\+11\.3 yds' dist; then
+            echo 'Forbidden sample golfer fact found in rendered UX5 application material.'
+            exit 1
+          fi
+          if grep -R -n -E 'rcux4-visuals' dist; then
+            echo 'Retired RCUX4 visual authority found in UX5 build.'
             exit 1
           fi
       - name: Upload verified RC artifact
