@@ -68,7 +68,7 @@ export async function renderGolferProfile(): Promise<string> {
       <header class="profile-hero"><div><p class="eyebrow">Build Your GAL Golfer</p><h1>The more GAL understands your game, the better we can fit your equipment.</h1><p><strong>Tell GAL Once.</strong> GAL responsibly reuses valid, semantically compatible information and asks again only when data is missing, stale, or genuinely context-specific.</p></div><div class="profile-completeness"><strong>${completed} of 5</strong><span>Profile completeness · data coverage</span><small>This measures known profile areas, not golfer quality or fitting confidence.</small></div></header>
 
       <div class="golfer-profile-hub">
-        <div class="golfer-figure" role="img" aria-label="Adaptive golfer representation placeholder"><span class="golfer-head"></span><span class="golfer-body"></span><span class="golfer-club"></span><small>Representation adapts only from known age-band, presentation and handedness data.</small></div>
+        <div class="golfer-figure" role="img" aria-label="Adaptive golfer representation"><span class="golfer-head"></span><span class="golfer-body"></span><span class="golfer-club"></span><small>Representation adapts only from known age-band, presentation and handedness data.</small></div>
         ${areas.map((area) => areaCard(area.label, area.key, area.facts)).join('')}
       </div>
 
