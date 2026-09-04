@@ -14,18 +14,29 @@ jobs:
         working-directory: portal
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.1
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install dependencies
-        run: npm install
+          cache: 'pnpm'
+          cache-dependency-path: portal/pnpm-lock.yaml
+      - name: Install dependencies and generate lockfile
+        run: pnpm install --no-frozen-lockfile
+      - name: Upload generated lockfile
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-pnpm-lock
+          path: portal/pnpm-lock.yaml
+          if-no-files-found: error
       - name: Unit tests
-        run: npm run test:run
+        run: pnpm run test:run
       - name: Production build
         env:
           VITE_SUPABASE_URL: https://example.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: test-publishable-key
-        run: npm run build
+        run: pnpm run build
       - name: Reject service-role material in browser build
         run: |
           if grep -R -E 'SUPABASE_SERVICE_ROLE_KEY|service_role' dist; then
