@@ -39,21 +39,15 @@ jobs:
             output="$2"
             : > "$output"
             for part in $pattern; do
-              echo "Decoding $part"
               base64 --decode "$part" >> "$output"
-              echo "Decoded $part"
             done
           }
           restore_bag() {
             head_file="$1"
             tail_file="$2"
             output="$3"
-            echo "Decoding first 20000 chars of $head_file"
-            head -c 20000 "$head_file" | base64 --decode > "$output"
-            echo "Decoded head for $output: $(wc -c < "$output") bytes"
-            echo "Decoding $tail_file"
+            python -c "import base64,re,sys; t=open(sys.argv[1],encoding='utf-8').read(); c=re.sub(r'[^A-Za-z0-9+/=]','',t)[:20000]; assert len(c)==20000, (sys.argv[1],len(c)); open(sys.argv[2],'wb').write(base64.b64decode(c,validate=True))" "$head_file" "$output"
             base64 --decode "$tail_file" >> "$output"
-            echo "Decoded complete $output: $(wc -c < "$output") bytes"
           }
           mkdir -p portal/public/ux10/tee-boxes portal/public/ux10/bags
           restore_parts 'portal/ux10-assets/coastal-01.b64.part*' portal/public/ux10/tee-boxes/coastal-01.webp
