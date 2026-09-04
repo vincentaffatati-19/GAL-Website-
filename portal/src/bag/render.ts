@@ -34,11 +34,10 @@ export async function renderMyBag(): Promise<string> {
 
     return `<section class="my-bag-experience">
       <header class="my-bag-heading"><div><p class="eyebrow">My Bag</p><h2>Your equipment, as GAL currently knows it.</h2><p>Select a category to see what is known, what still needs details, and where governed equipment intelligence can help. Missing information is not treated as a good fit.</p></div><a class="bag-guide-link" href="#bag-guide">How My Bag Works</a></header>
-      <section class="my-bag-hero" aria-label="My Bag equipment visualization">
-        <div class="my-bag-course" aria-hidden="true"></div>
+      <section class="my-bag-hero" aria-label="My Bag equipment intelligence">
         <div class="my-bag-stage">
           ${CATEGORY_ORDER.map((category) => categoryTarget(category, byCategory.get(category))).join('')}
-          <div class="bag-hero bag-hero-detail" role="img" aria-label="GAL golf bag visualization"><div class="bag-clubs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="bag-body"><span class="bag-gal-mark">GAL</span><span>MY BAG</span></div><div class="bag-base" aria-hidden="true"></div></div>
+          <div class="bag-hero bag-hero-detail" role="img" aria-label="GAL bag intelligence summary"></div>
         </div>
       </section>
       <section class="bag-detail-grid" id="bag-details" aria-label="Recorded equipment details">
