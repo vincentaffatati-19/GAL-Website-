@@ -5,19 +5,17 @@ import { describe, expect, it } from 'vitest';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(resolve(here, '../fitting/driver/render.ts'), 'utf8');
-const css = [
-  readFileSync(resolve(here, '../styles/ux5-mid.css'), 'utf8'),
-  readFileSync(resolve(here, '../styles/ux5-driver.css'), 'utf8'),
-].join('\n');
+const css = readFileSync(resolve(here, '../styles/ux10.css'), 'utf8');
 
-describe('GAL UX5 Driver intelligence interaction', () => {
-  it('renders the locked contextual club panel and four-part detail model', () => {
-    for (const className of ['ux5-club-panel', 'ux5-driver-snapshot', 'ux5-club-tabs', 'ux5-club-overview']) {
+describe('GAL UX10 Driver intelligence interaction', () => {
+  it('renders the locked contextual club panel and five-part detail model', () => {
+    for (const className of ['ux10-club-panel', 'ux10-driver-snapshot', 'ux10-club-tabs', 'ux10-club-overview']) {
       expect(source).toContain(className);
     }
-    for (const tab of ['Overview', 'Why It Matters', 'Recommendations', 'Compare']) {
+    for (const tab of ['Overview', 'Why It Matters', 'What To Do', 'Recommendations', 'Compare']) {
       expect(source).toContain(tab);
     }
+    expect(source).toContain('driver-what-to-do');
     expect(source).toContain('Close Driver intelligence');
     expect(source).toContain('/portal/');
   });
@@ -27,7 +25,7 @@ describe('GAL UX5 Driver intelligence interaction', () => {
       expect(source).toContain(label);
     }
     expect(source).toContain('Characteristics Before Brands');
-    for (const action of ['Keep', 'Adjust', 'Reconfigure', 'Replace']) expect(source).toContain(action);
+    for (const action of ['Keep', 'Adjust', 'Test', 'Reconfigure', 'Replace']) expect(source).toContain(action);
     expect(source).toContain('AI_FIT_LIMITED');
     expect(source).not.toContain('Mark as Optimized');
     expect(source).not.toContain('94 mph');
@@ -35,7 +33,7 @@ describe('GAL UX5 Driver intelligence interaction', () => {
   });
 
   it('provides a desktop contextual layout and compact mobile adaptation', () => {
-    for (const selector of ['.ux5-club-panel-body', '.ux5-club-primary', '.ux5-club-explain', '.ux5-driver-follow-through']) {
+    for (const selector of ['.ux10-club-panel-body', '.ux10-club-primary', '.ux10-club-explain', '.ux10-driver-follow-through']) {
       expect(css).toContain(selector);
     }
     expect(css).toContain('@media (max-width: 900px)');
