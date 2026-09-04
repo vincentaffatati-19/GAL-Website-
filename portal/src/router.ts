@@ -1,6 +1,6 @@
-export type PortalRoute = 'today' | 'bag' | 'insights' | 'guides' | 'progress';
+export type PortalRoute = 'today' | 'bag' | 'insights' | 'guides' | 'progress' | 'profile';
 
-const ROUTES = new Set<PortalRoute>(['today', 'bag', 'insights', 'guides', 'progress']);
+const ROUTES = new Set<PortalRoute>(['today', 'bag', 'insights', 'guides', 'progress', 'profile']);
 
 export function resolvePortalRoute(pathname: string): PortalRoute {
   const normalized = pathname.replace(/\/+$/, '');
