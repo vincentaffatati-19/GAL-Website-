@@ -1,4 +1,5 @@
 import './styles/portal.css';
+import './styles/rcux3.css';
 import { BRAND_FONT_FAMILY, BRAND_LOGO_ALT, BRAND_LOGO_SRC } from './branding';
 import { resolvePortalRoute, type PortalRoute } from './router';
 import { renderMyBag } from './bag/render';
