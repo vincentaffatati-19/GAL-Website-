@@ -1,6 +1,7 @@
 import './styles/portal.css';
 import './styles/rcux3.css';
 import './styles/ux5-mid.css';
+import './styles/ux5-scene.css';
 import './styles/ux5-driver.css';
 import { BRAND_FONT_FAMILY, BRAND_LOGO_ALT, BRAND_LOGO_SRC } from './branding';
 import { resolvePortalRoute, type PortalRoute } from './router';
