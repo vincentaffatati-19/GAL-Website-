@@ -42,16 +42,21 @@ jobs:
             output="$2"
             : > "$output"
             for part in $pattern; do
-              base64 --decode --ignore-garbage "$part" >> "$output" || true
+              base64 --decode "$part" >> "$output"
             done
+          }
+          restore_bag() {
+            head_file="$1"
+            tail_file="$2"
+            output="$3"
+            head -c 20000 "$head_file" | base64 --decode > "$output"
+            base64 --decode "$tail_file" >> "$output"
           }
           mkdir -p portal/public/ux10/tee-boxes portal/public/ux10/bags
           restore_parts 'portal/ux10-assets/coastal-01.b64.part*' portal/public/ux10/tee-boxes/coastal-01.webp
           restore_parts 'portal/ux10-assets/cliffs-01.b64.part*' portal/public/ux10/tee-boxes/cliffs-01.webp
-          restore_parts 'portal/ux10-assets/gal-tour-bag.b64.part*' portal/public/ux10/bags/gal-tour-bag.png
-          restore_parts 'portal/ux10-assets/gal-stand-bag.b64.part*' portal/public/ux10/bags/gal-stand-bag.png
-          wc -c portal/public/ux10/tee-boxes/coastal-01.webp portal/public/ux10/tee-boxes/cliffs-01.webp portal/public/ux10/bags/gal-tour-bag.png portal/public/ux10/bags/gal-stand-bag.png
-          sha256sum portal/public/ux10/tee-boxes/coastal-01.webp portal/public/ux10/tee-boxes/cliffs-01.webp portal/public/ux10/bags/gal-tour-bag.png portal/public/ux10/bags/gal-stand-bag.png
+          restore_bag portal/ux10-assets/gal-tour-bag.b64.part1 portal/ux10-assets/gal-tour-bag.tail.b64 portal/public/ux10/bags/gal-tour-bag.png
+          restore_bag portal/ux10-assets/gal-stand-bag.b64.part1 portal/ux10-assets/gal-stand-bag.tail.b64 portal/public/ux10/bags/gal-stand-bag.png
           test "$(wc -c < portal/public/ux10/tee-boxes/coastal-01.webp)" -eq 23560
           test "$(wc -c < portal/public/ux10/tee-boxes/cliffs-01.webp)" -eq 30352
           test "$(wc -c < portal/public/ux10/bags/gal-tour-bag.png)" -eq 23372
