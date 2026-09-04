@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - ux-reconciliation-rc
-      - feature/gal-ux5-mid-rc1
+      - feature/gal-ux10-01-tee-box-personalization
     paths-ignore:
       - 'preview/**'
 
@@ -32,12 +32,21 @@ jobs:
           cat portal/brand/gal-option7a-motion.b64.part* | base64 --decode > portal/public/gal-option7a-motion.jpg
           test "$(wc -c < portal/public/gal-option7a-motion.jpg)" -eq 15946
           echo "26ccad548313c1d018cb6421efdfc4a95fb18d2e5123eccdc0518777a5b7047a  portal/public/gal-option7a-motion.jpg" | sha256sum --check --strict
-      - name: Restore governed UX5 realistic scene
+      - name: Restore governed UX10 independent scene assets
         run: |
-          mkdir -p portal/public/ux5
-          cat portal/ux5-assets/reference-bag.b64.part* | base64 --decode > portal/public/ux5/reference-bag.webp
-          test "$(wc -c < portal/public/ux5/reference-bag.webp)" -eq 20240
-          echo "11c1f63ab18cb952d1d3ca1a9831905117e93231257b37535a6855b168e3b85f  portal/public/ux5/reference-bag.webp" | sha256sum --check --strict
+          mkdir -p portal/public/ux10/tee-boxes portal/public/ux10/bags
+          cat portal/ux10-assets/coastal-01.b64.part* | base64 --decode > portal/public/ux10/tee-boxes/coastal-01.webp
+          cat portal/ux10-assets/cliffs-01.b64.part* | base64 --decode > portal/public/ux10/tee-boxes/cliffs-01.webp
+          cat portal/ux10-assets/gal-tour-bag.b64.part* | base64 --decode > portal/public/ux10/bags/gal-tour-bag.png
+          cat portal/ux10-assets/gal-stand-bag.b64.part* | base64 --decode > portal/public/ux10/bags/gal-stand-bag.png
+          test "$(wc -c < portal/public/ux10/tee-boxes/coastal-01.webp)" -eq 23560
+          test "$(wc -c < portal/public/ux10/tee-boxes/cliffs-01.webp)" -eq 30352
+          test "$(wc -c < portal/public/ux10/bags/gal-tour-bag.png)" -eq 23372
+          test "$(wc -c < portal/public/ux10/bags/gal-stand-bag.png)" -eq 19207
+          echo "a2573d5603e24d67ba00b9bdc784340c57d5a35e3e92c40c51b53e5667faf7f9  portal/public/ux10/tee-boxes/coastal-01.webp" | sha256sum --check --strict
+          echo "4391c368868fee62aeb7c7cc002e2529bfb9ba8e0a6af96472bddb81f9a82f47  portal/public/ux10/tee-boxes/cliffs-01.webp" | sha256sum --check --strict
+          echo "7bf811eb4f7352779f6f3af1dfc50b4b8bf71f01fa5f6c21380dc3b7cdfb375d  portal/public/ux10/bags/gal-tour-bag.png" | sha256sum --check --strict
+          echo "488e4f6fec76007f0f4f6e2a32a5a57fbdea849c8da78ccd9bdb634a6150ca28  portal/public/ux10/bags/gal-stand-bag.png" | sha256sum --check --strict
       - name: Install verified dependencies
         working-directory: portal
         run: pnpm install --frozen-lockfile
@@ -58,17 +67,21 @@ jobs:
             exit 1
           fi
           if grep -R -n --include='*.js' --include='*.html' -E '94 mph|247 yds|\+12 Yards|\$3,840|78%|71%|\+11\.3 yds' dist; then
-            echo 'Forbidden sample golfer fact found in rendered UX5 application material.'
+            echo 'Forbidden sample golfer fact found in rendered UX10 application material.'
+            exit 1
+          fi
+          if grep -R -n --include='*.js' --include='*.html' -F '/portal/ux5/reference-bag.webp' dist; then
+            echo 'Retired combined UX5 course-and-bag scene found in UX10 build.'
             exit 1
           fi
           if grep -R -n -E 'rcux4-visuals' dist; then
-            echo 'Retired RCUX4 visual authority found in UX5 build.'
+            echo 'Retired RCUX4 visual authority found in UX10 build.'
             exit 1
           fi
       - name: Upload verified RC artifact
         uses: actions/upload-artifact@v4
         with:
-          name: GAL-UX5-MID-RC1-verified-preview
+          name: GAL-UX10.01-RC1-verified-preview
           path: portal/dist
           if-no-files-found: error
           retention-days: 7
@@ -79,10 +92,10 @@ jobs:
           cp -R portal/dist/. preview/portal/
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f portal/public/gal-option7a-motion.jpg portal/public/ux5/reference-bag.webp preview
+          git add -f portal/public/gal-option7a-motion.jpg portal/public/ux10 preview
           if git diff --cached --quiet; then
             echo 'Preview already current.'
             exit 0
           fi
-          git commit -m 'preview: publish verified GAL UX5 MID RC1 [skip ci]'
+          git commit -m 'preview: publish verified GAL UX10.01 RC1 [skip ci]'
           git push origin HEAD:${GITHUB_REF_NAME}
