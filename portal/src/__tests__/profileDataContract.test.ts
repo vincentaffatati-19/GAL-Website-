@@ -7,27 +7,24 @@ const here = dirname(fileURLToPath(import.meta.url));
 const srcRoot = resolve(here, '..');
 const renderPath = resolve(srcRoot, 'profile/render.ts');
 const clientPath = resolve(srcRoot, 'profile/client.ts');
+const typesPath = resolve(srcRoot, 'profile/types.ts');
 
 describe('RC-UX2 profile data contract', () => {
   it('preserves provenance, freshness and progressive completion', () => {
     expect(existsSync(clientPath)).toBe(true);
     expect(existsSync(renderPath)).toBe(true);
+    expect(existsSync(typesPath)).toBe(true);
     const client = readFileSync(clientPath, 'utf8');
     const render = readFileSync(renderPath, 'utf8');
+    const types = readFileSync(typesPath, 'utf8');
+    const profileContract = `${types}\n${render}`;
 
     for (const field of ['fact_key', 'fact_value', 'source', 'source_category', 'confidence', 'observed_at', 'updated_at', 'stale_after_days', 'source_reference']) {
       expect(client).toContain(field);
     }
-    expect(render).toContain('Tell GAL Once');
-    expect(render).toContain('Connect It Once');
-    expect(render).toContain('Profile completeness');
-    expect(render).toContain('data coverage');
-    expect(render).toContain('You');
-    expect(render).toContain('Your Game');
-    expect(render).toContain('Your Swing');
-    expect(render).toContain('Your Miss');
-    expect(render).toContain('Where You Play');
-    expect(render).toContain('Connect Your Golf');
+    for (const copy of ['Tell GAL Once', 'Connect It Once', 'Profile completeness', 'data coverage', 'You', 'Your Game', 'Your Swing', 'Your Miss', 'Where You Play', 'Connect Your Golf']) {
+      expect(profileContract).toContain(copy);
+    }
   });
 
   it('does not claim illustrative integrations are live', () => {
