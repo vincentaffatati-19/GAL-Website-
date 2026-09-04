@@ -16,6 +16,14 @@
     "height_px": 1024,
     "sha256": "3f0cf896cb88632d6bcf0f780de110bad6516b3264a8755de2c932edbca44f84"
   },
+  "governance_archive": {
+    "system": "Google Drive",
+    "folder": "Golf Analytics Lab/00 Governance & Standards",
+    "document_title": "GAL UX5 — My GAL Intelligence Dashboard — LOCKED",
+    "document_id": "1nu1_s0bTMx9-RleayxbiFpdZKspmsrt0HVGUfkwB4uE",
+    "document_url": "https://docs.google.com/document/d/1nu1_s0bTMx9-RleayxbiFpdZKspmsrt0HVGUfkwB4uE/edit?usp=drivesdk",
+    "contains_visual_reference": true
+  },
   "brand": {
     "system": "Option 7A Motion Arc / GAL Custom Hybrid",
     "primary_navigation": [
