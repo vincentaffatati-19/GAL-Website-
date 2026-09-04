@@ -1,5 +1,18 @@
 # Contributing to Golf Analytics Lab
 
+## UX source-of-truth preflight
+
+Before changing My GAL, portal visual design, navigation, interaction architecture, or any shared registered/subscriber UX:
+
+1. Read `GAL_UX_MANIFEST.json`.
+2. Read `GAL_UX_CURRENT.md`.
+3. Read the authoritative versioned UX specification referenced by the manifest.
+4. Compare the proposed work with the current lock before editing code.
+5. If the proposed work conflicts with the current lock, stop and obtain an explicit user-approved superseding UX decision with a new UX identifier.
+6. When a new UX is approved, update the manifest, current-UX pointer, and versioned specification in the same governed change.
+
+The most recent implementation or release candidate is **not** automatically the approved UX. Code may lag the lock; code must not silently supersede it.
+
 ## Branch workflow
 
 GAL uses a controlled branch and release model:
