@@ -8,7 +8,7 @@
 
 ## Status
 
-**CONDITIONAL — all application/database gates passed; exact-head Vercel preview pending because the Hobby project hit its build-rate limit immediately after Wave 2.**
+**CONDITIONAL — all application/database gates passed; exact-head Vercel preview pending final smoke test.**
 
 No production Supabase migration or production deployment is authorized by this record.
 
@@ -24,7 +24,9 @@ Wave 2 final head `97eca50702c34280888fc77c0da90d5de512d903` passed GitHub Actio
 - CI repository permission remained read-only.
 - Dynamic golfer/database content is HTML-escaped by shared rendering utility.
 
-The tests cover My Bag unknown/missing configuration behavior, Driver target-before-brand ordering, limited/readiness handling, Guide/AI Fit shared truth, Tell GAL Once reuse, golfer-safe Today/Insights/Progress mappings, subscriber/registered analytical invariants, commercial-consent browser behavior, and architecture guards.
+Wave 3 deployment-config head `0a2c62859bdb9b2d720574d22f1753bf36398f4e` passed GitHub Actions run `33834413712`, including the deployment regression test, production build, and service-role scan.
+
+The tests cover My Bag unknown/missing configuration behavior, Driver target-before-brand ordering, limited/readiness handling, Guide/AI Fit shared truth, Tell GAL Once reuse, golfer-safe Today/Insights/Progress mappings, subscriber/registered analytical invariants, commercial-consent browser behavior, architecture guards, and compiled-portal deployment configuration.
 
 ## Staging Database Acceptance
 
@@ -66,11 +68,11 @@ Commercial metadata is downstream of the analytical fit path and cannot change c
 
 Earlier Wave 2 preview deployments are READY, including deployment `dpl_W2yrZ72zL2PxE9eXDL3W3hjPoxCi` for commit `28dd015605c27f307a4098b22d971881ec753b38`.
 
-The exact merged integration commit `ed6f24668502f5126535adf9f72933520e26622b` received a Vercel build-rate-limit failure (`upgradeToPro=build-rate-limit`). This is an infrastructure quota condition, not a test/build failure. Wave 3 remains CONDITIONAL until an exact-head preview is READY and can be smoke-tested.
+A prior Wave 3 preview proved the Hobby quota had cleared but also exposed that Vercel was serving raw portal source instead of compiled Vite output. The deployment configuration was corrected and regression-tested at `0a2c62859bdb9b2d720574d22f1753bf36398f4e`.
 
 ### Rerun request
 
-A documentation-only commit was pushed on 2026-09-04 to trigger a fresh Vercel preview without changing application code. The resulting branch head remains code-equivalent to the verified Wave 2 integration and is the exact candidate for the rerun smoke test.
+This documentation-only commit triggers one fresh Vercel preview after the deployment fix. It does not change application or database behavior. The resulting branch head is the exact candidate for final compiled-portal smoke testing.
 
 ## Rollback
 
