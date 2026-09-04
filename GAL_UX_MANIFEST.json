@@ -17,6 +17,14 @@
     "height_px": 971,
     "sha256": "895f2c68b4be457356ba104b7a5d3335bc361cacfc73effe18138de5368a81c3"
   },
+  "governance_archive": {
+    "system": "Google Drive",
+    "folder": "Golf Analytics Lab/00 Governance & Standards",
+    "document_title": "GAL Governance Rule — UX10.01 — LOCKED",
+    "document_id": "1lwH1E6ZX_GRWm55AXHDdv1IVfUmlRiDVfDUx12EAnBI",
+    "document_url": "https://docs.google.com/document/d/1lwH1E6ZX_GRWm55AXHDdv1IVfUmlRiDVfDUx12EAnBI/edit?usp=drivesdk",
+    "contains_visual_reference": true
+  },
   "brand": {
     "system": "Option 7A Motion Arc / GAL Custom Hybrid",
     "primary_navigation": [
