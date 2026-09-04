@@ -38,7 +38,11 @@ jobs:
             pattern="$1"
             output="$2"
             : > "$output"
+            echo "Restoring $output from $pattern"
             for part in $pattern; do
+              echo "  validating $part ($(wc -c < "$part") bytes)"
+              base64 --decode "$part" >/dev/null
+              echo "  decoding $part"
               base64 --decode "$part" >> "$output"
             done
           }
