@@ -100,4 +100,10 @@ describe('GAL-UX5-MID candidate visual packaging', () => {
     expect(visuals).toMatch(/\.ux5-primary-nav\s*\{[^}]*background:\s*transparent;/s);
     expect(visuals).toContain('.ux5-dashboard .quick-actions a');
   });
+
+  it('keeps the mobile bottom navigation anchored to the viewport', () => {
+    const polish = readFileSync(polishLayerPath, 'utf8');
+    expect(polish).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*?\.ux5-app-header\s*\{[^}]*backdrop-filter:\s*none;/s);
+    expect(polish).toMatch(/@media\s*\(max-width:\s*900px\)[\s\S]*?\.ux5-primary-nav\s*\{[^}]*position:\s*fixed;[^}]*bottom:\s*0;/s);
+  });
 });
