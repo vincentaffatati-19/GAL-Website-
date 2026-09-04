@@ -20,6 +20,10 @@ describe('GAL-UX5-MID-RC1 locked portal contract', () => {
     expect(manifest.ux_version).toBe('GAL-UX5-MID');
     expect(manifest.next_review_candidate).toBe('GAL-UX5-MID-RC1');
     expect(main).toContain('GAL-UX5-MID-RC1');
+    expect(main).toContain('data-ux-version="GAL-UX5-MID-RC1"');
+    expect(main).toContain('ux5-app-header');
+    expect(main).toContain('ux5-primary-nav');
+    expect(main).toContain('ux5-profile-access');
     expect(main).toContain("import './styles/ux5-mid.css'");
     expect(main).not.toContain("import './styles/rcux4-visuals.css'");
   });
