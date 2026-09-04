@@ -1,0 +1,61 @@
+name: Publish UX Preview
+
+on:
+  push:
+    branches:
+      - ux-reconciliation-rc
+    paths-ignore:
+      - 'preview/**'
+
+permissions:
+  contents: write
+
+jobs:
+  publish-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ux-reconciliation-rc
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+          cache-dependency-path: portal/pnpm-lock.yaml
+      - name: Install verified dependencies
+        working-directory: portal
+        run: pnpm install --frozen-lockfile
+      - name: Verify portal
+        working-directory: portal
+        run: pnpm run test:run
+      - name: Build static review portal
+        working-directory: portal
+        env:
+          VITE_SUPABASE_URL: https://example.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: review-publishable-key
+        run: pnpm run build
+      - name: Reject service-role material
+        working-directory: portal
+        run: |
+          if grep -R -E 'SUPABASE_SERVICE_ROLE_KEY|service_role' dist; then
+            echo 'Forbidden service-role material found in portal build.'
+            exit 1
+          fi
+      - name: Publish prebuilt preview into branch
+        run: |
+          rm -rf preview
+          mkdir -p preview/portal
+          cp -R portal/dist/. preview/portal/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f preview
+          if git diff --cached --quiet; then
+            echo 'Preview already current.'
+            exit 0
+          fi
+          git commit -m 'preview: publish verified UX static build [skip ci]'
+          git push origin HEAD:ux-reconciliation-rc
