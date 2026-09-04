@@ -1,0 +1,10 @@
+{
+  "buildCommand": "corepack enable && cd portal && pnpm install --frozen-lockfile && pnpm build && find . -mindepth 1 -maxdepth 1 ! -name dist -exec rm -rf {} + && cp -R dist/. . && rm -rf dist",
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/portal/:path*",
+      "destination": "/portal/index.html"
+    }
+  ]
+}
