@@ -6,24 +6,27 @@ import { describe, expect, it } from 'vitest';
 const here = dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(resolve(here, '../fitting/driver/render.ts'), 'utf8');
 
-describe('RC-UX3 Driver AI Fitting UX', () => {
-  it('implements the locked nine-step mobile flow in order', () => {
-    const labels = ['Quick View','Fit Setup','Target Characteristics','Recommendations','Why This Fit','Compare','Next Action','Outcome Tracking','Progress Over Time'];
-    let lastIndex = -1;
-    for (const label of labels) {
-      const index = source.indexOf(label);
-      expect(index).toBeGreaterThan(lastIndex);
-      lastIndex = index;
+describe('GAL UX5 Driver intelligence interaction', () => {
+  it('renders the locked contextual club panel and four-part detail model', () => {
+    for (const className of ['ux5-club-panel', 'ux5-driver-snapshot', 'ux5-club-tabs', 'ux5-club-overview']) {
+      expect(source).toContain(className);
     }
+    for (const tab of ['Overview', 'Why It Matters', 'Recommendations', 'Compare']) {
+      expect(source).toContain(tab);
+    }
+    expect(source).toContain('Close Driver intelligence');
+    expect(source).toContain('/portal/');
   });
 
-  it('keeps characteristics before brands and supports optimize-current peer actions', () => {
+  it('preserves the governed fitting loop without user-declared optimization', () => {
+    for (const label of ['Quick View', 'Fit Setup', 'Target Characteristics', 'Outcome Tracking', 'Progress Over Time']) {
+      expect(source).toContain(label);
+    }
     expect(source).toContain('Characteristics Before Brands');
-    const targetIndex = source.indexOf('Target Characteristics');
-    const recommendationsIndex = source.indexOf('Recommendations');
-    expect(targetIndex).toBeGreaterThanOrEqual(0);
-    expect(recommendationsIndex).toBeGreaterThan(targetIndex);
     for (const action of ['Keep', 'Adjust', 'Reconfigure', 'Replace']) expect(source).toContain(action);
     expect(source).toContain('AI_FIT_LIMITED');
+    expect(source).not.toContain('Mark as Optimized');
+    expect(source).not.toContain('94 mph');
+    expect(source).not.toContain('247 yds');
   });
 });
