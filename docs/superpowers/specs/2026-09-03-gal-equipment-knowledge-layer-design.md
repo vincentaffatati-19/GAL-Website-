@@ -231,7 +231,43 @@ Compatibility/configuration rules are a first-class foundation for `keep`, `adju
 
 **Configuration changes must carry their known dependent effects so GAL does not optimize one equipment characteristic while silently degrading another.**
 
-## 16. Current Locked Decisions
+## 16. Locked AI Fitting Eligibility and Equipment Knowledge Completeness
+
+GAL evaluates equipment readiness against the specific use case rather than assigning a single generic completeness percentage.
+
+### Governed Readiness States
+- **`CATALOG_READY`** — identity and core published specifications are sufficiently complete for product display, search, and canonical resolution.
+- **`GUIDE_READY`** — enough governed attributes exist for inclusion in the applicable GAL Buyers Guide.
+- **`AI_FIT_LIMITED`** — GAL can evaluate the product against some target characteristics, but one or more important fitting attributes remain unavailable, conditional, stale, or insufficiently supported. Recommendation scope must be explicitly qualified.
+- **`AI_FIT_READY`** — all category-specific attributes required for the applicable AI Fitting use case are available, governed, and eligible for analytical matching.
+
+These states are use-case and category specific. A product may be Guide Ready while remaining AI Fit Limited.
+
+### Attribute Criticality by Use Case
+Each category/use case defines equipment attributes as:
+- **Required** — absence blocks the applicable readiness state or fitting decision.
+- **Conditionally Required** — required only when a particular golfer target, configuration path, or analytical claim depends on it.
+- **Optional** — useful enrichment that does not block the applicable readiness state.
+
+GAL must not use arbitrary percentage thresholds such as "80% complete" as the primary readiness rule. A single missing critical attribute may matter more than many completed optional fields.
+
+### Category-Specific Readiness
+Readiness requirements differ by category. For example, Driver AI Fitting may require validated product/configuration identity, loft/adjustability, compatibility rules, launch tendency, spin tendency, forgiveness/stability, and other governed performance characteristics. Directional tendency may be conditionally required when the golfer target includes directional correction. Exact CG coordinates may remain optional unless an approved methodology explicitly requires them.
+
+Wedges, irons, putters, balls, fairway woods, and hybrids must define their own Required / Conditional / Optional attribute sets according to the shared AI Fitting framework.
+
+### Limited-Evidence Behavior
+Missing critical evidence narrows the recommendation rather than being filled with assumptions. GAL may present a candidate as a qualified or potential match only when the Evidence Ladder and readiness policy permit that wording.
+
+A product with incomplete analytical evidence may therefore remain visible as **Potential Match — additional evidence needed** or an equivalent governed state rather than being falsely ranked as fully understood.
+
+### Separation from Media and Commerce Completeness
+Retail imagery, affiliate links, promotional metadata, commission data, and other commercial/display fields do not determine analytical AI Fitting readiness. Analytical readiness depends only on governed equipment knowledge required by the use case.
+
+### Governing Rule
+**Missing critical equipment evidence narrows or blocks the recommendation; it is never filled with assumptions.**
+
+## 17. Current Locked Decisions
 
 The following #4 architectural decisions are approved and locked:
 1. Multi-source equipment evidence with preserved provenance.
@@ -270,12 +306,15 @@ The following #4 architectural decisions are approved and locked:
 34. Unknown compatibility is not compatible.
 35. Configuration dependencies must be represented where defensible.
 36. Keep/adjust/reconfigure/replace are peer analytical outcomes; replacement is not assumed.
+37. Equipment readiness is evaluated by category and use case rather than one generic completeness percentage.
+38. Readiness states are `CATALOG_READY`, `GUIDE_READY`, `AI_FIT_LIMITED`, and `AI_FIT_READY`.
+39. Category attributes are classified as Required, Conditionally Required, or Optional for each use case.
+40. Missing critical evidence narrows or blocks recommendation scope; GAL does not fill missing equipment knowledge with assumptions.
+41. Media and commerce completeness do not determine analytical AI Fitting readiness.
 
-## 17. Design Status / Next Sections
+## 18. Design Status / Next Sections
 
 The Equipment Knowledge Layer design is not yet complete. Remaining design topics should include:
-- category completeness requirements for AI Fitting eligibility;
-- Equipment Knowledge completeness/quality states;
 - equipment image/media rights and provenance;
 - update cadence and new-model onboarding;
 - public Buyers Guide reuse;
