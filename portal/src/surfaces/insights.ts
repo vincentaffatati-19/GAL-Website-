@@ -1,4 +1,5 @@
 import { getCurrentSession } from '../auth/session';
+import { escapeHtml } from '../render/escape';
 import { getSupabaseClient } from '../supabase/client';
 
 export type GolferInsightStatus = 'ACTIVE' | 'ACKNOWLEDGED' | 'RESOLVED' | 'REGRESSED' | 'EVIDENCE_PENDING' | 'INEFFECTIVE' | 'SUPPRESSED' | 'EXPIRED';
@@ -31,5 +32,5 @@ export async function renderInsightsSurface(): Promise<string> {
   const rows = await fetchGolferInsights();
   const visible = rows.filter((row) => insightLabel(row.status));
   if (!visible.length) return '<section class="my-gal-state"><h2>No material equipment insights yet.</h2><p>GAL will surface an issue when governed evidence supports it.</p></section>';
-  return `<section class="equipment-list">${visible.map((row)=>`<article class="equipment-card"><p class="eyebrow">${insightLabel(row.status)}</p><h2>${row.headline}</h2><p>${row.golfer_message}</p></article>`).join('')}</section>`;
+  return `<section class="equipment-list">${visible.map((row)=>`<article class="equipment-card"><p class="eyebrow">${escapeHtml(insightLabel(row.status))}</p><h2>${escapeHtml(row.headline)}</h2><p>${escapeHtml(row.golfer_message)}</p></article>`).join('')}</section>`;
 }
