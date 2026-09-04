@@ -1,29 +1,52 @@
-import { readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-const here = dirname(fileURLToPath(import.meta.url));
-const srcRoot = resolve(here, '..');
-const bag = readFileSync(resolve(srcRoot, 'bag/render.ts'), 'utf8');
-const css = [
-  readFileSync(resolve(srcRoot, 'styles/portal.css'), 'utf8'),
-  readFileSync(resolve(srcRoot, 'styles/rcux3.css'), 'utf8'),
-].join('\n');
+const mocks = vi.hoisted(() => ({
+  fetchMyBag: vi.fn(),
+}));
 
-describe('RC-UX3 My Bag visual contract', () => {
-  it('uses the approved bag-first visual language and honest incomplete states', () => {
-    expect(bag).toContain('my-bag-hero');
-    expect(bag).toContain('bag-category-target');
-    expect(bag).toContain('How My Bag Works');
-    expect(bag).toContain('Configuration details needed');
-    expect(bag).not.toContain('Optimized');
-    expect(bag).not.toContain('Bag Score');
+vi.mock('../bag/client', () => ({
+  fetchMyBag: mocks.fetchMyBag,
+}));
+
+import { renderMyBag } from '../bag/render';
+
+describe('GAL UX5 My Bag visual contract', () => {
+  beforeEach(() => {
+    mocks.fetchMyBag.mockReset();
+    mocks.fetchMyBag.mockResolvedValue([]);
   });
 
-  it('has responsive bag interaction styling', () => {
-    expect(css).toContain('.my-bag-hero');
-    expect(css).toContain('.bag-category-target');
-    expect(css).toContain('.bag-detail-grid');
+  it('reuses the locked bag environment and honest incomplete states', async () => {
+    const html = await renderMyBag();
+
+    expect(html).toContain('ux5-bag-environment');
+    expect(html).toContain('ux5-status-rail');
+    expect(html).toContain('ux5-bag-visual');
+    expect((html.match(/data-bag-category=/g) ?? []).length).toBe(7);
+    expect(html).toContain('Choose My Tee Box');
+    expect(html).toContain('Customize My Bag');
+    expect(html).toContain('How My Bag Works');
+    expect(html).toContain('Not evaluated');
+    expect(html).not.toContain('Optimized');
+    expect(html).not.toContain('Bag Score');
+  });
+
+  it('does not turn known equipment identity into an unsupported positive fit claim', async () => {
+    mocks.fetchMyBag.mockResolvedValue([
+      {
+        bagItemId: 'bag-driver',
+        category: 'DRIVER',
+        equipmentName: 'Known Driver',
+        equipmentConfigurationId: 'driver-config',
+        configuration: { configurationId: 'driver-config', name: 'Known Driver Configuration' },
+        state: 'KNOWN',
+        fittingHref: '/portal/insights?fit=driver',
+      },
+    ]);
+
+    const html = await renderMyBag();
+    expect(html).toContain('Known Driver');
+    expect(html).toMatch(/data-bag-category="driver"[^>]*data-status="WATCHING"/);
+    expect(html).not.toMatch(/data-bag-category="driver"[^>]*data-status="GOOD"/);
   });
 });
