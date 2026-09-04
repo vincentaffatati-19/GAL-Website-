@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(resolve(here, '../fitting/driver/render.ts'), 'utf8');
+const css = readFileSync(resolve(here, '../styles/ux5-mid.css'), 'utf8');
 
 describe('GAL UX5 Driver intelligence interaction', () => {
   it('renders the locked contextual club panel and four-part detail model', () => {
@@ -28,5 +29,12 @@ describe('GAL UX5 Driver intelligence interaction', () => {
     expect(source).not.toContain('Mark as Optimized');
     expect(source).not.toContain('94 mph');
     expect(source).not.toContain('247 yds');
+  });
+
+  it('provides a desktop contextual layout and compact mobile adaptation', () => {
+    for (const selector of ['.ux5-club-panel-body', '.ux5-club-primary', '.ux5-club-explain', '.ux5-driver-follow-through']) {
+      expect(css).toContain(selector);
+    }
+    expect(css).toContain('@media (max-width: 900px)');
   });
 });
