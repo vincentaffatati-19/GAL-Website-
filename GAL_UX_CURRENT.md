@@ -2,40 +2,63 @@
 
 **Status:** LOCKED  
 **Locked:** 2026-09-04  
-**Current UX:** **GAL UX5 — My GAL Intelligence Dashboard**  
-**Identifier:** `GAL-UX5-MID`  
-**Next review candidate:** `GAL-UX5-MID-RC1`
+**Current UX family:** **GAL UX10 — Tee Box Personalization**  
+**Current version:** `GAL-UX10.01`  
+**Next review candidate:** `GAL-UX10.01-RC1`
 
-This file is the human-readable current-UX pointer. Do not infer the approved UX from whichever portal implementation happens to be newest. The implementation may lag the approved UX.
+This file is the human-readable current-UX pointer. Do not infer the approved UX from whichever portal implementation or release candidate happens to be newest. Implementation may lag the approved UX.
+
+## Mandatory preflight
+
+Before any GAL UX, design, code, database, guide, branding, or portal work that can affect this experience:
+
+1. Read `GAL_UX_MANIFEST.json`.
+2. Read this file.
+3. Read the governing versioned specification referenced by the manifest.
+4. Retrieve/verify the locked visual reference when visual work is involved.
+5. Compare the requested work with the current lock before editing code.
+6. If there is a conflict, surface it before implementation.
+
+If the governing material cannot be retrieved, implementation does not proceed.
 
 ## Authoritative visual reference
 
-- File: `My Gal Dashboard with landing.png`
-- Dimensions: 1536 × 1024
-- SHA-256: `3f0cf896cb88632d6bcf0f780de110bad6516b3264a8755de2c932edbca44f84`
-- Full specification: `docs/superpowers/specs/2026-09-04-gal-ux5-mid-locked-design.md`
+- File: `gal_golf_analytics_dashboard.png`
+- Dimensions: 1619 × 971
+- SHA-256: `895f2c68b4be457356ba104b7a5d3335bc361cacfc73effe18138de5368a81c3`
+- Full specification: `docs/superpowers/specs/2026-09-04-gal-ux10-01-tee-box-personalization-design.md`
 - Machine-readable authority: `GAL_UX_MANIFEST.json`
 
-## Locked visual architecture
+## Locked UX10.01 architecture
 
-The desktop reference is authoritative for composition and visual hierarchy:
-
-- premium dark/navy full-screen My GAL application shell;
-- locked Option 7A Motion Arc GAL identity;
-- persistent top navigation: Today | My Bag | Insights | Guides | Progress;
-- My GAL tee-box environment as the principal authenticated landing experience;
-- realistic golf bag and equipment imagery — no crude hand-drawn/cartoon substitute graphics;
-- equipment-category status rail for Driver, Fairway/3 Wood, Hybrid, Irons, Wedges, Putter, and Ball;
-- Bag Status, Next Opportunity, Bag Value, Bag User's Guide, Quick Actions, Recent Insight, and Progress modules;
-- club selection opens contextual intelligence without losing the bag context;
-- Driver/club intelligence surface uses Overview | Why It Matters | Recommendations | Compare;
-- supporting explanation stack includes Why It Matters, Recommendations, Compare, Inspect & Specs, and Real-World Results where governed data exists;
-- bottom instructional pattern includes How It Works and Works for Every Club;
-- responsive/mobile implementations adapt the hierarchy intentionally rather than merely shrinking the desktop composition.
+- premium dark/navy My GAL shell using the locked Option 7A Motion Arc identity;
+- primary navigation remains Today | My Bag | Insights | Guides | Progress;
+- **tee-box environment and bag visual are separate independent layers**;
+- the tee-box is a user-selectable presentation preference and may change independently (for example, a coastal Spyglass-inspired scene versus a Torrey-inspired cliffs scene);
+- the bag is a separate foreground visual driven by the golfer's saved bag/presentation preference and actual equipment structure where data exists;
+- changing the tee box must never change the bag, equipment configuration, club status, insights, recommendations, or analytics;
+- changing bag appearance must never change the tee box or analytical state;
+- a single composited course+bag image is forbidden as the active UX10 scene architecture;
+- the bag remains the hero object with Driver, Fairway/3 Wood, Hybrid, Irons, Wedges, Putter, and Ball status exploration;
+- Bag Status, Next Opportunity, Bag Visual/Bag Setup, Bag Value when governed, Quick Actions, Recent Insight, and Progress remain part of the My GAL experience;
+- club detail uses Overview | Why It Matters | What To Do | Recommendations | Compare;
+- mobile preserves the locked Driver/Profile progressive-disclosure model and viewport-anchored five-part bottom navigation;
+- `Tell GAL once. Connect it once. Use it everywhere.` remains a personalization/data-reuse principle.
 
 ## Truthfulness rule
 
-The screenshot controls presentation, not analytical truth. Example metrics, optimized states, yardage gains, retail/trade values, profile completeness, recommendations, and real-world-result claims may appear only when supported by governed GAL data or are explicitly labeled as review/demo data.
+The visual mockup controls presentation, not analytical truth. Example golfer metrics, optimized states, yardage gains, values, product recommendations, and real-world-result claims require governed GAL data or must be withheld/labeled as review data.
+
+## UX10 version-control rule
+
+`GAL-UX10` is the current architectural family.
+
+- The first locked version is `GAL-UX10.01`.
+- Revisions within this architecture increment `.02`, `.03`, `.04`, and so on.
+- Review candidates append `-RC1`, `-RC2`, etc., e.g. `GAL-UX10.02-RC1`.
+- A new whole-number family such as UX11 requires an explicit user-approved architectural replacement decision.
+- A new implementation, mockup, RC, or code change cannot silently create a new UX version.
+- Every locked revision must update this file, `GAL_UX_MANIFEST.json`, its governing versioned specification, and the governance archive together.
 
 ## Authority rule
 
@@ -48,10 +71,8 @@ When sources conflict, use this order:
 5. older approved UX specifications;
 6. current implementation/code.
 
-**Code never silently supersedes a locked UX.** If code conflicts with the lock, reconcile the code to the lock or ask for an explicit new UX decision.
+**Code never silently supersedes a locked UX.**
 
 ## Historical continuity
 
-This lock makes the 2026-09-02 approved tee-box + interactive-bag direction more specific. It preserves the My GAL product model, governed-data contract, security model, and registered/subscriber shared-component rule from the earlier approved specifications.
-
-`RC-UX4` is not the current visual authority. `GAL-UX5-MID` is.
+UX10.01 supersedes UX5 as the current visual/interaction authority while intentionally restoring the independent tee-box and independent bag-personalization requirements documented on 2026-09-02. Earlier implementation candidates remain history, not authority.
