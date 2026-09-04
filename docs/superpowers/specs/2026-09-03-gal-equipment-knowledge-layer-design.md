@@ -410,7 +410,92 @@ GAL must keep experimental/research evidence distinguishable from approved produ
 
 Interesting, incomplete, exploratory, or newly collected data must not become a golfer-facing claim or AI Fitting input until it passes the applicable governance gate.
 
-## 13. Current Locked Decisions
+## 13. Locked Test, Sample, Configuration, and Observation Model
+
+GAL will represent equipment testing using the governed chain:
+
+`Product/Variant -> Physical Sample -> Tested Configuration -> Test Session -> Test Run/Observation -> Derived Equipment Characteristic`
+
+This structure preserves the exact object and setup that generated evidence without fragmenting the canonical product catalog into isolated test records.
+
+### Physical Sample
+
+A Physical Sample represents the actual equipment unit or lot GAL possessed, inspected, measured, or tested.
+
+Where applicable it should preserve:
+- canonical product/variant reference;
+- GAL sample identifier;
+- manufacturer serial/lot/batch identifier when available and appropriate;
+- acquisition/source and date;
+- condition and prior-use state;
+- measured physical properties relevant to the test;
+- sample history and disposition;
+- provenance and ownership/loan status where relevant.
+
+A sample is evidence context, not a new product identity.
+
+### Tested Configuration
+
+A Tested Configuration freezes the exact assembly/settings used to produce the observations.
+
+For a driver this may include head variant, stated/measured loft where applicable, adapter setting, shaft model, flex, shaft weight, playing length, lie/setting, grip, and ball used.
+
+Other categories use their applicable configuration dimensions, such as iron set member/shaft/length/lie, wedge loft/bounce/grind, putter head/hosel/loft/lie/length/grip, or golf-ball model/lot.
+
+Changing a fitting-relevant configuration dimension creates a distinct tested-configuration record rather than rewriting the prior configuration.
+
+### Test Session
+
+A Test Session captures the shared context under which one or more test runs occurred, including where applicable:
+- date/time;
+- facility/location;
+- tester, panel, robot, or other test agent;
+- instrumentation/launch monitor/test rig;
+- calibration status;
+- ball and consumable controls where not configuration-specific;
+- environmental conditions;
+- protocol/methodology version;
+- session notes and anomalies.
+
+### Test Run / Observation
+
+Individual qualifying test runs preserve raw or minimally normalized observations.
+
+Depending on category and methodology, observations may include ball speed, launch, spin, carry, total distance, dispersion, strike location, delivered-club variables, friction, durability, dimensional measurements, or other approved metrics.
+
+Raw observations are append-oriented/immutable after validation. Corrections are represented through auditable correction/supersession records rather than silent mutation.
+
+### Exclusions
+
+Rejected or excluded observations must not simply disappear when the methodology requires exclusion tracking.
+
+The system must preserve the observation or exclusion record, exclusion reason, governing protocol/rule, and reviewer/system actor where appropriate. Derived calculations use only observations that qualify under the applicable methodology version.
+
+### Derived and Aggregate Characteristics
+
+GAL may aggregate qualifying observations into a governed derived equipment characteristic such as a launch tendency, spin tendency, stability/forgiveness classification, directional tendency, or other approved ontology attribute.
+
+Every aggregate/derivation must preserve:
+- contributing observations/tests;
+- physical samples represented;
+- tested configurations represented;
+- methodology and aggregation version;
+- relevant context/environment constraints;
+- sample/run counts where material;
+- effective date;
+- evidence/claim state.
+
+Repeated tests add evidence and may support a new derivation version; they do not erase prior test history.
+
+### Scope-of-Generalization Rule
+
+**GAL never attributes a measured result to an entire product family when the evidence was generated from only one specific sample/configuration unless an approved methodology explicitly supports that generalization.**
+
+A result may therefore be scoped to a physical sample, tested configuration, variant, or product family depending on what the evidence and methodology defensibly support.
+
+Where generalization is not justified, the broader characteristic remains `Unknown / Insufficient Evidence` or otherwise qualified.
+
+## 14. Current Locked Decisions
 
 The following #4 architectural decisions are approved and locked:
 
@@ -434,13 +519,19 @@ The following #4 architectural decisions are approved and locked:
 18. Source conflicts are preserved and resolved with characteristic-specific rules; newest-record-wins is prohibited.
 19. Individual test runs remain immutable; aggregate characteristics reference all contributing evidence and methodology.
 20. Research/experimental knowledge remains separated from golfer-facing production knowledge.
+21. Testing uses `Product/Variant -> Physical Sample -> Tested Configuration -> Test Session -> Test Run/Observation -> Derived Equipment Characteristic`.
+22. Physical samples preserve the identity/history of the actual equipment tested without becoming separate product identities.
+23. Tested configurations freeze all fitting-relevant assembly/settings; material configuration changes create new records rather than rewriting history.
+24. Test sessions preserve instrumentation, protocol, environment, calibration, and tester/robot context.
+25. Raw qualifying observations are append-oriented/immutable; exclusions remain auditable.
+26. Aggregate characteristics preserve contributing evidence, methodology, context, and scope.
+27. GAL does not generalize one sample/configuration to an entire product family unless an approved methodology supports that inference.
 
-## 14. Design Status / Next Sections
+## 15. Design Status / Next Sections
 
 The Equipment Knowledge Layer design is not yet complete. The approved sections above are locked architectural requirements.
 
 Remaining design topics should include:
-- test/sample/configuration representation;
 - versioning and product lifecycle;
 - compatibility/configuration rules;
 - category completeness requirements for AI Fitting eligibility;
