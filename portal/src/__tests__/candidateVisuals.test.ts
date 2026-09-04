@@ -20,8 +20,16 @@ const vercelConfig = JSON.parse(readFileSync(resolve(siteRoot, 'vercel.json'), '
   rewrites?: unknown;
 };
 const visualLayerPath = resolve(srcRoot, 'styles/ux5-mid.css');
+const polishLayerPath = resolve(srcRoot, 'styles/ux5-polish.css');
 const sceneAssetPath = resolve(portalRoot, 'public/ux5/reference-bag.webp');
 const sceneReadmePath = resolve(portalRoot, 'public/ux5/README.md');
+
+function readUx5Visuals(): string {
+  return [visualLayerPath, polishLayerPath]
+    .filter((path) => existsSync(path))
+    .map((path) => readFileSync(path, 'utf8'))
+    .join('\n');
+}
 
 describe('GAL-UX5-MID candidate visual packaging', () => {
   it('serves the locked GAL logo from a stable portal asset route before the SPA fallback', () => {
@@ -54,8 +62,10 @@ describe('GAL-UX5-MID candidate visual packaging', () => {
   it('uses UX5 as the only active current visual layer', () => {
     expect(profile).not.toContain('representation placeholder');
     expect(main).toContain("import './styles/ux5-mid.css'");
+    expect(main).toContain("import './styles/ux5-polish.css'");
     expect(main).not.toContain("import './styles/rcux4-visuals.css'");
     expect(existsSync(visualLayerPath)).toBe(true);
+    expect(existsSync(polishLayerPath)).toBe(true);
 
     for (const [source, primitive] of [
       [today, 'tee-box-sky'],
@@ -77,18 +87,16 @@ describe('GAL-UX5-MID candidate visual packaging', () => {
       expect(source).not.toContain(primitive);
     }
 
-    if (existsSync(visualLayerPath)) {
-      const visuals = readFileSync(visualLayerPath, 'utf8');
-      expect(visuals).not.toContain('data:image/svg+xml');
-      expect(visuals).not.toContain('base64,');
-      for (const contract of ['--ux5-navy', '--ux5-orange', '.ux5-shell', '.ux5-bag-environment', '.ux5-club-panel']) {
-        expect(visuals).toContain(contract);
-      }
+    const visuals = readUx5Visuals();
+    expect(visuals).not.toContain('data:image/svg+xml');
+    expect(visuals).not.toContain('base64,');
+    for (const contract of ['--ux5-navy', '--ux5-orange', '.ux5-shell', '.ux5-bag-environment', '.ux5-club-panel']) {
+      expect(visuals).toContain(contract);
     }
   });
 
   it('overrides legacy navigation and quick-action presentation in the UX5 layer', () => {
-    const visuals = readFileSync(visualLayerPath, 'utf8');
+    const visuals = readUx5Visuals();
     expect(visuals).toMatch(/\.ux5-primary-nav\s*\{[^}]*background:\s*transparent;/s);
     expect(visuals).toContain('.ux5-dashboard .quick-actions a');
   });
