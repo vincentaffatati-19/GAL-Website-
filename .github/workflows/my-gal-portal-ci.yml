@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - 'portal/**'
+      - 'drivers.html'
+      - 'supabase/migrations/20260904022000_consumer_commercial_consent.sql'
+      - 'supabase/tests/consumer_commercial_consent.sql'
       - '.github/workflows/my-gal-portal-ci.yml'
 
 permissions:
