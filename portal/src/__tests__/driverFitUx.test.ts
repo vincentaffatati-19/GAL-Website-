@@ -5,7 +5,10 @@ import { describe, expect, it } from 'vitest';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(resolve(here, '../fitting/driver/render.ts'), 'utf8');
-const css = readFileSync(resolve(here, '../styles/ux5-mid.css'), 'utf8');
+const css = [
+  readFileSync(resolve(here, '../styles/ux5-mid.css'), 'utf8'),
+  readFileSync(resolve(here, '../styles/ux5-driver.css'), 'utf8'),
+].join('\n');
 
 describe('GAL UX5 Driver intelligence interaction', () => {
   it('renders the locked contextual club panel and four-part detail model', () => {
