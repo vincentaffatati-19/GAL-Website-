@@ -10,6 +10,8 @@ const portalRoot = resolve(srcRoot, '..');
 const siteRoot = resolve(portalRoot, '..');
 const main = readFileSync(resolve(srcRoot, 'main.ts'), 'utf8');
 const profile = readFileSync(resolve(srcRoot, 'profile/render.ts'), 'utf8');
+const today = readFileSync(resolve(srcRoot, 'surfaces/today.ts'), 'utf8');
+const bag = readFileSync(resolve(srcRoot, 'bag/render.ts'), 'utf8');
 const viteConfig = readFileSync(resolve(portalRoot, 'vite.config.ts'), 'utf8');
 const vercelConfig = JSON.parse(readFileSync(resolve(siteRoot, 'vercel.json'), 'utf8')) as {
   routes?: Array<Record<string, string>>;
@@ -26,10 +28,30 @@ describe('RC-UX4 candidate visual packaging', () => {
     expect(vercelConfig.routes?.some((route) => route.dest === '/portal/index.html')).toBe(true);
   });
 
-  it('uses a clean GAL data-product visual layer without embedded illustration artwork', () => {
+  it('uses one clean GAL data-product visual system with no legacy illustration primitives', () => {
     expect(profile).not.toContain('representation placeholder');
     expect(main).toContain("import './styles/rcux4-visuals.css'");
     expect(existsSync(visualLayerPath)).toBe(true);
+
+    for (const [source, primitive] of [
+      [today, 'tee-box-sky'],
+      [today, 'tee-box-water'],
+      [today, 'tee-box-fairway'],
+      [today, 'bag-clubs'],
+      [today, 'bag-body'],
+      [today, 'bag-base'],
+      [bag, 'my-bag-course'],
+      [bag, 'bag-clubs'],
+      [bag, 'bag-body'],
+      [bag, 'bag-base'],
+      [profile, 'golfer-head'],
+      [profile, 'golfer-body'],
+      [profile, 'golfer-club'],
+      [profile, 'measure-person'],
+      [profile, 'measure-line'],
+    ] as const) {
+      expect(source).not.toContain(primitive);
+    }
 
     if (existsSync(visualLayerPath)) {
       const visuals = readFileSync(visualLayerPath, 'utf8');
