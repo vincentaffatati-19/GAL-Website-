@@ -43,3 +43,10 @@ jobs:
             echo 'Forbidden service-role material found in portal build.'
             exit 1
           fi
+      - name: Publish verified portal build
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-gal-portal-dist
+          path: portal/dist
+          if-no-files-found: error
+          retention-days: 7
