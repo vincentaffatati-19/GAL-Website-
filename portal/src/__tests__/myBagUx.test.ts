@@ -6,7 +6,10 @@ import { describe, expect, it } from 'vitest';
 const here = dirname(fileURLToPath(import.meta.url));
 const srcRoot = resolve(here, '..');
 const bag = readFileSync(resolve(srcRoot, 'bag/render.ts'), 'utf8');
-const css = readFileSync(resolve(srcRoot, 'styles/portal.css'), 'utf8');
+const css = [
+  readFileSync(resolve(srcRoot, 'styles/portal.css'), 'utf8'),
+  readFileSync(resolve(srcRoot, 'styles/rcux3.css'), 'utf8'),
+].join('\n');
 
 describe('RC-UX3 My Bag visual contract', () => {
   it('uses the approved bag-first visual language and honest incomplete states', () => {
