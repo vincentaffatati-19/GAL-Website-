@@ -253,26 +253,26 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
         <div class="ux10-club-list"><span>Driver</span><span>3 Wood</span><span>Hybrid</span><span>Irons</span><span>Wedges</span><span>Putter</span><span>Ball</span></div>
       </section>
     </section>
-  `}async function Go(){try{let e=(await zo()).filter(e=>[`RESOLVED`,`REGRESSED`,`EVIDENCE_PENDING`,`INEFFECTIVE`].includes(e.status));return e.length?`<section class="equipment-list">${e.map(e=>`<article class="equipment-card"><p class="eyebrow">${a(Lo(e.status)??``)}</p><h2>${a(e.headline)}</h2><p>${a(e.golfer_message)}</p></article>`).join(``)}</section>`:`<section class="my-gal-state"><h2>No equipment outcomes recorded yet.</h2><p>Progress appears after a recommendation or equipment change has governed outcome evidence.</p></section>`}catch{return`<section class="my-gal-state"><h2>Progress is temporarily unavailable.</h2></section>`}}function Ko(e,t,n,r){e.querySelectorAll(t).forEach(e=>{e.setAttribute(`aria-pressed`,e.dataset[r]===n?`true`:`false`)})}function qo(e=document){e.querySelectorAll(`[data-tee-box-theme-id]`).forEach(t=>{t.addEventListener(`click`,()=>{let n=t.dataset.teeBoxThemeId,r=o.find(e=>e.id===n);if(!r)return;p({...f(),teeBoxThemeId:r.id});let i=e.querySelector(`.ux10-tee-box-background`);i&&(i.src=r.src,i.dataset.currentTeeBox=r.id),Ko(e,`[data-tee-box-theme-id]`,r.id,`teeBoxThemeId`)})}),e.querySelectorAll(`[data-bag-visual-id]`).forEach(t=>{t.addEventListener(`click`,()=>{let n=t.dataset.bagVisualId,r=s.find(e=>e.id===n);if(!r)return;p({...f(),bagVisualId:r.id});let i=e.querySelector(`.ux10-bag-image`);i&&(i.src=r.src,i.dataset.currentBagVisual=r.id),Ko(e,`[data-bag-visual-id]`,r.id,`bagVisualId`)})})}var Jo=[{route:`today`,label:`Today`},{route:`bag`,label:`My Bag`},{route:`insights`,label:`Insights`},{route:`guides`,label:`Guides`},{route:`progress`,label:`Progress`}];function Yo(e){return e===`today`?`/portal/`:`/portal/${e}`}async function Xo(e){let t=new URLSearchParams(window.location.search);return e===`profile`?Fo(t):e===`bag`?Xa():e===`guides`&&(t.get(`category`)??`driver`).toLowerCase()===`driver`?io():e===`insights`&&t.get(`fit`)?.toLowerCase()===`driver`?eo():e===`insights`?Bo():e===`progress`?Go():Wo()}async function Zo(){let r=document.querySelector(`#app`);if(!r)throw Error(`My GAL app mount is missing`);document.documentElement.style.fontFamily=e;let a=i(window.location.pathname),o=a===`profile`?`Golfer Profile`:Jo.find(e=>e.route===a)?.label??`Today`;r.innerHTML=`
+  `}async function Go(){try{let e=(await zo()).filter(e=>[`RESOLVED`,`REGRESSED`,`EVIDENCE_PENDING`,`INEFFECTIVE`].includes(e.status));return e.length?`<section class="equipment-list">${e.map(e=>`<article class="equipment-card"><p class="eyebrow">${a(Lo(e.status)??``)}</p><h2>${a(e.headline)}</h2><p>${a(e.golfer_message)}</p></article>`).join(``)}</section>`:`<section class="my-gal-state"><h2>No equipment outcomes recorded yet.</h2><p>Progress appears after a recommendation or equipment change has governed outcome evidence.</p></section>`}catch{return`<section class="my-gal-state"><h2>Progress is temporarily unavailable.</h2></section>`}}var Ko=[{route:`today`,label:`Today`},{route:`bag`,label:`My Bag`},{route:`insights`,label:`Insights`},{route:`guides`,label:`Guides`},{route:`progress`,label:`Progress`}];function qo(e){return e===`today`?`/portal/`:`/portal/${e}`}function Jo(e){return`<header class="my-gal-header ux10-app-header" data-ux10-shared-header="true">
+    <div class="my-gal-header-inner ux10-app-header-inner">
+      <a class="my-gal-brand ux10-brand" href="/portal/" aria-label="My GAL home">
+        <img class="my-gal-brand-logo ux10-brand-logo" src="${n}" alt="${t}">
+      </a>
+      <div class="my-gal-product-name ux10-product-name">
+        <strong>My GAL</strong>
+        <small>Your Equipment Intelligence Center</small>
+      </div>
+      <nav class="my-gal-nav ux10-primary-nav" aria-label="My GAL primary navigation">
+        ${Ko.map(t=>`<a href="${qo(t.route)}"${t.route===e?` aria-current="page"`:``}>${t.label}</a>`).join(``)}
+      </nav>
+      <a class="profile-access ux10-profile-access" href="/portal/profile" aria-label="Golfer Profile"${e===`profile`?` aria-current="page"`:``}>Golfer Profile</a>
+    </div>
+  </header>`}function Yo(e,t,n,r){e.querySelectorAll(t).forEach(e=>{e.setAttribute(`aria-pressed`,e.dataset[r]===n?`true`:`false`)})}function Xo(e=document){e.querySelectorAll(`[data-tee-box-theme-id]`).forEach(t=>{t.addEventListener(`click`,()=>{let n=t.dataset.teeBoxThemeId,r=o.find(e=>e.id===n);if(!r)return;p({...f(),teeBoxThemeId:r.id});let i=e.querySelector(`.ux10-tee-box-background`);i&&(i.src=r.src,i.dataset.currentTeeBox=r.id),Yo(e,`[data-tee-box-theme-id]`,r.id,`teeBoxThemeId`)})}),e.querySelectorAll(`[data-bag-visual-id]`).forEach(t=>{t.addEventListener(`click`,()=>{let n=t.dataset.bagVisualId,r=s.find(e=>e.id===n);if(!r)return;p({...f(),bagVisualId:r.id});let i=e.querySelector(`.ux10-bag-image`);i&&(i.src=r.src,i.dataset.currentBagVisual=r.id),Yo(e,`[data-bag-visual-id]`,r.id,`bagVisualId`)})})}async function Zo(e){let t=new URLSearchParams(window.location.search);return e===`profile`?Fo(t):e===`bag`?Xa():e===`guides`&&(t.get(`category`)??`driver`).toLowerCase()===`driver`?io():e===`insights`&&t.get(`fit`)?.toLowerCase()===`driver`?eo():e===`insights`?Bo():e===`progress`?Go():Wo()}async function Qo(){let t=document.querySelector(`#app`);if(!t)throw Error(`My GAL app mount is missing`);document.documentElement.style.fontFamily=e;let n=i(window.location.pathname),r=n===`profile`?`Golfer Profile`:Ko.find(e=>e.route===n)?.label??`Today`;t.innerHTML=`
     <div class="my-gal-shell ux10-shell" data-ux-version="GAL-UX10.02-RC1">
-      <header class="my-gal-header ux10-app-header">
-        <div class="my-gal-header-inner ux10-app-header-inner">
-          <a class="my-gal-brand ux10-brand" href="/portal/" aria-label="My GAL home">
-            <img class="my-gal-brand-logo ux10-brand-logo" src="${n}" alt="${t}">
-          </a>
-          <div class="my-gal-product-name ux10-product-name">
-            <strong>My GAL</strong>
-            <small>Your Equipment Intelligence Center</small>
-          </div>
-          <nav class="my-gal-nav ux10-primary-nav" aria-label="My GAL primary navigation">
-            ${Jo.map(e=>`<a href="${Yo(e.route)}"${e.route===a?` aria-current="page"`:``}>${e.label}</a>`).join(``)}
-          </nav>
-          <a class="profile-access ux10-profile-access" href="/portal/profile" aria-label="Golfer Profile"${a===`profile`?` aria-current="page"`:``}>Golfer Profile</a>
-        </div>
-      </header>
-      <main class="my-gal-main ux10-main${a===`today`?` my-gal-main-today ux10-main-today`:``}${a===`profile`?` my-gal-main-profile ux10-main-profile`:``}" id="main-content">
-        ${a===`today`||a===`profile`?``:`<p class="eyebrow">Equipment Intelligence</p><h1>${o}</h1><p class="intro">My GAL shows what GAL knows, what deserves attention, why it matters, and what to do next without inventing fit claims.</p>`}
+      ${Jo(n)}
+      <main class="my-gal-main ux10-main${n===`today`?` my-gal-main-today ux10-main-today`:``}${n===`profile`?` my-gal-main-profile ux10-main-profile`:``}" id="main-content">
+        ${n===`today`||n===`profile`?``:`<p class="eyebrow">Equipment Intelligence</p><h1>${r}</h1><p class="intro">My GAL shows what GAL knows, what deserves attention, why it matters, and what to do next without inventing fit claims.</p>`}
         <div id="route-content"><section class="my-gal-state"><h2>Loading your equipment intelligence…</h2></section></div>
       </main>
     </div>
-  `;let s=document.querySelector(`#route-content`);s&&(s.innerHTML=await Xo(a),qo(s))}Zo();
+  `;let a=document.querySelector(`#route-content`);a&&(a.innerHTML=await Zo(n),Xo(a))}Qo();
