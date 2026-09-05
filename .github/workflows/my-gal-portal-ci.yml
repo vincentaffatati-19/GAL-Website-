@@ -103,10 +103,20 @@ jobs:
           grep -R -q -F 'Your bag. Your game. Smarter together.' dist/assets
           grep -R -q -F 'My Golfer Profile' dist/assets
           grep -R -q -F 'Connected Golf' dist/assets
+      - name: Verify Vercel preview builder end to end
+        working-directory: .
+        run: bash scripts/build-ux10-preview.sh
       - name: Publish verified portal build
         uses: actions/upload-artifact@v4
         with:
           name: GAL-UX10.02-RC1-portal-dist
           path: portal/dist
+          if-no-files-found: error
+          retention-days: 7
+      - name: Publish exact verified preview package
+        uses: actions/upload-artifact@v4
+        with:
+          name: GAL-UX10.02-RC1-verified-preview
+          path: preview/portal
           if-no-files-found: error
           retention-days: 7
