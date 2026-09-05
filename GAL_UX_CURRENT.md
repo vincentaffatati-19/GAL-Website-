@@ -22,6 +22,15 @@ Before any GAL UX, design, code, database, guide, branding, or portal work that 
 
 If the governing material cannot be retrieved, implementation does not proceed.
 
+## Locked UX10 brand authority
+
+- **Authoritative brand system:** **Stylized Option B: Motion Arc — built on Option 7A GAL Custom Hybrid**.
+- This is the only active brand system for UX10 unless the user explicitly replaces it later.
+- Active website dark lockup: `/portal/gal-motion-arc-dark-lockup.webp`.
+- Locked dark-lockup SHA-256: `8cd2030c7b3f4e75a9474dbd3e9f27e6697ce89ea756f22a5c4749192c117636`.
+- `/portal/gal-option7a-motion.jpg` and other older/approximate GAL marks are retired from active UX10 use.
+- Mockups, previews and website builds must verify the locked brand before presentation.
+
 ## Authoritative Golfer Profile visual reference
 
 - File: `Profile Mobile Screen(1).png`
