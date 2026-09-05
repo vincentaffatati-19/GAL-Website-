@@ -1,3 +1,4 @@
+import { BRAND_LOGO_SRC } from '../branding';
 import { escapeHtml } from '../render/escape';
 import {
   UX10_BAG_VISUALS,
@@ -68,7 +69,7 @@ export function renderUx10BagEnvironment(options: Ux10BagEnvironmentOptions): st
         <nav class="ux10-status-rail" aria-label="Equipment category status">${categories}</nav>
         <div class="ux10-bag-stage" aria-label="Personalized bag visual">
           <img class="ux10-bag-image" data-current-bag-visual="${bagVisual.id}" src="${escapeHtml(bagVisual.src)}" alt="Personalized golf bag visual" loading="eager" decoding="async">
-          <div class="ux10-bag-brand" aria-hidden="true"><img src="/portal/gal-option7a-motion.jpg" alt=""></div>
+          <div class="ux10-bag-brand" aria-hidden="true"><img src="${escapeHtml(BRAND_LOGO_SRC)}" alt=""></div>
           <p class="ux10-scene-note">Different tee box. Same bag intelligence.</p>
         </div>
       </div>
