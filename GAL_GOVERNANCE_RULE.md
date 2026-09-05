@@ -2,7 +2,7 @@
 
 **Status:** USER-APPROVED / LOCKED  
 **Effective:** 2026-09-04  
-**Amended:** 2026-09-04 — Mandatory step-by-step preview/review gate
+**Amended:** 2026-09-05 — Mandatory step-by-step preview/review gate; universal UX10 header rule
 
 This rule governs all Golf Analytics Lab design, UX, code, database, guide, branding, portal, data-model, and release work.
 
@@ -46,6 +46,19 @@ The user reviews every meaningful GAL implementation step. This is a hard releas
 - Production promotion remains separately gated and still requires explicit user approval.
 
 This review gate applies even when the requested implementation is part of a larger approved plan. Approval of the plan does not waive step-by-step previews.
+
+## Universal UX10 header rule
+
+All UX10 website, portal, dashboard, Profile, guide, insight, progress, bag, fitting, and focused-workspace screens must use the same governed shared header component.
+
+- The shared header is a single implementation source; individual screens may not create substitute, approximate, alternate, or page-specific GAL headers.
+- The header must use the locked **Stylized Option B: Motion Arc — built on Option 7A GAL Custom Hybrid** brand system.
+- The active UX10 dark header logo asset is `/portal/gal-motion-arc-dark-lockup.webp`, SHA-256 `8cd2030c7b3f4e75a9474dbd3e9f27e6697ce89ea756f22a5c4749192c117636`.
+- Older Option 7A-only marks, generated approximations, alternate logo treatments, and page-specific logo substitutions are forbidden in active UX10 screens.
+- Primary navigation remains `Today | My Bag | Insights | Guides | Progress`.
+- `Golfer Profile` remains separate from the five primary navigation items.
+- Responsive/mobile adaptations may change layout and density, but must preserve the same logo, navigation model, product identity, and shared-header source.
+- Any future header change must update the single shared component and therefore propagate consistently to every UX10 screen.
 
 ## UX authority
 
