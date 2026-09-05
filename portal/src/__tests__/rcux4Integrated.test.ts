@@ -12,13 +12,13 @@ const bag = readFileSync(resolve(srcRoot, 'bag/render.ts'), 'utf8');
 const profile = readFileSync(resolve(srcRoot, 'profile/render.ts'), 'utf8');
 const driver = readFileSync(resolve(srcRoot, 'fitting/driver/render.ts'), 'utf8');
 
-describe('shared analytical contracts retained through GAL UX5', () => {
+describe('shared analytical contracts retained through GAL UX10.02', () => {
   it('keeps the connected golfer journey and route contracts intact', () => {
     for (const label of ['Today', 'My Bag', 'Insights', 'Guides', 'Progress', 'Golfer Profile']) {
       expect(main).toContain(label);
     }
-    expect(profile).toContain('Build Your GAL Golfer');
-    expect(profile).toContain('Connect Your Golf');
+    expect(profile).toContain('My Golfer Profile');
+    expect(profile).toContain('Connected Golf');
     expect(profile).toContain('Tell GAL Once');
     expect(bag).toContain('How My Bag Works');
     expect(driver).toContain('Target Characteristics');
