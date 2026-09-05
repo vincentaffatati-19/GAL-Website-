@@ -4,6 +4,11 @@ on:
   pull_request:
     paths:
       - 'portal/**'
+      - 'scripts/build-ux10-preview.sh'
+      - 'vercel.json'
+      - 'GAL_UX_MANIFEST.json'
+      - 'GAL_UX_CURRENT.md'
+      - 'docs/superpowers/specs/**'
       - 'drivers.html'
       - 'supabase/migrations/20260904022000_consumer_commercial_consent.sql'
       - 'supabase/tests/consumer_commercial_consent.sql'
@@ -85,6 +90,12 @@ jobs:
             echo 'Retired GAL logo found in active UX10 build.'
             exit 1
           fi
+          grep -R -q -F 'GAL-UX10.02-RC1' dist/assets
+          grep -R -q -F '/portal/gal-motion-arc-dark-lockup.webp' dist/assets
+          grep -R -q -F 'Your Equipment Intelligence Center' dist/assets
+          grep -R -q -F 'Your bag. Your game. Smarter together.' dist/assets
+          grep -R -q -F 'My Golfer Profile' dist/assets
+          grep -R -q -F 'Connected Golf' dist/assets
       - name: Publish verified portal build
         uses: actions/upload-artifact@v4
         with:
