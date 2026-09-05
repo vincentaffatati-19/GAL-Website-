@@ -4,10 +4,12 @@
       <b aria-hidden="true">${a(m[e.status])}</b>
     </a>`).join(``),l=o.map(e=>`
     <button type="button" class="ux10-theme-option" data-tee-box-theme-id="${e.id}" data-theme-src="${a(e.src)}" aria-pressed="${e.id===r.id?`true`:`false`}">
-      <span>${a(e.shortLabel)}</span><small>${a(e.label)}</small>
+      <img class="ux10-theme-preview" src="${a(e.src)}" alt="" aria-hidden="true" loading="eager" decoding="async">
+      <span class="ux10-selector-copy"><strong>${a(e.shortLabel)}</strong><small>${a(e.label)}</small></span>
     </button>`).join(``),u=s.map(e=>`
     <button type="button" class="ux10-bag-option" data-bag-visual-id="${e.id}" data-bag-src="${a(e.src)}" aria-pressed="${e.id===i.id?`true`:`false`}">
-      <span>${a(e.label)}</span>
+      <span class="ux10-bag-preview"><img src="${a(e.src)}" alt="" aria-hidden="true" loading="eager" decoding="async"></span>
+      <span class="ux10-selector-copy"><strong>${a(e.label)}</strong><small>Presentation only</small></span>
     </button>`).join(``);return`
     <section class="ux10-bag-environment" aria-label="${a(e.contextLabel)}">
       <img class="ux10-tee-box-background" data-current-tee-box="${r.id}" src="${a(r.src)}" alt="" aria-hidden="true" loading="eager" decoding="async">
@@ -15,12 +17,12 @@
 
       <div class="ux10-scene-controls">
         <section class="ux10-tee-box-selector" aria-label="Choose My Tee Box">
-          <div><p class="eyebrow">Choose My Tee Box</p><small>Changes the background only.</small></div>
-          <div class="ux10-selector-options">${l}</div>
+          <div class="ux10-selector-heading"><p class="eyebrow">Choose My Tee Box</p><small>Changes the background only.</small></div>
+          <div class="ux10-selector-options ux10-tee-box-options">${l}</div>
         </section>
         <section class="ux10-bag-selector" aria-label="Bag Visual">
-          <div><p class="eyebrow">Bag Visual</p><small>Changes presentation only. Your equipment data stays the same.</small></div>
-          <div class="ux10-selector-options">${u}</div>
+          <div class="ux10-selector-heading"><p class="eyebrow">Bag Visual</p><small>Changes presentation only. Your equipment data stays the same.</small></div>
+          <div class="ux10-selector-options ux10-bag-options">${u}</div>
         </section>
       </div>
 
