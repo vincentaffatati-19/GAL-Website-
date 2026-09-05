@@ -63,6 +63,11 @@ jobs:
           echo "fc194bd6aabb91ff0d87f5175a2d7b79eea40a2d3a7d0966808e63a83f17a16e  portal/public/ux10/tee-boxes/cliffs-01.webp" | sha256sum --check --strict
           echo "94d18e5ca9dd4045ddbe199b4b91cce7c537beba9c030166a5c02f65b2aadc9f  portal/public/ux10/bags/gal-tour-bag.png" | sha256sum --check --strict
           echo "7ffd0881aafdc8885e468ad929a88d4a3dcbc1cece8b0e9b471720da27443d4c  portal/public/ux10/bags/gal-stand-bag.png" | sha256sum --check --strict
+      - name: Exclude retired visuals from UX10 package
+        working-directory: .
+        run: |
+          rm -f portal/public/gal-option7a-motion.jpg
+          rm -rf portal/public/ux5
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Unit tests
@@ -90,6 +95,8 @@ jobs:
             echo 'Retired GAL logo found in active UX10 build.'
             exit 1
           fi
+          test ! -e dist/gal-option7a-motion.jpg
+          test ! -e dist/ux5
           grep -R -q -F 'GAL-UX10.02-RC1' dist/assets
           grep -R -q -F '/portal/gal-motion-arc-dark-lockup.webp' dist/assets
           grep -R -q -F 'Your Equipment Intelligence Center' dist/assets
