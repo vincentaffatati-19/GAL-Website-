@@ -6,6 +6,7 @@ import { describe, expect, it } from 'vitest';
 const here = dirname(fileURLToPath(import.meta.url));
 const srcRoot = resolve(here, '..');
 const main = readFileSync(resolve(srcRoot, 'main.ts'), 'utf8');
+const header = readFileSync(resolve(srcRoot, 'shell/header.ts'), 'utf8');
 const today = readFileSync(resolve(srcRoot, 'surfaces/today.ts'), 'utf8');
 const scene = readFileSync(resolve(srcRoot, 'ux10/scene.ts'), 'utf8');
 const driver = readFileSync(resolve(srcRoot, 'fitting/driver/render.ts'), 'utf8');
@@ -13,10 +14,11 @@ const profile = readFileSync(resolve(srcRoot, 'profile/render.ts'), 'utf8');
 const branding = readFileSync(resolve(srcRoot, 'branding.ts'), 'utf8');
 
 describe('UX10 approved dashboard and profile baseline', () => {
-  it('retains the approved My GAL shell and five-item navigation', () => {
-    expect(main).toContain('Your Equipment Intelligence Center');
-    for (const label of ['Today', 'My Bag', 'Insights', 'Guides', 'Progress']) expect(main).toContain(label);
-    expect(main).toContain('Golfer Profile');
+  it('retains the approved My GAL shell and five-item navigation through one shared header', () => {
+    expect(header).toContain('Your Equipment Intelligence Center');
+    for (const label of ['Today', 'My Bag', 'Insights', 'Guides', 'Progress']) expect(header).toContain(label);
+    expect(header).toContain('Golfer Profile');
+    expect(main).toContain('renderUx10SharedHeader(currentRoute)');
     expect(main).toContain('GAL-UX10.02-RC1');
     expect(branding).toContain('/portal/gal-motion-arc-dark-lockup.webp');
     expect(branding).not.toContain('/portal/gal-option7a-motion.jpg');
