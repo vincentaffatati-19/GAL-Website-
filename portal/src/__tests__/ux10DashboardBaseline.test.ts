@@ -32,6 +32,17 @@ describe('UX10 approved dashboard and profile baseline', () => {
     expect(today + scene).not.toContain('/portal/ux5/reference-bag.webp');
   });
 
+  it('renders the Step 2 visual tee-box and bag selectors without changing their data contract', () => {
+    expect(main).toContain("import './styles/ux10-dashboard-step2.css'");
+    expect(scene).toContain('ux10-theme-preview');
+    expect(scene).toContain('ux10-bag-preview');
+    expect(scene).toContain('Choose My Tee Box');
+    expect(scene).toContain('Changes the background only.');
+    expect(scene).toContain('Changes presentation only. Your equipment data stays the same.');
+    expect(scene).toContain('data-tee-box-theme-id');
+    expect(scene).toContain('data-bag-visual-id');
+  });
+
   it('retains the five-stage Driver intelligence panel', () => {
     for (const label of ['Overview', 'Why It Matters', 'What To Do', 'Recommendations', 'Compare']) expect(driver).toContain(label);
   });
