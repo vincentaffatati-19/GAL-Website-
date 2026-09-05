@@ -9,8 +9,8 @@ const renderPath = resolve(srcRoot, 'profile/render.ts');
 const clientPath = resolve(srcRoot, 'profile/client.ts');
 const typesPath = resolve(srcRoot, 'profile/types.ts');
 
-describe('RC-UX2 profile data contract', () => {
-  it('preserves provenance, freshness and progressive completion', () => {
+describe('GAL UX10.02 profile data contract', () => {
+  it('preserves provenance, freshness and truthful progressive coverage', () => {
     expect(existsSync(clientPath)).toBe(true);
     expect(existsSync(renderPath)).toBe(true);
     expect(existsSync(typesPath)).toBe(true);
@@ -22,15 +22,19 @@ describe('RC-UX2 profile data contract', () => {
     for (const field of ['fact_key', 'fact_value', 'source', 'source_category', 'confidence', 'observed_at', 'updated_at', 'stale_after_days', 'source_reference']) {
       expect(client).toContain(field);
     }
-    for (const copy of ['Tell GAL Once', 'Connect It Once', 'Profile completeness', 'data coverage', 'You', 'Your Game', 'Your Swing', 'Your Miss', 'Where You Play', 'Connect Your Golf']) {
+    for (const copy of ['Tell GAL Once', 'Connect It Once', 'profile areas started', 'Coverage only', 'You / Measurements', 'Your Game', 'Your Swing', 'Your Miss', 'Where You Play', 'Connected Golf']) {
       expect(profileContract).toContain(copy);
     }
+    expect(profileContract).not.toContain('Profile completeness');
   });
 
-  it('does not claim illustrative integrations are live', () => {
+  it('uses truthful integration states and never claims unsupported live connections', () => {
     if (!existsSync(renderPath)) return;
     const render = readFileSync(renderPath, 'utf8');
-    expect(render).toContain('Illustrative connection');
+    expect(render).toContain('Not connected');
+    expect(render).toContain('Unavailable in this review');
+    expect(render).toContain('What GAL Learned');
+    expect(render).not.toContain('Illustrative connection');
     expect(render).not.toContain('Connected to Arccos');
     expect(render).not.toContain('Connected to Garmin');
   });
