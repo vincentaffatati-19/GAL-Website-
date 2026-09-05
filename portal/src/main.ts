@@ -1,6 +1,7 @@
 import './styles/portal.css';
 import './styles/rcux3.css';
 import './styles/ux10.css';
+import './styles/ux10-profile.css';
 import { BRAND_FONT_FAMILY, BRAND_LOGO_ALT, BRAND_LOGO_SRC } from './branding';
 import { resolvePortalRoute, type PortalRoute } from './router';
 import { renderMyBag } from './bag/render';
@@ -26,7 +27,7 @@ function routeHref(route: Exclude<PortalRoute, 'profile'>): string {
 
 async function routeContent(route: PortalRoute): Promise<string> {
   const params = new URLSearchParams(window.location.search);
-  if (route === 'profile') return renderGolferProfile();
+  if (route === 'profile') return renderGolferProfile(params);
   if (route === 'bag') return renderMyBag();
   if (route === 'guides' && (params.get('category') ?? 'driver').toLowerCase() === 'driver') return renderDriverGuide();
   if (route === 'insights' && params.get('fit')?.toLowerCase() === 'driver') return renderDriverFit();
@@ -46,7 +47,7 @@ async function renderShell(): Promise<void> {
     : NAV_ITEMS.find((item) => item.route === currentRoute)?.label ?? 'Today';
 
   app.innerHTML = `
-    <div class="my-gal-shell ux10-shell" data-ux-version="GAL-UX10.01-RC1">
+    <div class="my-gal-shell ux10-shell" data-ux-version="GAL-UX10.02-RC1">
       <header class="my-gal-header ux10-app-header">
         <div class="my-gal-header-inner ux10-app-header-inner">
           <a class="my-gal-brand ux10-brand" href="/portal/" aria-label="My GAL home">
