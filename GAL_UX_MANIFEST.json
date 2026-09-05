@@ -41,6 +41,9 @@
     "status": "LOCKED_FOR_UX10",
     "active_dark_lockup_asset": "/portal/gal-motion-arc-dark-lockup.webp",
     "active_dark_lockup_sha256": "8cd2030c7b3f4e75a9474dbd3e9f27e6697ce89ea756f22a5c4749192c117636",
+    "shared_header_required_all_ux10_screens": true,
+    "shared_header_single_source_required": true,
+    "page_specific_header_substitutions_forbidden": true,
     "retired_active_logo_paths": [
       "/portal/gal-option7a-motion.jpg"
     ],
