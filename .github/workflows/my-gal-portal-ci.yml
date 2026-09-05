@@ -28,12 +28,12 @@ jobs:
           node-version: '22'
           cache: 'pnpm'
           cache-dependency-path: portal/pnpm-lock.yaml
-      - name: Restore locked GAL Option 7A logo
+      - name: Restore locked UX10 Stylized Option B Motion Arc logo
         working-directory: .
         run: |
-          cat portal/brand/gal-option7a-motion.b64.part* | base64 --decode > portal/public/gal-option7a-motion.jpg
-          test "$(wc -c < portal/public/gal-option7a-motion.jpg)" -eq 15946
-          echo "26ccad548313c1d018cb6421efdfc4a95fb18d2e5123eccdc0518777a5b7047a  portal/public/gal-option7a-motion.jpg" | sha256sum --check --strict
+          cat portal/brand/gal-motion-arc-dark-lockup.b64.part* | base64 --decode > portal/public/gal-motion-arc-dark-lockup.webp
+          test "$(wc -c < portal/public/gal-motion-arc-dark-lockup.webp)" -eq 15580
+          echo "8cd2030c7b3f4e75a9474dbd3e9f27e6697ce89ea756f22a5c4749192c117636  portal/public/gal-motion-arc-dark-lockup.webp" | sha256sum --check --strict
       - name: Restore governed UX10 independent scene assets
         working-directory: .
         run: |
@@ -48,8 +48,8 @@ jobs:
           mkdir -p portal/public/ux10/tee-boxes portal/public/ux10/bags
           restore_parts 'portal/ux10-assets/coastal-01.b64.part*' portal/public/ux10/tee-boxes/coastal-01.webp
           restore_parts 'portal/ux10-assets/cliffs-01.b64.part*' portal/public/ux10/tee-boxes/cliffs-01.webp
-          restore_parts 'portal/ux10-assets/gal-tour-bag.b64.part*' portal/public/ux10/bags/gal-tour-bag.png
-          restore_parts 'portal/ux10-assets/gal-stand-bag.b64.part*' portal/public/ux10/bags/gal-stand-bag.png
+          cat portal/ux10-assets/gal-tour-bag.fixed.part01 portal/ux10-assets/gal-tour-bag.fixed.part02 portal/ux10-assets/gal-tour-bag.b64.part2 | base64 --decode > portal/public/ux10/bags/gal-tour-bag.png
+          cat portal/ux10-assets/gal-stand-bag.fixed.part01 portal/ux10-assets/gal-stand-bag.fixed.part02 portal/ux10-assets/gal-stand-bag.b64.part2 | base64 --decode > portal/public/ux10/bags/gal-stand-bag.png
           test "$(wc -c < portal/public/ux10/tee-boxes/coastal-01.webp)" -eq 23560
           test "$(wc -c < portal/public/ux10/tee-boxes/cliffs-01.webp)" -eq 30352
           test "$(wc -c < portal/public/ux10/bags/gal-tour-bag.png)" -eq 17841
@@ -81,10 +81,14 @@ jobs:
             echo 'Retired combined UX5 course-and-bag scene found in UX10 build.'
             exit 1
           fi
+          if grep -R -n --include='*.js' --include='*.html' -F '/portal/gal-option7a-motion.jpg' dist; then
+            echo 'Retired GAL logo found in active UX10 build.'
+            exit 1
+          fi
       - name: Publish verified portal build
         uses: actions/upload-artifact@v4
         with:
-          name: GAL-UX10.01-RC1-portal-dist
+          name: GAL-UX10.02-RC1-portal-dist
           path: portal/dist
           if-no-files-found: error
           retention-days: 7
