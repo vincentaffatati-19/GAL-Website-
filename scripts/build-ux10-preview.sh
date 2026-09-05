@@ -34,14 +34,16 @@ test "$(wc -c < portal/public/ux10/bags/gal-stand-bag.png)" -eq 14867
   sha256sum --check --strict SHA256SUMS
 )
 
-corepack enable
-corepack prepare pnpm@10.15.1 --activate
+# Vercel may expose a different global pnpm even after Corepack activation.
+# Invoke the locked package manager version directly so pnpm-lock.yaml v9 is deterministic.
+PNPM=(npx --yes pnpm@10.15.1)
 cd portal
-pnpm install --frozen-lockfile
-pnpm run test:run
+"${PNPM[@]}" --version | grep -qx '10.15.1'
+"${PNPM[@]}" install --frozen-lockfile
+"${PNPM[@]}" run test:run
 VITE_SUPABASE_URL="${VITE_SUPABASE_URL:-https://example.supabase.co}" \
 VITE_SUPABASE_PUBLISHABLE_KEY="${VITE_SUPABASE_PUBLISHABLE_KEY:-test-publishable-key}" \
-pnpm run build
+"${PNPM[@]}" run build
 cd "$ROOT"
 
 # Build-time safety gates. A Vercel READY state is invalid unless these pass.
