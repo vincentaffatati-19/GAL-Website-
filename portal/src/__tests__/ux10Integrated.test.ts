@@ -18,14 +18,15 @@ const manifest = JSON.parse(readFileSync(resolve(repoRoot, 'GAL_UX_MANIFEST.json
 const scenePath = resolve(srcRoot, 'ux10/scene.ts');
 const scene = existsSync(scenePath) ? readFileSync(scenePath, 'utf8') : '';
 
-describe('GAL-UX10.01-RC1 locked portal contract', () => {
-  it('binds implementation to the locked UX10 authority', () => {
+describe('GAL-UX10.02-RC1 locked portal contract', () => {
+  it('binds implementation to the locked UX10.02 authority', () => {
     expect(manifest.ux_family).toBe('GAL-UX10');
-    expect(manifest.ux_version).toBe('GAL-UX10.01');
-    expect(manifest.next_review_candidate).toBe('GAL-UX10.01-RC1');
-    expect(main).toContain('GAL-UX10.01-RC1');
-    expect(main).toContain('data-ux-version="GAL-UX10.01-RC1"');
+    expect(manifest.ux_version).toBe('GAL-UX10.02');
+    expect(manifest.next_review_candidate).toBe('GAL-UX10.02-RC1');
+    expect(main).toContain('GAL-UX10.02-RC1');
+    expect(main).toContain('data-ux-version="GAL-UX10.02-RC1"');
     expect(main).toContain("import './styles/ux10.css'");
+    expect(main).toContain("import './styles/ux10-profile.css'");
     expect(main).not.toContain("import './styles/ux5-mid.css'");
   });
 
