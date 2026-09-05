@@ -123,6 +123,26 @@ A clear `View All Swing Data` action is required.
 
 If relevant swing data is missing, the workspace must show a useful next action, for example connecting/importing launch-monitor data, without fabricating metrics.
 
+### 7.1 Swing-speed capture and reuse
+
+Swing speed is a governed golfer-profile fact, not a standalone recommendation outcome on the Profile screen.
+
+- store club-specific speed, beginning with Driver and 7-Iron;
+- preserve source, source category, observation date, freshness, confidence/data-quality state, and user-confirmed state;
+- prefer recent measured launch-monitor or fitting-session data over estimates;
+- retain raw observations underneath any later governed representative value;
+- reuse valid swing-speed facts downstream in Buyers Guides, fitting logic, Insights, and future recommendations so GAL does not ask the golfer again unnecessarily;
+- do not silently average conflicting or stale measurements without governed longitudinal logic;
+- estimated speed must be labeled `Inferred / Estimated` and never presented as measured.
+
+The Swing workspace must include `How to get your swing speed` guidance with three paths:
+
+1. best — measure with an approved/supported launch monitor using normal swings;
+2. good — enter a recent fitting/simulator measurement and identify the source;
+3. fallback — allow `I don't know` without forcing an estimate.
+
+Manual entry must distinguish `Measured` from `Estimated / I'm not sure`.
+
 ## 8. Your Miss
 
 Your Miss is a guided capture experience and must preserve three separate concepts:
@@ -239,9 +259,24 @@ The visual behavior from the reference is locked:
 - Fresh and Useful — source/date/freshness remain visible when relevant;
 - One Source of Truth — Profile facts are shared across GAL rather than duplicated.
 
-Use the locked Option 7A GAL brand system and UX10 navy/orange visual language.
+Use the locked **Stylized Option B: Motion Arc — built on Option 7A GAL Custom Hybrid** brand system and UX10 navy/orange visual language.
 
 Crude cartoon/schematic substitutes are not acceptable for high-value golfer/swing/clubface visuals.
+
+### 14.1 Mandatory visual-refinement gate
+
+The user approved the Step 6 `Your Miss` interaction model on 2026-09-05 with an explicit condition: the current golfer, swing, fairway/dispersion, and clubface visuals are provisional and too crude for final UX10 quality.
+
+Before `GAL-UX10.02-RC1` can be considered visually complete or eligible for final review, GAL must return to these high-value graphics and replace/refine them to a polished, premium standard consistent with the authoritative Profile reference and locked brand system.
+
+This refinement requirement applies at minimum to:
+
+- adaptive golfer/body visuals;
+- swing-motion visuals;
+- finish-direction / dispersion visuals;
+- clubface / strike-location visuals.
+
+Functional approval of the interaction model does not waive this visual-quality gate.
 
 ## 15. Data model and truthfulness
 
@@ -282,6 +317,7 @@ The current Profile implementation must be corrected in the following ways:
 11. Preserve the five-part mobile bottom navigation.
 12. Remove or retire older Profile visual primitives that conflict with the approved reference.
 13. Keep existing source/freshness/data-governance logic wherever valid.
+14. Complete the mandatory high-value visual-refinement gate before final UX10.02 RC review.
 
 ## 17. Testing requirements
 
@@ -297,6 +333,7 @@ Before `GAL-UX10.02-RC1` is reviewable, automated verification must prove:
 - Connected Golf never claims `Connected` without valid connection state;
 - bottom mobile navigation remains viewport anchored;
 - accessibility keyboard/focus behavior works for Profile area navigation and selectors;
+- high-value golfer/swing/dispersion/clubface visuals have passed explicit user refinement review;
 - production remains untouched until explicit approval.
 
 ## 18. Relationship to UX10.01
