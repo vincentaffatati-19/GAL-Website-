@@ -17,6 +17,8 @@ const scene = readFileSync(resolve(srcRoot, 'ux10/scene.ts'), 'utf8');
 const personalization = readFileSync(resolve(srcRoot, 'ux10/personalization.ts'), 'utf8');
 const viteConfig = readFileSync(resolve(portalRoot, 'vite.config.ts'), 'utf8');
 const vercelConfig = JSON.parse(readFileSync(resolve(siteRoot, 'vercel.json'), 'utf8')) as {
+  buildCommand?: string;
+  outputDirectory?: string;
   routes?: Array<Record<string, string>>;
   rewrites?: unknown;
 };
@@ -30,10 +32,14 @@ const assets = [
   'public/ux10/bags/gal-stand-bag.png',
 ] as const;
 
-describe('GAL-UX10.01 candidate visual packaging', () => {
-  it('serves the locked GAL logo from a stable portal asset route before the SPA fallback', () => {
-    expect(BRAND_LOGO_SRC).toBe('/portal/gal-option7a-motion.jpg');
+describe('GAL-UX10.02 candidate visual packaging', () => {
+  it('serves the locked Stylized Option B Motion Arc logo and builds the preview from current source', () => {
+    expect(BRAND_LOGO_SRC).toBe('/portal/gal-motion-arc-dark-lockup.webp');
+    expect(BRAND_LOGO_SRC).not.toBe('/portal/gal-option7a-motion.jpg');
     expect(viteConfig).toContain("base: './'");
+    expect(vercelConfig.buildCommand).toBe('bash scripts/build-ux10-preview.sh');
+    expect(vercelConfig.buildCommand).not.toContain('Using prebuilt verified UX preview');
+    expect(vercelConfig.outputDirectory).toBe('preview');
     expect(vercelConfig.rewrites).toBeUndefined();
     expect(vercelConfig.routes?.[0]).toEqual({ handle: 'filesystem' });
     expect(vercelConfig.routes?.some((route) => route.dest === '/portal/index.html')).toBe(true);
@@ -63,6 +69,7 @@ describe('GAL-UX10.01 candidate visual packaging', () => {
   it('uses UX10 as the only active current visual layer', () => {
     expect(profile).not.toContain('representation placeholder');
     expect(main).toContain("import './styles/ux10.css'");
+    expect(main).toContain("import './styles/ux10-profile.css'");
     expect(main).not.toMatch(/import '\.\/styles\/ux5-/);
     expect(main).not.toContain("import './styles/rcux4-visuals.css'");
     expect(existsSync(visualLayerPath)).toBe(true);
