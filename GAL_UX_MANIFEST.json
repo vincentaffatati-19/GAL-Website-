@@ -7,6 +7,9 @@
   "release_name": "Golfer Profile Experience",
   "next_review_candidate": "GAL-UX10.02-RC1",
   "authoritative_spec": "docs/superpowers/specs/2026-09-04-gal-ux10-02-golfer-profile-experience-design.md",
+  "amendments": [
+    "docs/superpowers/specs/2026-09-05-gal-ux10-shared-header-amendment.md"
+  ],
   "inherits_from": [
     "docs/superpowers/specs/2026-09-04-gal-ux10-01-tee-box-personalization-design.md",
     "docs/superpowers/specs/2026-09-02-my-gal-tee-box-ux-design.md",
