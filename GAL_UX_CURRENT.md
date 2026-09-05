@@ -2,6 +2,7 @@
 
 **Status:** LOCKED  
 **Locked:** 2026-09-04  
+**Amended:** 2026-09-05 — universal UX10 shared header rule  
 **Current UX family:** **GAL UX10**  
 **Current version:** `GAL-UX10.02`  
 **Current focus:** **Golfer Profile Experience**  
@@ -30,6 +31,17 @@ If the governing material cannot be retrieved, implementation does not proceed.
 - Locked dark-lockup SHA-256: `8cd2030c7b3f4e75a9474dbd3e9f27e6697ce89ea756f22a5c4749192c117636`.
 - `/portal/gal-option7a-motion.jpg` and other older/approximate GAL marks are retired from active UX10 use.
 - Mockups, previews and website builds must verify the locked brand before presentation.
+
+## Universal UX10 shared header
+
+- Every UX10 screen and focused workspace uses one governed shared header implementation.
+- This applies to Today, My Bag, Insights, Guides, Progress, Golfer Profile, Profile sub-workspaces, fitting/intelligence views, and future UX10 screens.
+- Individual screens may not create alternate or page-specific GAL header/logo treatments.
+- The shared header always uses the locked Stylized Option B Motion Arc dark lockup above.
+- Primary navigation remains `Today | My Bag | Insights | Guides | Progress`.
+- `Golfer Profile` remains separate from primary navigation.
+- Responsive/mobile layouts may compress or rearrange the header, but they must preserve the same logo, product identity, navigation model, and shared implementation source.
+- Future header refinements are made once in the shared header and propagate everywhere.
 
 ## Authoritative Golfer Profile visual reference
 
