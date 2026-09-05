@@ -1,38 +1,88 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
   "status": "LOCKED",
   "locked_at": "2026-09-04",
-  "ux_version": "GAL-UX5-MID",
-  "release_name": "My GAL Intelligence Dashboard",
-  "next_review_candidate": "GAL-UX5-MID-RC1",
-  "authoritative_spec": "docs/superpowers/specs/2026-09-04-gal-ux5-mid-locked-design.md",
+  "ux_family": "GAL-UX10",
+  "ux_version": "GAL-UX10.02",
+  "release_name": "Golfer Profile Experience",
+  "next_review_candidate": "GAL-UX10.02-RC1",
+  "authoritative_spec": "docs/superpowers/specs/2026-09-04-gal-ux10-02-golfer-profile-experience-design.md",
+  "amendments": [
+    "docs/superpowers/specs/2026-09-05-gal-ux10-shared-header-amendment.md"
+  ],
   "inherits_from": [
+    "docs/superpowers/specs/2026-09-04-gal-ux10-01-tee-box-personalization-design.md",
     "docs/superpowers/specs/2026-09-02-my-gal-tee-box-ux-design.md",
     "docs/superpowers/specs/2026-08-31-my-gal-equipment-intelligence-product-design.md"
   ],
   "visual_reference": {
-    "filename": "My Gal Dashboard with landing.png",
-    "width_px": 1536,
-    "height_px": 1024,
-    "sha256": "3f0cf896cb88632d6bcf0f780de110bad6516b3264a8755de2c932edbca44f84"
+    "filename": "Profile Mobile Screen(1).png",
+    "width_px": 1606,
+    "height_px": 979,
+    "sha256": "36e3e9d606534cc7af4dd35f1aae81fe7f86fdc4515b90d741c8da2b909c24e8",
+    "scope": "Golfer Profile mobile interaction and information architecture"
   },
+  "inherited_visual_references": [
+    {
+      "filename": "gal_golf_analytics_dashboard.png",
+      "width_px": 1619,
+      "height_px": 971,
+      "sha256": "895f2c68b4be457356ba104b7a5d3335bc361cacfc73effe18138de5368a81c3",
+      "scope": "My GAL tee-box and independent bag architecture from UX10.01"
+    }
+  ],
   "governance_archive": {
     "system": "Google Drive",
     "folder": "Golf Analytics Lab/00 Governance & Standards",
-    "document_title": "GAL UX5 — My GAL Intelligence Dashboard — LOCKED",
-    "document_id": "1nu1_s0bTMx9-RleayxbiFpdZKspmsrt0HVGUfkwB4uE",
-    "document_url": "https://docs.google.com/document/d/1nu1_s0bTMx9-RleayxbiFpdZKspmsrt0HVGUfkwB4uE/edit?usp=drivesdk",
+    "document_title": "GAL UX10.02 — Golfer Profile Experience — LOCKED",
+    "document_id": "1i2FfzUFQDyKIE7umomg629SP2O3n3C-Ohv-b47hfM70",
+    "document_url": "https://docs.google.com/document/d/1i2FfzUFQDyKIE7umomg629SP2O3n3C-Ohv-b47hfM70/edit?usp=drivesdk",
     "contains_visual_reference": true
   },
   "brand": {
-    "system": "Option 7A Motion Arc / GAL Custom Hybrid",
+    "system": "Stylized Option B: Motion Arc — built on Option 7A GAL Custom Hybrid",
+    "status": "LOCKED_FOR_UX10",
+    "active_dark_lockup_asset": "/portal/gal-motion-arc-dark-lockup.webp",
+    "active_dark_lockup_sha256": "8cd2030c7b3f4e75a9474dbd3e9f27e6697ce89ea756f22a5c4749192c117636",
+    "shared_header_required_all_ux10_screens": true,
+    "shared_header_single_source_required": true,
+    "page_specific_header_substitutions_forbidden": true,
+    "retired_active_logo_paths": [
+      "/portal/gal-option7a-motion.jpg"
+    ],
     "primary_navigation": [
       "Today",
       "My Bag",
       "Insights",
       "Guides",
       "Progress"
-    ]
+    ],
+    "golfer_profile_is_separate_from_primary_navigation": true
+  },
+  "versioning": {
+    "family_rule": "Whole-number UX family changes require an explicit user-approved architectural replacement decision.",
+    "minor_rule": "Revisions within GAL-UX10 increment sequentially as GAL-UX10.01, GAL-UX10.02, GAL-UX10.03, and so on.",
+    "candidate_rule": "Review candidates append -RC1, -RC2, and so on to the locked minor version.",
+    "atomic_update_rule": "Every locked UX revision updates the manifest, current UX pointer, governing specification, and governance archive together."
+  },
+  "architecture_rules": {
+    "tee_box_and_bag_are_independent": true,
+    "tee_box_is_presentation_only": true,
+    "bag_visual_is_presentation_only": true,
+    "presentation_preferences_must_not_affect_analytics": true,
+    "combined_course_and_bag_scene_is_forbidden": true,
+    "profile_home_has_six_areas": true,
+    "profile_mobile_uses_progressive_disclosure": true,
+    "profile_mobile_flow": [
+      "Profile Home",
+      "You / Measurements",
+      "Your Swing",
+      "Your Miss",
+      "Connected Golf"
+    ],
+    "where_you_play_is_profile_home_area": true,
+    "your_game_is_profile_home_area": true,
+    "profile_data_quality_language_required": true
   },
   "authority_precedence": [
     "Explicit later user-approved UX lock",
@@ -43,9 +93,11 @@
     "current implementation/code"
   ],
   "rules": {
+    "mandatory_preflight_before_gal_work": true,
     "implementation_may_lag_lock": true,
     "code_does_not_supersede_lock": true,
     "invented_golfer_metrics_forbidden": true,
+    "connected_state_requires_valid_connection": true,
     "production_promotion_requires_explicit_user_approval": true
   }
 }

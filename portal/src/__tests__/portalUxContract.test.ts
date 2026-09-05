@@ -5,15 +5,17 @@ import { describe, expect, it } from 'vitest';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const mainSource = readFileSync(resolve(here, '../main.ts'), 'utf8');
+const headerSource = readFileSync(resolve(here, '../shell/header.ts'), 'utf8');
 const cssSource = readFileSync(resolve(here, '../styles/portal.css'), 'utf8');
 
 describe('My GAL shell UX contract', () => {
-  it('keeps the locked five-part primary navigation and exposes Profile separately', () => {
+  it('keeps the locked five-part primary navigation and exposes Profile separately through the shared header', () => {
     for (const label of ['Today', 'My Bag', 'Insights', 'Guides', 'Progress']) {
-      expect(mainSource).toContain(`label: '${label}'`);
+      expect(headerSource).toContain(`label: '${label}'`);
     }
-    expect(mainSource).toContain('/portal/profile');
-    expect(mainSource).toContain('Golfer Profile');
+    expect(headerSource).toContain('/portal/profile');
+    expect(headerSource).toContain('Golfer Profile');
+    expect(mainSource).toContain('renderUx10SharedHeader(currentRoute)');
   });
 
   it('includes mobile-first tee-box and bottom-navigation styling hooks', () => {

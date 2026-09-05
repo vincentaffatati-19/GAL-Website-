@@ -1,12 +1,42 @@
 import { escapeHtml } from '../render/escape';
+import { renderUx10BagEnvironment, type Ux10BagCategory } from '../ux10/scene';
 import { fetchGolferInsights, type GolferInsightRow } from './insights';
 
 export function isDriverInsight(row: GolferInsightRow): boolean {
-  return [row.insight_domain,row.subject_type,row.subject_key,row.scope_key].join(' ').toLowerCase().includes('driver');
+  return [row.insight_domain, row.subject_type, row.subject_key, row.scope_key].join(' ').toLowerCase().includes('driver');
 }
 
-function categoryMarker(label: string, key: string): string {
-  return `<a class="bag-marker bag-marker-${key}" href="/portal/bag" aria-label="${label}: GAL needs more information"><span>${label}</span><small>Not evaluated</small></a>`;
+function todayCategories(hasDriverOpportunity: boolean): Ux10BagCategory[] {
+  const needsEvidence = 'GAL needs more information';
+  return [
+    {
+      key: 'driver',
+      label: 'Driver',
+      status: hasDriverOpportunity ? 'NEEDS_ATTENTION' : 'NOT_EVALUATED',
+      detail: hasDriverOpportunity ? 'Review governed Driver insight' : needsEvidence,
+      href: hasDriverOpportunity ? '/portal/insights?fit=driver' : '/portal/bag',
+    },
+    { key: 'fairway', label: '3 Wood', status: 'NOT_EVALUATED', detail: needsEvidence, href: '/portal/bag' },
+    { key: 'hybrid', label: 'Hybrid', status: 'NOT_EVALUATED', detail: needsEvidence, href: '/portal/bag' },
+    { key: 'irons', label: 'Irons', status: 'NOT_EVALUATED', detail: needsEvidence, href: '/portal/bag' },
+    { key: 'wedges', label: 'Wedges', status: 'NOT_EVALUATED', detail: needsEvidence, href: '/portal/bag' },
+    { key: 'putter', label: 'Putter', status: 'NOT_EVALUATED', detail: needsEvidence, href: '/portal/bag' },
+    { key: 'ball', label: 'Ball', status: 'NOT_EVALUATED', detail: needsEvidence, href: '/portal/bag' },
+  ];
+}
+
+function howItWorks(): string {
+  const steps = [
+    ['1', 'Tap a Club', 'Select any equipment category in your bag.'],
+    ['2', 'See Why', 'GAL shows what it knows and what needs evidence.'],
+    ['3', 'Explore', 'Review insights, fit guidance and comparisons.'],
+    ['4', 'Take Action', 'Keep, adjust, test or replace when evidence supports it.'],
+    ['5', 'Track Progress', 'See what changed and whether the issue resolved.'],
+  ];
+  return `<section class="ux10-how-it-works" aria-label="How It Works">
+    <div class="ux10-section-heading"><div><p class="eyebrow">How It Works</p><h2>Simple. Visual. Personal.</h2></div></div>
+    <div class="ux10-how-steps">${steps.map(([number, title, detail]) => `<article><span>${number}</span><div><strong>${title}</strong><small>${detail}</small></div></article>`).join('')}</div>
+  </section>`;
 }
 
 export async function renderTodaySurface(): Promise<string> {
@@ -19,43 +49,58 @@ export async function renderTodaySurface(): Promise<string> {
     driverMessage = '';
   }
 
-  const nextOpportunity = driverMessage
+  const hasDriverOpportunity = Boolean(driverMessage);
+  const nextOpportunity = hasDriverOpportunity
     ? `<p class="eyebrow">Needs Attention</p><h2>GAL Sees a Driver Opportunity</h2><p>${driverMessage}</p><a class="button" href="/portal/insights?fit=driver">See Why</a>`
     : `<p class="eyebrow">Learning Your Bag</p><h2>Next Opportunity</h2><p><strong>GAL needs more information</strong> before identifying a governed equipment opportunity.</p><a class="button" href="/portal/bag">Review My Bag</a>`;
 
+  const bagEnvironment = renderUx10BagEnvironment({
+    categories: todayCategories(hasDriverOpportunity),
+    contextLabel: 'My GAL equipment intelligence bag environment',
+  });
+
   return `
-    <section class="tee-box-hero" aria-label="My GAL equipment intelligence overview">
-      <div class="tee-box-content">
-        <article class="tee-panel tee-panel-status">
-          <p class="eyebrow">Bag Status</p>
-          <h2>GAL is learning your equipment</h2>
-          <p>GAL needs more information before it can describe the whole bag as evaluated or optimized.</p>
-          <a href="/portal/bag">Review My Bag</a>
-        </article>
+    <section class="ux10-dashboard" aria-label="My GAL Intelligence Dashboard">
+      <header class="ux10-dashboard-heading">
+        <div><p class="eyebrow">My GAL</p><h1>Your bag. Your game. Smarter together.</h1><p>Tell GAL once. Connect it once. Use it everywhere.</p></div>
+      </header>
 
-        <div class="bag-stage" aria-label="Interactive equipment categories">
-          ${categoryMarker('Driver', 'driver')}
-          ${categoryMarker('Fairway', 'fairway')}
-          ${categoryMarker('Hybrid', 'hybrid')}
-          ${categoryMarker('Irons', 'irons')}
-          ${categoryMarker('Wedges', 'wedges')}
-          ${categoryMarker('Putter', 'putter')}
-          ${categoryMarker('Ball', 'ball')}
-          <div class="bag-hero" role="img" aria-label="GAL bag intelligence summary"></div>
-        </div>
-
-        <article class="tee-panel tee-panel-opportunity">
-          ${nextOpportunity}
-        </article>
+      <div class="ux10-dashboard-main">
+        <div class="ux10-bag-environment-slot">${bagEnvironment}</div>
+        <aside class="ux10-dashboard-summary" aria-label="Bag intelligence summary">
+          <article class="ux10-panel ux10-bag-status">
+            <p class="eyebrow">Bag Status</p>
+            <h2>GAL is learning your equipment</h2>
+            <p>GAL needs more information before it can describe the whole bag as evaluated or optimized.</p>
+            <a href="/portal/bag">Review My Bag</a>
+          </article>
+          <article class="ux10-panel ux10-next-opportunity">${nextOpportunity}</article>
+          <article class="ux10-panel ux10-bag-visual-summary">
+            <p class="eyebrow">Bag Visual</p><h2>Your bag presentation is independent</h2>
+            <p>Choose a bag style without changing your tee box, equipment records, fitting state, or recommendations.</p>
+            <a href="/portal/bag#customize">Customize My Bag</a>
+          </article>
+          <article class="ux10-panel ux10-bag-value">
+            <p class="eyebrow">Bag Value</p><h2>Value data not available yet</h2>
+            <p>Retail, resale and trade estimates appear only after GAL has a governed valuation method and current source data.</p>
+            <a href="/portal/bag">View My Bag</a>
+          </article>
+        </aside>
       </div>
-    </section>
 
-    <section class="today-support-grid" aria-label="My GAL equipment tools">
-      <article class="today-card"><p class="eyebrow">Bag Value</p><h2>Value data not available yet</h2><p>GAL will show retail, resale, or trade estimates only after a governed valuation method and current source data are available.</p><a href="/portal/bag">View My Bag</a></article>
-      <article class="today-card"><p class="eyebrow">Bag User's Guide</p><h2>How My Bag Works</h2><p>Status markers distinguish what GAL knows, what needs attention, and what still needs evidence. Missing information is never treated as a good fit.</p><a href="/portal/bag">Open My Bag</a></article>
-      <article class="today-card"><p class="eyebrow">Quick Actions</p><h2>Keep your equipment current</h2><div class="quick-actions"><a href="/portal/bag">Update Equipment</a><a href="/portal/guides">Browse Guides</a><a href="/portal/profile">Golfer Profile</a></div></article>
-      <article class="today-card"><p class="eyebrow">Recent Insight</p><h2>${driverMessage ? 'Driver deserves review' : 'No active governed insight'}</h2><p>${driverMessage || 'When GAL has enough evidence to identify a material equipment opportunity, it will appear here.'}</p></article>
-      <article class="today-card"><p class="eyebrow">Progress at a Glance</p><h2>Equipment progress builds over time</h2><p>No aggregate progress score is shown. GAL records evidence-backed equipment changes, outcomes, resolutions, and recurring issues.</p><a href="/portal/progress">View Progress</a></article>
+      <section class="ux10-dashboard-support" aria-label="My GAL equipment tools">
+        <article class="ux10-panel"><p class="eyebrow">Bag User's Guide</p><h2>How My Bag Works</h2><p>Status markers distinguish what GAL knows, what needs attention, and what still needs evidence. Missing information is never treated as a good fit.</p><a href="/portal/bag#bag-guide">Open Guide</a></article>
+        <article class="ux10-panel"><p class="eyebrow">Quick Actions</p><h2>Keep your equipment current</h2><div class="quick-actions"><a href="/portal/bag">Update Equipment</a><a href="/portal/guides">Browse Guides</a><a href="/portal/profile">Golfer Profile</a></div></article>
+        <article class="ux10-panel"><p class="eyebrow">Recent Insight</p><h2>${hasDriverOpportunity ? 'Driver deserves review' : 'No active governed insight'}</h2><p>${driverMessage || 'When GAL has enough evidence to identify a material equipment opportunity, it will appear here.'}</p>${hasDriverOpportunity ? '<a href="/portal/insights?fit=driver">View Insight</a>' : ''}</article>
+        <article class="ux10-panel"><p class="eyebrow">Progress at a Glance</p><h2>Equipment progress builds over time</h2><p>No aggregate progress score is shown. GAL records evidence-backed equipment changes, outcomes, resolutions, and recurring issues.</p><a href="/portal/progress">View Progress</a></article>
+      </section>
+
+      ${howItWorks()}
+
+      <section class="ux10-every-club" aria-label="Works for Every Club">
+        <div><p class="eyebrow">Works for Every Club</p><h2>One intelligence pattern across your entire bag.</h2></div>
+        <div class="ux10-club-list"><span>Driver</span><span>3 Wood</span><span>Hybrid</span><span>Irons</span><span>Wedges</span><span>Putter</span><span>Ball</span></div>
+      </section>
     </section>
   `;
 }

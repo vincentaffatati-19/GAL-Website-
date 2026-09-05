@@ -4,6 +4,11 @@ on:
   pull_request:
     paths:
       - 'portal/**'
+      - 'scripts/build-ux10-preview.sh'
+      - 'vercel.json'
+      - 'GAL_UX_MANIFEST.json'
+      - 'GAL_UX_CURRENT.md'
+      - 'docs/superpowers/specs/**'
       - 'drivers.html'
       - 'supabase/migrations/20260904022000_consumer_commercial_consent.sql'
       - 'supabase/tests/consumer_commercial_consent.sql'
@@ -28,12 +33,41 @@ jobs:
           node-version: '22'
           cache: 'pnpm'
           cache-dependency-path: portal/pnpm-lock.yaml
-      - name: Restore locked GAL Option 7A logo
+      - name: Restore locked UX10 Stylized Option B Motion Arc logo
         working-directory: .
         run: |
-          cat portal/brand/gal-option7a-motion.b64.part* | base64 --decode > portal/public/gal-option7a-motion.jpg
-          test "$(wc -c < portal/public/gal-option7a-motion.jpg)" -eq 15946
-          echo "26ccad548313c1d018cb6421efdfc4a95fb18d2e5123eccdc0518777a5b7047a  portal/public/gal-option7a-motion.jpg" | sha256sum --check --strict
+          cat portal/brand/gal-motion-arc-dark-lockup.b64.part* | base64 --decode > portal/public/gal-motion-arc-dark-lockup.webp
+          test "$(wc -c < portal/public/gal-motion-arc-dark-lockup.webp)" -eq 15580
+          echo "8cd2030c7b3f4e75a9474dbd3e9f27e6697ce89ea756f22a5c4749192c117636  portal/public/gal-motion-arc-dark-lockup.webp" | sha256sum --check --strict
+      - name: Restore governed UX10 independent scene assets
+        working-directory: .
+        run: |
+          restore_parts() {
+            pattern="$1"
+            output="$2"
+            : > "$output"
+            for part in $pattern; do
+              base64 --decode "$part" >> "$output"
+            done
+          }
+          mkdir -p portal/public/ux10/tee-boxes portal/public/ux10/bags
+          restore_parts 'portal/ux10-assets/coastal-01.b64.part*' portal/public/ux10/tee-boxes/coastal-01.webp
+          restore_parts 'portal/ux10-assets/cliffs-01.b64.part*' portal/public/ux10/tee-boxes/cliffs-01.webp
+          cat portal/ux10-assets/gal-tour-bag.fixed.part01 portal/ux10-assets/gal-tour-bag.fixed.part02 portal/ux10-assets/gal-tour-bag.b64.part2 | base64 --decode > portal/public/ux10/bags/gal-tour-bag.png
+          cat portal/ux10-assets/gal-stand-bag.fixed.part01 portal/ux10-assets/gal-stand-bag.fixed.part02 portal/ux10-assets/gal-stand-bag.b64.part2 | base64 --decode > portal/public/ux10/bags/gal-stand-bag.png
+          test "$(wc -c < portal/public/ux10/tee-boxes/coastal-01.webp)" -eq 23560
+          test "$(wc -c < portal/public/ux10/tee-boxes/cliffs-01.webp)" -eq 30352
+          test "$(wc -c < portal/public/ux10/bags/gal-tour-bag.png)" -eq 17841
+          test "$(wc -c < portal/public/ux10/bags/gal-stand-bag.png)" -eq 14867
+          echo "a2573d5603e24d67ba00b9bdc784340c57d5a35e3e92c40c51b53e5667faf7f9  portal/public/ux10/tee-boxes/coastal-01.webp" | sha256sum --check --strict
+          echo "fc194bd6aabb91ff0d87f5175a2d7b79eea40a2d3a7d0966808e63a83f17a16e  portal/public/ux10/tee-boxes/cliffs-01.webp" | sha256sum --check --strict
+          echo "94d18e5ca9dd4045ddbe199b4b91cce7c537beba9c030166a5c02f65b2aadc9f  portal/public/ux10/bags/gal-tour-bag.png" | sha256sum --check --strict
+          echo "7ffd0881aafdc8885e468ad929a88d4a3dcbc1cece8b0e9b471720da27443d4c  portal/public/ux10/bags/gal-stand-bag.png" | sha256sum --check --strict
+      - name: Exclude retired visuals from UX10 package
+        working-directory: .
+        run: |
+          rm -f portal/public/gal-option7a-motion.jpg
+          rm -rf portal/public/ux5
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Unit tests
@@ -43,16 +77,46 @@ jobs:
           VITE_SUPABASE_URL: https://example.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: test-publishable-key
         run: pnpm run build
-      - name: Reject service-role material in browser build
+      - name: Reject forbidden browser material and sample facts
         run: |
           if grep -R -E 'SUPABASE_SERVICE_ROLE_KEY|service_role' dist; then
             echo 'Forbidden service-role material found in portal build.'
             exit 1
           fi
+          if grep -R -n --include='*.js' --include='*.html' -E '94 mph|247 yds|\+12 Yards|\$3,840|78%|71%|\+11\.3 yds' dist; then
+            echo 'Forbidden sample golfer fact found in rendered UX10 application material.'
+            exit 1
+          fi
+          if grep -R -n --include='*.js' --include='*.html' -F '/portal/ux5/reference-bag.webp' dist; then
+            echo 'Retired combined UX5 course-and-bag scene found in UX10 build.'
+            exit 1
+          fi
+          if grep -R -n --include='*.js' --include='*.html' -F '/portal/gal-option7a-motion.jpg' dist; then
+            echo 'Retired GAL logo found in active UX10 build.'
+            exit 1
+          fi
+          test ! -e dist/gal-option7a-motion.jpg
+          test ! -e dist/ux5
+          grep -R -q -F 'GAL-UX10.02-RC1' dist/assets
+          grep -R -q -F '/portal/gal-motion-arc-dark-lockup.webp' dist/assets
+          grep -R -q -F 'Your Equipment Intelligence Center' dist/assets
+          grep -R -q -F 'Your bag. Your game. Smarter together.' dist/assets
+          grep -R -q -F 'My Golfer Profile' dist/assets
+          grep -R -q -F 'Connected Golf' dist/assets
+      - name: Verify Vercel preview builder end to end
+        working-directory: .
+        run: bash scripts/build-ux10-preview.sh
       - name: Publish verified portal build
         uses: actions/upload-artifact@v4
         with:
-          name: my-gal-portal-dist
+          name: GAL-UX10.02-RC1-portal-dist
           path: portal/dist
+          if-no-files-found: error
+          retention-days: 7
+      - name: Publish exact verified preview package
+        uses: actions/upload-artifact@v4
+        with:
+          name: GAL-UX10.02-RC1-verified-preview
+          path: preview/portal
           if-no-files-found: error
           retention-days: 7

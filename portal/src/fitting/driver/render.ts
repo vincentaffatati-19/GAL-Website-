@@ -24,26 +24,92 @@ export async function renderDriverFit(evidence: DriverEvidenceInput[] = []): Pro
         ? `<div class="driver-candidate-grid">${model.candidates.map((candidate) => `<article class="driver-candidate"><p class="eyebrow">Governed configuration</p><h3>${escapeHtml(candidate.item.familyName)}</h3><p>${escapeHtml(candidate.configuration.name)}</p><small>${escapeHtml(readinessCopy(candidate.configuration.readiness, candidate.configuration.blockingGapCount))}</small></article>`).join('')}</div>`
         : '<p>No governed Driver configurations currently qualify. GAL will not fill the list with unverified alternatives.</p>';
 
-    return `<div class="driver-fit driver-fit-workspace">
-      <header class="driver-fit-hero"><div><p class="eyebrow">GAL AI Fitting · Driver</p><h1>Personalized equipment fitting powered by your game.</h1><p><strong>Characteristics Before Brands.</strong> GAL determines the equipment characteristics your evidence supports before showing product configurations, brands, models, or commerce.</p></div><a class="button" href="/portal/profile">Review Golfer Profile</a></header>
+    const snapshotCopy = model.missingEvidence
+      ? 'Your Driver fit needs more compatible evidence before GAL can define a target profile.'
+      : 'GAL has enough compatible evidence to define target characteristics. Review the evidence context before acting.';
 
-      <section class="driver-fit-step" data-step="1"><span class="step-number">01</span><div><p class="eyebrow">Quick View</p><h2>What GAL knows right now</h2><p>${model.missingEvidence ? 'Your Driver fit needs more compatible evidence before GAL can define a target profile.' : 'GAL has enough compatible evidence to define target characteristics. Review the evidence context before acting.'}</p></div></section>
+    return `<div class="driver-fit ux10-driver-context">
+      <section class="ux10-club-panel" aria-label="Driver equipment intelligence">
+        <header class="ux10-club-panel-header">
+          <div class="ux10-selected-club">
+            <p class="eyebrow">Selected Club</p>
+            <h1>Driver</h1>
+            <p><strong>Characteristics Before Brands.</strong> GAL starts with supported golfer evidence and target characteristics before product configurations or commerce.</p>
+          </div>
+          <a class="ux10-club-close" href="/portal/" aria-label="Close Driver intelligence">Close Driver intelligence</a>
+        </header>
 
-      <section class="driver-fit-step" data-step="2"><span class="step-number">02</span><div><p class="eyebrow">Fit Setup</p><h2>Use known data first</h2><p>Tell GAL Once applies here: valid profile, bag, measured and connected evidence should be reused. GAL asks only for missing, stale, or Driver-specific inputs.</p><a href="/portal/profile">Review profile inputs</a></div></section>
+        <nav class="ux10-club-tabs" aria-label="Driver intelligence sections">
+          <a href="#driver-overview" aria-current="page">Overview</a>
+          <a href="#driver-why">Why It Matters</a>
+          <a href="#driver-what-to-do">What To Do</a>
+          <a href="#driver-recommendations">Recommendations</a>
+          <a href="#driver-compare">Compare</a>
+        </nav>
 
-      <section class="driver-fit-step driver-fit-targets" data-step="3"><span class="step-number">03</span><div><p class="eyebrow">Target Characteristics</p><h2>What GAL is fitting for</h2>${targets}</div></section>
+        <div class="ux10-club-panel-body">
+          <section class="ux10-club-primary">
+            <section class="ux10-club-overview" id="driver-overview">
+              <header><p class="eyebrow">Quick View</p><h2>What GAL knows right now</h2></header>
+              <article class="ux10-driver-snapshot">
+                <h3>Driver Snapshot</h3>
+                <p>${snapshotCopy}</p>
+                <p class="ux10-source-note">Only compatible governed evidence is shown here. Missing measurements remain missing.</p>
+              </article>
+              <article class="ux10-fit-setup">
+                <p class="eyebrow">Fit Setup</p><h3>Use known data first</h3>
+                <p>Tell GAL once applies here: valid profile, bag, measured and connected evidence should be reused. GAL asks only for missing, stale, or Driver-specific inputs.</p>
+                <a href="/portal/profile">Review profile inputs</a>
+              </article>
+              <article class="ux10-target-characteristics">
+                <p class="eyebrow">Target Characteristics</p><h3>What GAL is fitting for</h3>${targets}
+              </article>
+            </section>
 
-      <section class="driver-fit-step" data-step="4"><span class="step-number">04</span><div><p class="eyebrow">Recommendations</p><h2>Compatible configurations that follow the target</h2>${candidates}<div class="driver-action-peers" aria-label="Possible recommendation actions"><span>Keep</span><span>Adjust</span><span>Reconfigure</span><span>Replace</span></div><p class="fit-firewall">The current club is a valid peer option. Commerce appears only after the analytical decision and cannot change candidate rank.</p></div></section>
+            <section class="ux10-club-why" id="driver-why">
+              <p class="eyebrow">Why It Matters</p><h2>Evidence before explanation</h2>
+              <p>GAL explains how the target characteristics relate to your evidence, why a configuration qualifies, what is uncertain, and which evidence would strengthen or change the recommendation.</p>
+              <div class="ux10-why-cards">
+                <article><h3>Performance context</h3><p>Current-versus-target performance appears only when compatible measured or observed data supports the comparison.</p></article>
+                <article><h3>What is holding you back</h3><p>GAL identifies a limiting factor only when the evidence supports that conclusion; otherwise it asks for the missing evidence.</p></article>
+              </div>
+            </section>
 
-      <section class="driver-fit-step" data-step="5"><span class="step-number">05</span><div><p class="eyebrow">Why This Fit</p><h2>Evidence before explanation</h2><p>GAL explains how the target characteristics relate to your evidence, why a configuration qualifies, what is uncertain, and which evidence would strengthen or change the recommendation.</p></div></section>
+            <section class="ux10-club-what-to-do" id="driver-what-to-do">
+              <p class="eyebrow">What To Do</p><h2>Choose the smallest defensible next step</h2>
+              <p>Keep, adjust, test, reconfigure, or replace only when governed evidence supports that action. GAL does not assume a purchase is required.</p>
+              <div class="driver-action-peers" aria-label="Possible next actions"><span>Keep</span><span>Adjust</span><span>Test</span><span>Reconfigure</span><span>Replace</span></div>
+            </section>
 
-      <section class="driver-fit-step" data-step="6"><span class="step-number">06</span><div><p class="eyebrow">Compare</p><h2>Compare the configuration—not just the logo</h2><p>Head, loft or effective loft, settings, shaft profile, weight, length and other supported configuration details belong together when evidence supports them.</p></div></section>
+            <section class="ux10-club-recommendations" id="driver-recommendations">
+              <p class="eyebrow">Recommendations</p><h2>Compatible configurations that follow the target</h2>
+              ${candidates}
+              <p class="fit-firewall">The current club is a valid peer option. Commerce appears only after the analytical decision and cannot change candidate rank.</p>
+            </section>
 
-      <section class="driver-fit-step" data-step="7"><span class="step-number">07</span><div><p class="eyebrow">Next Action</p><h2>Choose the smallest defensible next step</h2><p>Keep, adjust, reconfigure, compare/test, or replace can all be correct outcomes. GAL does not assume a purchase is required.</p></div></section>
+            <section class="ux10-club-compare" id="driver-compare">
+              <p class="eyebrow">Compare</p><h2>Compare the configuration—not just the logo</h2>
+              <p>Head, loft or effective loft, settings, shaft profile, weight, length and other supported configuration details belong together when evidence supports them.</p>
+              <p>If comparable configuration evidence is not available, GAL withholds the comparison instead of filling it with assumptions.</p>
+            </section>
+          </section>
 
-      <section class="driver-fit-step" data-step="8"><span class="step-number">08</span><div><p class="eyebrow">Outcome Tracking</p><h2>Record what changed</h2><p>After a fitting action, GAL can connect the action to attributable outcome evidence rather than assuming the recommendation worked.</p></div></section>
+          <aside class="ux10-club-explain" aria-label="Driver exploration">
+            <article><p class="eyebrow">Why It Matters</p><h3>Understand the evidence</h3><p>${model.missingEvidence ? 'More compatible golfer evidence is required before GAL can quantify the performance impact.' : 'Review the evidence-linked target characteristics and uncertainty before choosing an action.'}</p></article>
+            <article><p class="eyebrow">What To Do</p><h3>Act only on supported evidence</h3><p>Keep, adjust, test, reconfigure, or replace are peers. GAL recommends an action only when the evidence supports it.</p></article>
+            <article><p class="eyebrow">Recommendations</p><h3>Characteristics first</h3><p>${model.missingEvidence ? 'Recommendations are withheld until the missing evidence is resolved.' : `${model.candidates.length} governed configuration candidate(s) currently follow the evidence-backed target.`}</p></article>
+            <article><p class="eyebrow">Compare</p><h3>Side-by-side when supported</h3><p>GAL compares configuration evidence, fit-relevant characteristics, and supported performance context—not brand popularity.</p></article>
+            <article><p class="eyebrow">Inspect &amp; Specs</p><h3>Configuration detail</h3><p>Supported head, loft, setting, shaft and length details appear when they exist in governed Equipment Knowledge.</p></article>
+            <article><p class="eyebrow">Real-World Results</p><h3>Outcome evidence</h3><p>Real-world outcome summaries appear only after GAL has attributable, governed results for comparable golfers or this golfer.</p></article>
+          </aside>
+        </div>
 
-      <section class="driver-fit-step" data-step="9"><span class="step-number">09</span><div><p class="eyebrow">Progress Over Time</p><h2>Did the equipment opportunity resolve?</h2><p>Progress reflects evidence-backed equipment outcomes, resolutions and regressions—not a generic engagement score.</p><a href="/portal/progress">View Progress</a></div></section>
+        <footer class="ux10-driver-follow-through">
+          <article><p class="eyebrow">Next Action</p><h3>Choose the smallest defensible next step</h3><p>Keep, adjust, test, reconfigure, or replace can all be correct outcomes. GAL does not assume a purchase is required.</p></article>
+          <article><p class="eyebrow">Outcome Tracking</p><h3>Record what changed</h3><p>After a fitting action, GAL can connect the action to attributable outcome evidence rather than assuming the recommendation worked.</p></article>
+          <article><p class="eyebrow">Progress Over Time</p><h3>Did the equipment opportunity resolve?</h3><p>Progress reflects evidence-backed equipment outcomes, resolutions and regressions—not a generic engagement score.</p><a href="/portal/progress">View Progress</a></article>
+        </footer>
+      </section>
     </div>`;
   } catch (error) {
     const code = error instanceof Error ? (error as Error & { code?: string }).code ?? error.message : '';

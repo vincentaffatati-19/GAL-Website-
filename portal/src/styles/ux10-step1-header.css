@@ -1,0 +1,64 @@
+.ux10-app-header-inner {
+  min-height: 74px;
+  grid-template-columns: 190px auto minmax(420px, 1fr) auto;
+  gap: 20px;
+}
+
+.ux10-brand {
+  min-width: 0;
+}
+
+.ux10-brand-logo {
+  width: 188px;
+  height: 58px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+  background: transparent;
+  border-radius: 0;
+}
+
+.ux10-product-name {
+  min-width: 152px;
+}
+
+.ux10-product-name strong {
+  font-size: 17px;
+  letter-spacing: 0.01em;
+}
+
+.ux10-product-name small {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+.ux10-primary-nav {
+  min-height: 74px;
+}
+
+@media (max-width: 1180px) {
+  .ux10-app-header-inner {
+    grid-template-columns: 164px auto minmax(360px, 1fr) auto;
+    gap: 14px;
+  }
+
+  .ux10-brand-logo {
+    width: 162px;
+    height: 52px;
+  }
+
+  .ux10-product-name {
+    min-width: 132px;
+  }
+}
+
+@media (max-width: 900px) {
+  .ux10-app-header-inner {
+    min-height: 64px;
+  }
+
+  .ux10-brand-logo {
+    width: 150px;
+    height: 48px;
+  }
+}

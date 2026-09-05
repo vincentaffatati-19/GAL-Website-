@@ -1,0 +1,40 @@
+.ux5-primary-nav {
+  position: static;
+  top: auto;
+  padding: 0;
+  border-bottom: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.ux5-dashboard .quick-actions a {
+  min-height: 44px;
+  border: 1px solid var(--ux5-line);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ux5-text);
+  text-decoration: none;
+}
+
+.ux5-dashboard .quick-actions a:hover,
+.ux5-dashboard .quick-actions a:focus-visible {
+  border-color: rgba(255, 90, 31, 0.72);
+  background: rgba(255, 90, 31, 0.10);
+  color: var(--ux5-orange);
+}
+
+@media (max-width: 900px) {
+  .ux5-app-header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .ux5-primary-nav {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    padding: 0 0 env(safe-area-inset-bottom);
+    border-top: 1px solid var(--ux5-line);
+    background: rgba(3, 15, 25, 0.98);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.22);
+  }
+}
