@@ -34,6 +34,10 @@ test "$(wc -c < portal/public/ux10/bags/gal-stand-bag.png)" -eq 14867
   sha256sum --check --strict SHA256SUMS
 )
 
+# Retired visuals may remain in repository history but must never ship in UX10.
+rm -f portal/public/gal-option7a-motion.jpg
+rm -rf portal/public/ux5
+
 # Vercel may expose a different global pnpm even after Corepack activation.
 # Invoke the locked package manager version directly so pnpm-lock.yaml v9 is deterministic.
 PNPM=(npx --yes pnpm@10.15.1)
@@ -63,6 +67,8 @@ if grep -R -n --include='*.js' --include='*.html' -F '/portal/gal-option7a-motio
   echo 'Retired GAL logo found in active UX10 build.' >&2
   exit 1
 fi
+test ! -e portal/dist/gal-option7a-motion.jpg
+test ! -e portal/dist/ux5
 
 grep -R -q -F 'GAL-UX10.02-RC1' portal/dist/assets
 grep -R -q -F '/portal/gal-motion-arc-dark-lockup.webp' portal/dist/assets
