@@ -52,7 +52,7 @@ jobs:
           test "$(wc -c < portal/public/ux10/bags/gal-tour-bag.png)" -eq 17841
           test "$(wc -c < portal/public/ux10/bags/gal-stand-bag.png)" -eq 14867
           echo "a2573d5603e24d67ba00b9bdc784340c57d5a35e3e92c40c51b53e5667faf7f9  portal/public/ux10/tee-boxes/coastal-01.webp" | sha256sum --check --strict
-          echo "4391c368868fee62aeb7c7cc002e2529bfb9ba8e0a6af96472bddb81f9a82f47  portal/public/ux10/tee-boxes/cliffs-01.webp" | sha256sum --check --strict
+          echo "fc194bd6aabb91ff0d87f5175a2d7b79eea40a2d3a7d0966808e63a83f17a16e  portal/public/ux10/tee-boxes/cliffs-01.webp" | sha256sum --check --strict
           echo "94d18e5ca9dd4045ddbe199b4b91cce7c537beba9c030166a5c02f65b2aadc9f  portal/public/ux10/bags/gal-tour-bag.png" | sha256sum --check --strict
           echo "7ffd0881aafdc8885e468ad929a88d4a3dcbc1cece8b0e9b471720da27443d4c  portal/public/ux10/bags/gal-stand-bag.png" | sha256sum --check --strict
       - name: Install verified dependencies
