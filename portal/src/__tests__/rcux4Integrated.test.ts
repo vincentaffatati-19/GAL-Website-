@@ -8,6 +8,7 @@ import { resolvePortalRoute } from '../router';
 const here = dirname(fileURLToPath(import.meta.url));
 const srcRoot = resolve(here, '..');
 const main = readFileSync(resolve(srcRoot, 'main.ts'), 'utf8');
+const header = readFileSync(resolve(srcRoot, 'shell/header.ts'), 'utf8');
 const bag = readFileSync(resolve(srcRoot, 'bag/render.ts'), 'utf8');
 const profile = readFileSync(resolve(srcRoot, 'profile/render.ts'), 'utf8');
 const driver = readFileSync(resolve(srcRoot, 'fitting/driver/render.ts'), 'utf8');
@@ -15,8 +16,9 @@ const driver = readFileSync(resolve(srcRoot, 'fitting/driver/render.ts'), 'utf8'
 describe('shared analytical contracts retained through GAL UX10.02', () => {
   it('keeps the connected golfer journey and route contracts intact', () => {
     for (const label of ['Today', 'My Bag', 'Insights', 'Guides', 'Progress', 'Golfer Profile']) {
-      expect(main).toContain(label);
+      expect(header).toContain(label);
     }
+    expect(main).toContain('renderUx10SharedHeader(currentRoute)');
     expect(profile).toContain('My Golfer Profile');
     expect(profile).toContain('Connected Golf');
     expect(profile).toContain('Tell GAL Once');
