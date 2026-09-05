@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "echo 'UX10 dependencies are installed by the verified build script'",
   "buildCommand": "bash scripts/build-ux10-preview.sh",
   "outputDirectory": "preview",
   "routes": [
