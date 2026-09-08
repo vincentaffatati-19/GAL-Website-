@@ -1,0 +1,33 @@
+{
+  "schema": "GAL-DYNAMIC-GOLFER-VISUAL-MANIFEST-1.0",
+  "candidate": "GAL-UX10.02-STEP17.3-DYNAMIC-VISUAL-RC",
+  "candidateSha256": "79964db0db57fa1e5636773d974da7495789a1f2601efaeb1b9daffc3fe95d85",
+  "reviewDriveFileId": "1oD_FRv7Ex_vnhBaDZ3lj4WtoUQkB6PdU",
+  "design": {
+    "dimensions": ["gender visual family", "age visual band", "handedness"],
+    "raceEthnicity": "not collected or inferred",
+    "leftHanded": "mirror photographic layer only; labels remain normal HTML"
+  },
+  "counts": {
+    "personaPairs": 12,
+    "bodyMasters": 12,
+    "swingPlates": 12,
+    "durableEmbeddedPairs": 4,
+    "generatedPairsPendingDurablePromotion": 8
+  },
+  "personas": [
+    {"key":"junior_male","gender":"Male","age":"Junior","bodyTaskId":"516028c5-4ce0-485d-b9ea-3c454b297d92","bodyAssetId":"a68d83ee-5b3c-4397-8021-00b1338f03a5","swingTaskId":"e9e05506-8d41-439d-8422-72f44acf145e","swingAssetId":"5dfa6f77-6125-497a-bfec-f8f8ea712b02","status":"PENDING_DURABLE_PROMOTION"},
+    {"key":"junior_female","gender":"Female","age":"Junior","bodyTaskId":"c61b82fd-a7d2-470d-8833-e071f48b1556","bodyAssetId":"52b8115e-ab83-4844-b449-6b0cd6ea820b","swingTaskId":"63f91279-836f-45af-9969-a3f20b53c8a9","swingAssetId":"fd418171-6564-4115-a9bb-621d4310d1e0","status":"PENDING_DURABLE_PROMOTION"},
+    {"key":"male_young","gender":"Male","age":"18–34","bodyTaskId":"66cf69fa-692d-4ccf-b884-25c344f75d0f","bodyAssetId":"8944d807-8398-4d2b-9e84-cbe1662df7df","swingTaskId":"c6cca01c-7ba6-40a0-9e52-4b5ad5170aa9","swingAssetId":"110efe42-1790-480e-9971-f7dfef1c8d33","status":"PENDING_DURABLE_PROMOTION"},
+    {"key":"female_young","gender":"Female","age":"18–34","bodyFile":"female_young_body.png","swingFile":"female_young_swing_plate.png","status":"APPROVED_DURABLE"},
+    {"key":"male_middle","gender":"Male","age":"35–54","bodyTaskId":"38050c81-c8da-4572-ba4a-6be5ae4696aa","bodyAssetId":"960ffa79-462e-4223-9c90-212fe2254ce5","swingTaskId":"605c724b-2211-4804-a3cd-2c3cd99ecbdd","swingAssetId":"b80ce11d-8926-45d3-9500-8cd80015df44","status":"PENDING_DURABLE_PROMOTION"},
+    {"key":"female_middle","gender":"Female","age":"35–54","bodyTaskId":"5e31a1ca-f96b-4aa8-b269-0818e4294c40","bodyAssetId":"a8d2e120-50ab-4955-9819-5dcaca4d0d9f","swingTaskId":"df2bb53d-a07e-479f-b651-a75f9b6171d6","swingAssetId":"532f8541-5d65-4f56-89ee-234d5df90e1e","status":"PENDING_DURABLE_PROMOTION"},
+    {"key":"male_mature","gender":"Male","age":"55–64","bodyFile":"male_mature_body.png","swingFile":"male_mature_swing_plate.png","status":"APPROVED_DURABLE"},
+    {"key":"female_mature","gender":"Female","age":"55–64","bodyFile":"female_mature_body.png","swingFile":"female_mature_swing_plate.png","status":"APPROVED_DURABLE"},
+    {"key":"male_senior","gender":"Male","age":"65+","bodyTaskId":"d9accb4f-4880-404a-b5a8-29f9d20e586c","bodyAssetId":"c1e36276-7abe-41fe-895b-252806d265af","swingTaskId":"0c3c217f-df96-47e3-aa9f-5cb5e3518102","swingAssetId":"27675624-5274-4f8f-9e53-0b5a75f87096","status":"PENDING_DURABLE_PROMOTION"},
+    {"key":"female_senior","gender":"Female","age":"65+","bodyFile":"female_senior_body.png","swingFile":"female_senior_swing_plate.png","status":"APPROVED_DURABLE"},
+    {"key":"neutral_junior","gender":"Neutral","age":"Junior","bodyTaskId":"66d7247c-5c75-4a4f-bafa-6358e2dafb92","bodyAssetId":"bfe5d17c-6d93-48a4-888d-7a8c12afd841","swingTaskId":"9bb270ba-17ea-44a4-8416-a8c86a58fe88","swingAssetId":"fea129f3-4ac1-4fc3-9509-f23d374580f1","status":"PENDING_DURABLE_PROMOTION"},
+    {"key":"neutral_adult","gender":"Neutral","age":"Adult fallback","bodyTaskId":"2df948f4-dd3a-4041-b6c2-a656e75420c0","bodyAssetId":"b92502ad-a7c6-422a-8815-2fcfc7175558","swingTaskId":"57e134be-9614-4d52-b102-ae097534cf17","swingAssetId":"325a97ae-916c-448a-98c7-341cb92bc7b3","status":"PENDING_DURABLE_PROMOTION"}
+  ],
+  "promotion": {"reviewCandidate":"PASS","production":"BLOCKED","reason":"Eight generated pairs require durable GAL-owned image bytes and final pixel-level visual QA."}
+}
