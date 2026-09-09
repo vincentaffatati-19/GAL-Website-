@@ -6,35 +6,132 @@ const BAG_KEY="gal_equipment_bag_v1";
 const DUPLICATE_DRIVER="DUPLICATE_DRIVER";
 const compareIds=new Set();
 let state={search:"",brand:"all",profile:"all",images:"all"};
+
 const $=id=>document.getElementById(id);
 const esc=v=>String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const money=v=>Number.isFinite(Number(v))?"$"+Number(v).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+const money=v=>v==null||v===""?"—":Number.isFinite(Number(v))?"$"+Number(v).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
 const title=v=>String(v||"").replace(/(^|[-/ ])([a-z])/g,(m,a,b)=>a+b.toUpperCase());
-const fallbackBagAdapter={load(){try{const x=JSON.parse(localStorage.getItem(BAG_KEY)||"[]");return Array.isArray(x)?x:[]}catch(_){return[]}},save(items){localStorage.setItem(BAG_KEY,JSON.stringify(items));return items}};
+
+const fallbackBagAdapter={
+  load(){
+    try{const x=JSON.parse(localStorage.getItem(BAG_KEY)||"[]");return Array.isArray(x)?x:[]}catch(_){return[]}
+  },
+  save(items){localStorage.setItem(BAG_KEY,JSON.stringify(items));return items}
+};
 const BAG_ADAPTER=root.GALBagAdapter&&typeof root.GALBagAdapter.load==="function"&&typeof root.GALBagAdapter.save==="function"?root.GALBagAdapter:fallbackBagAdapter;
-function loadBag(){const raw=BAG_ADAPTER.load()||[];return raw.map(x=>typeof x==="string"?{canonicalProductId:x,productType:"Driver"}:x).filter(x=>x&&x.canonicalProductId)}
+
+function loadBag(){
+  const raw=BAG_ADAPTER.load()||[];
+  return raw.map(x=>typeof x==="string"?{canonicalProductId:x,productType:"Driver"}:x).filter(x=>x&&x.canonicalProductId);
+}
 function saveBag(items){return BAG_ADAPTER.save(items)}
 function byId(id){return DATA.find(d=>d.canonicalProductId===id)||null}
-function userHoldMessage(status){if(status==="SOURCE_QUALITY_HOLD")return"Higher-resolution product image under review.";if(status==="SOURCE_RECOVERY_HOLD")return"Verified product image source under review.";if(status==="SOURCE_VERIFIED_FETCH_BLOCKED")return"Verified product image is being prepared.";return"Product image is being prepared."}
-function mediaMarkup(d,surface){const p=root.GALDriverMedia&&root.GALDriverMedia.picture?root.GALDriverMedia.picture(d):{available:false,status:d.imageStatus};if(!p.available)return '<div class="driver-media driver-image-hold '+esc(surface)+'-media" role="img" aria-label="'+esc(d.imageAltText)+' — image coming soon"><span>Image coming soon</span><small>'+esc(userHoldMessage(p.status))+'</small></div>';return '<picture class="driver-media '+esc(surface)+'-media"><img loading="lazy" decoding="async" src="'+esc(p.src)+'" srcset="'+esc(p.srcset)+'" sizes="'+esc(p.sizes)+'" alt="'+esc(p.alt)+'"></picture>'}
+function userHoldMessage(status){
+  if(status==="SOURCE_QUALITY_HOLD")return"Higher-resolution product image under review.";
+  if(status==="SOURCE_RECOVERY_HOLD")return"Verified product image source under review.";
+  if(status==="SOURCE_VERIFIED_FETCH_BLOCKED")return"Verified product image is being prepared.";
+  return"Product image is being prepared.";
+}
+function mediaMarkup(d,surface){
+  const p=root.GALDriverMedia&&root.GALDriverMedia.picture?root.GALDriverMedia.picture(d):{available:false,status:d.imageStatus};
+  if(!p.available){
+    return '<div class="driver-media driver-image-hold '+esc(surface)+'-media" role="img" aria-label="'+esc(d.imageAltText)+' — image coming soon"><span>Image coming soon</span><small>'+esc(userHoldMessage(p.status))+'</small></div>';
+  }
+  return '<picture class="driver-media '+esc(surface)+'-media"><img loading="lazy" decoding="async" src="'+esc(p.src)+'" srcset="'+esc(p.srcset)+'" sizes="'+esc(p.sizes)+'" alt="'+esc(p.alt)+'"></picture>';
+}
 function profileLabel(d){return title(d.profile||"Driver")}
-function specLine(d){const lofts=Array.isArray(d.lofts)&&d.lofts.length?d.lofts.map(x=>x+"°").join(" · "):"—";return '<div class="driver-specs"><span><b>Launch</b>'+esc(title(d.launch||"—"))+'</span><span><b>Spin</b>'+esc(title(d.spin||"—"))+'</span><span><b>Lofts</b>'+esc(lofts)+'</span><span><b>Price</b>'+esc(money(d.priceUSD))+'</span></div>'}
+function specLine(d){
+  const lofts=Array.isArray(d.lofts)&&d.lofts.length?d.lofts.map(x=>x+"°").join(" · "):"—";
+  return '<div class="driver-specs"><span><b>Launch</b>'+esc(title(d.launch||"—"))+'</span><span><b>Spin</b>'+esc(title(d.spin||"—"))+'</span><span><b>Lofts</b>'+esc(lofts)+'</span><span><b>Price</b>'+esc(money(d.priceUSD))+'</span></div>';
+}
 function isInBag(id){return loadBag().some(x=>x.canonicalProductId===id)}
-function statusMessage(message,tone){const el=$("driverStatus");if(!el)return;el.textContent=message||"";el.dataset.tone=tone||"info"}
-function addToBag(id){const d=byId(id);if(!d)return;const bag=loadBag();if(bag.some(x=>x.canonicalProductId===id)){statusMessage("This Driver is already in your bag.","warning");return}if(bag.length>=MAX_BAG_CLUBS){statusMessage("14-club limit reached. Remove a club before adding another.","error");return}const hasOtherDriver=bag.some(x=>String(x.productType||"").toLowerCase()==="driver"&&x.canonicalProductId!==id);if(hasOtherDriver)statusMessage(DUPLICATE_DRIVER+": Your bag already contains a Driver. GAL will keep both, but verify that the duplicate category is intentional.","warning");else statusMessage(d.brand+" "+d.model+" added to your bag.","success");bag.push({canonicalProductId:id,productType:"Driver",brand:d.brand,model:d.model});saveBag(bag);render()}
-function removeFromBag(id){const bag=loadBag().filter(x=>x.canonicalProductId!==id);saveBag(bag);statusMessage("Driver removed from your bag.","info");render()}
+function statusMessage(message,tone){
+  const el=$("driverStatus");if(!el)return;el.textContent=message||"";el.dataset.tone=tone||"info";
+}
+function addToBag(id){
+  const d=byId(id);if(!d)return;
+  const bag=loadBag();
+  if(bag.some(x=>x.canonicalProductId===id)){statusMessage("This Driver is already in your bag.","warning");return}
+  if(bag.length>=MAX_BAG_CLUBS){statusMessage("14-club limit reached. Remove a club before adding another.","error");return}
+  const hasOtherDriver=bag.some(x=>String(x.productType||"").toLowerCase()==="driver"&&x.canonicalProductId!==id);
+  if(hasOtherDriver)statusMessage(DUPLICATE_DRIVER+": Your bag already contains a Driver. GAL will keep both, but verify that the duplicate category is intentional.","warning");
+  else statusMessage(d.brand+" "+d.model+" added to your bag.","success");
+  bag.push({canonicalProductId:id,productType:"Driver",brand:d.brand,model:d.model});saveBag(bag);render();
+}
+function removeFromBag(id){
+  const bag=loadBag().filter(x=>x.canonicalProductId!==id);saveBag(bag);statusMessage("Driver removed from your bag.","info");render();
+}
 function toggleBag(id){isInBag(id)?removeFromBag(id):addToBag(id)}
-function toggleCompare(id){if(compareIds.has(id))compareIds.delete(id);else if(compareIds.size<3)compareIds.add(id);else{statusMessage("Compare supports up to three Drivers.","warning");return}render()}
-function filtered(){const q=state.search.trim().toLowerCase();return DATA.filter(d=>{if(state.brand!=="all"&&d.brand!==state.brand)return false;if(state.profile!=="all"&&d.profile!==state.profile)return false;if(state.images==="ready"&&d.imageStatus!=="VERIFIED_REVIEW_ASSET")return false;if(state.images==="holds"&&d.imageStatus==="VERIFIED_REVIEW_ASSET")return false;if(q&&!((d.brand+" "+d.model+" "+d.profile).toLowerCase().includes(q)))return false;return true})}
-function cardMarkup(d){const selected=compareIds.has(d.canonicalProductId),inBag=isInBag(d.canonicalProductId);return '<article class="driver-card" data-driver="'+esc(d.canonicalProductId)+'">'+mediaMarkup(d,"catalog")+'<div class="driver-card-body"><div class="driver-brand">'+esc(d.brand)+'</div><h3>'+esc(d.model)+'</h3><div class="driver-tags"><span>'+esc(profileLabel(d))+'</span>'+(d.womenSpecific?'<span>Women-specific</span>':'')+(d.imageStatus!=="VERIFIED_REVIEW_ASSET"?'<span class="hold-tag">Image hold</span>':'')+'</div>'+specLine(d)+'<div class="driver-actions"><button type="button" data-detail="'+esc(d.canonicalProductId)+'">Details</button><button type="button" class="'+(selected?'on':'')+'" data-compare="'+esc(d.canonicalProductId)+'">'+(selected?'Selected':'Compare')+'</button><button type="button" class="bag-action '+(inBag?'on':'')+'" data-bag="'+esc(d.canonicalProductId)+'">'+(inBag?'Remove from Bag':'Add to Bag')+'</button></div></div></article>'}
-function renderCatalog(){const rows=filtered();$("driverGrid").innerHTML=rows.map(cardMarkup).join("");$("driverCount").textContent=rows.length+" of "+DATA.length+" Drivers"}
-function renderCompare(){const chosen=[...compareIds].map(byId).filter(Boolean),body=$("driverCompareGrid");if(!chosen.length){body.innerHTML='<div class="driver-empty">Select up to three Drivers to compare.</div>';return}body.innerHTML=chosen.map(d=>'<article class="compare-card">'+mediaMarkup(d,"compare")+'<div><div class="driver-brand">'+esc(d.brand)+'</div><h3>'+esc(d.model)+'</h3>'+specLine(d)+'<button type="button" data-compare="'+esc(d.canonicalProductId)+'">Remove</button></div></article>').join("")}
-function renderBag(){const bag=loadBag(),known=bag.map(x=>byId(x.canonicalProductId)).filter(Boolean);$("driverBagCount").textContent=bag.length+" / "+MAX_BAG_CLUBS+" clubs";$("driverBagWarning").textContent=bag.length>MAX_BAG_CLUBS?"Bag exceeds the 14-club limit.":bag.length===MAX_BAG_CLUBS?"Bag is at the 14-club limit.":"";$("driverBagList").innerHTML=known.length?known.map(d=>'<article class="bag-card">'+mediaMarkup(d,"bag")+'<div><div class="driver-brand">'+esc(d.brand)+'</div><h3>'+esc(d.model)+'</h3><button type="button" data-bag="'+esc(d.canonicalProductId)+'">Remove</button></div></article>').join(""):'<div class="driver-empty">No Drivers in this browser bag yet.</div>'}
-function openDetail(id){const d=byId(id);if(!d)return;$("driverDetailContent").innerHTML='<div class="detail-layout">'+mediaMarkup(d,"detail")+'<div><div class="driver-brand">'+esc(d.brand)+'</div><h2>'+esc(d.model)+'</h2><p>'+esc(profileLabel(d))+' profile · '+esc(title(d.bias||"neutral"))+' bias</p>'+specLine(d)+'<dl class="detail-governance"><div><dt>GAL ID</dt><dd>'+esc(d.canonicalProductId)+'</dd></div><div><dt>Image governance</dt><dd>'+esc(d.imageStatus==="VERIFIED_REVIEW_ASSET"?"Verified review asset":userHoldMessage(d.imageStatus))+'</dd></div></dl><div class="driver-actions"><button type="button" data-compare="'+esc(d.canonicalProductId)+'">'+(compareIds.has(id)?"Remove comparison":"Compare")+'</button><button type="button" class="bag-action" data-bag="'+esc(d.canonicalProductId)+'">'+(isInBag(id)?"Remove from Bag":"Add to Bag")+'</button></div></div></div>';const dialog=$("driverDetail");if(dialog.showModal)dialog.showModal();else dialog.setAttribute("open","")}
-function renderFilters(){const brands=[...new Set(DATA.map(d=>d.brand))].sort(),profiles=[...new Set(DATA.map(d=>d.profile).filter(Boolean))].sort();$("driverBrand").innerHTML='<option value="all">All brands</option>'+brands.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join("");$("driverProfile").innerHTML='<option value="all">All profiles</option>'+profiles.map(x=>'<option value="'+esc(x)+'">'+esc(profileLabel({profile:x}))+'</option>').join("")}
+function toggleCompare(id){
+  if(compareIds.has(id))compareIds.delete(id);
+  else if(compareIds.size<3)compareIds.add(id);
+  else{statusMessage("Compare supports up to three Drivers.","warning");return}
+  render();
+}
+function filtered(){
+  const q=state.search.trim().toLowerCase();
+  return DATA.filter(d=>{
+    if(state.brand!=="all"&&d.brand!==state.brand)return false;
+    if(state.profile!=="all"&&d.profile!==state.profile)return false;
+    if(state.images==="ready"&&d.imageStatus!=="VERIFIED_REVIEW_ASSET")return false;
+    if(state.images==="holds"&&d.imageStatus==="VERIFIED_REVIEW_ASSET")return false;
+    if(q&&!((d.brand+" "+d.model+" "+d.profile).toLowerCase().includes(q)))return false;
+    return true;
+  });
+}
+function cardMarkup(d){
+  const selected=compareIds.has(d.canonicalProductId),inBag=isInBag(d.canonicalProductId);
+  return '<article class="driver-card" data-driver="'+esc(d.canonicalProductId)+'">'+mediaMarkup(d,"catalog")+
+    '<div class="driver-card-body"><div class="driver-brand">'+esc(d.brand)+'</div><h3>'+esc(d.model)+'</h3>'+
+    '<div class="driver-tags"><span>'+esc(profileLabel(d))+'</span>'+(d.womenSpecific?'<span>Women-specific</span>':'')+(d.imageStatus!=="VERIFIED_REVIEW_ASSET"?'<span class="hold-tag">Image hold</span>':'')+'</div>'+specLine(d)+
+    '<div class="driver-actions"><button type="button" data-detail="'+esc(d.canonicalProductId)+'">Details</button><button type="button" class="'+(selected?'on':'')+'" data-compare="'+esc(d.canonicalProductId)+'">'+(selected?'Selected':'Compare')+'</button><button type="button" class="bag-action '+(inBag?'on':'')+'" data-bag="'+esc(d.canonicalProductId)+'">'+(inBag?'Remove from Bag':'Add to Bag')+'</button></div></div></article>';
+}
+function renderCatalog(){
+  const rows=filtered();
+  $("driverGrid").innerHTML=rows.map(cardMarkup).join("");
+  $("driverCount").textContent=rows.length+" of "+DATA.length+" Drivers";
+}
+function renderCompare(){
+  const chosen=[...compareIds].map(byId).filter(Boolean);
+  const body=$("driverCompareGrid");
+  if(!chosen.length){body.innerHTML='<div class="driver-empty">Select up to three Drivers to compare.</div>';return}
+  body.innerHTML=chosen.map(d=>'<article class="compare-card">'+mediaMarkup(d,"compare")+'<div><div class="driver-brand">'+esc(d.brand)+'</div><h3>'+esc(d.model)+'</h3>'+specLine(d)+'<button type="button" data-compare="'+esc(d.canonicalProductId)+'">Remove</button></div></article>').join("");
+}
+function renderBag(){
+  const bag=loadBag(),known=bag.map(x=>byId(x.canonicalProductId)).filter(Boolean);
+  $("driverBagCount").textContent=bag.length+" / "+MAX_BAG_CLUBS+" clubs";
+  $("driverBagWarning").textContent=bag.length>MAX_BAG_CLUBS?"Bag exceeds the 14-club limit.":bag.length===MAX_BAG_CLUBS?"Bag is at the 14-club limit.":"";
+  $("driverBagList").innerHTML=known.length?known.map(d=>'<article class="bag-card">'+mediaMarkup(d,"bag")+'<div><div class="driver-brand">'+esc(d.brand)+'</div><h3>'+esc(d.model)+'</h3><button type="button" data-bag="'+esc(d.canonicalProductId)+'">Remove</button></div></article>').join(""):'<div class="driver-empty">No Drivers in this browser bag yet.</div>';
+}
+function openDetail(id){
+  const d=byId(id);if(!d)return;
+  $("driverDetailContent").innerHTML='<div class="detail-layout">'+mediaMarkup(d,"detail")+'<div><div class="driver-brand">'+esc(d.brand)+'</div><h2>'+esc(d.model)+'</h2><p>'+esc(profileLabel(d))+' profile · '+esc(title(d.bias||"neutral"))+' bias</p>'+specLine(d)+'<dl class="detail-governance"><div><dt>GAL ID</dt><dd>'+esc(d.canonicalProductId)+'</dd></div><div><dt>Image governance</dt><dd>'+esc(d.imageStatus==="VERIFIED_REVIEW_ASSET"?"Verified review asset":userHoldMessage(d.imageStatus))+'</dd></div></dl><div class="driver-actions"><button type="button" data-compare="'+esc(d.canonicalProductId)+'">'+(compareIds.has(id)?"Remove comparison":"Compare")+'</button><button type="button" class="bag-action" data-bag="'+esc(d.canonicalProductId)+'">'+(isInBag(id)?"Remove from Bag":"Add to Bag")+'</button></div></div></div>';
+  const dialog=$("driverDetail");if(dialog.showModal)dialog.showModal();else dialog.setAttribute("open","");
+}
+function renderFilters(){
+  const brands=[...new Set(DATA.map(d=>d.brand))].sort();
+  const profiles=[...new Set(DATA.map(d=>d.profile).filter(Boolean))].sort();
+  $("driverBrand").innerHTML='<option value="all">All brands</option>'+brands.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join("");
+  $("driverProfile").innerHTML='<option value="all">All profiles</option>'+profiles.map(x=>'<option value="'+esc(x)+'">'+esc(profileLabel({profile:x}))+'</option>').join("");
+}
 function render(){renderCatalog();renderCompare();renderBag()}
-function bind(){$("driverSearch").addEventListener("input",e=>{state.search=e.target.value;renderCatalog()});$("driverBrand").addEventListener("change",e=>{state.brand=e.target.value;renderCatalog()});$("driverProfile").addEventListener("change",e=>{state.profile=e.target.value;renderCatalog()});$("driverImageFilter").addEventListener("change",e=>{state.images=e.target.value;renderCatalog()});document.addEventListener("click",e=>{const detail=e.target.closest&&e.target.closest("[data-detail]");if(detail){openDetail(detail.dataset.detail);return}const compare=e.target.closest&&e.target.closest("[data-compare]");if(compare){toggleCompare(compare.dataset.compare);return}const bag=e.target.closest&&e.target.closest("[data-bag]");if(bag){toggleBag(bag.dataset.bag);return}if(e.target.closest&&e.target.closest("[data-close-detail]")){const d=$("driverDetail");if(d.close)d.close();else d.removeAttribute("open")}})}
-function init(){if(!DATA.length||!root.GALDriverMedia){statusMessage("Driver database failed to load.","error");return}renderFilters();bind();render();root.GAL_DRIVER_APP_SELF_TEST={records:DATA.length,approved:DATA.filter(d=>d.imageStatus==="VERIFIED_REVIEW_ASSET").length,holds:DATA.filter(d=>d.imageStatus!=="VERIFIED_REVIEW_ASSET").length,passed:DATA.length===64}}
+function bind(){
+  $("driverSearch").addEventListener("input",e=>{state.search=e.target.value;renderCatalog()});
+  $("driverBrand").addEventListener("change",e=>{state.brand=e.target.value;renderCatalog()});
+  $("driverProfile").addEventListener("change",e=>{state.profile=e.target.value;renderCatalog()});
+  $("driverImageFilter").addEventListener("change",e=>{state.images=e.target.value;renderCatalog()});
+  document.addEventListener("click",e=>{
+    const detail=e.target.closest&&e.target.closest("[data-detail]");if(detail){openDetail(detail.dataset.detail);return}
+    const compare=e.target.closest&&e.target.closest("[data-compare]");if(compare){toggleCompare(compare.dataset.compare);return}
+    const bag=e.target.closest&&e.target.closest("[data-bag]");if(bag){toggleBag(bag.dataset.bag);return}
+    if(e.target.closest&&e.target.closest("[data-close-detail]")){const d=$("driverDetail");if(d.close)d.close();else d.removeAttribute("open")}
+  });
+}
+function init(){
+  if(!DATA.length||!root.GALDriverMedia){statusMessage("Driver database failed to load.","error");return}
+  renderFilters();bind();render();
+  root.GAL_DRIVER_APP_SELF_TEST={records:DATA.length,approved:DATA.filter(d=>d.imageStatus==="VERIFIED_REVIEW_ASSET").length,holds:DATA.filter(d=>d.imageStatus!=="VERIFIED_REVIEW_ASSET").length,passed:DATA.length===64};
+}
 root.GALDriversAppContract=Object.freeze({MAX_BAG_CLUBS,DUPLICATE_DRIVER,mediaMarkup,loadBag,addToBag,removeFromBag});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })(window);
