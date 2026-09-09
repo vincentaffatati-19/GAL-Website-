@@ -86,5 +86,6 @@ assert.match(appSource, /DUPLICATE_DRIVER/, 'bag behavior must surface a duplica
 assert.match(appSource, /canonicalProductId/, 'bag and compare state must use canonical product identity');
 assert.match(appSource, /Image coming soon/, 'hold records must render a controlled image placeholder');
 assert.match(css, /\.driver-image-hold/, 'controlled hold state must be styled');
+assert.match(appSource, /v==null\|\|v===""/, 'missing Driver prices must render as unavailable rather than $0');
 
 console.log('PASS driver equipment UI contract');
