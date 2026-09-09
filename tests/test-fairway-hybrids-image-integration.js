@@ -1,0 +1,13 @@
+const fs=require("fs"),vm=require("vm"),assert=require("assert");
+const ctx={globalThis:{},window:null,localStorage:{getItem:()=>null,setItem:()=>{}}};ctx.window=ctx.globalThis;ctx.globalThis.localStorage=ctx.localStorage;vm.createContext(ctx);
+["fairway-hybrids__data.js","fairway-hybrids__media.js","fairway-hybrids__app.js"].forEach(f=>vm.runInContext(fs.readFileSync(f,"utf8"),ctx));
+const D=ctx.globalThis.GALFairwayHybridData,M=ctx.globalThis.GALFairwayHybridMedia,A=ctx.globalThis.GALFairwayHybridApp;
+assert.equal(D.length,71);assert.equal(D.filter(x=>x.category==="FAIRWAY").length,49);assert.equal(D.filter(x=>x.category==="HYBRID").length,22);
+assert.equal(new Set(D.map(x=>x.product_id)).size,71);
+assert.equal(D.filter(x=>x.imageStatus==="VERIFIED_REVIEW_ASSET").length,49);assert.equal(D.filter(x=>x.imageStatus!=="VERIFIED_REVIEW_ASSET").length,22);
+assert.equal(new Set(D.filter(x=>x.imageAssetPath).map(x=>x.imageAssetPath)).size,49);
+D.filter(x=>x.imageStatus!=="VERIFIED_REVIEW_ASSET").forEach(x=>{assert.equal(x.imageAssetPath,null);assert.equal(M.resolve(x,640).available,false);assert.ok(!A.renderMedia(x).includes("<img"))});
+assert.equal(A.price(null),"—");assert.ok(!A.publicStatus(D[18]).includes("SOURCE_"));
+assert.equal(A.filter({type:"FAIRWAY"}).length,49);assert.equal(A.filter({type:"HYBRID"}).length,22);
+const src=fs.readFileSync("fairway-hybrids__app.js","utf8");assert.ok(!src.includes("res.cloudinary.com"));
+console.log("PASS fairway/hybrid integration contracts");
