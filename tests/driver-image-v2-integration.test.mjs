@@ -64,3 +64,27 @@ assert.ok(picture.srcset.includes('w_640'), 'picture() must include a 640px resp
 assert.ok(picture.srcset.includes('w_960'), 'picture() must include a 960px responsive source');
 
 console.log('PASS driver image v2 data/media contract');
+
+const html = fs.readFileSync(path.join(root, 'drivers.html'), 'utf8');
+const appSource = fs.readFileSync(path.join(root, 'drivers__app.js'), 'utf8');
+const css = fs.readFileSync(path.join(root, 'drivers__styles.css'), 'utf8');
+
+assert.match(html, /drivers__styles\.css/, 'Driver page must load Driver-specific styles');
+assert.match(html, /drivers__data\.js[\s\S]*drivers__media\.js[\s\S]*drivers__app\.js/, 'Driver modules must load data -> media -> app in order');
+assert.match(html, /id="driverGrid"/, 'Driver page must expose catalog grid');
+assert.match(html, /id="driverCompare"/, 'Driver page must expose compare surface');
+assert.match(html, /id="driverBag"/, 'Driver page must expose bag surface');
+assert.match(html, /id="driverDetail"/, 'Driver page must expose detail surface');
+
+assert.doesNotMatch(appSource, /res\.cloudinary\.com/, 'Driver app must never hard-code image URLs outside the media resolver');
+assert.match(appSource, /GALDriverMedia\.picture/, 'Driver app must consume the governed media resolver');
+for (const surface of ['catalog','detail','compare','bag']) {
+  assert.match(appSource, new RegExp(`mediaMarkup\\(.*${surface}`, 'i'), `${surface} must render through mediaMarkup()`);
+}
+assert.match(appSource, /MAX_BAG_CLUBS\s*=\s*14/, 'bag behavior must enforce the 14-club warning contract');
+assert.match(appSource, /DUPLICATE_DRIVER/, 'bag behavior must surface a duplicate Driver warning');
+assert.match(appSource, /canonicalProductId/, 'bag and compare state must use canonical product identity');
+assert.match(appSource, /Image coming soon/, 'hold records must render a controlled image placeholder');
+assert.match(css, /\.driver-image-hold/, 'controlled hold state must be styled');
+
+console.log('PASS driver equipment UI contract');
