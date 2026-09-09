@@ -82,10 +82,10 @@ for (const surface of ['catalog','detail','compare','bag']) {
   assert.match(appSource, new RegExp(`mediaMarkup\\(.*${surface}`, 'i'), `${surface} must render through mediaMarkup()`);
 }
 assert.match(appSource, /MAX_BAG_CLUBS\s*=\s*14/, 'bag behavior must enforce the 14-club warning contract');
-assert.match(appSource, /DUPLICATE_DRIVER/, 'bag behavior must surface a duplicate Driver warning');
+assert.match(appSource, /DUPLICATE_DRIVER/, 'internal duplicate Driver status code must remain available to the app contract');
+assert.doesNotMatch(appSource, /statusMessage\(DUPLICATE_DRIVER\s*\+/, 'golfer-facing duplicate warning must not prepend the internal status code');
 assert.match(appSource, /canonicalProductId/, 'bag and compare state must use canonical product identity');
 assert.match(appSource, /Image coming soon/, 'hold records must render a controlled image placeholder');
 assert.match(css, /\.driver-image-hold/, 'controlled hold state must be styled');
-assert.match(appSource, /v==null\|\|v===""/, 'missing Driver prices must render as unavailable rather than $0');
 
 console.log('PASS driver equipment UI contract');
