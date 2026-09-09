@@ -1,0 +1,12 @@
+(function(root){"use strict";
+const APPROVED="VERIFIED_REVIEW_ASSET",WIDTHS=Object.freeze([320,640,960]);
+const SOURCES=Object.freeze({
+qf:["gal/fairway-hybrids/source/taylormade-qi35-fairway-original",1788991347],qr:["gal/fairway-hybrids/source/taylormade-qi35-rescue-original",1788991354],ef:["gal/fairway-hybrids/source/callaway-elyte-fairway-original",1788991361],eh:["gal/fairway-hybrids/source/callaway-elyte-hybrid-original",1788991381],pm:["gal/fairway-hybrids/source/ping-g440-max-fairway-original",1788991406],ps:["gal/fairway-hybrids/source/ping-g440-sft-fairway-original",1788991432],pl:["gal/fairway-hybrids/source/ping-g440-lst-fairway-original",1788991440],ph:["gal/fairway-hybrids/source/ping-g440-max-hl-fairway-original",1788991447],cl:["gal/fairway-hybrids/source/cobra-ds-adapt-ls-fairway-original",1788991455],cx:["gal/fairway-hybrids/source/cobra-ds-adapt-x-fairway-original",1788991335],cm:["gal/fairway-hybrids/source/cobra-ds-adapt-max-fairway-original",1788991462],ch:["gal/fairway-hybrids/source/cobra-ds-adapt-hybrid-original",1788991471]});
+function clampWidth(w){w=Number(w);return Number.isFinite(w)?Math.max(160,Math.min(1200,Math.round(w))):640}
+function masterUrl(r){if(!r||r.imageStatus!==APPROVED||!r.imageAssetKey||!SOURCES[r.imageAssetKey])return null;const s=SOURCES[r.imageAssetKey],id=r.product_id;return "https://res.cloudinary.com/bevzhkct/image/upload/$rid_!"+id+"!/c_fit,h_1056,w_1056/b_white,c_lpad,h_1200,w_1200/f_webp/q_94/v"+s[1]+"/"+s[0]+".webp"}
+function responsiveUrl(url,w){if(!url)return null;return url.replace("/image/upload/","/image/upload/f_auto,q_auto,w_"+clampWidth(w)+"/")}
+function unavailable(r){return {available:false,src:null,masterUrl:null,alt:r&&r.imageAltText?r.imageAltText:"Golf club",label:"Image coming soon"}}
+function resolve(r,w){const m=masterUrl(r);if(!m)return unavailable(r);return {available:true,src:responsiveUrl(m,w),masterUrl:m,alt:r.imageAltText,width:clampWidth(w)}}
+function picture(r){const x=resolve(r,640);if(!x.available)return x;return Object.assign({},x,{srcset:WIDTHS.map(w=>responsiveUrl(x.masterUrl,w)+" "+w+"w").join(", "),sizes:"(max-width:640px) 92vw,(max-width:1024px) 46vw,300px"})}
+root.GALFairwayHybridMedia=Object.freeze({APPROVED,WIDTHS,resolve,picture,masterUrl,responsiveUrl});
+})(typeof window!=="undefined"?window:globalThis);
