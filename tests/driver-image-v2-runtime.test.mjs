@@ -33,7 +33,8 @@ app.addToBag(globalThis.GAL_DRIVERS[0].canonicalProductId);
 assert.equal(JSON.parse(localStorage.getItem('gal_equipment_bag_v1')).length,1,'first Driver should add to bag');
 app.addToBag(globalThis.GAL_DRIVERS[1].canonicalProductId);
 assert.equal(JSON.parse(localStorage.getItem('gal_equipment_bag_v1')).length,2,'second Driver is allowed with duplicate-category warning');
-assert.match(elements.get('driverStatus').textContent,/DUPLICATE_DRIVER/,'second Driver must emit duplicate category warning');
+assert.match(elements.get('driverStatus').textContent,/already contains a Driver/i,'second Driver must emit a golfer-facing duplicate category warning');
+assert.doesNotMatch(elements.get('driverStatus').textContent,/DUPLICATE_DRIVER/,'golfer-facing duplicate warning must not expose internal status codes');
 
 localStorage.setItem('gal_equipment_bag_v1',JSON.stringify(globalThis.GAL_DRIVERS.slice(0,14).map(d=>({canonicalProductId:d.canonicalProductId,productType:'Driver',brand:d.brand,model:d.model}))));
 app.addToBag(globalThis.GAL_DRIVERS[14].canonicalProductId);
