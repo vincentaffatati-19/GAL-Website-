@@ -54,7 +54,7 @@ function addToBag(id){
   if(bag.some(x=>x.canonicalProductId===id)){statusMessage("This Driver is already in your bag.","warning");return}
   if(bag.length>=MAX_BAG_CLUBS){statusMessage("14-club limit reached. Remove a club before adding another.","error");return}
   const hasOtherDriver=bag.some(x=>String(x.productType||"").toLowerCase()==="driver"&&x.canonicalProductId!==id);
-  if(hasOtherDriver)statusMessage(DUPLICATE_DRIVER+": Your bag already contains a Driver. GAL will keep both, but verify that the duplicate category is intentional.","warning");
+  if(hasOtherDriver)statusMessage("Your bag already contains a Driver. GAL will keep both, but verify that the duplicate category is intentional.","warning");
   else statusMessage(d.brand+" "+d.model+" added to your bag.","success");
   bag.push({canonicalProductId:id,productType:"Driver",brand:d.brand,model:d.model});saveBag(bag);render();
 }
