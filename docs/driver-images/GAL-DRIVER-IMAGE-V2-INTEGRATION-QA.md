@@ -20,6 +20,7 @@
 - Replaces the foundation-only `drivers.html` page with a responsive Driver equipment browser.
 - Adds search, brand/profile/image-state filters, detail dialog, compare up to three Drivers, Add/Remove from Bag, duplicate Driver warning, and 14-club guard.
 - Missing price values remain unavailable (`—`) and are not coerced to `$0`.
+- Internal duplicate-category status code `DUPLICATE_DRIVER` remains available to the app contract but is no longer exposed in golfer-facing copy.
 
 ## Bag/profile boundary
 
@@ -51,7 +52,9 @@ A second UI contract failed before the Driver page/app/styles existed, then pass
 
 A price regression test was added before the formatter fix. It failed because blank prices were coerced to `$0`, then passed after the null/empty guard was added.
 
-### Fresh final local verification
+A duplicate-warning presentation regression was added before the copy fix. The current implementation exposed the internal `DUPLICATE_DRIVER` code in golfer-facing text; the runtime contract now requires the golfer-facing warning to describe the duplicate Driver without exposing the internal code.
+
+### Fresh final verification contract
 
 ```text
 PASS driver image v2 data/media contract
@@ -72,8 +75,12 @@ Runtime contract verifies:
 - 64 catalog cards render.
 - exactly 54 catalog images render.
 - exactly 10 controlled `Image coming soon` states render.
-- second Driver in a bag emits `DUPLICATE_DRIVER` warning.
+- second Driver in a bag emits a golfer-facing duplicate category warning without exposing `DUPLICATE_DRIVER`.
 - a 15th club is blocked by the 14-club guard.
+
+## Master parity
+
+The application projection is derived from the authoritative Library artifact `GAL-Driver-Master-v2.0-Image-Governance-FINAL.csv`. The projection retains the canonical Driver ID, brand/model identity, profile/launch/spin/bias, lofts, price, women-specific flag, image governance status, governed image URL, and governed alt text used by the Driver experience. No image identity is hand-authored in `drivers__app.js`.
 
 ## Repository preservation verification
 
@@ -82,10 +89,10 @@ Feature branch is a clean fast-forward descendant of the September integrated RC
 ## Vercel preview evidence
 
 Connected project: `gal-website` (`prj_42qpNLd0D8npq4hgm3WSOpyuhYBd`)  
-Latest verified feature deployment: `dpl_4EHU8cqc9H9T4Yh4NpRSPkX5wrHS`  
-Git commit: `f0456dfc3a872da59344517ef3c25301f7bfd8b5`  
+Latest verified feature deployment: `dpl_CCMLAB4EsGtaKgvWWpxJJQRpS7AB`  
+Git commit: `2ddc274dfa39394fcf03bfa8fdebfd826371d49e`  
 State: **READY**  
-Build errors-only log: no errors; `Build Completed in /vercel/output`.
+Build errors-only log: no errors; `Build Completed in /vercel/output [268ms]`.
 
 The preview is protected by Vercel SSO. The available automated fetch/browser channels receive the authentication redirect rather than the application page, so a full protected-preview visual interaction pass cannot be truthfully marked PASS from this environment. This is an access boundary, not a build failure.
 
