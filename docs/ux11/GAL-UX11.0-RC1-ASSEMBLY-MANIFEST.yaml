@@ -1,0 +1,185 @@
+schema: GAL-RC-ASSEMBLY-MANIFEST-1.0
+rc: GAL-UX11.0-RC1
+workstream: "GAL UX11 — My GAL Intelligence Experience"
+status: PRE_IMPLEMENTATION_PROVENANCE_GATE
+created: 2026-09-09
+
+policy:
+  governing_rule: docs/GAL_ARTIFACT_PROVENANCE_AND_RC_ASSEMBLY_RULE.md
+  rule_status: LOCKED
+  selection_rule: "Authority is determined by lineage + approval/QA, never by filename recency alone."
+
+implementation_baseline:
+  repository: vincentaffatati-19/GAL-Website-
+  branch: feature/ux11-my-gal-intelligence-experience
+  base_branch: feature/ux10-corrected-my-gal-review
+  base_commit: 092aadef8d64886716cf99d2045d0ea8cc90fe50
+  source_role: STRUCTURE_AND_GOVERNED_LOGIC_ONLY
+  accepted_from_baseline:
+    - corrected My Bag -> Golfer Profile -> Recommendations flow
+    - 14-club semantics; golf ball excluded from club count
+    - governed profile snapshot/patch handoff
+    - recommendation handoff and existing category-engine contracts
+  rejected_from_baseline:
+    - CSS-drawn tee-box scenery
+    - CSS/shape approximations of the approved bag visual
+
+architecture_source:
+  classification: INCLUDE
+  source: "approved UX10 My GAL architecture"
+  primary_navigation:
+    - Today
+    - My Bag
+    - Insights
+    - Guides
+    - Progress
+  golfer_profile: "separate destination/control; not a sixth primary tab"
+  tee_box_and_bag: "independent presentation layers"
+  profile_centered_model: true
+
+visual_source_my_gal:
+  classification: CURRENT_VISUAL_REFERENCE
+  source_name: "My Gal Dashboard with landing.png"
+  verified_local_copy: GAL_My_GAL_Refined.png
+  sha256: 3f0cf896cb88632d6bcf0f780de110bad6516b3264a8755de2c932edbca44f84
+  dimensions: "1536x1024"
+  required_characteristics:
+    - photographic coastal/famous-course environment
+    - realistic GAL bag
+    - real club/product imagery
+    - category status callouts
+    - Bag Status
+    - Next Opportunity
+    - Bag Value
+    - Bag User's Guide
+    - Quick Actions
+    - Recent Insight
+    - Progress at a Glance
+    - contextual equipment intelligence panel
+  note: "Reference establishes presentation target; underlying implementation assets must be recovered and governed separately."
+
+profile_implementation_source:
+  classification: CURRENT_IMPLEMENTATION_SOURCE
+  rc: GAL-UX10.02-FINAL-PROFILE-RC.html
+  rc_sha256: c2dd228f782fd357949c472a07d6a2cb68be6308ea60d749dfac8fe0bdc5c084
+  normalized_approved_step17_3_3_sha256: aa9908bea071318e45ee3b1af0a0c41f12fa46acb2c1f88111cb6c4fdd7539f7
+  asset_manifest: GAL-UX10.02-FINAL-PROFILE-ASSET-MANIFEST.json
+  static_verification: GAL-UX10.02-FINAL-PROFILE-STATIC-VERIFICATION.json
+  qa: GAL-UX10.02-FINAL-PROFILE-QA.md
+  required_counts:
+    persona_families: 12
+    body_masters: 12
+    swing_plates: 12
+    durable_persona_pairs: 12
+    pending_durable_promotion: 0
+  resolver_verification: "50/50 PASS"
+  static_verification_count: "47/47 PASS"
+  swing_stages:
+    - Address
+    - Backswing
+    - Impact
+    - Finish
+
+visual_library_overview:
+  classification: REFERENCE_ONLY
+  source_name: "Golf Analytics Lab Visual Library(3).png"
+  verified_local_copy: GAL_Visual_Library_COMPLETE.png
+  sha256: 3c6d13d5c52cc99bffe5c7bc5fc321787d61ca03e011b8b34a7ceba6ea801821
+  dimensions: "1536x1024"
+  note: "Fullest recovered single presentation board, but not the authoritative runtime asset source. Runtime authority remains the Final Profile asset manifest."
+
+supersession_lineage:
+  - order: 1
+    source: "early Golf Analytics Lab Golfer Visual Library"
+    status: SUPERSEDED
+    reason: "later Dynamic Golfer Visual Library and governed persona work expanded coverage"
+  - order: 2
+    source: "Dynamic Golfer Visual Library numbered/timestamped refinement series"
+    status: SUPERSEDED_AS_IMPLEMENTATION_SOURCE
+    reason: "intermediate visual development; later STEP17.3.x governed implementation replaced it"
+  - order: 3
+    source: "Golf Analytics Lab Visual Library(3).png"
+    status: CURRENT_VISUAL_OVERVIEW_REFERENCE
+    reason: "fullest recovered single board"
+  - order: 4
+    source: GAL-UX10.02-STEP17.3-DYNAMIC-VISUAL-RC.html
+    status: SUPERSEDED
+    reason: "corrected by STEP17.3.2 and STEP17.3.3"
+  - order: 5
+    source: GAL-UX10.02-STEP17.3.2-DYNAMIC-VISUAL-RC.html
+    status: SUPERSEDED
+    reason: "swing formatting corrected in STEP17.3.3"
+  - order: 6
+    source: GAL-UX10.02-STEP17.3.3-DYNAMIC-VISUAL-RC.html
+    status: APPROVED_PREDECESSOR
+    reason: "native-aspect swing + six collapsed disclosures approved"
+  - order: 7
+    source: GAL-UX10.02-FINAL-PROFILE-RC.html
+    status: CURRENT_PROFILE_IMPLEMENTATION_SOURCE
+    reason: "preserves approved STEP17.3.3 UX while moving all persona custody to durable GAL-owned storage"
+
+recommendation_contract:
+  top_3_definition: "Top three product recommendations within the selected equipment/category context."
+  allowed_contexts:
+    - Driver
+    - Fairway Woods / Hybrids
+    - Irons
+    - Wedges
+    - Putter
+    - Golf Ball
+  forbidden_interpretation: "Top three equipment categories / cross-category Better Bag priority ranking"
+  data_rule: "No recommendation score or ranking may be fabricated when governed data is insufficient."
+
+explicit_exclusions:
+  - id: UX10.03_BETTER_BAG_SCORECARD
+    classification: REJECTED_SUPERSEDED
+    exclude:
+      - Better Bag Priority Index
+      - cross-category "Your Top 3 Better Bag Priorities"
+      - invented whole-bag/category scores
+      - standalone scorecard hierarchy competing with profile-centered My GAL
+  - id: CSS_SCENE_APPROXIMATION
+    classification: EXCLUDE
+    exclude:
+      - CSS sky/fairway/tree/course drawings used as substitutes for approved photography
+      - CSS/shape bag approximations
+  - id: SUPERSEDED_GOLFER_ART
+    classification: EXCLUDE
+    exclude:
+      - earlier visual-library boards as runtime source
+      - regenerated golfer/persona art where approved masters exist
+  - id: UNGOVERNED_PRODUCT_MEDIA
+    classification: EXCLUDE
+    exclude:
+      - retailer watermarks
+      - Hot List/award/ranking graphics
+      - promotional backgrounds
+      - generic fallback product imagery
+      - guessed sibling/model imagery
+
+qa_gate:
+  required:
+    - provenance manifest complete and internally consistent
+    - source hashes verified where available
+    - no UX10.03 scorecard hierarchy
+    - five primary navigation items preserved
+    - final governed profile/persona system retained
+    - photographic My GAL visual treatment restored
+    - tee-box and bag remain independent presentation layers
+    - category-level Top 3 only
+    - governed equipment imagery or explicit hold state
+    - truthful unknown/insufficient states
+    - desktop contract tests pass
+    - mobile contract tests pass
+    - JavaScript syntax passes
+    - visual regression comparison against approved references
+  browser_policy: "If browser rendering is blocked, report BLOCKED/UNVERIFIED. Static checks are not a browser visual pass."
+
+open_release_blockers:
+  - "Supabase Auth leaked-password protection disabled; resolve before public authentication release."
+  - "External platform integrations remain outstanding; overall implementation is not fully complete until integrated and verified."
+
+production_boundary:
+  production_promotion: FORBIDDEN_IN_RC_ASSEMBLY
+  merge_to_main: NOT_AUTHORIZED_BY_THIS_MANIFEST
+  review_candidate_only: true
