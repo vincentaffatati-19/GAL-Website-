@@ -1,0 +1,18 @@
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
+const ROOT=fs.existsSync(path.join(__dirname,'recommendations__profile.js'))?__dirname:path.resolve(__dirname,'..');
+const ctx={globalThis:null,window:undefined,localStorage:{getItem:()=>null,setItem:()=>{}},GAL_DRIVERS:[{id:'GAL-DRV-1',canonicalProductId:'GAL-DRV-1',productType:'Driver',brand:'A',model:'Draw Max',profile:'forgiveness',launch:'high',spin:'mid',bias:'draw',priceUSD:599,active:true,womenSpecific:false,imageStatus:'VERIFIED_REVIEW_ASSET',imageAssetPath:'x'}],GALFairwayHybridData:[{product_id:'GAL-FH-1',brand:'B',model:'G440 SFT Fairway',category:'FAIRWAY',club:'7W',loft_deg:21,current_price_usd:299,imageStatus:'VERIFIED_REVIEW_ASSET'},{product_id:'GAL-FH-2',brand:'C',model:'Hybrid',category:'HYBRID',club:'4H',loft_deg:22,current_price_usd:199,imageStatus:'VERIFIED_REVIEW_ASSET'}]};
+ctx.globalThis=ctx;vm.createContext(ctx);
+for(const f of ['recommendations__profile.js','recommendations__engine.js'])vm.runInContext(fs.readFileSync(path.join(ROOT,f),'utf8'),ctx);
+const snap={profileId:'profile:GAL-USER-1',revision:7,facts:[{key:'driver_swing_speed_mph',value:94},{key:'driver_primary_miss',value:'right'},{key:'top_bag_target_yards',value:215}]};
+const out=ctx.GALRecommendationEngine.recommendations(snap);
+assert.equal(out.engineVersion,'GAL-REC-1.0');
+assert.equal(out.profileRevision,7);
+assert.equal(out.needs[0].id,'driver');
+assert.equal(out.needs[1].id,'top-bag');
+assert(out.needs[1].items.some(x=>x.category==='FAIRWAY'));
+assert(out.needs[1].items.some(x=>x.category==='HYBRID'));
+assert(out.categories.DRIVER[0].canonicalProductId==='GAL-DRV-1');
+assert(out.categories.FAIRWAY.length===1&&out.categories.HYBRID.length===1);
+assert(out.categories.FAIRWAY[0].score>0);
+assert(!JSON.stringify(out.needs).includes('SOURCE_'));
+console.log('PASS recommendation engine contracts');
