@@ -1,4 +1,4 @@
-schema: GAL-RC-ASSEMBLY-MANIFEST-1.0
+schema: GAL-RC-ASSEMBLY-MANIFEST-1.1
 rc: GAL-UX11.0-RC1
 workstream: "GAL UX11 — My GAL Intelligence Experience"
 status: PRE_IMPLEMENTATION_PROVENANCE_GATE
@@ -56,7 +56,55 @@ visual_source_my_gal:
     - Recent Insight
     - Progress at a Glance
     - contextual equipment intelligence panel
-  note: "Reference establishes presentation target; underlying implementation assets must be recovered and governed separately."
+  note: "Reference establishes presentation target; implementation uses recovered governed component assets below rather than flattening this dashboard image into the UI."
+
+recovered_my_gal_assets:
+  classification: CURRENT_RECOVERED_IMPLEMENTATION_ASSET_SOURCE
+  repository: vincentaffatati-19/GAL-Website-
+  source_branch: feature/gal-ux10-01-tee-box-personalization
+  source_commit: c2568a5a7dffaed422f03306509343078d5d8782
+  source_tree: 182df4636db2e4a9ff0d59810c4c1bdf14c43a17
+  recovery_rule: "Reuse exact repository assets. Do not redraw or regenerate them for UX11."
+  tee_box_assets:
+    - id: coastal-01
+      path: portal/public/ux10/tee-boxes/coastal-01.webp
+      git_blob_sha1: aa8812e72ca4a5b4a622e19cbe118a4b46f8f606
+      size_bytes: 23560
+      file_signature: WEBP_RIFF_VERIFIED_FROM_REPOSITORY_CONTENT
+      role: photographic_background
+    - id: cliffs-01
+      path: portal/public/ux10/tee-boxes/cliffs-01.webp
+      git_blob_sha1: 0adcaeab08c904c1216821ee50b1165831bb65a9
+      size_bytes: 30352
+      file_signature: WEBP_RIFF_VERIFIED_FROM_REPOSITORY_CONTENT
+      role: photographic_background
+  bag_assets:
+    - id: gal-stand-bag
+      path: portal/public/ux10/bags/gal-stand-bag.png
+      git_blob_sha1: 4995baf756a16e9aca03fcd2201c6cfc7d75d92d
+      size_bytes: 14867
+      local_byte_verification: EXACT_GIT_BLOB_MATCH
+      local_sha256: 7ffd0881aafdc8885e468ad929a88d4a3dcbc1cece8b0e9b471720da27443d4c
+      verified_dimensions: "166x400"
+      verified_format: PNG
+      role: transparent_bag_presentation_layer
+    - id: gal-tour-bag
+      path: portal/public/ux10/bags/gal-tour-bag.png
+      git_blob_sha1: ea2b1eeec016c85ddb4ce8cca5d90a9e57d448d4
+      size_bytes: 17841
+      local_byte_verification: EXACT_GIT_BLOB_MATCH
+      local_sha256: 94d18e5ca9dd4045ddbe199b4b91cce7c537beba9c030166a5c02f65b2aadc9f
+      verified_dimensions: "166x400"
+      verified_format: PNG
+      role: transparent_bag_presentation_layer
+  implementation_support:
+    scene_module: portal/src/ux10/scene.ts
+    personalization_module: portal/src/ux10/personalization.ts
+    historical_tests:
+      - portal/src/__tests__/candidateVisuals.test.ts
+      - portal/src/__tests__/teeBoxToday.test.ts
+      - portal/src/__tests__/ux10Personalization.test.ts
+  note: "Git blob SHA-1 values are immutable Git object identities. The two bag files were independently materialized and recomputed locally; their Git object hashes match the historical branch exactly."
 
 profile_implementation_source:
   classification: CURRENT_IMPLEMENTATION_SOURCE
@@ -161,6 +209,7 @@ qa_gate:
   required:
     - provenance manifest complete and internally consistent
     - source hashes verified where available
+    - exact historical photographic scene and bag assets recovered
     - no UX10.03 scorecard hierarchy
     - five primary navigation items preserved
     - final governed profile/persona system retained
