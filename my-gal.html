@@ -1,15 +1,78 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My GAL · My Bag | Golf Analytics Lab</title><meta name="description" content="Your Golf Analytics Lab bag, visualized from the tee box and connected to your Golfer Profile and recommendations."><link rel="stylesheet" href="assets__styles.css"><link rel="stylesheet" href="my-gal__styles.css"></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My GAL · My Bag | Golf Analytics Lab</title>
+<meta name="description" content="Your governed Golf Analytics Lab bag, profile and equipment intelligence in one photographic My GAL experience.">
+<link rel="stylesheet" href="assets__styles.css">
+<link rel="stylesheet" href="my-gal__styles.css">
+</head>
+<body>
 <header class="site-header"><div class="header-inner"><a class="brand-link" href="index.html" aria-label="Golf Analytics Lab home"><img class="logo" src="assets__images__gal-logo.png" alt="Golf Analytics Lab — Data-Driven Equipment Insight"></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation"><span class="menu-toggle-label">Menu</span><span aria-hidden="true">☰</span></button><nav class="nav" id="primary-navigation" aria-label="Primary navigation"><a href="build-a-better-bag.html">Build a Better Bag</a><a href="golf-ball-learning-center.html">Learn</a><a href="tools.html">Tools</a><a href="how-we-test.html">How We Test</a><a href="about.html">About</a><a class="cta-nav" href="my-gal.html" aria-current="page">My GAL</a></nav></div></header>
-<nav class="mygal-subnav" aria-label="My GAL"><a class="active" href="my-gal.html">My Bag</a><a href="profile.html">Golfer Profile</a><a href="recommendations.html">Bag Needs &amp; Recommendations</a></nav>
-<main class="mygal-shell"><section class="mygal-hero"><div><span class="eyebrow">MY GAL · UX10</span><h1>My Bag from the tee box.</h1><p>Your current equipment is the starting point. GAL combines the bag you actually play with your Profile to identify gaps, preserve what already works, and recommend only where there is a reason to change.</p></div><div id="bagSource" class="source-pill" aria-live="polite">Loading bag…</div></section>
-<section class="scene" id="teeScene" data-tee-context="middle" aria-labelledby="sceneTitle"><div class="sky"></div><div class="tree-line"></div><div class="fairway"></div><div class="teeing-ground"></div><div class="scene-shade"></div>
-<div class="scene-controls"><div><span class="eyebrow">PLAY CONTEXT</span><h2 id="sceneTitle">Choose My Tee Box</h2><p>Visual context only. This does not change your governed Profile until you explicitly save play context.</p></div><div class="tee-options" role="group" aria-label="Choose tee box"><button type="button" data-tee="back">Back tees</button><button type="button" data-tee="middle" class="active">Middle tees</button><button type="button" data-tee="forward">Forward tees</button></div></div>
-<div class="scene-grid"><aside class="status-rail" aria-label="Bag category status"><div class="rail-title">Bag positions</div><div id="categoryStatus"></div></aside>
-<div class="bag-stage" id="bagStage"><div class="club-fan" id="clubFan" aria-hidden="true"></div><div class="bag-visual" aria-label="Golf bag visualization"><div class="bag-mouth"></div><div class="bag-body"><span>GAL</span></div><div class="bag-pocket"></div><div class="bag-strap"></div><div class="bag-stand stand-a"></div><div class="bag-stand stand-b"></div></div><div class="bag-caption"><strong id="bagCount">0 / 14 clubs</strong><span id="bagCaption">Build your bag from governed equipment.</span></div></div>
-<aside class="intelligence-rail"><article><span class="eyebrow">BAG HEALTH</span><strong id="healthScore">—</strong><p id="healthCopy">Waiting for bag data.</p></article><article><span class="eyebrow">OPEN NEEDS</span><strong id="gapCount">—</strong><p id="gapCopy">GAL will identify missing or review-worthy roles.</p></article><article><span class="eyebrow">PROFILE</span><strong id="profileCompleteness">—</strong><p id="profileCopy">Connect your Profile to personalize fit.</p></article></aside></div>
-<div class="tee-markers" aria-hidden="true"><span class="marker back"></span><span class="marker middle"></span><span class="marker forward"></span></div></section>
-<section class="mygal-actions"><a class="primary" href="profile.html">Review Golfer Profile</a><a href="recommendations.html">See Bag Needs &amp; Recommendations</a><a href="drivers.html">Browse Drivers</a><a href="fairway-hybrids.html">Browse Woods &amp; Hybrids</a></section>
-<section class="detail-grid"><article class="detail-card"><span class="eyebrow">CURRENT EQUIPMENT</span><h2>What is in the bag</h2><div id="equipmentList" class="equipment-list"></div></article><article class="detail-card"><span class="eyebrow">WHY GAL IS WATCHING</span><h2>Bag intelligence</h2><div id="bagInsights" class="insight-list"></div></article></section>
+
+<div class="mygal-nav-shell">
+  <nav class="mygal-primary-nav" aria-label="My GAL primary destinations">
+    <a href="my-gal.html#today">Today</a>
+    <a class="active" href="my-gal.html#bag" aria-current="page">My Bag</a>
+    <a href="my-gal.html#insights">Insights</a>
+    <a href="build-a-better-bag.html">Guides</a>
+    <a href="my-gal.html#progress">Progress</a>
+  </nav>
+  <a class="profile-control" href="profile.html">Golfer Profile</a>
+</div>
+
+<main class="mygal-shell">
+<section class="mygal-hero" id="today">
+  <div><span class="eyebrow">MY GAL · UX11</span><h1>Your bag. Your game. One governed view.</h1><p>GAL starts with the equipment you actually play and the facts in your Golfer Profile. Presentation can change; your governed equipment and profile state do not.</p></div>
+  <div id="bagSource" class="source-pill" aria-live="polite">Loading bag…</div>
+</section>
+
+<section class="scene" id="bag" aria-labelledby="sceneTitle">
+  <img id="teeBoxBackground" class="tee-box-background" src="https://raw.githubusercontent.com/vincentaffatati-19/GAL-Website-/c2568a5a7dffaed422f03306509343078d5d8782/portal/public/ux10/tee-boxes/coastal-01.webp" alt="" aria-hidden="true" decoding="async">
+  <div class="scene-overlay" aria-hidden="true"></div>
+  <div class="scene-controls">
+    <div><span class="eyebrow">PRESENTATION ONLY</span><h2 id="sceneTitle">Choose the view</h2><p>The tee-box photo and bag visual are independent presentation layers. Changing either does not change your Profile, bag contents, or recommendation evidence.</p></div>
+    <div class="presentation-selectors">
+      <fieldset class="selector-group"><legend>Tee box</legend><div class="selector-options"><button type="button" data-tee-theme="coastal" aria-pressed="true" class="active"><strong>Coastal</strong><small>Spyglass-inspired</small></button><button type="button" data-tee-theme="cliffs" aria-pressed="false"><strong>Cliffs</strong><small>Torrey-inspired</small></button></div></fieldset>
+      <fieldset class="selector-group"><legend>Bag visual</legend><div class="selector-options"><button type="button" data-bag-visual="tour" aria-pressed="true" class="active"><strong>Tour</strong><small>GAL Tour Bag</small></button><button type="button" data-bag-visual="stand" aria-pressed="false"><strong>Stand</strong><small>GAL Stand Bag</small></button></div></fieldset>
+    </div>
+  </div>
+
+  <div class="scene-grid">
+    <aside class="status-rail" aria-label="Current bag categories"><div class="rail-title">In your bag</div><div id="categoryStatus"></div></aside>
+    <div class="bag-stage" id="bagStage">
+      <img id="bagVisualImage" class="bag-image" src="https://raw.githubusercontent.com/vincentaffatati-19/GAL-Website-/c2568a5a7dffaed422f03306509343078d5d8782/portal/public/ux10/bags/gal-tour-bag.png" alt="GAL Tour Bag" decoding="async">
+      <div class="bag-caption"><strong id="bagCount">0 / 14 clubs</strong><span id="bagCaption">Loading your recorded equipment.</span></div>
+    </div>
+    <aside class="intelligence-rail" aria-label="Bag intelligence">
+      <article><span class="eyebrow">BAG STATUS</span><strong id="bagStatus">Loading</strong><p id="bagStatusCopy">Reading your current bag.</p></article>
+      <article><span class="eyebrow">NEXT OPPORTUNITY</span><strong id="nextOpportunity">—</strong><p id="nextOpportunityCopy">Waiting for governed recommendation evidence.</p></article>
+      <article><span class="eyebrow">BAG VALUE</span><strong id="bagValue">—</strong><p id="bagValueCopy">Waiting for governed valuation data.</p></article>
+      <article><span class="eyebrow">PROFILE</span><strong id="profileCompleteness">—</strong><p id="profileCopy">Connect your Golfer Profile to category engines.</p></article>
+    </aside>
+  </div>
+  <p id="duplicateWarning" class="duplicate-warning" role="status" hidden></p>
+  <aside id="contextDrawer" class="context-drawer" aria-live="polite" hidden></aside>
+</section>
+
+<section class="quick-actions" aria-label="Quick Actions">
+  <div><span class="eyebrow">QUICK ACTIONS</span><h2>Keep My GAL current</h2></div>
+  <div class="quick-action-links"><a class="primary" href="profile.html">Review Golfer Profile</a><a href="recommendations.html">Open category recommendations</a><a href="build-a-better-bag.html">Open Buyer Guides</a></div>
+</section>
+
+<section class="dashboard-grid">
+  <article class="detail-card"><span class="eyebrow">CURRENT EQUIPMENT</span><h2>What is in the bag</h2><div id="equipmentList" class="equipment-list"></div></article>
+  <article class="detail-card user-guide"><span class="eyebrow">BAG USER’S GUIDE</span><h2>How GAL reads this view</h2><p>Your bag is a factual record first. A missing club is not automatically a problem, a saved club is not automatically a good fit, and a recommendation appears only when a governed category engine has enough evidence.</p><a href="profile.html">Review the facts GAL can reuse</a></article>
+</section>
+
+<section class="dashboard-grid" id="insights">
+  <article class="detail-card"><span class="eyebrow">RECENT INSIGHT</span><h2>What GAL has learned</h2><div id="recentInsight" class="truthful-state"></div></article>
+  <article class="detail-card" id="progress"><span class="eyebrow">PROGRESS AT A GLANCE</span><h2>Your longitudinal view</h2><div id="progressGlance" class="truthful-state"></div></article>
+</section>
 </main>
+
 <footer class="site-footer"><div class="footer-inner"><div class="footer-grid"><div class="footer-brand"><img src="assets__images__gal-logo.png" alt="Golf Analytics Lab"><p>Independent golf-equipment education, analysis, and practical decision tools.</p></div><div><h3>My GAL</h3><a href="my-gal.html">My Bag</a><a href="profile.html">Golfer Profile</a><a href="recommendations.html">Recommendations</a></div><div><h3>Build a Better Bag</h3><a href="drivers.html">Drivers</a><a href="fairway-hybrids.html">Fairways &amp; Hybrids</a><a href="irons-buyers-guide.html">Irons</a></div><div><h3>About GAL</h3><a href="how-we-test.html">How We Test</a><a href="about.html">About</a><a href="contact.html">Contact</a></div></div><div class="footer-legal"><span>© Golf Analytics Lab</span><span>As an Amazon Associate I earn from qualifying purchases.</span><span><a href="editorial-standards.html">Editorial Standards</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div></div></footer>
-<script src="site.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js"></script><script src="recommendations__supabase.js"></script><script src="recommendations__profile.js"></script><script src="my-gal__app.js"></script></body></html>
+<script src="site.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js"></script><script src="recommendations__supabase.js"></script><script src="recommendations__profile.js"></script><script src="my-gal__app.js"></script>
+</body>
+</html>
