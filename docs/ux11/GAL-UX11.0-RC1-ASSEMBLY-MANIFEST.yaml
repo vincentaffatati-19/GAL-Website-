@@ -1,4 +1,4 @@
-schema: GAL-RC-ASSEMBLY-MANIFEST-1.1
+schema: GAL-RC-ASSEMBLY-MANIFEST-1.2
 rc: GAL-UX11.0-RC1
 workstream: "GAL UX11 — My GAL Intelligence Experience"
 status: PRE_IMPLEMENTATION_PROVENANCE_GATE
@@ -128,6 +128,67 @@ profile_implementation_source:
     - Impact
     - Finish
 
+profile_visual_routing_lock:
+  classification: LOCKED_SOURCE_DEPENDENCY
+  governing_document: docs/ux11/GAL-UX11-PROFILE-VISUAL-LINEAGE-AND-ROUTING-LOCK.md
+  last_progress_checkpoint: "GAL-UX10.02-FINAL-PROFILE-RC.html (2026-09-08), then STEP18 integrated staging verification"
+  lineage:
+    - source: GAL-UX10.02-STEP17.2-RC3.html
+      preserve: "corrected senior Male/Female Body mappings and restored complete 12-persona visual manifest"
+    - source: GAL-UX10.02-STEP17.3-DYNAMIC-VISUAL-RC.html
+      preserve: "12 unique Body and matching Swing persona routes"
+    - source: GAL-UX10.02-STEP17.3.2-DYNAMIC-VISUAL-RC.html
+      preserve: "gender-safe unknown/undisclosed-age routing"
+    - source: GAL-UX10.02-STEP17.3.3-DYNAMIC-VISUAL-RC.html
+      preserve: "native-aspect Swing rendering and six collapsed profile disclosures"
+    - source: GAL-UX10.02-FINAL-PROFILE-RC.html
+      preserve: "approved STEP17.3.3 behavior plus durable governed custody of all 12 persona pairs"
+    - source: GAL-UX10.02-STEP18-STAGING-RC.html
+      preserve: "integrated gender/age/handedness matrix and downstream same-revision profile consistency"
+  mapping:
+    male_under_18: junior_male
+    female_under_18: junior_female
+    male_18_24_or_25_34: male_young
+    female_18_24_or_25_34: female_young
+    male_35_44_or_45_54: male_middle
+    female_35_44_or_45_54: female_middle
+    male_55_64: male_mature
+    female_55_64: female_mature
+    male_65_74_or_75_plus: male_senior
+    female_65_74_or_75_plus: female_senior
+    male_age_unknown_or_undisclosed: male_age_unspecified
+    female_age_unknown_or_undisclosed: female_age_unspecified
+    neutral_or_missing_gender_under_18: neutral_junior
+    neutral_or_missing_gender_adult_or_unknown: neutral_adult
+  unknown_age_gender_authority:
+    male_age_unspecified_alias: male_mature
+    female_age_unspecified_alias: female_mature
+    rule: "Explicit Male/Female must not fall through to neutral imagery solely because age is unknown or undisclosed; UI metadata must not claim the aliased age."
+  handedness:
+    base: Right-handed
+    left_hand_rule: "Mirror photographic layer only; HTML/UI/stage labels remain unmirrored."
+  swing_fidelity:
+    stages: [Address, Backswing, Impact, Finish]
+    rule: "Render source-plate quarters at native aspect ratio; responsive scaling must preserve proportional height; no fixed-height crop/stretch."
+  final_asset_custody:
+    base_persona_pairs: 12
+    embedded_approved_pairs: 4
+    gal_owned_supabase_runtime_pairs: 8
+    review_hosted_generation_urls: 0
+    source_of_truth: GAL-UX10.02-FINAL-PROFILE-ASSET-MANIFEST.json
+  regression_gates:
+    - 12 Body base routes present
+    - 12 Swing base routes present
+    - 50/50 Gender x Age resolver matrix
+    - explicit Male/Female unknown-age routing tests
+    - explicit Male/Female 65-74 and 75+ senior routing tests
+    - Body/Swing persona-key parity
+    - right/left handed photographic mirroring behavior
+    - native Swing aspect ratio on desktop and mobile
+    - six profile disclosures preserved
+    - no replacement/regeneration of governed persona masters without explicit reviewed supersession
+    - STEP18 downstream same-profile-revision consistency
+
 visual_library_overview:
   classification: REFERENCE_ONLY
   source_name: "Golf Analytics Lab Visual Library(3).png"
@@ -213,6 +274,13 @@ qa_gate:
     - no UX10.03 scorecard hierarchy
     - five primary navigation items preserved
     - final governed profile/persona system retained
+    - exact 12 Body and 12 Swing base persona routes retained
+    - 50/50 Gender x Age resolver matrix retained
+    - senior Male/Female 65-74 and 75+ mapping regressions pass
+    - explicit Male/Female unknown-age gender-authority regressions pass
+    - Body/Swing persona-key parity passes
+    - native Swing aspect ratio preserved at desktop and mobile
+    - final profile asset custody remains 4 approved embedded + 8 GAL-owned Supabase runtime pairs with no review-hosted generation URLs
     - photographic My GAL visual treatment restored
     - tee-box and bag remain independent presentation layers
     - category-level Top 3 only
@@ -222,6 +290,7 @@ qa_gate:
     - mobile contract tests pass
     - JavaScript syntax passes
     - visual regression comparison against approved references
+    - STEP18 same-profile-revision downstream consistency retained
   browser_policy: "If browser rendering is blocked, report BLOCKED/UNVERIFIED. Static checks are not a browser visual pass."
 
 open_release_blockers:
