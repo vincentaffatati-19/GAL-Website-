@@ -1,0 +1,26 @@
+name: UX11 Regression Contract
+
+on:
+  push:
+    branches:
+      - feature/ux11-profile-integration-recovery
+  workflow_dispatch:
+
+jobs:
+  ux11-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax checks
+        shell: bash
+        run: |
+          node --check my-gal__app.js
+          node --check profile__app.js
+          node --check recommendations__app.js
+      - name: UX11 governed regression contract
+        run: node tests/test-ux11-my-gal-intelligence.js
