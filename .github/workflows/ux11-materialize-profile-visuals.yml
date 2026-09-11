@@ -45,7 +45,7 @@ jobs:
       - name: Commit generated locked resolver
         shell: bash
         run: |
-          if git diff --quiet -- profile__visuals.js; then
+          if [ -z "$(git status --porcelain -- profile__visuals.js)" ]; then
             echo 'profile__visuals.js already materialized; nothing to commit.'
             exit 0
           fi
