@@ -32,10 +32,15 @@ assert(!bagApp.includes("count?'Good':'Review'"),'UX11 forbids inferred Good/Rev
 assert(bagApp.includes('duplicate'),'UX11 must preserve an explicit duplicate-club warning path');
 assert(bagApp.includes("catOf(x)!=='GOLF_BALL'"),'Golf ball must not count toward the 14-club limit');
 
-// My GAL navigation is five primary destinations; Golfer Profile is separate.
+// My GAL navigation is five primary destinations on every UX11 account surface; Golfer Profile stays separate.
 const primaryLabels=['Today','My Bag','Insights','Guides','Progress'];
-for(const label of primaryLabels) assert(bag.includes(`>${label}</a>`),`My GAL primary navigation missing ${label}`);
-assert(bag.includes('class="profile-control"')||bag.includes('data-profile-control'),'Golfer Profile must remain a separate destination/control');
+const assertMyGalNav=(surface,name)=>{
+  for(const label of primaryLabels) assert(surface.includes(`>${label}</a>`),`${name} My GAL primary navigation missing ${label}`);
+  assert(surface.includes('class="profile-control"')||surface.includes('data-profile-control'),`${name} must keep Golfer Profile as a separate destination/control`);
+};
+assertMyGalNav(bag,'My Bag');
+assertMyGalNav(profile,'Golfer Profile');
+assertMyGalNav(recs,'Recommendations');
 
 // Governed profile visual resolver is a required locked dependency.
 const visualPath=path.join(ROOT,'profile__visuals.js');
@@ -84,6 +89,15 @@ for(const id of ['swingDisclosure','missDisclosure','playDisclosure','connectedD
   assert(profile.includes(`id="${id}"`),`Missing collapsed profile disclosure ${id}`);
 }
 assert(profileApp.includes('aria-expanded')||profile.includes('aria-expanded="false"'),'Profile disclosures must maintain aria-expanded state');
+
+// The approved Your Miss reference art is inherited exactly and remains informational, isolated from Save controls.
+assert(profile.includes('class="miss-reference"'),'Your Miss must retain the approved reference-art container');
+assert(profile.includes('src="profile__miss-reference.png"'),'Your Miss must bind the exact approved reference asset');
+assert(profileCss.includes('.miss-reference')&&profileCss.includes('object-fit:contain'),'Your Miss art must remain fully visible rather than hero-cropped');
+const missStart=profile.indexOf('id="missContent"');
+const missArt=profile.indexOf('class="miss-reference"');
+const saveBar=profile.indexOf('class="save-bar"');
+assert(missStart>=0&&missArt>missStart&&saveBar>missArt,'Your Miss reference art must remain inside the Miss section and isolated above Save controls');
 
 // UX10.03 scorecard direction remains excluded; Top 3 remains category-contextual only.
 const active=[bag,profile,recs,bagApp,profileApp].join('\n');
