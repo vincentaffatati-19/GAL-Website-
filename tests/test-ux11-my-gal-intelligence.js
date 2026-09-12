@@ -1,5 +1,6 @@
 const fs=require('fs');
 const path=require('path');
+const crypto=require('crypto');
 const assert=require('assert');
 const ROOT=path.resolve(__dirname,'..');
 const read=(name)=>fs.readFileSync(path.join(ROOT,name),'utf8');
@@ -98,6 +99,11 @@ const missStart=profile.indexOf('id="missContent"');
 const missArt=profile.indexOf('class="miss-reference"');
 const saveBar=profile.indexOf('class="save-bar"');
 assert(missStart>=0&&missArt>missStart&&saveBar>missArt,'Your Miss reference art must remain inside the Miss section and isolated above Save controls');
+const missAsset=path.join(ROOT,'profile__miss-reference.png');
+assert(fs.existsSync(missAsset),'Exact approved Your Miss PNG must be materialized in the UX11 branch');
+const missBytes=fs.readFileSync(missAsset);
+assert.strictEqual(missBytes.length,826825,'Your Miss PNG byte size must match the approved UX10.02 source');
+assert.strictEqual(crypto.createHash('sha256').update(missBytes).digest('hex'),'721d149366e5132bede0ea33eef809baae309e646da6acd063a403da15306348','Your Miss PNG SHA-256 must match the approved UX10.02 source');
 
 // UX10.03 scorecard direction remains excluded; Top 3 remains category-contextual only.
 const active=[bag,profile,recs,bagApp,profileApp].join('\n');
