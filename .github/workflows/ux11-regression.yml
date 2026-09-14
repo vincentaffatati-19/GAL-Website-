@@ -24,3 +24,11 @@ jobs:
           node --check recommendations__app.js
       - name: UX11 governed regression contract
         run: node tests/test-ux11-my-gal-intelligence.js
+      - name: Broader UX10/UX11 regressions
+        if: always()
+        shell: bash
+        run: |
+          node tests/test-ux10-my-gal-review.js
+          node tests/test-recommendations.js
+          node tests/test-recommendation-runtime.js
+          node tests/test-recommendation-auth.js
