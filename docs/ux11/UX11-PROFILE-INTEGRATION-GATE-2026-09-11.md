@@ -5,10 +5,10 @@
 
 Recovery branch: `feature/ux11-profile-integration-recovery`
 
-Current verified recovery head as of 2026-09-14: `6aa5d6051492ade6400bbd2acd1e5569692c3826`
+Current verified recovery head as of 2026-09-14: `edaf644a99f2cc9cf2dd6934fd2d8593f9fe82c0`
 
 ## Fresh verification evidence
-GitHub Actions run `34851756197`:
+GitHub Actions run `34851843865`:
 
 - Checkout: PASS
 - Node 22 setup: PASS
