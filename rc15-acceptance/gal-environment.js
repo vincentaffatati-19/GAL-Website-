@@ -1,0 +1,11 @@
+window.GAL_ENVIRONMENT=Object.freeze({
+  environmentName:"rc14-staging",
+  supabaseUrl:"https://ylrxwtbzavhxxpoqqmho.supabase.co",
+  publishableKey:"sb_publishable_Jgy4llwo5UhX4mg3EZ6VSA_xhyPOcVp",
+  releaseId:"GAL-v7.0.0-RC14-backend-convergence",
+  termsVersion:"terms-rc14-draft-2026-09-25",
+  privacyVersion:"privacy-rc14-draft-2026-09-25",
+  commercialAggregatePolicyVersion:null,
+  debug:false,
+  telemetryMode:"staging-review"
+});
