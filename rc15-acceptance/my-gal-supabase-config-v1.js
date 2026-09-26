@@ -1,0 +1,19 @@
+(function(){
+  const e=window.GAL_ENVIRONMENT||{};
+  window.GAL_SUPABASE_CONFIG={
+    url:e.supabaseUrl||"",
+    publishableKey:e.publishableKey||"",
+    policyVersion:e.privacyVersion||"unknown",
+    termsVersion:e.termsVersion||"unknown",
+    privacyVersion:e.privacyVersion||"unknown",
+    commercialAggregatePolicyVersion:e.commercialAggregatePolicyVersion||null,
+    environment:e.environmentName||"unknown",
+    releaseId:e.releaseId||"unknown",
+    authCallbackPath:"auth-callback.html",
+    providerReadiness:{
+      email:"WIRED_DELIVERABILITY_PENDING",
+      google:"CREDENTIALS_REQUIRED",
+      apple:"CREDENTIALS_REQUIRED"
+    }
+  };
+})();
