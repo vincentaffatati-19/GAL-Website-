@@ -1,0 +1,163 @@
+name: RC15 Browser Acceptance One Shot v2
+
+on:
+  push:
+    branches:
+      - rc15-driver-browser-acceptance
+    paths:
+      - .github/workflows/rc15-browser-acceptance-one-shot-v2.yml
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Run RC15 browser acceptance
+        env:
+          RC15_TARGET: 'https://gal-website-dzpo0ryag-gal25.vercel.app/rc15-browser-acceptance.html?_vercel_share=Zq56HZsNaTj3ojYJmi34EKhUtBP7ohMk'
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const { chromium } = require('playwright');
+          const assert = require('assert');
+
+          const TARGET = process.env.RC15_TARGET;
+          const activeClubs = bag => (bag?.items || []).filter(x => x.itemType === 'CLUB' && x.status === 'IN_BAG' && x.countsToward14);
+          const activeDrivers = bag => activeClubs(bag).filter(x => x.category === 'DRIVER' || x.slotCode === 'D');
+
+          async function waitText(page, selector, patterns, timeout = 15000) {
+            await page.waitForFunction(
+              ({selector, patterns}) => {
+                const t = document.querySelector(selector)?.textContent || '';
+                return patterns.some(p => t.includes(p));
+              },
+              {selector, patterns},
+              {timeout}
+            );
+            return (await page.locator(selector).innerText()).trim();
+          }
+          async function loadBag(page) { return await page.evaluate(async () => await window.__RC15_ACCEPTANCE.loadBag()); }
+
+          (async () => {
+            const browser = await chromium.launch({headless:true});
+            const result = {checks:{}};
+            let email = null;
+            try {
+              const c1 = await browser.newContext();
+              const p1 = await c1.newPage();
+              await p1.goto(TARGET, {waitUntil:'domcontentloaded'});
+              await p1.waitForFunction(() => !!window.__RC15_ACCEPTANCE, null, {timeout:15000});
+
+              await p1.click('#generate');
+              email = await p1.inputValue('#email');
+              const password = await p1.inputValue('#password');
+              assert(email.startsWith('rc15-ui-') && email.endsWith('@example.com'));
+              assert(password.length >= 20);
+
+              await p1.click('#signUp');
+              let auth = await waitText(p1, '#authStatus', ['ACCOUNT CREATED', 'ERROR']);
+              assert(!auth.startsWith('ERROR'), auth);
+              if (!auth.includes('session ACTIVE')) {
+                await p1.click('#signIn');
+                auth = await waitText(p1, '#authStatus', ['SIGNED IN', 'ERROR']);
+                assert(auth.startsWith('SIGNED IN'), auth);
+              }
+              result.checks.synthetic_account = 'PASS';
+
+              const emptyBag = await loadBag(p1);
+              assert.strictEqual(activeClubs(emptyBag).length, 0, 'synthetic bag must start empty');
+
+              await p1.click('#seed14');
+              await p1.waitForTimeout(1000);
+              const bag14 = await loadBag(p1);
+              assert.strictEqual(activeClubs(bag14).length, 14, 'fixture must contain 14 active clubs');
+              result.checks.seed_14_clubs = 'PASS';
+
+              await p1.click('#addPrimary');
+              const addText = await waitText(p1, '#driverBagStatus', ['Saved to My GAL.', 'ERROR', 'My Bag save did not complete']);
+              assert(addText.includes('Saved to My GAL.'), addText);
+              assert(addText.includes('15 clubs in this bag'), '15-club warning not rendered: ' + addText);
+              const bag15 = await loadBag(p1);
+              assert.strictEqual(activeClubs(bag15).length, 15, 'Driver add must produce 15 active clubs');
+              assert.strictEqual(activeDrivers(bag15).length, 1, 'exactly one active Driver expected');
+              assert.strictEqual(activeDrivers(bag15)[0].canonicalProductId, 'GAL-DRV-0003');
+              assert((bag15.decisions || []).some(d => d.canonicalProductIdAtDecision === 'GAL-DRV-0003' && d.sourceTool === 'driver_buyers_guide'), 'Driver recommendation decision lineage missing');
+              result.checks.driver_add_15_club_warning = 'PASS';
+              result.checks.decision_lineage = 'PASS';
+
+              await p1.click('#addSecond');
+              const conflictText = await waitText(p1, '#driverBagStatus', ['A Driver is already active in My Bag.', 'ERROR', 'My Bag save did not complete']);
+              assert(conflictText.includes('A Driver is already active in My Bag.'), conflictText);
+              const afterConflict = await loadBag(p1);
+              assert.strictEqual(activeDrivers(afterConflict).length, 1, 'duplicate Driver must not be added');
+              assert.strictEqual(activeDrivers(afterConflict)[0].canonicalProductId, 'GAL-DRV-0003');
+              result.checks.duplicate_slot_d_ui = 'PASS';
+              await p1.screenshot({path:'rc15-session1.png', fullPage:true});
+
+              await p1.click('#signOut');
+              let signed = await waitText(p1, '#authStatus', ['SIGNED OUT', 'ERROR']);
+              assert.strictEqual(signed, 'SIGNED OUT');
+              await p1.fill('#email', email);
+              await p1.fill('#password', password);
+              await p1.click('#signIn');
+              signed = await waitText(p1, '#authStatus', ['SIGNED IN', 'ERROR']);
+              assert(signed.startsWith('SIGNED IN'), signed);
+              const restored = await loadBag(p1);
+              assert.strictEqual(activeDrivers(restored).length, 1);
+              assert.strictEqual(activeDrivers(restored)[0].canonicalProductId, 'GAL-DRV-0003');
+              result.checks.logout_login_persistence = 'PASS';
+
+              const c2 = await browser.newContext();
+              const p2 = await c2.newPage();
+              await p2.goto(TARGET, {waitUntil:'domcontentloaded'});
+              await p2.waitForFunction(() => !!window.__RC15_ACCEPTANCE, null, {timeout:15000});
+              await p2.fill('#email', email);
+              await p2.fill('#password', password);
+              await p2.click('#signIn');
+              const auth2 = await waitText(p2, '#authStatus', ['SIGNED IN', 'ERROR']);
+              assert(auth2.startsWith('SIGNED IN'), auth2);
+              const restored2 = await loadBag(p2);
+              assert.strictEqual(activeDrivers(restored2).length, 1);
+              assert.strictEqual(activeDrivers(restored2)[0].canonicalProductId, 'GAL-DRV-0003');
+              result.checks.second_browser_session = 'PASS';
+              await p2.screenshot({path:'rc15-session2.png', fullPage:true});
+
+              result.synthetic_email = email;
+              result.active_club_count = activeClubs(restored2).length;
+              result.driver = activeDrivers(restored2)[0].canonicalProductId;
+              result.status = 'PASS';
+              fs.writeFileSync('rc15-browser-result.json', JSON.stringify(result, null, 2));
+              console.log('RC15_BROWSER_RESULT=' + JSON.stringify(result));
+              await p2.click('#signOut').catch(()=>{});
+              await c2.close();
+              await p1.click('#signOut').catch(()=>{});
+              await c1.close();
+            } catch (err) {
+              result.synthetic_email = email;
+              result.status = 'FAIL';
+              result.error = String(err && err.stack || err);
+              fs.writeFileSync('rc15-browser-result.json', JSON.stringify(result, null, 2));
+              console.error('RC15_BROWSER_RESULT=' + JSON.stringify(result));
+              throw err;
+            } finally {
+              await browser.close();
+            }
+          })();
+          NODE
+      - name: Upload acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rc15-browser-acceptance-evidence-v2
+          path: |
+            rc15-browser-result.json
+            rc15-session1.png
+            rc15-session2.png
