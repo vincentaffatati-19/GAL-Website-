@@ -6,7 +6,7 @@ on:
       - rc15-driver-browser-acceptance
     paths:
       - .github/workflows/rc15-browser-acceptance-local.yml
-      - tests/e2e/rc15-browser-local-one-shot.js
+      - tests/e2e/rc15-browser-mailtm-one-shot.js
 
 jobs:
   acceptance:
@@ -35,7 +35,7 @@ jobs:
       - name: Run RC15 browser acceptance
         env:
           RC15_TARGET: 'http://127.0.0.1:4173/rc15-browser-acceptance.html'
-        run: node tests/e2e/rc15-browser-local-one-shot.js
+        run: node tests/e2e/rc15-browser-mailtm-one-shot.js
       - name: Upload acceptance evidence
         if: always()
         uses: actions/upload-artifact@v4
