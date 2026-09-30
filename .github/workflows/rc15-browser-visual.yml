@@ -1,0 +1,48 @@
+name: RC15 Browser Visual Acceptance
+
+on:
+  push:
+    branches:
+      - rc15-driver-browser-acceptance
+    paths:
+      - .github/workflows/rc15-browser-visual.yml
+      - tests/e2e/rc15-browser-visual-one-shot.js
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start local RC15 acceptance harness
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/rc15-http.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/rc15-browser-acceptance.html >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/rc15-http.log
+          exit 1
+      - name: Run browser visual acceptance
+        env:
+          RC15_TARGET: 'http://127.0.0.1:4173/rc15-browser-acceptance.html'
+        run: node tests/e2e/rc15-browser-visual-one-shot.js
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rc15-browser-visual-evidence
+          path: |
+            rc15-browser-visual-result.json
+            rc15-browser-14-club-warning.png
+            rc15-browser-duplicate-driver.png
+          if-no-files-found: warn
