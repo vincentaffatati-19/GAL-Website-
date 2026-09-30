@@ -52,7 +52,10 @@ async function createMailbox() {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ address, password })
   });
-  assert(createRes.ok, `mail.tm account create failed: ${createRes.status} ${await createRes.text()}`);
+  if (!createRes.ok) {
+    const body = await createRes.text();
+    throw new Error(`mail.tm account create failed: ${createRes.status} ${body}`);
+  }
   const account = await createRes.json();
 
   const tokenRes = await fetch('https://api.mail.tm/token', {
