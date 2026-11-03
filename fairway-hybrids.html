@@ -182,7 +182,7 @@ function renderResults(){
   section.hidden=false;
   document.getElementById("fhCount").textContent=ranked.length;
   const top=ranked[0]?ranked[0].gal_fit:0;
-  host.innerHTML=ranked.length?ranked.slice(0,24).map(x=>productCard(x,top)).join(""):'<div class="empty">No matching configurations.</div>';
+  host.innerHTML=ranked.length?ranked.slice(0,3).map(x=>productCard(x,top)).join(""):'<div class="empty">No matching configurations.</div>';
   renderCompare();
   try{section.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){}
 }
@@ -192,27 +192,30 @@ function toggleCompare(id){
   else compared.add(id);
   renderResults();
 }
-function saveBag(id,button){
-  const x=ranked.find(p=>p.product_id===id);if(!x)return;
-  const status=document.getElementById("fhBagStatus");
-  try{
-    const key="gal_fh_rc131_bag";
-    let bag=[];
-    try{bag=JSON.parse(localStorage.getItem(key)||"[]")}catch(e){bag=[]}
-    if(!bag.some(i=>i.product_id===id)){
-      bag.push({
-        product_id:id,brand:x.brand,model:x.model,club:x.club,loft_deg:x.loft_deg,
-        gal_fit:x.gal_fit,gal_value:x.gal_value,saved_at:new Date().toISOString()
-      });
-      localStorage.setItem(key,JSON.stringify(bag));
-    }
-    button.textContent="Saved";
-    button.classList.add("saved");
-    status.textContent="Saved on this browser for review.";
-  }catch(e){
-    button.textContent="Selected";
-    status.textContent="Browser storage is unavailable. Your selected club remains visible in this shortlist.";
+async function saveBag(id,button){
+ const x=ranked.find(p=>p.product_id===id);if(!x)return;
+ const status=document.getElementById("fhBagStatus");
+ if(button){button.disabled=true;button.textContent="Saving…";}
+ try{
+  const p={id:x.product_id,product_id:x.product_id,brand:x.brand,model:x.model,club:x.club,category:x.category,loft_deg:x.loft_deg,hand:x.hand};
+  let saved=false;
+  if(typeof window.GALMyBag?.addFairwayHybrid==="function"){
+   saved=await window.GALMyBag.addFairwayHybrid({product:p,guideVersion:FIT_VERSION,inputs:{...state},fit:x.gal_fit,value:x.gal_value,reasons:reasons(x)});
+  }else{
+   const key="gal_mybag_phase3_v1";const db=JSON.parse(localStorage.getItem(key)||"null")||{schemaVersion:"1.0",mode:"GUEST_REVIEW",guestId:"GUEST-FH",bagId:"GAL-BAG-REVIEW",items:[],decisions:[],events:[]};
+   if(!Array.isArray(db.items)||!Array.isArray(db.decisions)||!Array.isArray(db.events))throw Error("My Bag schema invalid");
+   if(!db.items.some(i=>i.canonicalProductId===id&&i.status!=="RETIRED")){
+    const stamp=new Date().toISOString(),rid=()=>Math.random().toString(36).slice(2),decisionId="GAL-DS-FH-"+rid(),slot=x.club||"FW";
+    const d={decisionSnapshotId:decisionId,capturedAt:stamp,sourceTool:"Fairway Woods & Hybrids Buyers Guide",sourceToolVersion:FIT_VERSION,userInputs:{...state},metrics:[{metricId:"GAL_FIT",status:"KNOWN",score:x.gal_fit,modelVersion:FIT_VERSION},{metricId:"GAL_VALUE",status:x.gal_value==null?"UNKNOWN":"KNOWN",score:x.gal_value??null,modelVersion:FIT_VERSION}],reasonSummary:reasons(x).join(" "),canonicalProductIdAtDecision:id,canonicalBrandIdAtDecision:null,marketCodeAtDecision:null,immutable:true};
+    const item={bagItemId:"GAL-BI-FH-"+rid(),itemType:"CLUB",category:x.category==="HYBRID"?"HYBRID":"FAIRWAY_WOOD",slotCode:slot,slotLabel:slot,groupId:"GAL-GRP-FH-"+rid(),canonicalProductId:id,canonicalBrandId:null,display:{brand:x.brand,model:x.model,variant:slot},configuration:{loft_deg:x.loft_deg,hand:x.hand},status:"CONSIDERING",countsToward14:true,decisionSnapshotId:decisionId,createdAt:stamp,updatedAt:stamp};
+    db.decisions.push(d);db.items.push(item);db.events.push({eventId:"GAL-EVT-FH-"+rid(),eventType:"ADD_TO_MY_BAG",occurredAt:stamp,canonicalProductId:id,status:"CONSIDERING",components:[slot]});db.updatedAt=stamp;
+    localStorage.setItem(key,JSON.stringify(db));window.dispatchEvent(new CustomEvent("gal:mybag-changed"));
+   }
+   saved=true;
   }
+  if(saved){button.textContent="Saved";button.classList.add("saved");status.textContent="Saved to My Bag on this browser. Sign in for cross-device synchronization."}
+  else{button.disabled=false;button.textContent="Add to My Bag";status.textContent="Not saved; no changes made."}
+ }catch(e){console.error("Fairway/Hybrid My Bag save",e);button.disabled=false;button.textContent="Add to My Bag";status.textContent="Save failed. Please retry."}
 }
 function reset(){
   Q.forEach(q=>state[q[0]]=null);compared.clear();ranked=[];
