@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/ux11-profile-integration-recovery
+      - integration/ux11-rc16-reconciliation
   workflow_dispatch:
 
 jobs:
