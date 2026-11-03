@@ -162,8 +162,8 @@ function productCard(x,top){
   const co=top-x.gal_fit<1.5,price=x.current_price_usd==null?"Price unavailable":"$"+Number(x.current_price_usd).toFixed(0);
   return `<article class="result fh-product-card">
     <div class="topline"><span class="badge">${x.category==="FAIRWAY"?"FAIRWAY WOOD":"HYBRID"}</span>${co?'<span class="verified">TOP FIT TIER</span>':""}</div>
-    \x24{GAL_FH_APPROVED_IMAGES[x.product_id]?'<img class="fh-product-image" loading="lazy" alt="'+esc(x.brand+" "+x.model+" "+x.club)+'" src="'+esc(GAL_FH_APPROVED_IMAGES[x.product_id])+'">':'<div class="fh-image-hold">Official product image under review</div>'}
-    <div class="brandname">\x24{esc(x.brand)}</div><h3>${esc(x.model)} · ${esc(x.club)}</h3>
+    ${GAL_FH_APPROVED_IMAGES[x.product_id]?'<img class="fh-product-image" loading="lazy" alt="'+esc(x.brand+" "+x.model+" "+x.club)+'" src="'+esc(GAL_FH_APPROVED_IMAGES[x.product_id])+'">':'<div class="fh-image-hold">Official product image under review</div>'}
+    <div class="brandname">${esc(x.brand)}</div><h3>${esc(x.model)} · ${esc(x.club)}</h3>
     <div class="spec">${esc(x.loft_deg)}° · ${esc(x.hand)} · ${esc(price)}</div>
     <div class="scores"><div class="score"><b>${x.gal_fit}</b><span>GAL Fit</span></div><div class="score"><b>${x.gal_value==null?"—":x.gal_value}</b><span>GAL Value</span></div><div class="score"><b>${x.confidence}</b><span>Data confidence</span></div></div>
     <div class="gal-why-title">Why it fits</div><div class="why">${(reasons(x).length?reasons(x):["Balanced match across role, loft, launch and lie."]).map(r=>"<div>• "+esc(r)+"</div>").join("")}</div>
